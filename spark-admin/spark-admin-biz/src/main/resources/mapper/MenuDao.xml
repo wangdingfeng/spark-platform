@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.spark.platform.adminbiz.dao.menu.MenuDao">
+
+    <!--查询当前用户菜单-->
+    <select id="findMenuByUserName" resultType="Menu">
+        SELECT
+        m.*
+        FROM
+        sys_menu m
+        JOIN (
+        SELECT DISTINCT
+        ra.menu_id
+        FROM
+        sys_user_role ur
+        JOIN sys_role_auth ra ON ur.role_id = ra.role_id
+        JOIN sys_user u ON ur.user_id = u.id
+        WHERE
+        u.username = #{userName}
+        ) AS um ON m.id = um.AUTH_ID
+        WHERE
+        m.del_flag = 0
+        <if test="filterType != null and filterType != ''">
+            AND m.type !=#{filterType}
+        </if>
+    </select>
+
+    <!--查询当前用户菜单-->
+    <select id="findMenuVueByUserName" resultType="com.spark.platform.adminapi.vo.MenuVue">
+        SELECT
+        m.*,
+        m.name AS "Meta.title",
+        m.icon AS "Meta.icon"
+        FROM
+        sys_menu m
+        JOIN (
+        SELECT DISTINCT
+        ra.menu_id
+        FROM
+        sys_user_role ur
+        JOIN sys_role_menu ra ON ur.role_id = ra.role_id
+        JOIN sys_user u ON ur.user_id = u.ID
+        WHERE
+        u.username = #{userName}
+        ) AS um ON m.id = um.menu_id
+        WHERE
+        m.del_flag = 0
+        AND m.type != '2'
+        ORDER BY m.sort
+    </select>
+
+    <!--查询当前用户权限-->
+    <select id="findAuthByUserId" resultType="Menu">
+        SELECT
+            m.name,
+            m.permission
+        FROM
+            sys_menu m
+            JOIN (
+                SELECT DISTINCT ra.menu_id
+                FROM sys_user_role ur JOIN sys_role_menu ra ON ur.role_id = ra.role_id
+                WHERE ur.user_id = #{userId}
+            ) AS um ON m.id = um.menu_id
+        WHERE
+            m.permission is not null AND m.permission !=''
+    </select>
+
+    <select id="getRoleMenu" resultType="Menu">
+        SELECT
+            m.*
+        FROM
+            sys_menu m
+            JOIN sys_role_menu rm ON m.id = rm.menu_id
+        WHERE
+            rm.role_id = #{roleId}
+    </select>
+
+    <select id="getMenuIdsByRole" resultType="String">
+        SELECT menu_id FROM sys_role_menu WHERE role_id=#{roleId}
+    </select>
+
+</mapper>

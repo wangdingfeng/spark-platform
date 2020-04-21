@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.spark.platform</groupId>
+        <artifactId>spark-admin</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
+    </parent>
+    <artifactId>spark-admin-biz</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>spark-admin-biz</name>
+    <description>admin 服务</description>
+
+    <properties>
+        <java.version>1.8</java.version>
+    </properties>
+
+    <dependencies>
+        <!-- for swagger -->
+        <dependency>
+            <groupId>com.spring4all</groupId>
+            <artifactId>swagger-spring-boot-starter</artifactId>
+            <version>${swagger-spring-boot-starter.version}</version>
+        </dependency>
+        <!--公共 工具包 -->
+        <dependency>
+            <groupId>com.spark.platform</groupId>
+            <artifactId>spark-common-utils</artifactId>
+            <version>${spark-common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.spark.platform</groupId>
+            <artifactId>spark-common-log</artifactId>
+            <version>${spark-common.version}</version>
+        </dependency>
+        <!--公共配置包 包含base包-->
+        <dependency>
+            <groupId>com.spark.platform</groupId>
+            <artifactId>spark-common-config</artifactId>
+            <version>${spark-common.version}</version>
+        </dependency>
+        <!--公共security包 包含admin api 及 包含base-->
+        <dependency>
+            <groupId>com.spark.platform</groupId>
+            <artifactId>spark-common-security</artifactId>
+            <version>${spark-common.version}</version>
+        </dependency>
+        <!--actuator监管-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <!--eureka client-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-generator</artifactId>
+            <version>${mybatis-plus.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>${freemarker.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

@@ -1,0 +1,34 @@
+server:
+  port: 9000
+spring:
+#  注册中心登录信息
+  security:
+    user:
+      name: spark
+      password: spark
+  application:
+    name: spark-eureka
+#    amdin监控
+  boot:
+    admin:
+      client:
+        url: http://127.0.0.1:9002
+        instance:
+          prefer-ip: true
+eureka:
+  instance:
+    hostname: localhost
+    lease-renewal-interval-in-seconds: 1
+    lease-expiration-duration-in-seconds: 2
+  server:
+    enable-self-preservation: false
+  client:
+    service-url:
+      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@${eureka.instance.hostname}:${server.port}/eureka/
+    register-with-eureka: false
+    fetch-registry: false
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

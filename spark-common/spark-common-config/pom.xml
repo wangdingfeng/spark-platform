@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.spark.platform</groupId>
+        <artifactId>spark-common</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <artifactId>spark-common-config</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>spark-common-config</name>
+    <description>公共配置</description>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <!--公共基礎包-->
+        <dependency>
+            <groupId>com.spark.platform</groupId>
+            <artifactId>spark-common-base</artifactId>
+            <version>${spark-common.version}</version>
+        </dependency>
+        <!--mysql-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <!--druid-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>${druid.version}</version>
+        </dependency>
+    </dependencies>
+
+</project>

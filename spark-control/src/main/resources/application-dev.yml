@@ -1,0 +1,24 @@
+server:
+  port: 9002
+spring:
+  application:
+    name: spark-control
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: http://${eurekaUserName}:${eurekaPassWord}@localhost:9000/eureka/
+  instance:
+    prefer‐ip‐address: true
+    status-page-url-path: /actuator/info
+    health-check-url-path: /actuator/health
+eurekaUserName: spark
+eurekaPassWord: spark
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

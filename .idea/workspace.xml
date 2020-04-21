@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DefaultGradleProjectSettings">
+    <option name="testRunner" value="GRADLE" />
+    <option name="delegatedBuild" value="true" />
+  </component>
+  <component name="GradleLocalSettings">
+    <option name="projectSyncType">
+      <map>
+        <entry key="D:/wordspace/mybatis-plus" value="PREVIEW" />
+      </map>
+    </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="localRepository" value="D:\.m2\repository" />
+        <option name="mavenHome" value="D:/ProjectTool/apache-maven-3.5.4" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="D:/wordspace/bets" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="MavenSettings" />
+  </component>
+  <component name="RunManager" selected="Spring Boot.SparkAdminBizApplication">
+    <configuration name="SparkAdminBizApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="spark-admin-biz" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.spark.platform.adminbiz.SparkAdminBizApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SparkAuthApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="spark-auth" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.spark.platform.auth.SparkAuthApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SparkControlApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="spark-control" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.spark.platform.control.SparkControlApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SparkEurekaApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="spark-eureka" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.spark.platform.eureka.SparkEurekaApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SparkFlowableBizApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="spark-flowable-biz" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.spark.platform.flowable.biz.SparkFlowableBizApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SparkGatewayApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="spark-gateway" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.spark.platform.gateway.SparkGatewayApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

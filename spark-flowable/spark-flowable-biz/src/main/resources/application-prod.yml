@@ -1,0 +1,151 @@
+server:
+  port: 9030
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: spark-flowable
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url:  jdbc:mysql://127.0.0.1:3306/spark?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8&nullCatalogMeansCurrent=true
+    username: root
+    password:
+    name: spark
+    type: com.alibaba.druid.pool.DruidDataSource
+    initial-size: 5
+    min-idle: 5
+    max-active: 20
+    max-wait: 30000
+    time-between-eviction-runs-millis: 60000
+    min-evictable-idle-time-millis: 300000
+    validation-query: select '1' from dual
+    test-while-idle: true
+    test-on-borrow: false
+    test-on-return: false
+    pool-prepared-statements: true
+    max-open-prepared-statements: 20
+    max-pool-prepared-statement-per-connection-size: 20
+  boot:
+    admin:
+      client:
+        url: http://127.0.0.1:9002
+        instance:
+          prefer-ip: true
+          service-url: http://127.0.0.1:9030
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    timeout: 10000
+    database: 0
+    password:
+    lettuce:
+      pool:
+        max-active: 300
+        max-idle: 100
+        max-wait: -1
+        min-idle: 20
+      shutdown-timeout: 10000
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: http://${eurekaUserName}:${eurekaPassWord}@127.0.0.1:9000/eureka/
+  instance:
+    status-page-url-path: /actuator/info
+    health-check-url-path: /actuator/health
+    #      分服务器部署一定要配置ip
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+eurekaUserName: spark
+eurekaPassWord: spark
+
+management:
+  metrics:
+    web:
+      server:
+        auto-time-requests: false
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    bus-refresh:
+      enabled: true
+
+swagger:
+  base-package: com.spark.platform.flowable.biz
+  enabled: true
+  description: spark 工作流服务
+  version: V1.0
+  license: Apache License, Version 2.0
+  license-url: https://www.apache.org/licenses/LICENSE-2.0.html
+  authorization:
+    key-name: Authorization
+  contact:
+    name: wangdingfeng
+    email: wangdingfeng@live.com
+
+ribbon:
+  ReadTimeout: 10000 #请求处理的超时时间
+  ConnectTimeout: 5000 #请求连接的超时时间
+  MaxAutoRetries: 1 #对当前实例的重试次数
+  MaxAutoRetriesNextServer: 2 #切换实例的重试次数
+  eureka:
+    enabled: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+
+#熔断器开启
+feign:
+  hystrix:
+    enabled: true
+  okhttp:
+    enabled: true
+  httpclient:
+    enabled: false
+
+# flowable配置
+flowable:
+  check-process-definitions: true
+  custom-mybatis-mappers:
+  custom-mybatis-x-m-l-mappers:
+  database-schema:
+  database-schema-update: true
+  db-history-used: true
+  deployment-name: SpringBootAutoDeployment
+  mail:
+    server:
+      default-from: flowable@localhost # 发送邮件时使用的默认发信人地址。'
+      host: localhost # 邮件服务器。'
+      password: # 邮件服务器的登录密码。'
+      port: 1025 # 邮件服务器的端口号。'
+      use-ssl: false # 是否使用SSL/TLS加密SMTP传输连接（即SMTPS/POPS)。'
+      use-tls: false # 使用或禁用STARTTLS加密。'
+      username: # 邮件服务器的登录用户名。如果为空，则不需要登录。'
+  process:
+    async:
+      executor:
+        async-job-lock-time-in-millis: 300000 # 异步作业在被异步执行器取走后的锁定时间（以毫秒计）。在这段时间内，其它异步执行器不会尝试获取及锁定这个任务。'
+        default-async-job-acquire-wait-time-in-millis: 10000 # 异步作业获取线程在进行下次获取查询前的等待时间（以毫秒计）。只在当次没有取到新的异步作业，或者只取到很少的异步作业时生效。默认值= 10秒。'
+        default-queue-size-full-wait-time-in-millis: 0 # 异步作业（包括定时器作业与异步执行）获取线程在队列满时，等待执行下次查询的等待时间（以毫秒计）。默认值为0（以向后兼容）'
+        default-timer-job-acquire-wait-time-in-millis: 10000 # 定时器作业获取线程在进行下次获取查询前的等待时间（以毫秒计）。只在当次没有取到新的定时器作业，或者只取到很少的定时器作业时生效。默认值= 10秒。'
+        max-async-jobs-due-per-acquisition: 1 # （译者补）单次查询的异步作业数量。默认值为1，以降低乐观锁异常的可能性。除非你知道自己在做什么，否则请不要修改这个值。'
+        retry-wait-time-in-millis: 500
+        timer-lock-time-in-millis: 300000 # 定时器作业在被异步执行器取走后的锁定时间（以毫秒计）。在这段时间内，其它异步执行器不会尝试获取及锁定这个任务。'
+    async-executor-activate: true # 是否启用异步执行器。'
+    definition-cache-limit: -1 # 流程定义缓存中保存流程定义的最大数量。默认值为-1（缓存所有流程定义）。'
+    enable-safe-xml: true
+    servlet:
+      load-on-startup: -1 # 启动时加载Process servlet。'
+      name: Flowable BPMN Rest API # Process servlet的名字。'
+      path: /process-api # Process servelet的context path。'
+  process-definition-location-prefix: classpath*:/processes/ # 自动部署时查找流程的目录。'
+  process-definition-location-suffixes: # **.bpmn20.xml,**.bpmn # ''processDefinitionLocationPrefix''路径下需要部署的文件的后缀（扩展名）。'

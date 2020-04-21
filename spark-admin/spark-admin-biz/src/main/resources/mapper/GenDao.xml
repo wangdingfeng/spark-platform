@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.platform.adminbiz.dao.gen.GenDao">
+
+
+    <select id="tableInfoPage" resultType="com.spark.platform.adminapi.entity.gen.TableInfo">
+        SELECT
+            TABLE_NAME,
+            ENGINE,
+            TABLE_COMMENT,
+            TABLE_ROWS,
+            AUTO_INCREMENT,
+            CREATE_TIME,
+            UPDATE_TIME 
+        FROM
+            information_schema.TABLES 
+        WHERE
+            TABLE_SCHEMA = #{tableSchema}
+            AND LEFT(TABLE_NAME,3) != 'act'
+            <if test="tableName != null and tableName != ''">
+                AND TABLE_NAME =#{tableName}
+            </if>
+    </select>
+
+    <select id="findTableColumnInfo" resultType="com.spark.platform.adminapi.entity.gen.TableColumnInfo">
+        SELECT
+            TABLE_SCHEMA,
+            COLUMN_NAME,
+            COLUMN_TYPE,
+            IS_NULLABLE,
+            COLUMN_DEFAULT,
+            COLUMN_COMMENT,
+            COLUMN_KEY,
+            EXTRA
+        FROM
+            INFORMATION_SCHEMA.COLUMNS
+        WHERE
+            TABLE_SCHEMA = #{tableSchema}
+            AND TABLE_NAME = #{tableName}
+    </select>
+
+</mapper>

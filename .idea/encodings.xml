@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark-admin" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark-admin/spark-admin-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark-admin/spark-admin-biz" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark-auth" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark-common" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark-common/spark-common-base" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark-common/spark-common-config" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark-common/spark-common-feign" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark-common/spark-common-log" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark-common/spark-common-security" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark-common/spark-common-utils" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark-control" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark-eureka" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark-flowable" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark-flowable/spark-flowable-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark-flowable/spark-flowable-biz" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark-gateway" charset="UTF-8" />
+  </component>
+</project>

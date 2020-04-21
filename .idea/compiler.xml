@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="spark-gateway" />
+        <module name="spark-common-config" />
+        <module name="spark-admin-api" />
+        <module name="spark-flowable-biz" />
+        <module name="spark-common-log" />
+        <module name="spark-common-feign" />
+        <module name="spark-common-security" />
+        <module name="spark-admin-biz" />
+        <module name="spark-control" />
+        <module name="spark-common-base" />
+        <module name="spark-flowable-api" />
+        <module name="spark-eureka" />
+        <module name="spark-auth" />
+        <module name="spark-common-utils" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="spark-admin" target="1.8" />
+      <module name="spark-admin-api" target="1.8" />
+      <module name="spark-admin-biz" target="1.8" />
+      <module name="spark-auth" target="1.8" />
+      <module name="spark-common" target="1.8" />
+      <module name="spark-common-base" target="1.8" />
+      <module name="spark-common-config" target="1.8" />
+      <module name="spark-common-feign" target="1.8" />
+      <module name="spark-common-log" target="1.8" />
+      <module name="spark-common-security" target="1.8" />
+      <module name="spark-common-utils" target="1.8" />
+      <module name="spark-control" target="1.8" />
+      <module name="spark-eureka" target="1.8" />
+      <module name="spark-flowable" target="1.8" />
+      <module name="spark-flowable-api" target="1.8" />
+      <module name="spark-flowable-biz" target="1.8" />
+      <module name="spark-gateway" target="1.8" />
+      <module name="spark-platform" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="spark-admin-api" options="-parameters" />
+      <module name="spark-admin-biz" options="-parameters" />
+      <module name="spark-auth" options="-parameters" />
+      <module name="spark-common-base" options="-parameters" />
+      <module name="spark-common-config" options="-parameters" />
+      <module name="spark-common-feign" options="-parameters" />
+      <module name="spark-common-log" options="-parameters" />
+      <module name="spark-common-security" options="-parameters" />
+      <module name="spark-common-utils" options="-parameters" />
+      <module name="spark-control" options="-parameters" />
+      <module name="spark-eureka" options="-parameters" />
+      <module name="spark-flowable-api" options="-parameters" />
+      <module name="spark-flowable-biz" options="-parameters" />
+      <module name="spark-gateway" options="-parameters" />
+    </option>
+  </component>
+</project>

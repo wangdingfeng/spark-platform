@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.platform.adminbiz.dao.user.UserDao">
+    <resultMap id="BaseResultMap" type="com.spark.platform.adminapi.entity.user.User">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="sex" jdbcType="INTEGER" property="sex"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="last_login_ip" jdbcType="VARCHAR" property="lastLoginIp"/>
+        <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime"/>
+        <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
+        <result column="dept_id" jdbcType="BIGINT" property="deptId"/>
+        <result column="dept_name" jdbcType="VARCHAR" property="deptName"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="creator" jdbcType="INTEGER" property="creator"/>
+        <result column="modifier" jdbcType="INTEGER" property="modifier"/>
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate"/>
+        <result column="remarks" jdbcType="INTEGER" property="remarks"/>
+        <result column="del_flag" jdbcType="INTEGER" property="delFlag"/>
+
+    </resultMap>
+
+    <resultMap id="BaseResultMapVO" type="com.spark.platform.adminapi.vo.UserVo">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="sex" jdbcType="INTEGER" property="sex"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
+        <result column="dept_id" jdbcType="BIGINT" property="deptId"/>
+        <result column="dept_name" jdbcType="VARCHAR" property="deptName"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, username, nickname, password, sex, phone, email, create_date, modify_date, last_login_ip, last_login_time, del_flag, status, avatar, dept_id,dept_name
+    </sql>
+
+    <select id="findByUserName" parameterType="string" resultMap="BaseResultMap">
+        select  id, username, nickname, password, status
+        from sys_user
+        WHERE 1 = 1
+        <if test="username != null and username != '' ">
+            AND username = #{username}
+        </if>
+    </select>
+
+    <select id="findByUserId" parameterType="long" resultMap="BaseResultMap">
+        select  ID, username, nickname, avatar, phone, email, dept_id, dept_name, status
+        from sys_user
+        WHERE id = #{userId}
+    </select>
+
+</mapper>

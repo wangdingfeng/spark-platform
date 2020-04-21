@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.platform.adminbiz.dao.role.RoleDao">
+    <resultMap id="BaseResultMap" type="com.spark.platform.adminapi.entity.role.Role">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="role_name" jdbcType="VARCHAR" property="roleName"/>
+        <result column="role_code" jdbcType="VARCHAR" property="roleCode"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="dept_id" jdbcType="BIGINT" property="deptId"/>
+        <result column="dept_name" jdbcType="VARCHAR" property="deptName"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="creator" jdbcType="INTEGER" property="creator"/>
+        <result column="modifier" jdbcType="INTEGER" property="modifier"/>
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate"/>
+        <result column="remarks" jdbcType="INTEGER" property="remarks"/>
+        <result column="del_flag" jdbcType="INTEGER" property="delFlag"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, role_name, role_code, create_date, description, dept_id,dept_name
+    </sql>
+
+    <select id="getRoleByUserId" parameterType="long" resultMap="BaseResultMap">
+        SELECT su.id,role_name,role_code,create_date,description,dept_id,dept_name
+        FROM sys_role su
+        LEFT JOIN sys_user_role sr ON sr.role_id = su.id
+        WHERE sr.user_id = ${userId}
+    </select>
+
+</mapper>

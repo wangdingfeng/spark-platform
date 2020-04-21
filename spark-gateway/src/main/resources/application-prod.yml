@@ -1,0 +1,102 @@
+server:
+  port: 9001
+spring:
+  redis:
+    host: 127.0.0.1
+    password:
+    port: 6379
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: spark-gateway
+  cloud:
+    #设置路由规则
+    gateway:
+      locator:
+        enabled: true
+      routes:
+        - id: spark-auth
+          uri: lb://spark-auth
+          predicates:
+            - Path=/auth/**
+          filters:
+            - StripPrefix=1
+            - name: Hystrix
+              args:
+                name: oauth-hystrix
+                fallbackUri: forward:/common/fallback
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 2
+                redis-rate-limiter.burstCapacity: 5
+                key-resolver: "#{@ipKeyResolver}"
+        - id: spark-admin
+          uri: lb://spark-admin
+          predicates:
+            - Path=/admin/**
+          filters:
+            - StripPrefix=1
+            - name: Hystrix
+              args:
+                name: admin-hystrix
+                fallbackUri: forward:/common/fallback
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 2
+                redis-rate-limiter.burstCapacity: 5
+                key-resolver: "#{@ipKeyResolver}"
+        - id: spark-flowable
+          uri: lb://spark-flowable
+          predicates:
+            - Path=/flow/**
+          filters:
+            - StripPrefix=1
+            - name: Hystrix
+              args:
+                name: flowable-hystrix
+                fallbackUri: forward:/common/fallback
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 2
+                redis-rate-limiter.burstCapacity: 5
+                key-resolver: "#{@ipKeyResolver}"
+  boot:
+    admin:
+      client:
+        url: http://127.0.0.1:9002
+        instance:
+          prefer-ip: true
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: http://${eurekaUserName}:${eurekaPassWord}@localhost:9000/eureka/
+  instance:
+    status-page-url-path: /actuator/info
+    health-check-url-path: /actuator/health
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+eurekaUserName: spark
+eurekaPassWord: spark
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 30000
+
+management:
+  metrics:
+    web:
+      server:
+        auto-time-requests: false
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    bus-refresh:
+      enabled: true

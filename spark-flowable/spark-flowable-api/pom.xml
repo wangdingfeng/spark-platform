@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.spark.platform</groupId>
+        <artifactId>spark-flowable</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
+    </parent>
+    <artifactId>spark-flowable-api</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>spark-flowable-api</name>
+    <description>工作流暴露接口</description>
+
+    <dependencies>
+        <!--公共基礎包-->
+        <dependency>
+            <groupId>com.spark.platform</groupId>
+            <artifactId>spark-common-base</artifactId>
+            <version>${spark-common.version}</version>
+        </dependency>
+        <!--feign 包含oauth-->
+        <dependency>
+            <groupId>com.spark.platform</groupId>
+            <artifactId>spark-common-feign</artifactId>
+            <version>${spark-common.version}</version>
+        </dependency>
+        <!-- for swagger -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+    </dependencies>
+
+</project>
