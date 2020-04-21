@@ -99,9 +99,7 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
         //修改用户角色
         int i = userRoleDao.deleteByUserId(user.getId());
         log.info("删除用户：{}角色:{}个", user.getId(), i);
-        for (Long roleId : user.getRoles()) {
-            userRoleDao.insert(new UserRole(roleId, user.getId()));
-        }
+        userRoleDao.insertBatch(user.getId(),user.getRoles());
         return super.updateById(user);
     }
 
