@@ -26,17 +26,18 @@ public class FeignRequestInterceptorConfig implements RequestInterceptor {
     @Override
     public void apply(RequestTemplate requestTemplate) {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = attributes.getRequest();
-        request.getRequestURI();
-        //清洗日志请求头信息
-        if (request != null) {
-            // 只携带token
-            String authorization = request.getHeader(AUTHORIZATION_HEADER);
-            log.info("Authorization :\t\t" + authorization);
-            requestTemplate.header(AUTHORIZATION_HEADER, authorization);
+        if (null != attributes) {
+            HttpServletRequest request = attributes.getRequest();
+            request.getRequestURI();
+            //清洗日志请求头信息
+            if (request != null) {
+                // 只携带token
+                String authorization = request.getHeader(AUTHORIZATION_HEADER);
+                log.info("Authorization :\t\t" + authorization);
+                requestTemplate.header(AUTHORIZATION_HEADER, authorization);
 
+            }
         }
-
     }
 
 }
