@@ -25,6 +25,7 @@ public class LogLoginServiceImpl extends ServiceImpl<LoginLogDao, LogLogin> impl
     @Override
     public IPage findPage(Page page, LogLogin loginLog) {
         QueryWrapper wrapper = new QueryWrapper();
+        wrapper.orderByDesc("login_time");
         WrapperSupport.putParamsLike(wrapper,loginLog,"username");
         return super.page(page, wrapper);
     }

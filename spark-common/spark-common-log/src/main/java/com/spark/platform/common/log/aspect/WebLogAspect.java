@@ -3,18 +3,17 @@ package com.spark.platform.common.log.aspect;
 import cn.hutool.core.util.URLUtil;
 import com.google.common.collect.Lists;
 import com.spark.platform.adminapi.entity.log.LogApi;
-import com.spark.platform.adminapi.feign.client.LogClient;
 import com.spark.platform.common.base.support.ApiResponse;
+import com.spark.platform.common.log.event.ApiLogEvent;
 import com.spark.platform.common.utils.AddressUtils;
+import com.spark.platform.common.utils.SpringContextHolder;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -35,17 +34,12 @@ import java.util.List;
  * @Version: 1.0
  */
 @Aspect
-@Component
 @Slf4j
 public class WebLogAspect {
-
-    @Autowired
-    private LogClient apiLogClient;
 
     @Pointcut("execution(public * com.spark.platform..*.controller..*.*(..))")
     public void webLog() {
     }
-
 
     @Around("webLog()")
     public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
@@ -80,7 +74,7 @@ public class WebLogAspect {
             apiLog.setTimes(endTime - startTime);
             apiLog.setAddress(AddressUtils.getCityInfo(ip));
             apiLog.setStatus(code);
-            apiLogClient.save(apiLog);
+            SpringContextHolder.publishEvent(new ApiLogEvent(apiLog));
         }
         return result;
     }

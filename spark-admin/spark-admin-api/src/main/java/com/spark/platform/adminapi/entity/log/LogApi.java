@@ -1,5 +1,6 @@
 package com.spark.platform.adminapi.entity.log;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
@@ -69,5 +70,10 @@ public class LogApi implements Serializable {
      * 错误日志
      */
     private String errorLog;
+    /**
+     * 不持久化参数
+     */
+    @TableField(exist = false)
+    private String createTimeStr;
 
 }

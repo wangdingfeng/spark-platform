@@ -27,13 +27,13 @@ public class LogClientFallBackFactory implements FallbackFactory<LogClient> {
         return new LogClient() {
             @Override
             public ApiResponse save(LogApi apiLog) {
-                log.error("调用spark-admin服务LogClient:save方法失败!,错误日志:{}",throwable.getMessage());
+                log.error("调用spark-admin服务LogClient:save方法失败!,错误日志:{}",throwable);
                 return ApiResponse.hystrixError(ServiceNameConstants.SPARK_ADMIN , "save");
             }
 
             @Override
             public ApiResponse saveLoginLog(LogLogin loginLog) {
-                log.error("调用spark-admin服务LogClient:saveLoginLog方法失败!,错误日志:{}",throwable.getMessage());
+                log.error("调用spark-admin服务LogClient:saveLoginLog方法失败!,错误日志:{}",throwable);
                 return ApiResponse.hystrixError(ServiceNameConstants.SPARK_ADMIN , "saveLoginLog");
             }
         };
