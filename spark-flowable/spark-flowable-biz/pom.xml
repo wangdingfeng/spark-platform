@@ -18,6 +18,12 @@
     </properties>
 
     <dependencies>
+        <!-- for swagger -->
+        <dependency>
+            <groupId>com.spring4all</groupId>
+            <artifactId>swagger-spring-boot-starter</artifactId>
+            <version>${swagger-spring-boot-starter.version}</version>
+        </dependency>
         <!--actuator监管-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -34,12 +40,6 @@
             <artifactId>flowable-spring-boot-starter-process</artifactId>
             <version>${flowable.version}</version>
         </dependency>
-        <!-- for swagger -->
-        <dependency>
-            <groupId>com.spring4all</groupId>
-            <artifactId>swagger-spring-boot-starter</artifactId>
-            <version>${swagger-spring-boot-starter.version}</version>
-        </dependency>
         <!--公共配置包 包含base包-->
         <dependency>
             <groupId>com.spark.platform</groupId>
@@ -51,10 +51,21 @@
             <artifactId>spark-common-utils</artifactId>
             <version>${spark-common.version}</version>
         </dependency>
+        <!--公共security包 包含admin api 及 包含base-->
+        <dependency>
+            <groupId>com.spark.platform</groupId>
+            <artifactId>spark-common-security</artifactId>
+            <version>${spark-common.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.spark.platform</groupId>
             <artifactId>spark-flowable-api</artifactId>
             <version>${spark-fowable-api.version}</version>
+        </dependency>
+        <!--undertow容器-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-undertow</artifactId>
         </dependency>
     </dependencies>
 

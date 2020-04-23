@@ -25,10 +25,10 @@
 	</modules>
 
 	<dependencies>
-		<!--web-->
+		<!--server-api-->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
 		</dependency>
 		<!--fastjson-->
 		<dependency>
