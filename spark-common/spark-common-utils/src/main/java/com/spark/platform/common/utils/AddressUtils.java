@@ -1,5 +1,6 @@
 package com.spark.platform.common.utils;
 
+import cn.hutool.core.io.resource.ClassPathResource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.lionsoul.ip2region.DataBlock;
@@ -25,12 +26,15 @@ import java.net.UnknownHostException;
 @Slf4j
 public class AddressUtils {
 
+    private static final String LOCAL_IP = "0:0:0:0:0:0:0:1";
+
     /**
      * 获取用户ip地址位置信息
+     *
      * @param request
      * @return
      */
-    public static String getCityInfo(HttpServletRequest request){
+    public static String getCityInfo(HttpServletRequest request) {
         return getCityInfo(getIpAddress(request));
     }
 
@@ -39,6 +43,7 @@ public class AddressUtils {
      * 获取用户真实IP地址，不使用request.getRemoteAddr();的原因是有可能用户使用了代理软件方式避免真实IP地址。
      * 可是，如果通过了多级反向代理的话，X-Forwarded-For的值并不止一个，而是一串IP值，究竟哪个才是真正的用户端的真实IP呢？
      * 答案是取X-Forwarded-For中第一个非unknown的有效IP字符串
+     *
      * @param request
      * @return
      */
@@ -58,15 +63,15 @@ public class AddressUtils {
         }
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getRemoteAddr();
-            if("127.0.0.1".equals(ip)||"0:0:0:0:0:0:0:1".equals(ip)){
+            if ("127.0.0.1".equals(ip) || LOCAL_IP.equals(ip)) {
                 //根据网卡取本机配置的IP
-                InetAddress inet=null;
+                InetAddress inet = null;
                 try {
                     inet = InetAddress.getLocalHost();
                 } catch (UnknownHostException e) {
-                    log.error("获取ip失败",e);
+                    log.error("获取ip失败", e);
                 }
-                ip= inet.getHostAddress();
+                ip = inet.getHostAddress();
             }
         }
         return ip;
@@ -74,6 +79,7 @@ public class AddressUtils {
 
     /**
      * 根据ip 获取位置信息
+     *
      * @param ip
      * @return
      */
@@ -85,7 +91,8 @@ public class AddressUtils {
                 String tmpDir = System.getProperties().getProperty("java.io.tmpdir");
                 dbPath = tmpDir + "ip.db";
                 file = new File(dbPath);
-                FileUtils.copyInputStreamToFile(AddressUtils.class.getClassLoader().getResourceAsStream("classpath:ip2region/ip2region.db"), file);
+                ClassPathResource classPathResource = new ClassPathResource("/ip2region/ip2region.db");
+                FileUtils.copyInputStreamToFile(classPathResource.getStream(), file);
             }
             int algorithm = DbSearcher.BTREE_ALGORITHM;
             DbConfig config = new DbConfig();
