@@ -129,7 +129,7 @@ public class FileInfoServiceImpl extends ServiceImpl<FileInfoDao, FileInfo> impl
     public IPage findPage(Page page, FileInfo fileInfo) {
         QueryWrapper wrapper = new QueryWrapper<FileInfo>();
         WrapperSupport.putParamsLike(wrapper,fileInfo,"fileName","fileType");
-        WrapperSupport.putParamsEqual(wrapper,fileInfo,"bizId","bizType");
+        WrapperSupport.putParamsEqual(wrapper,fileInfo,"bizId","bizType","status");
         return super.page(page, wrapper);
     }
 
