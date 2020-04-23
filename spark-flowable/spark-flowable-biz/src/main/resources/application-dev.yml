@@ -145,3 +145,15 @@ flowable:
       path: /process-api # Process servelet的context path。'
   process-definition-location-prefix: classpath*:/processes/ # 自动部署时查找流程的目录。'
   process-definition-location-suffixes: # **.bpmn20.xml,**.bpmn # ''processDefinitionLocationPrefix''路径下需要部署的文件的后缀（扩展名）。'
+
+# 直接放行URL
+ignore:
+  urls:
+    - /actuator/**
+    - /druid/**
+    - /runtime/image/**
+    - /runtime/process-definitions/resource/**
+    - /v2/api-docs
+    - /swagger-ui.html
+    - /swagger-resources/**
+    - /webjars/**

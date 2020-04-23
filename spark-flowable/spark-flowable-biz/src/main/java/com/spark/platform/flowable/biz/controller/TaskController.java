@@ -71,10 +71,10 @@ public class TaskController extends BaseController {
     @PostMapping(value = "/{taskId}")
     @ApiOperation(value = "执行任务", notes = "任务执行类型 claim：签收 unclaim 反签收 complete 完成 delegate 任务委派 resolve 任务签收完成 返回任务人 assignee 任务转办", produces = "application/json")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "taskId", value = "任务ID", required = true),
-            @ApiImplicitParam(name = "action", value = "执行任务类型", required = true),
-            @ApiImplicitParam(name = "assignee", value = "受让人", required = false),
-            @ApiImplicitParam(name = "localScope", value = "流程参数存储范围", required = false)
+            @ApiImplicitParam(name = "taskId", value = "任务ID", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "action", value = "执行任务类型", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "assignee", value = "受让人", required = false, dataType = "String"),
+            @ApiImplicitParam(name = "localScope", value = "流程参数存储范围", required = false, dataType = "boolean")
     })
     public ApiResponse executeTask(@PathVariable String taskId, @RequestParam("action") String action, @RequestParam(value = "assignee",required = false) String assignee,
                                    @RequestParam(value = "localScope",required = false) boolean localScope, @RequestBody Map<String, Object> variables) {
