@@ -25,6 +25,7 @@ spring:
     pool-prepared-statements: true
     max-open-prepared-statements: 20
     max-pool-prepared-statement-per-connection-size: 20
+    filters: stat,wall
   boot:
     admin:
       client:
@@ -50,7 +51,6 @@ mybatis-plus:
   mapper-locations: classpath*:mapper/*.xml
   type-aliases-package: com.spark.platform.adminapi.entity
   configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     cache-enabled: false
     map-underscore-to-camel-case: true
     use-generated-keys: true
@@ -58,11 +58,6 @@ mybatis-plus:
     defaultStatementTimeout: 1000
     jdbc-type-for-null: null
     call-setters-on-nulls: true
-  global-config:
-    db-config:
-      logic-delete-field: delFlag
-      logic-not-delete-value: 0
-      logic-delete-value: 1
 eureka:
   client:
     register-with-eureka: true
