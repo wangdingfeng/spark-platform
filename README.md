@@ -7,6 +7,12 @@ spark 平台
 - 认证服务器与资源服务器分离，方便接入自己的微服务系统；
 - 基于flowable的工作流系统，提供完善基于业务的流程系统(工作流结合业务例子已经在开发中)
 
+注意：
+1. 工作流中没有把flowable-modeler 流程设计功能引入，需要的请自行下载官方的war包，或者到此地址下载:
+[下载官方war包](https://download.csdn.net/download/wangdingfeng5141/12299018) 后续我还会另起一个工作流服务把这些全部集成，但是spark项目就暂时不会集成了。
+2. 工作流测试请移步到
+[工作流测试](https://gitee.com/dreamfeng/spark-platform/tree/master/spark-flowable)
+
 ### 已实现功能
 |   用户管理  |  角色管理   |  菜单管理   |  部门管理   |  字典管理   |  客户端管理   |  待办事项   |  已办事项   |
 | --- | --- | --- | --- | --- | --- | --- | --- |
