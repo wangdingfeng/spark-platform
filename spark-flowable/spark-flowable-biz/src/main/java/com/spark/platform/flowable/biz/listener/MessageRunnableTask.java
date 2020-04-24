@@ -33,7 +33,13 @@ public class MessageRunnableTask implements Runnable {
 
     @Override
     public void run() {
-        getTask(delegateTask);
+        Task task = getTask(delegateTask);
+        StringRedisTemplate redisTemplate = SpringContextHolder.getBean(StringRedisTemplate.class);
+        TaskVO taskVO = new TaskVO();
+        BeanUtil.copyProperties(task, taskVO, "variables");
+        taskVO.setVariables(task.getProcessVariables());
+        redisTemplate.convertAndSend(RedisTopicName.topicName, JSONObject.toJSONString(taskVO));
+
     }
 
     /**
@@ -44,17 +50,13 @@ public class MessageRunnableTask implements Runnable {
      */
     private Task getTask(DelegateTask delegateTask) {
         ActTaskQueryService actTaskQueryService = SpringContextHolder.getBean(ActTaskQueryService.class);
-        Task task = actTaskQueryService.createTaskQuery().processInstanceId(delegateTask.getProcessInstanceId()).taskAssignee(delegateTask.getAssignee()).includeProcessVariables().singleResult();
-        if (null == task) {
+        Task task = null;
+        while (null == task){
+            log.info("开是休眠40S");
             ThreadUtil.sleep(1000 * 40);
-            log.info("休眠一分钟");
-            getTask(delegateTask);
+            task = actTaskQueryService.createTaskQuery().processInstanceId(delegateTask.getProcessInstanceId()).taskAssignee(delegateTask.getAssignee()).includeProcessVariables().singleResult();
         }
-        StringRedisTemplate redisTemplate = SpringContextHolder.getBean(StringRedisTemplate.class);
-        TaskVO taskVO = new TaskVO();
-        BeanUtil.copyProperties(task, taskVO, "variables");
-        taskVO.setVariables(task.getProcessVariables());
-        redisTemplate.convertAndSend(RedisTopicName.topicName, JSONObject.toJSONString(taskVO));
+        log.info("代办任务数据库已经落地----");
         return task;
     }
 }
