@@ -65,6 +65,7 @@ http://localhost:9001/flow/runtime/tasks/你的任务id?action=complete&localSco
 5. 系统判断节点
 
 自动审核节点，不需要任何操作，具体实现的逻辑请参考我的博客：
+https://blog.csdn.net/wangdingfeng5141/article/details/105724437
 
 6. 退回修改节点
 
