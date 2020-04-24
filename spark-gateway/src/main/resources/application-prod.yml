@@ -25,11 +25,6 @@ spring:
               args:
                 name: oauth-hystrix
                 fallbackUri: forward:/common/fallback
-            - name: RequestRateLimiter
-              args:
-                redis-rate-limiter.replenishRate: 2
-                redis-rate-limiter.burstCapacity: 5
-                key-resolver: "#{@ipKeyResolver}"
         - id: spark-admin
           uri: lb://spark-admin
           predicates:

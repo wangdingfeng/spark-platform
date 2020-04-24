@@ -32,17 +32,11 @@ spring:
               args:
                 name: oauth-hystrix
                 fallbackUri: forward:/common/fallback #设置熔断器
-            - name: RequestRateLimiter
-              args:
-                redis-rate-limiter.replenishRate: 2 #允许用户每秒处理多少个请求
-                redis-rate-limiter.burstCapacity: 5 #令牌桶的容量，允许在一秒钟内完成的最大请求数
-                key-resolver: "#{@ipKeyResolver}" #使用SpEL按名称引用bean
         - id: spark-admin
           uri: lb://spark-admin
           predicates:
             - Path=/admin/**
           filters:
-            #            - SwaggerHeaderFilter
             - StripPrefix=1
             - name: Hystrix
               args:
@@ -50,15 +44,14 @@ spring:
                 fallbackUri: forward:/common/fallback #设置熔断器
             - name: RequestRateLimiter
               args:
-                redis-rate-limiter.replenishRate: 10
-                redis-rate-limiter.burstCapacity: 10
-                key-resolver: "#{@ipKeyResolver}"
+                redis-rate-limiter.replenishRate: 10 #允许用户每秒处理多少个请求
+                redis-rate-limiter.burstCapacity: 10  #令牌桶的容量，允许在一秒钟内完成的最大请求数
+                key-resolver: "#{@ipKeyResolver}" #使用SpEL按名称引用bean
         - id: spark-flowable
           uri: lb://spark-flowable
           predicates:
             - Path=/flow/**
           filters:
-            # - SwaggerHeaderFilter
             - StripPrefix=1
             - name: Hystrix
               args:
