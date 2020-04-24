@@ -1,6 +1,5 @@
 package com.spark.platform.flowable.biz.controller;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spark.platform.common.base.support.ApiResponse;
 import com.spark.platform.common.base.support.BaseController;
 import com.spark.platform.flowable.api.enums.ActionEnum;
@@ -57,7 +56,7 @@ public class TaskController extends BaseController {
         return success(actTaskService.getTaskComments(taskId));
     }
 
-    @GetMapping(value = "/his/{userId}")
+    @GetMapping(value = "/his")
     @ApiOperation(value = "查询已办任务", produces = "application/json")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "String"),

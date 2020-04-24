@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.spark.platform.adminapi.entity.log.LogLogin;
 
+import java.util.List;
+
 /**
  * <p>
  * 登录日志 服务类
@@ -22,5 +24,11 @@ public interface LogLoginService extends IService<LogLogin> {
      * @return
      */
     IPage findPage(Page page, LogLogin loginLog);
+
+    /**
+     * 查询最近登录日志 10条
+     * @return
+     */
+    List<LogLogin> findLately(String username);
 
 }

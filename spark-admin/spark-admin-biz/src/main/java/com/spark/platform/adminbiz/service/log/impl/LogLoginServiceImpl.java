@@ -11,6 +11,8 @@ import com.spark.platform.adminbiz.service.log.LogLoginService;
 import com.spark.platform.common.base.support.WrapperSupport;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  * 登录日志 服务实现类
@@ -28,5 +30,10 @@ public class LogLoginServiceImpl extends ServiceImpl<LoginLogDao, LogLogin> impl
         wrapper.orderByDesc("login_time");
         WrapperSupport.putParamsLike(wrapper,loginLog,"username");
         return super.page(page, wrapper);
+    }
+
+    @Override
+    public List<LogLogin> findLately(String username) {
+        return super.baseMapper.findLately(username);
     }
 }
