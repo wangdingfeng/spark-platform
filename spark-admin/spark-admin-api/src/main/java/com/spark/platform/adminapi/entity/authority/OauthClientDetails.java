@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -27,46 +28,35 @@ public class OauthClientDetails implements Serializable {
 
     @TableId(type = IdType.AUTO)
     private Long id;
-    /**
-     * 客户端(client)id
-     */
+
+    @ApiModelProperty(value = "客户端(client)id")
     private String clientId;
-    /**
-     * 客户端所能访问的资源id集合
-     */
+
+    @ApiModelProperty(value = "客户端所能访问的资源id集合")
     private String resourceIds;
 
-    /**
-     * 客户端(client)的访问密匙
-     */
+    @ApiModelProperty(value = "客户端(client)的访问密匙")
     private String clientSecret;
-    /**
-     * 客户端申请的权限范围
-     */
+
+    @ApiModelProperty(value = "客户端申请的权限范围")
     private String scope;
-    /**
-     * 客户端支持的grant_type授权类型 password 密码模式
-     */
+
+    @ApiModelProperty(value = "客户端支持的grant_type授权类型 password 密码模式")
     private String authorizedGrantTypes;
-    /**
-     * 重定向地址 逗号隔开
-     */
+
+    @ApiModelProperty(value = "重定向地址 逗号隔开")
     private String webServerRedirectUri;
-    /**
-     * 授权的权限
-     */
+
+    @ApiModelProperty(value = "授权的权限")
     private String authorities;
-    /**
-     * token 时效
-     */
+
+    @ApiModelProperty(value = " token 时效")
     private Integer accessTokenValidity;
-    /**
-     * 刷新时效
-     */
+
+    @ApiModelProperty(value = "刷新时效")
     private Integer refreshTokenValidity;
-    /**
-     * 设置用户是否自动Approval操作, 默认值为 'false', 可选值包括 'true','false', 'read','write'.
-     */
+
+    @ApiModelProperty(value = "设置用户是否自动Approval操作, 默认值为 'false', 可选值包括 'true','false', 'read','write'.")
     private String autoapprove;
 
 }

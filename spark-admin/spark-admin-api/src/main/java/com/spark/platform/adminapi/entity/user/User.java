@@ -7,10 +7,10 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.spark.platform.common.base.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -33,63 +33,35 @@ public class User extends BaseEntity {
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    /**
-     * 用户名
-     */
+    @ApiModelProperty(value = "用户名")
     private String username;
 
-    /**
-     * 用户昵称
-     */
+    @ApiModelProperty(value = "用户昵称")
     private String nickname;
 
-    /**
-     * 密码
-     */
     @JsonIgnore
+    @ApiModelProperty(value = "密码")
     private String password;
 
-    /**
-     * 性别
-     */
+    @ApiModelProperty(value = "性别")
     private Integer sex;
 
-    /**
-     * 手机号
-     */
+    @ApiModelProperty(value = "手机号")
     private String phone;
 
-    /**
-     * 邮箱
-     */
+    @ApiModelProperty(value = "邮箱")
     private String email;
 
-    /**
-     * 最后登录IP
-     */
-    private String lastLoginIp;
-
-    /**
-     * 最后登陆时间
-     */
-    private LocalDateTime lastLoginTime;
-
-    /**
-     * 头像
-     */
+    @ApiModelProperty(value = "头像")
     private String avatar;
 
-    /**
-     * 部门id
-     */
+    @ApiModelProperty(value = "部门ID")
     private Long deptId;
-    /**
-     * 部门名称
-     */
+
+    @ApiModelProperty(value = "部门名称")
     private String deptName;
-    /**
-     * 状态
-     */
+
+    @ApiModelProperty(value = "状态")
     private Integer status;
 
     @TableField(exist = false)

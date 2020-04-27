@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spark.platform.adminapi.entity.role.Role;
 import com.spark.platform.adminbiz.service.menu.MenuService;
 import com.spark.platform.adminbiz.service.role.RoleService;
+import com.spark.platform.adminbiz.service.user.UserService;
 import com.spark.platform.common.base.support.BaseController;
 import com.spark.platform.common.base.support.ApiResponse;
 import io.swagger.annotations.Api;
@@ -31,6 +32,9 @@ public class RoleController extends BaseController {
     @Autowired
     private MenuService menuService;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping("/{id}")
     @ApiOperation(value = "根据用户id获取用户角色信息")
     public ApiResponse getRoleByUserId(@PathVariable Long id) {
@@ -53,14 +57,14 @@ public class RoleController extends BaseController {
     @ApiOperation(value = "保存角色信息")
     @PreAuthorize("hasAnyAuthority('role:add')")
     public ApiResponse save(@RequestBody Role role){
-        return success(roleService.save(role));
+        return success(roleService.saveOrUpdateRole(role));
     }
 
     @PutMapping
     @ApiOperation(value = "更新角色信息")
     @PreAuthorize("hasAnyAuthority('role:edit')")
     public ApiResponse update(@RequestBody Role role){
-        return success(roleService.updateById(role));
+        return success(roleService.saveOrUpdateRole(role));
     }
 
     @DeleteMapping("/{id}")
@@ -82,6 +86,12 @@ public class RoleController extends BaseController {
     public ApiResponse saveRoleAuth(@RequestBody Role role){
         roleService.saveRoleAuth(role);
         return success("更新成功");
+    }
+
+    @GetMapping("/users/{id}")
+    @ApiOperation(value = "根据角色id获取角色下对应的用户")
+    public ApiResponse findUsersByRoleId(@PathVariable Long id){
+        return success(userService.findUsersByRoleId(id));
     }
 
 

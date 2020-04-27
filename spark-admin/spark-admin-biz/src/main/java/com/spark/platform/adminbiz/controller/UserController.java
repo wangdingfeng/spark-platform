@@ -58,7 +58,7 @@ public class UserController extends BaseController {
     @ApiOperation(value = "保存用户数据")
     @PreAuthorize("hasAnyAuthority('user:add')")
     public ApiResponse save(@RequestBody User user) {
-        return success(userService.save(user));
+        return success(userService.saveUser(user));
     }
 
     @DeleteMapping("/{id}")

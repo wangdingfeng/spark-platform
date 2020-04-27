@@ -41,6 +41,12 @@ public interface UserService extends IService<User> {
     UserDTO getUserInfo();
 
     /**
+     * 保存用户信息
+     * @param user
+     */
+    boolean saveUser(User user);
+
+    /**
      * 更新用户信息
      * @param user
      * @return
@@ -73,4 +79,11 @@ public interface UserService extends IService<User> {
      * @param id
      */
     void validateUserName(String username,Long id);
+
+    /**
+     * 根据角色id查询用户
+     * @param roleId
+     * @return
+     */
+    List<User> findUsersByRoleId(Long roleId);
 }

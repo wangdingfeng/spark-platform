@@ -10,6 +10,7 @@ import com.spark.platform.adminapi.entity.role.RoleMenu;
 import com.spark.platform.adminbiz.dao.role.RoleDao;
 import com.spark.platform.adminbiz.dao.role.RoleMenuDao;
 import com.spark.platform.adminbiz.service.role.RoleService;
+import com.spark.platform.common.base.exception.BusinessException;
 import com.spark.platform.common.base.support.WrapperSupport;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,12 @@ public class RoleServiceImpl extends ServiceImpl<RoleDao, Role> implements RoleS
     }
 
     @Override
+    public boolean saveOrUpdateRole(Role role) {
+        validateRoleCode(role.getRoleCode(),role.getId());
+        return super.saveOrUpdate(role);
+    }
+
+    @Override
     public void saveRoleAuth(Role role) {
         Preconditions.checkArgument(null != role && null != role.getId(),"角色id不能为空");
         //删除该角色下所有的权限
@@ -66,5 +73,17 @@ public class RoleServiceImpl extends ServiceImpl<RoleDao, Role> implements RoleS
     @Override
     public List<Role> findAllRole() {
         return super.baseMapper.findAllRole();
+    }
+
+    @Override
+    public void validateRoleCode(String roleCode,Long roleId) {
+        QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
+        if (null != roleId) {
+            queryWrapper.ne("id", roleId);
+        }
+        queryWrapper.eq("role_code", roleCode);
+        if (0 != super.count(queryWrapper)) {
+            throw new BusinessException("角色编号重复");
+        }
     }
 }

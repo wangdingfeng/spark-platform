@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.spark.platform.adminapi.entity.authority.Menu;
 import com.spark.platform.common.base.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -32,39 +33,22 @@ public class Dept extends BaseEntity {
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    /**
-     * 排序
-     */
+    @ApiModelProperty(value = "排序")
     private Integer sort;
 
-    /**
-     * 父部门id
-     */
+    @ApiModelProperty(value = "父部门id")
     private Long pid;
 
-    /**
-     * 父级ids
-     */
-    private String pids;
-
-    /**
-     * 简称
-     */
+    @ApiModelProperty(value = "简称")
     private String simpleName;
 
-    /**
-     * 全称
-     */
+    @ApiModelProperty(value = "全称")
     private String fullName;
 
-    /**
-     * 地址
-     */
+    @ApiModelProperty(value = "地址")
     private String address;
 
-    /**
-     * 部门类型(0 公司1部门)
-     */
+    @ApiModelProperty(value = "部门类型(0 公司1部门)")
     private Integer deptType;
 
     @TableField(exist = false)

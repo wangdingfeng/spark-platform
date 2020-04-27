@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.spark.platform.common.base.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -31,48 +32,34 @@ public class Menu extends BaseEntity {
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    /**
-     * 菜单名称
-     */
+    @ApiModelProperty(value = "菜单名称")
     private String name;
 
-    /**
-     * 父级菜单主键
-     */
+    @ApiModelProperty(value = "父级菜单主键")
     private Long pid;
 
-    /**
-     * 类型 0 菜单 1 按钮
-     */
+    @ApiModelProperty(value = "类型 0 菜单 1 按钮")
     private String type;
-    /**
-     * 是否外链
-     */
+
+    @ApiModelProperty(value = "是否外链")
     private boolean iFrame;
 
-    /**
-     * 路径
-     */
+    @ApiModelProperty(value = "路径")
     private String path;
-    /**
-     * 组件路径
-     */
+
+    @ApiModelProperty(value = "组件路径")
     private String component;
-    /**
-     * 权限
-     */
+
+    @ApiModelProperty(value = "权限")
     private String permission;
-    /**
-     * 是否隐藏
-     */
+
+    @ApiModelProperty(value = "是否隐藏")
     private boolean hidden;
-    /**
-     * 图标
-     */
+
+    @ApiModelProperty(value = "图标")
     private String icon;
-    /**
-     * 排序
-     */
+
+    @ApiModelProperty(value = "排序")
     private Integer sort;
 
     @TableField(exist = false)

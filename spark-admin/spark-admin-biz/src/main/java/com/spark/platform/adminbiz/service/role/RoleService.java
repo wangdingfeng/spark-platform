@@ -35,6 +35,13 @@ public interface RoleService extends IService<Role> {
     IPage findPage(Role role, Page page);
 
     /**
+     * 保存更新
+     * @param role
+     * @return
+     */
+    boolean saveOrUpdateRole(Role role);
+
+    /**
      * 保存角色权限
      * @param role
      */
@@ -45,4 +52,11 @@ public interface RoleService extends IService<Role> {
      * @return
      */
     List<Role> findAllRole();
+
+    /**
+     * 验证角色code
+     * @param roleCode 角色code
+     * @param roleId 角色id
+     */
+    void validateRoleCode(String roleCode,Long roleId);
 }

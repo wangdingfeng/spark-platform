@@ -91,6 +91,12 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
     }
 
     @Override
+    public boolean saveUser(User user) {
+        validateUserName(user.getUsername(), user.getId());
+        return super.save(user);
+    }
+
+    @Override
     public boolean updateUser(User user) {
         //只允许小写
         user.setUsername(user.getUsername().toLowerCase());
@@ -163,5 +169,10 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
         if (0 != super.count(queryWrapper)) {
             throw new BusinessException("账号重复");
         }
+    }
+
+    @Override
+    public List<User> findUsersByRoleId(Long roleId) {
+        return super.baseMapper.findUsersByRoleId(roleId);
     }
 }

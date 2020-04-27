@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.spark.platform.common.base.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -25,39 +26,25 @@ import java.util.List;
 @ApiModel(value = "Role",description = "角色设置")
 public class Role extends BaseEntity {
 
-    /**
-     * id
-     * */
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    /**
-     * 角色名称
-     */
+    @ApiModelProperty(value = "角色名称")
     private String roleName;
 
-    /**
-     * 角色编号
-     */
+    @ApiModelProperty(value = "角色编号")
     private String roleCode;
 
-    /**
-     * 描述
-     */
+    @ApiModelProperty(value = "描述")
     private String description;
 
-    /**
-     * 部门id
-     */
+    @ApiModelProperty(value = "部门id")
     private Long deptId;
-    /**
-     * 部门名称
-     */
+
+    @ApiModelProperty(value = "部门名称")
     private String deptName;
 
-    /**
-     * 状态
-     */
+    @ApiModelProperty(value = "状态")
     private String status;
     /**
      * 角色对应的菜单

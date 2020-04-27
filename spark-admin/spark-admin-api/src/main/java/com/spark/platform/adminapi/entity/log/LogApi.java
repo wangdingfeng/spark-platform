@@ -3,6 +3,7 @@ package com.spark.platform.adminapi.entity.log;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -26,49 +27,37 @@ public class LogApi implements Serializable {
 
     private Long id;
 
-    /**
-     * url
-     */
+    @ApiModelProperty(value = "url")
     private String url;
-    /**
-     * 方法名
-     */
+
+    @ApiModelProperty(value = "方法名")
     private String method;
-    /**
-    参数
-     */
+
+    @ApiModelProperty(value = "参数")
     private String params;
-    /**
-     * 访问时间
-     */
+
+    @ApiModelProperty(value = "访问时间")
     private LocalDateTime createTime;
-    /**
-     * 耗时
-     */
+
+    @ApiModelProperty(value = "耗时")
     private Long times;
-    /**
-     * 访问用户
-     */
+
+    @ApiModelProperty(value = "访问用户")
     private String creator;
-    /**
-     * 访问ip
-     */
+
+    @ApiModelProperty(value = "访问ip")
     private String ip;
-    /**
-     * 地址
-     */
+
+    @ApiModelProperty(value = "地址")
     private String address;
-    /**
-     * 描述
-     */
+
+    @ApiModelProperty(value = "描述")
     private String description;
-    /**
-     * 状态
-     */
+
+    @ApiModelProperty(value = "状态")
     private Integer status;
-    /**
-     * 错误日志
-     */
+
+    @ApiModelProperty(value = "错误日志")
     private String errorLog;
     /**
      * 不持久化参数
