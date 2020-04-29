@@ -8,6 +8,7 @@ import com.spark.platform.adminapi.entity.dict.DictItem;
 import com.spark.platform.adminapi.vo.VueTree;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author: wangdingfeng
@@ -23,5 +24,16 @@ public interface DictService extends IService<Dict> {
      * @return
      */
     IPage findPage(Dict dict, Page page);
+
+    /**
+     * 获取所有的字典map
+     * @return
+     */
+    Map<String,List<DictItem>> selectAllMap();
+
+    /**
+     * 重置字典缓存
+     */
+    void resetCache();
 
 }

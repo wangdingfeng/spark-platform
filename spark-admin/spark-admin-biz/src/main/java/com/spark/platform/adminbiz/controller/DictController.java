@@ -41,6 +41,12 @@ public class DictController extends BaseController {
         return success(dictItemService.page(page, Wrappers.query(dictItem).orderByAsc("sort")));
     }
 
+    @GetMapping
+    @ApiOperation(value = "获取所有的字典项")
+    public ApiResponse getAll(){
+        return success(dictService.selectAllMap());
+    }
+
     @GetMapping("/type/{type}")
     @ApiOperation(value = "通过type查询菜单子项")
     public ApiResponse findItemType(@PathVariable String type){
@@ -95,5 +101,11 @@ public class DictController extends BaseController {
         return success(dictItemService.removeById(id));
     }
 
+    @GetMapping("/cache")
+    @ApiOperation(value = "重置缓存")
+    public ApiResponse resetCache(){
+        dictService.resetCache();
+        return success("重置成功");
+    }
 
 }

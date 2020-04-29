@@ -44,4 +44,11 @@ public class DictItem extends BaseEntity {
 
     @ApiModelProperty(value = "描述")
     private String description;
+
+    @ApiModelProperty(value = "扩充字段1")
+    private String value1;
+
+    @ApiModelProperty(value = "扩充字段2")
+    private String value2;
+
 }

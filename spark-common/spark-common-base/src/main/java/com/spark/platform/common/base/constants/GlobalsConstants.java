@@ -41,6 +41,10 @@ public class GlobalsConstants {
     /**
      * 缓存中user的key
      */
+    public static final String DICT_KEY_All_PREFIX = "SparkAllDict";
+    /**
+     * 缓存中user的key
+     */
     public static final String DICT_KEY_PREFIX = "SparkDict_";
 
     /**

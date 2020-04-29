@@ -1,8 +1,10 @@
-package com.spark.platform.adminbiz.dao.dept;
+package com.spark.platform.adminbiz.dao.dict;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.spark.platform.adminapi.entity.dict.DictItem;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @ProjectName: spark-platform
@@ -15,4 +17,9 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface DictItemDao extends BaseMapper<DictItem> {
+    /**
+     * 查询所有的字典项
+     * @return
+     */
+    List<DictItem> selectAll();
 }
