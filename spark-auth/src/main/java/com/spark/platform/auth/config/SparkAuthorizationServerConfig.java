@@ -1,10 +1,10 @@
 package com.spark.platform.auth.config;
 
 import com.spark.platform.common.base.constants.GlobalsConstants;
-import com.spark.platform.common.security.support.SparkWebResponseExceptionTranslator;
 import com.spark.platform.common.security.config.JwtTokenEnhancer;
 import com.spark.platform.common.security.service.SparkClientDetailsService;
 import com.spark.platform.common.security.service.SparkUserDetailService;
+import com.spark.platform.common.security.support.SparkWebResponseExceptionTranslator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
