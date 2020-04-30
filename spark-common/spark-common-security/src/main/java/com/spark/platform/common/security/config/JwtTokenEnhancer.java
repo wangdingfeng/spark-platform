@@ -41,7 +41,7 @@ public class JwtTokenEnhancer implements TokenEnhancer {
         }
         String roles = StringUtils.join(roleList,",");
         additionalInfo.put("roles", roles);
-        additionalInfo.put("author", "spark");
+        additionalInfo.put("author", "spark-auth");
         additionalInfo.put("createTime", df.format(LocalDateTime.now()));
         ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
         return accessToken;
