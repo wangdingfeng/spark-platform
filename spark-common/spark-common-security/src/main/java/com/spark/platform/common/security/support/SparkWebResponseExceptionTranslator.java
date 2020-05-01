@@ -4,13 +4,9 @@ import com.spark.platform.common.base.enums.SparkHttpStatus;
 import com.spark.platform.common.base.support.ApiResponse;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
-import org.springframework.security.oauth2.common.exceptions.InvalidGrantException;
-import org.springframework.security.oauth2.common.exceptions.InvalidScopeException;
-import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
-import org.springframework.security.oauth2.common.exceptions.UnsupportedGrantTypeException;
+import org.springframework.security.oauth2.common.exceptions.*;
 import org.springframework.security.oauth2.provider.error.WebResponseExceptionTranslator;
 
 /**
@@ -26,7 +22,8 @@ public class SparkWebResponseExceptionTranslator implements WebResponseException
     @Override
     @SneakyThrows
     public ResponseEntity<?> translate(Exception e) {
-        ResponseEntity.BodyBuilder status = ResponseEntity.status(HttpStatus.UNAUTHORIZED);
+        OAuth2Exception auth2Exception = new OAuth2Exception(e.getMessage(),e);
+        ResponseEntity.BodyBuilder status = ResponseEntity.status(auth2Exception.getHttpErrorCode());
         String message = "认证失败";
         if (e instanceof UnsupportedGrantTypeException) {
             message = "不支持该认证类型";
@@ -53,7 +50,7 @@ public class SparkWebResponseExceptionTranslator implements WebResponseException
             //自定义异常
             message = e.getMessage();
         }
-        return status.body(new ApiResponse(SparkHttpStatus.INVALID_TOKEN.getCode(), message));
+        return status.body(new ApiResponse(SparkHttpStatus.INVALID_TOKEN.getCode(), message,auth2Exception.getOAuth2ErrorCode()));
     }
 }
 

@@ -6,6 +6,7 @@ import com.spark.platform.adminapi.feign.client.AuthorityClient;
 import com.spark.platform.common.base.enums.SparkHttpStatus;
 import com.spark.platform.common.base.exception.CommonException;
 import com.spark.platform.common.base.support.ApiResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,9 +33,8 @@ import java.util.Arrays;
  * @Version: 1.0
  */
 @Service
+@Slf4j
 public class SparkClientDetailsService implements ClientDetailsService {
-
-    private  static  final Logger log = LoggerFactory.getLogger(SparkClientDetailsService.class);
 
     @Autowired
     private AuthorityClient authorityClient;
