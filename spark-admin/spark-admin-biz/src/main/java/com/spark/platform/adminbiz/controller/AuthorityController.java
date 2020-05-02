@@ -56,7 +56,7 @@ public class AuthorityController extends BaseController {
     }
 
     @DeleteMapping("/{id}")
-    @ApiOperation(value = "更新信息")
+    @ApiOperation(value = "删除")
     @PreAuthorize("hasAnyAuthority('oauth:delete1')")
     public ApiResponse delete(@PathVariable Long id){
         return success(oauthClientDetailsService.removeById(id));
