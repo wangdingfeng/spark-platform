@@ -2,10 +2,11 @@
 spark 开发平台
 
 - 基于 Spring Cloud Hoxton 、Spring Boot 2.2、 OAuth2 的RBAC权限管理系统  
-- 基于vue-element-template 实现的前端交互  
+- 基于vue-element-template，更简洁的页面，实现的前后端交互
 - 前后端分离架构，客户端和服务端纯Token交互，接口全部使用restful风格
 - 认证服务器与资源服务器分离，方便接入自己的微服务系统；
 - 基于flowable的工作流系统，提供完善基于业务的流程系统
+- 提供代码生成器、封装Mybatis plus 查询，提高开发效率
 
  _### 如果您喜欢，请小手抖一下，帮作者点个赞_  :smile: 
 
