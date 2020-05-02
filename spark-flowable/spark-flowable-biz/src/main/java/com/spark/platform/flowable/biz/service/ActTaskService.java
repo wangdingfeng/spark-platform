@@ -163,7 +163,7 @@ public interface ActTaskService {
      * @return
      * @throws Exception
      */
-    Comment addComment(String taskId, String processInstanceId, String message) throws Exception;
+    Comment addComment(String taskId, String processInstanceId, String message);
 
 
     /**

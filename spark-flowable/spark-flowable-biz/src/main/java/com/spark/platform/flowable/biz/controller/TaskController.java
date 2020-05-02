@@ -49,6 +49,17 @@ public class TaskController extends BaseController {
         return success(actTaskQueryService.queryByParams(taskRequestQuery));
     }
 
+    @PostMapping(value = "/comment")
+    @ApiOperation(value = "添加批注信息", produces = "application/json")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "taskId", value = "任务ID", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "processInstanceId", value = "流程实例ID", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "message", value = "批注信息", required = true, dataType = "String"),
+    })
+    public ApiResponse addComments(@RequestParam String taskId,@RequestParam String processInstanceId,@RequestParam String message){
+        return success(actTaskService.addComment(taskId,processInstanceId,message));
+    }
+
     @GetMapping(value = "/comment")
     @ApiOperation(value = "查询批注信息", produces = "application/json")
     @ApiImplicitParams({@ApiImplicitParam(name = "taskId", value = "任务ID", required = true, dataType = "String")})
