@@ -2,6 +2,7 @@ package com.spark.platform.adminbiz.dao.user;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.spark.platform.adminapi.entity.user.User;
+import com.spark.platform.adminapi.vo.UserVo;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
@@ -24,7 +25,7 @@ public interface UserDao extends BaseMapper<User> {
      * @param username 用户名称
      * @return User
      */
-    User findByUserName(@Param(value = "username") String username);
+    UserVo findByUserName(@Param(value = "username") String username);
 
     /**
      * 根据用户id查询用户

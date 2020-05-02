@@ -22,7 +22,7 @@
 
     <select id="selectAll" resultType="DictItem">
         SELECT
-            dt.type,
+            d.type,
             dt.label,
             dt.`value`,
             dt.description,

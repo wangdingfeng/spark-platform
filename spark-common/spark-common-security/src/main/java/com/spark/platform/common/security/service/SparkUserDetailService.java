@@ -3,11 +3,13 @@ package com.spark.platform.common.security.service;
 import cn.hutool.http.useragent.UserAgent;
 import cn.hutool.http.useragent.UserAgentUtil;
 import com.alibaba.fastjson.JSON;
+import com.spark.platform.adminapi.dto.UserDTO;
 import com.spark.platform.adminapi.entity.authority.Menu;
 import com.spark.platform.adminapi.entity.log.LogLogin;
 import com.spark.platform.adminapi.feign.client.LogClient;
 import com.spark.platform.adminapi.feign.client.MenuClient;
 import com.spark.platform.adminapi.feign.client.UserClient;
+import com.spark.platform.adminapi.vo.UserVo;
 import com.spark.platform.common.base.constants.BizConstants;
 import com.spark.platform.adminapi.entity.user.User;
 import com.spark.platform.common.base.exception.CommonException;
@@ -45,8 +47,6 @@ public class SparkUserDetailService implements UserDetailsService {
     @Autowired
     private UserClient userClient;
     @Autowired
-    private MenuClient menuClient;
-    @Autowired
     private LogClient logClient;
 
     @Override
@@ -55,8 +55,9 @@ public class SparkUserDetailService implements UserDetailsService {
             throw new CommonException("登录名不能为空");
         }
         ApiResponse apiResponse = userClient.getUserByUserName(username);
-        User user = JSON.parseObject(JSON.toJSONString(apiResponse.getData(), true), User.class);
-        if (user == null) {
+        UserDTO userDTO = JSON.parseObject(JSON.toJSONString(apiResponse.getData(), true), UserDTO.class);
+        UserVo user = userDTO.getSysUser();
+        if (userDTO == null) {
             throw new CommonException("登录名不存在");
         } else if (BizConstants.USER_STATUS_EXPIRED.equals(user.getStatus())) {
             throw new CommonException("用户已过期");
@@ -66,12 +67,11 @@ public class SparkUserDetailService implements UserDetailsService {
             throw new CommonException("用户已禁用");
         }
         //查询用户具有的权限
-        ApiResponse response = menuClient.findAuthByUserId(user.getId());
-        List<Menu> authList = JSON.parseArray(JSON.toJSONString(response.getData(), true), Menu.class);
+        List<String> authList = userDTO.getPermissions();
         List<GrantedAuthority> lists = new ArrayList<>();
         if (authList != null && authList.size() > 0) {
-            for (Menu auth : authList) {
-                lists.add(new SimpleGrantedAuthority(auth.getPermission()));
+            for (String auth : authList) {
+                lists.add(new SimpleGrantedAuthority(auth));
             }
         }
         LoginUser loginUser = new LoginUser(username, user.getPassword(), user.getNickname(), user.getStatus(), lists);

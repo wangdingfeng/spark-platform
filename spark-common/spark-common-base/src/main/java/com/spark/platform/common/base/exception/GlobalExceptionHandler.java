@@ -29,7 +29,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = BusinessException.class)
     public ApiResponse defaultErrorHandler(BusinessException e) {
-        e.printStackTrace();
+        log.error("业务异常 ex={}",e.getMessage(),e);
         return new ApiResponse(SparkHttpStatus.COMMON_FAIL.getCode(),e.getMessage());
     }
 
@@ -40,7 +40,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = CommonException.class)
     public ApiResponse defaultErrorHandler(CommonException e) {
-        e.printStackTrace();
+        log.error("公共异常 ex={}",e.getMessage(),e);
         return new ApiResponse(SparkHttpStatus.COMMON_FAIL.getCode(),new CommonException().getMessage());
     }
 
@@ -51,8 +51,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = RuntimeException.class)
     public ApiResponse defaultErrorHandler(RuntimeException e) {
-        e.printStackTrace();
-        createLogger(e);
+        log.error("全局运行异常 ex={}",e.getMessage(),e);
         return new ApiResponse(SparkHttpStatus.SERVER_FUGUE.getCode(),"不允许访问".equals(e.getMessage()) ? e.getMessage():SparkHttpStatus.SERVER_FUGUE.getMessage());
     }
 
@@ -63,8 +62,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler( Exception.class)
     public ApiResponse defaultErrorException(Exception e){
-        e.printStackTrace();
-        createLogger(e);
+        log.error("全局异常 ex={}",e.getMessage(),e);
         ApiResponse apiResponse = new ApiResponse(SparkHttpStatus.SERVER_FUGUE.getCode(), SparkHttpStatus.SERVER_FUGUE.getMessage());
         apiResponse.setData(e.getMessage());
         return apiResponse;
@@ -74,9 +72,8 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(NullPointerException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ApiResponse nullPointerExceptionHandler(Exception e) {
-        e.printStackTrace();
-        createLogger(e);
+    public ApiResponse nullPointerExceptionHandler(NullPointerException e) {
+        log.error("空指针异常 ex={}",e.getMessage(),e);
         return new ApiResponse(SparkHttpStatus.SERVER_ERROR.getCode(), SparkHttpStatus.SERVER_ERROR.getMessage());
     }
 
@@ -85,21 +82,8 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(ClassCastException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ApiResponse classCastExceptionHandler() {
+    public ApiResponse classCastExceptionHandler(ClassCastException e) {
+        log.error("类型转换异常 ex={}",e.getMessage(),e);
         return new ApiResponse(SparkHttpStatus.SERVER_ERROR.getCode(), SparkHttpStatus.SERVER_ERROR.getMessage());
-    }
-
-    /**
-     * 打印关键log信息
-     * @param e
-     */
-
-    private void createLogger(Exception e) {
-        log.info(e.getMessage());
-        log.info(e.getStackTrace()[0].toString());
-        log.error(e.getMessage());
-        for (StackTraceElement stackTraceElement : e.getStackTrace()) {
-            log.error(stackTraceElement.toString());
-        }
     }
 }

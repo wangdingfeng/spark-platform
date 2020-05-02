@@ -24,7 +24,7 @@ public interface UserService extends IService<User> {
      * @param username 用户名
      * @return User
      */
-    User loadUserByUserName(String username);
+    UserDTO loadUserByUserName(String username);
 
     /**
      * 根据用户id查询用户
@@ -60,6 +60,12 @@ public interface UserService extends IService<User> {
      * @return
      */
     IPage findPage(User user, Page page);
+
+    /**
+     * 批量重置密码
+     * @param id
+     */
+    void restPassword(String[] ids);
 
     /**
      * 修改用户信息

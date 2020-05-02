@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.google.common.collect.Lists;
 import com.spark.platform.adminapi.dto.UserDTO;
 import com.spark.platform.adminapi.entity.authority.Menu;
 import com.spark.platform.adminapi.entity.role.Role;
@@ -56,8 +57,15 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
     private MenuService menuService;
 
     @Override
-    public User loadUserByUserName(String username) {
-        return super.baseMapper.findByUserName(username);
+    public UserDTO loadUserByUserName(String username) {
+        UserDTO userDto = new UserDTO();
+        UserVo userVo = super.baseMapper.findByUserName(username);
+        if(null == userVo) return null;
+        userDto.setSysUser(userVo);
+        //查询权限
+        List<Menu> menus = menuService.findAuthByUserId(userVo.getId());
+        userDto.setPermissions(menus.stream().map(Menu::getPermission).collect(toList()));
+        return userDto;
     }
 
     @Override
@@ -115,6 +123,18 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
         WrapperSupport.putParamsLike(wrapper,user,"username","nickname");
         WrapperSupport.putParamsEqual(wrapper,user,"status","deptId");
         return super.page(page, wrapper);
+    }
+
+    @Override
+    public void restPassword(String[] ids) {
+        List<User> users = Lists.newArrayList();
+        for(String id: ids){
+            User user = new User();
+            user.setId(Long.valueOf(id));
+            user.setPassword(GlobalsConstants.DEFAULT_USER_PASSWORD);
+            users.add(user);
+        }
+        super.updateBatchById(users);
     }
 
     @Override

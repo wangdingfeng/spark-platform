@@ -2,7 +2,6 @@ package com.spark.platform.adminbiz.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spark.platform.adminapi.entity.user.User;
-import com.spark.platform.common.base.constants.GlobalsConstants;
 import com.spark.platform.common.base.support.BaseController;
 import com.spark.platform.adminbiz.service.user.UserService;
 import com.spark.platform.common.base.support.ApiResponse;
@@ -12,6 +11,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
 
 
 /**
@@ -78,11 +78,8 @@ public class UserController extends BaseController {
     @GetMapping("/rest/password")
     @ApiOperation(value = "重置密码")
     @PreAuthorize("hasAnyAuthority('user:edit')")
-    public ApiResponse restPassword(@RequestParam Long id) {
-        User user = new User();
-        user.setId(id);
-        user.setPassword(GlobalsConstants.DEFAULT_USER_PASSWORD);
-        userService.updateUserInfo(user);
+    public ApiResponse restPassword(@RequestParam String ids) {
+        userService.restPassword(ids.split(","));
         return success("重置成功");
     }
 

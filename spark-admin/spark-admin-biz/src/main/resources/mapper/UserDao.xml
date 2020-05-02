@@ -42,8 +42,8 @@
         id, username, nickname, password, sex, phone, email, create_date, modify_date, last_login_ip, last_login_time, del_flag, status, avatar, dept_id,dept_name
     </sql>
 
-    <select id="findByUserName" parameterType="string" resultMap="BaseResultMap">
-        select  id, username, nickname, password, status
+    <select id="findByUserName" parameterType="string" resultType="com.spark.platform.adminapi.vo.UserVo">
+        select  id, username, nickname, password, status, dept_id
         from sys_user
         WHERE 1 = 1
         <if test="username != null and username != '' ">
