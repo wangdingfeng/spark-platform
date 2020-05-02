@@ -40,7 +40,7 @@ http://localhost:9001/flow/runtime/tasks/你的任务id?action=claim&localScope=
 
 流程中参数：
 
-{"GROUP_LEADER_APPROVE_SUBMIT_VALUE","GROUP_EDITOR","group_editor1":"spark","group_editor2":"test"}
+{"GROUP_LEADER_APPROVE_SUBMIT_VALUE":"GROUP_EDITOR","group_editor1":"zhubian1","group_editor2":"zhubian2"}
 
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/0424/103319_7f897375_1890906.png "屏幕截图.png")
 
