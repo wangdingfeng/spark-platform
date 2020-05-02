@@ -1,4 +1,4 @@
-package com.spark.platform.flowable.biz.config;
+package com.spark.platform.cms.config;
 
 import com.spark.platform.flowable.api.enums.RedisTopicName;
 import org.springframework.context.annotation.Bean;

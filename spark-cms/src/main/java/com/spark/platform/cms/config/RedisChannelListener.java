@@ -1,11 +1,14 @@
-package com.spark.platform.flowable.biz.config;
+package com.spark.platform.cms.config;
 
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.ImmutableMap;
+import com.spark.platform.cms.article.constant.ArticleConstant;
+import com.spark.platform.cms.article.constant.ArticleProcessKeyNode;
 import com.spark.platform.common.utils.SpringContextHolder;
+import com.spark.platform.flowable.api.enums.ActionEnum;
 import com.spark.platform.flowable.api.enums.RedisTopicName;
+import com.spark.platform.flowable.api.feign.client.TaskClient;
 import com.spark.platform.flowable.api.vo.TaskVO;
-import com.spark.platform.flowable.biz.service.ActTaskService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.connection.MessageListener;
@@ -62,19 +65,18 @@ public class RedisChannelListener implements MessageListener {
         //判断两个主编的最终审核结果 只有当两个主编都审核通过才通过
         while (it.hasNext()) {
             Map.Entry<String, Object> entry = it.next();
-            if (entry.getKey().startsWith("multiInstance_result")) {
+            if (entry.getKey().startsWith(ArticleConstant.MULTIINSTANCE_RESULT_PREFIX)) {
                 if (!(boolean) entry.getValue()) {
                     flag = false;
                     break;
                 }
             }
         }
-        ActTaskService actTaskService = SpringContextHolder.getBean(ActTaskService.class);
-        Map<String, Object> map = ImmutableMap.of("SYSTEM_JUDGE_SUBMIT_VALUE", "SUBMIT_APPROVAL");
-        if (flag) {
-            map = ImmutableMap.of("SYSTEM_JUDGE_SUBMIT_VALUE", "PASS");
-        }
-        actTaskService.complete(taskVO.getId(), map);
+        TaskClient taskClient = SpringContextHolder.getBean(TaskClient.class);
+        ArticleProcessKeyNode articleProcessKeyNode = ArticleProcessKeyNode.getProcessNextKeyNodeByKey(taskVO.getTaskDefinitionKey(),flag);
+        Map<String, Object> map = ImmutableMap.of(ArticleConstant.PROCESS_NODE_SYSTEM_JUDGE.toUpperCase()+ArticleConstant.SUBMIT_SUFFIX, articleProcessKeyNode.getTargetNode());
+        taskClient.executeTask(taskVO.getId(), ActionEnum.COMPLETE.getAction(),"",false,map);
+        log.info("系统判断结束");
     }
 
 }
