@@ -1,15 +1,17 @@
 # spark-platform
-spark 平台
+spark 开发平台
 
 - 基于 Spring Cloud Hoxton 、Spring Boot 2.2、 OAuth2 的RBAC权限管理系统  
 - 基于vue-element-template 实现的前端交互  
 - 前后端分离架构，客户端和服务端纯Token交互，接口全部使用restful风格
 - 认证服务器与资源服务器分离，方便接入自己的微服务系统；
-- 基于flowable的工作流系统，提供完善基于业务的流程系统(工作流结合业务例子已经在开发中)
+- 基于flowable的工作流系统，提供完善基于业务的流程系统
+
+ _### 如果您喜欢，请小手抖一下，帮作者点个赞_  :smile: 
 
 注意：
-1. 工作流中没有把flowable-modeler 流程设计功能引入，需要的请自行下载官方的war包，或者到此地址下载:
-[下载官方war包](https://download.csdn.net/download/wangdingfeng5141/12299018) 后续我还会另起一个工作流服务把这些全部集成，但是spark项目就暂时不会集成了。
+1. 工作流中没有把flowable-modeler 流程设计功能引入，需要的请自行到此地址下载:
+[下载官方war包](https://download.csdn.net/download/wangdingfeng5141/12299018) 官方war包。后续我还会另起一个工作流服务把这些全部集成，但是spark项目就暂时不会集成了。
 2. 工作流测试请移步到
 [工作流测试](https://gitee.com/dreamfeng/spark-platform/tree/master/spark-flowable)
 
@@ -68,17 +70,21 @@ spark-platform
 └── spark-flowable -- 通用工作流模块
      └── spark-flowable-api -- 通用工作流模块公共api模块
      └── spark-flowable-biz -- 通用工作流模块业务处理模块
+├── spark-cms -- 内容管理平台
 ```
  **平台截图**
- 
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0414/203519_d3bb2ecf_1890906.png "屏幕截图.png")
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0414/203457_15593a6b_1890906.png "屏幕截图.png")
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0414/203428_709e61c6_1890906.png "屏幕截图.png")
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0414/203543_ed7c5f02_1890906.png "屏幕截图.png")
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0414/205632_66bdcc0b_1890906.png "屏幕截图.png")
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0414/205726_e7fc1fd3_1890906.png "屏幕截图.png")
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0414/205905_b67406dd_1890906.png "屏幕截图.png")
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0414/205836_f50e2362_1890906.png "屏幕截图.png")
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0414/205954_e8763418_1890906.png "屏幕截图.png")
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0414/210304_7fb0e942_1890906.png "屏幕截图.png")
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0414/210343_6346c833_1890906.png "屏幕截图.png")
+ ![输入图片说明](https://images.gitee.com/uploads/images/2020/0502/205849_8b0d2d5c_1890906.png "屏幕截图.png")
+ ![输入图片说明](https://images.gitee.com/uploads/images/2020/0502/205924_a89d430e_1890906.png "屏幕截图.png")
+ ![输入图片说明](https://images.gitee.com/uploads/images/2020/0502/205952_3dec6a78_1890906.png "屏幕截图.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0502/210017_0e8f6a85_1890906.png "屏幕截图.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0502/210044_dae7ffed_1890906.png "屏幕截图.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0502/210119_395a0d45_1890906.png "屏幕截图.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0502/210138_905a364c_1890906.png "屏幕截图.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0502/210204_2518650a_1890906.png "屏幕截图.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0502/210247_b290c63a_1890906.png "屏幕截图.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0502/210359_b671c3c6_1890906.png "屏幕截图.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0502/210425_955364bf_1890906.png "屏幕截图.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0502/210505_dd8d86d8_1890906.png "屏幕截图.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0502/210541_e9f22e3c_1890906.png "屏幕截图.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0502/210554_488d1efb_1890906.png "屏幕截图.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0502/210633_70f91502_1890906.png "屏幕截图.png")
