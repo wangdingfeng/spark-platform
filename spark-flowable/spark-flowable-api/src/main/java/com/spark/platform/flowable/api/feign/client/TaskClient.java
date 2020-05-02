@@ -32,5 +32,15 @@ public interface TaskClient {
     ApiResponse executeTask(@PathVariable String taskId, @RequestParam("action") String action, @RequestParam(value = "assignee") String assignee,
                             @RequestParam(value = "localScope") boolean localScope, @RequestBody Map<String, Object> variables);
 
+    /**
+     * 添加批注信息
+     * @param taskId 任务ID
+     * @param processInstanceId 流程实例ID
+     * @param message 批注信息
+     * @return
+     */
+    @PostMapping(value = "/runtime/tasks/comment")
+    ApiResponse addComments(@RequestParam String taskId,@RequestParam String processInstanceId,@RequestParam String message);
+
 
 }
