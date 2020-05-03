@@ -15,6 +15,8 @@ spark 开发平台
 [下载官方war包](https://download.csdn.net/download/wangdingfeng5141/12299018) 官方war包。后续我还会另起一个工作流服务把这些全部集成，但是spark项目就暂时不会集成了。
 2. 工作流测试请移步到
 [工作流测试](https://gitee.com/dreamfeng/spark-platform/tree/master/spark-flowable)
+3. 流程测试图
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0424/102707_2837dc87_1890906.png "屏幕截图.png")
 
 ### 已实现功能
 |   用户管理  |  角色管理   |  菜单管理   |  部门管理   |  字典管理   |  客户端管理   |  待办事项   |  已办事项   |
