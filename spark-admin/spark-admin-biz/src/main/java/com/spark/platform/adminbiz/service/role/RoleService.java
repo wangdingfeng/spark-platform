@@ -39,7 +39,7 @@ public interface RoleService extends IService<Role> {
      * @param role
      * @return
      */
-    boolean saveOrUpdateRole(Role role);
+    Role saveOrUpdateRole(Role role);
 
     /**
      * 保存角色权限

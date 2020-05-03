@@ -9,6 +9,7 @@ import com.spark.platform.common.base.support.ApiResponse;
 import com.spark.platform.common.base.support.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,13 +28,11 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @Api(tags = "日志")
+@AllArgsConstructor
 public class LogController extends BaseController {
 
-    @Autowired
-    private LogApiService apiLogService;
-    
-    @Autowired
-    private LogLoginService loginLogService;
+    private final LogApiService apiLogService;
+    private final LogLoginService loginLogService;
 
     @PostMapping("/log/page")
     @ApiOperation(value = "分页获取日志信息")

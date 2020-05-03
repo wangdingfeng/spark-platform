@@ -44,7 +44,7 @@ public interface UserService extends IService<User> {
      * 保存用户信息
      * @param user
      */
-    boolean saveUser(User user);
+    User saveUser(User user);
 
     /**
      * 更新用户信息
@@ -63,7 +63,7 @@ public interface UserService extends IService<User> {
 
     /**
      * 批量重置密码
-     * @param id
+     * @param ids
      */
     void restPassword(String[] ids);
 

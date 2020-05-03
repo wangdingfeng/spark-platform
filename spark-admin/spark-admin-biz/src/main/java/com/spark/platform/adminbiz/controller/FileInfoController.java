@@ -8,7 +8,7 @@ import com.spark.platform.adminbiz.service.file.FileInfoService;
 import com.spark.platform.common.base.support.ApiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import com.spark.platform.common.base.support.BaseController;
@@ -27,10 +27,10 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 @RequestMapping("/file")
 @Api(tags = "文件上传")
+@AllArgsConstructor
 public class FileInfoController extends BaseController {
 
-    @Autowired
-    private FileInfoService fileInfoService;
+    private final FileInfoService fileInfoService;
 
     @PostMapping(value = "/upload",headers = "content-type=multipart/form-data")
     @ApiOperation(value = "上传文件")

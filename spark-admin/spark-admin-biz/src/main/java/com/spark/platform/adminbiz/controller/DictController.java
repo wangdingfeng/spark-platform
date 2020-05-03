@@ -10,7 +10,7 @@ import com.spark.platform.common.base.support.ApiResponse;
 import com.spark.platform.common.base.support.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -21,13 +21,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/dict")
 @Api(tags = "字典管理")
+@AllArgsConstructor
 public class DictController extends BaseController {
 
-    @Autowired
-    private DictService dictService;
-
-    @Autowired
-    private DictItemService dictItemService;
+    private final DictService dictService;
+    private final DictItemService dictItemService;
 
     @PostMapping("/page")
     @ApiOperation(value = "字典列表")
@@ -68,13 +66,15 @@ public class DictController extends BaseController {
     @PostMapping
     @ApiOperation(value = "保存字典信息")
     public ApiResponse save(@RequestBody Dict dict){
-        return success(dictService.save(dict));
+        dictService.save(dict);
+        return success(dict);
     }
 
     @PostMapping("/item")
     @ApiOperation(value = "保存字典子表信息")
     public ApiResponse saveItem(@RequestBody DictItem dictItem){
-        return success(dictItemService.save(dictItem));
+        dictItemService.save(dictItem);
+        return success(dictItem);
     }
 
     @PutMapping

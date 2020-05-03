@@ -99,9 +99,10 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
     }
 
     @Override
-    public boolean saveUser(User user) {
+    public User saveUser(User user) {
         validateUserName(user.getUsername(), user.getId());
-        return super.save(user);
+        this.save(user);
+        return user;
     }
 
     @Override
@@ -166,12 +167,9 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
         //保存密码 默认密码
         entity.setPassword(new BCryptPasswordEncoder().encode(GlobalsConstants.DEFAULT_USER_PASSWORD));
         //修改用户角色
-        for (Long roleId : entity.getRoles()) {
-            int i = userRoleDao.deleteByUserId(entity.getId());
-            log.info("删除用户：{}角色:{}个", entity.getId(), i);
-            userRoleDao.insert(new UserRole(roleId, entity.getId()));
-        }
-        return super.save(entity);
+        super.save(entity);
+        userRoleDao.insertBatch(entity.getId(),entity.getRoles());
+        return true;
     }
 
     /**

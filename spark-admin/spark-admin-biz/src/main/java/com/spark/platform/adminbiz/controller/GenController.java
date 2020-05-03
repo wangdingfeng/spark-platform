@@ -7,6 +7,7 @@ import com.spark.platform.common.base.support.ApiResponse;
 import com.spark.platform.common.base.support.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,10 +28,10 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 @RequestMapping("/gen")
 @Api(tags = "代码生成器")
+@AllArgsConstructor
 public class GenController extends BaseController {
 
-    @Autowired
-    private GenService genService;
+    private final GenService genService;
 
     @GetMapping("/page")
     @ApiOperation(value = "分页查询数据表")

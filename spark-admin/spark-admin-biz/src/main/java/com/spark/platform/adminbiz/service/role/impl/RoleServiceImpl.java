@@ -50,9 +50,10 @@ public class RoleServiceImpl extends ServiceImpl<RoleDao, Role> implements RoleS
     }
 
     @Override
-    public boolean saveOrUpdateRole(Role role) {
+    public Role saveOrUpdateRole(Role role) {
         validateRoleCode(role.getRoleCode(),role.getId());
-        return super.saveOrUpdate(role);
+        super.saveOrUpdate(role);
+        return role;
     }
 
     @Override

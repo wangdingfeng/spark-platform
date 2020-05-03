@@ -8,7 +8,7 @@ import com.spark.platform.common.base.support.ApiResponse;
 import com.spark.platform.common.security.util.UserUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,10 +25,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/user")
 @Api(tags = "用户管理")
+@AllArgsConstructor
 public class UserController extends BaseController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @GetMapping("/principal")
     @ApiOperation(value = "获取用户DTO")
@@ -63,7 +63,7 @@ public class UserController extends BaseController {
 
     @DeleteMapping("/{id}")
     @ApiOperation(value = "删除用户")
-    @PreAuthorize("hasAnyAuthority('user:delete1')")
+    @PreAuthorize("hasAnyAuthority('user:delete')")
     public ApiResponse delete(@PathVariable Long id) {
         return success(userService.removeById(id));
     }

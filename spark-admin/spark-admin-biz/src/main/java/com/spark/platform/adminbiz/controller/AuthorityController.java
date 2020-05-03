@@ -7,7 +7,7 @@ import com.spark.platform.common.base.support.BaseController;
 import com.spark.platform.common.base.support.ApiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,10 +23,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/authority")
 @Api(tags = "Oauht2客户端")
+@AllArgsConstructor
 public class AuthorityController extends BaseController {
 
-    @Autowired
-    private OauthClientDetailsService oauthClientDetailsService;
+    private final OauthClientDetailsService oauthClientDetailsService;
 
 
     @GetMapping("/api/info")
@@ -45,7 +45,8 @@ public class AuthorityController extends BaseController {
     @ApiOperation(value = "保存信息")
     @PreAuthorize("hasAnyAuthority('oauth:add')")
     public ApiResponse save(@RequestBody OauthClientDetails oauthClientDetails){
-        return success(oauthClientDetailsService.save(oauthClientDetails));
+        oauthClientDetailsService.save(oauthClientDetails);
+        return success(oauthClientDetails);
     }
 
     @PutMapping
