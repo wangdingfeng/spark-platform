@@ -4,11 +4,9 @@ import com.spark.platform.common.base.constants.ServiceNameConstants;
 import com.spark.platform.common.base.support.ApiResponse;
 import com.spark.platform.common.feign.config.FeignRequestInterceptorConfig;
 import com.spark.platform.flowable.api.feign.fallback.TaskFallBackFactory;
+import com.spark.platform.flowable.api.request.TaskRequestQuery;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -41,6 +39,14 @@ public interface TaskClient {
      */
     @PostMapping(value = "/runtime/tasks/comment")
     ApiResponse addComments(@RequestParam String taskId,@RequestParam String processInstanceId,@RequestParam String message);
+
+    /**
+     *
+     * @param taskRequestQuery
+     * @return
+     */
+    @GetMapping(value = "/runtime/tasks")
+    ApiResponse getTask(TaskRequestQuery taskRequestQuery);
 
 
 }

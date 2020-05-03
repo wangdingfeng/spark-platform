@@ -22,8 +22,14 @@ public class InstanceFallBackFactory implements FallbackFactory<InstanceClient> 
         return new InstanceClient() {
             @Override
             public ApiResponse startByKey(String key, String businessKey, String businessType, String businessName, Map<String, Object> variables) {
-                log.error("调用spark-flowable服务InstanceClient:startByKey方法失败!,错误日志:{}", throwable.getMessage());
-                return ApiResponse.hystrixError(ServiceNameConstants.SPARK_FLOWABLE, "startByKey");
+                log.error("调用spark-flowable服务InstanceClient:startByKey方法失败!,错误日志:{}", throwable);
+                return ApiResponse.hystrixError(ServiceNameConstants.SPARK_FLOWABLE, "InstanceClient:startByKey");
+            }
+
+            @Override
+            public ApiResponse delete(String processInstanceId) {
+                log.error("调用spark-flowable服务InstanceClient:delete方法失败!,错误日志:{}", throwable);
+                return ApiResponse.hystrixError(ServiceNameConstants.SPARK_FLOWABLE, "InstanceClient:delete");
             }
         };
     }

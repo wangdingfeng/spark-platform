@@ -26,6 +26,7 @@
         <module>spark-gateway</module>
         <module>spark-control</module>
         <module>spark-flowable</module>
+        <module>spark-cms</module>
     </modules>
 
 
