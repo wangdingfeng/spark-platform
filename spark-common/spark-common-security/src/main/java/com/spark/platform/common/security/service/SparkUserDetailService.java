@@ -56,10 +56,11 @@ public class SparkUserDetailService implements UserDetailsService {
         }
         ApiResponse apiResponse = userClient.getUserByUserName(username);
         UserDTO userDTO = JSON.parseObject(JSON.toJSONString(apiResponse.getData(), true), UserDTO.class);
-        UserVo user = userDTO.getSysUser();
         if (userDTO == null) {
             throw new CommonException("登录名不存在");
-        } else if (BizConstants.USER_STATUS_EXPIRED.equals(user.getStatus())) {
+        }
+        UserVo user = userDTO.getSysUser();
+        if (BizConstants.USER_STATUS_EXPIRED.equals(user.getStatus())) {
             throw new CommonException("用户已过期");
         } else if (BizConstants.USER_STATUS_LOCKED.equals(user.getStatus())) {
             throw new CommonException("用户已锁定");
