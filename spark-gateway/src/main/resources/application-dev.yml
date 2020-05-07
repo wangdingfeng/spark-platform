@@ -62,7 +62,16 @@ spring:
                 redis-rate-limiter.replenishRate: 10
                 redis-rate-limiter.burstCapacity: 10
                 key-resolver: "#{@ipKeyResolver}"
-
+        - id: spark-cms
+          uri: lb://spark-cms
+          predicates:
+            - Path=/cms/**
+          filters:
+            - StripPrefix=1
+            - name: Hystrix
+              args:
+                name: flowable-hystrix
+                fallbackUri: forward:/common/fallback #设置熔断器
   boot:
     admin:
       client:
