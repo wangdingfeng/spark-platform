@@ -79,8 +79,6 @@ swagger:
   enabled: true
   description: spark 工作流服务
   version: V1.0
-  license: Apache License, Version 2.0
-  license-url: https://www.apache.org/licenses/LICENSE-2.0.html
   authorization:
     key-name: Authorization
   contact:
@@ -130,13 +128,14 @@ flowable:
   process-definition-location-prefix: classpath*:/processes/
 
   # 直接放行URL
-  ignore:
-    urls:
-      - /actuator/**
-      - /druid/**
-      - /runtime/image/**
-      - /runtime/process-definitions/resource/**
-      - /v2/api-docs
-      - /swagger-ui.html
-      - /swagger-resources/**
-      - /webjars/**
+ignore:
+  urls:
+    - /actuator/**
+    - /druid/**
+    - /runtime/image/**
+    - /runtime/tasks/**
+    - /runtime/process-definitions/resource/**
+    - /v2/api-docs
+    - /swagger-ui.html
+    - /swagger-resources/**
+    - /webjars/**

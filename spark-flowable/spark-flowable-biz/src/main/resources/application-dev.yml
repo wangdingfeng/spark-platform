@@ -111,7 +111,7 @@ feign:
 # flowable配置
 flowable:
   async-executor-activate: true #开启定时任务
-  check-process-definitions: true #是否需要自动部署流程定义。
+  check-process-definitions: false #是否需要自动部署流程定义。
   database-schema-update: true # 数据库schema更新策略。'
   db-history-used: true # 是否要使用db历史。'
   deployment-name: SpringBootAutoDeployment # 自动部署的名称。'
@@ -132,6 +132,7 @@ ignore:
     - /actuator/**
     - /druid/**
     - /runtime/image/**
+    - /runtime/tasks/**
     - /runtime/process-definitions/resource/**
     - /v2/api-docs
     - /swagger-ui.html
