@@ -17,6 +17,6 @@ public class ServiceNameConstants {
     /**
      * 工作流
      */
-    public static final String SPARK_FLOWABLE  = "SPARK-LOWABLE";
+    public static final String SPARK_FLOWABLE  = "SPARK-FLOWABLE";
 
 }
