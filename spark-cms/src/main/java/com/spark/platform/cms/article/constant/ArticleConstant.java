@@ -33,6 +33,14 @@ public class ArticleConstant {
     public static final String MULTIINSTANCE_RESULT_PREFIX = "multiInstance_result_";
 
     /**
+     * 流程参数key
+     */
+    //主编1
+    public static final String PROCESS_VARIABLES_KEY_EDIT1 = "group_editor1";
+    //主编2
+    public static final String PROCESS_VARIABLES_KEY_EDIT2 = "group_editor2";
+
+    /**
      * 流程节点 组长审核
      */
     public static final String PROCESS_NODE_GROUP_LEADER_APPROVE = "group_leader_approve";

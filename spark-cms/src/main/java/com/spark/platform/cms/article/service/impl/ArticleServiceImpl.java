@@ -22,6 +22,7 @@ import com.spark.platform.flowable.api.enums.ActionEnum;
 import com.spark.platform.flowable.api.enums.VariablesEnum;
 import com.spark.platform.flowable.api.feign.client.InstanceClient;
 import com.spark.platform.flowable.api.feign.client.TaskClient;
+import com.spark.platform.flowable.api.request.ExecuteTaskRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -51,7 +52,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> impleme
     public IPage findPage(Page page, Article article) {
         QueryWrapper wrapper = new QueryWrapper<Article>();
         WrapperSupport.putParamsLike(wrapper,article,"title","author");
-        WrapperSupport.putParamsEqual(wrapper,article,"platform","status");
+        WrapperSupport.putParamsEqual(wrapper,article,"platforms","status");
         return super.baseMapper.selectPage(page,wrapper);
     }
 
@@ -70,7 +71,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> impleme
         //放入提交人
         Map<String,Object> variables = ImmutableMap.of(VariablesEnum.submitter.toString(), UserUtils.getLoginUser().getUsername());
         ApiResponse apiResponse = instanceClient.startByKey(ArticleConstant.PROCESS_KEY,article.getId().toString(),ArticleConstant.PROCESS_BUSINESS_TYPE,article.getTitle(),variables);
-        if(SparkHttpStatus.SUCCESS.getCode() != apiResponse.getCode()){
+        if(!SparkHttpStatus.SUCCESS.getCode().equals(apiResponse.getCode())){
             log.error("发起工作流失败",apiResponse.getData());
             throw new BusinessException("发起工作流失败!");
         }
@@ -81,21 +82,21 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> impleme
     @Transactional(readOnly = false)
     public void backEdit(ArticleAuditDto articleAuditDto) {
         Article article = articleAuditDto.getArticle();
+        article.setStatus(articleAuditDto.getResult() == true ? ArticleConstant.STATUS_APPROVAL_GROUP :ArticleConstant.STATUS_FAIL);
         super.updateById(article);
         //执行工作流
         ArticleProcessKeyNode keyNode = ArticleProcessKeyNode.getProcessNextKeyNodeByKey(articleAuditDto.getTaskDefinitionKey(),articleAuditDto.getResult());
         Map<String,Object> variables = ImmutableMap.of(ArticleConstant.PROCESS_NODE_SUBMIT_APPROVAL.toUpperCase()+ArticleConstant.SUBMIT_SUFFIX,keyNode.getTargetNode());
-        ApiResponse apiResponse = taskClient.executeTask(articleAuditDto.getTaskId(), ActionEnum.COMPLETE.getAction(),"",false,variables);
-        if(SparkHttpStatus.SUCCESS.getCode() != apiResponse.getCode()){
-            log.error("执行工作流失败",apiResponse.getData());
-            throw new BusinessException("执行工作流失败!");
-        }
+        ExecuteTaskRequest executeTaskRequest = ExecuteTaskRequest.builder().taskId(articleAuditDto.getTaskId()).action(ActionEnum.COMPLETE.getAction()).variables(variables).build();
+        executeTask(executeTaskRequest);
     }
 
     @Override
     @Transactional(readOnly = false)
     public void audit(ArticleAuditDto articleAuditDto) {
         Assert.notBlank(articleAuditDto.getTaskId(),"任务ID不能为空");
+        Assert.notNull(articleAuditDto.getArticleId(),"文章id不能为空");
+        Assert.notBlank(articleAuditDto.getTaskDefinitionKey(),"当前流程节点id不能为空");
         Article article = new Article();
         article.setId(articleAuditDto.getArticleId());
         Map<String,Object> variables = Maps.newHashMap();
@@ -105,7 +106,15 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> impleme
                 //组长审核
                 ArticleProcessKeyNode keyNode = ArticleProcessKeyNode.getProcessNextKeyNodeByKey(articleAuditDto.getTaskDefinitionKey(),articleAuditDto.getResult());
                 variables.put(ArticleConstant.PROCESS_NODE_GROUP_LEADER_APPROVE.toUpperCase()+ArticleConstant.SUBMIT_SUFFIX,keyNode.getTargetNode());
-                article.setStatus(result == true ? ArticleConstant.STATUS_APPROVAL_EDITOR:ArticleConstant.STATUS_BACK_EDIT);
+                if(result){
+                    //审核通过
+                    article.setStatus(ArticleConstant.STATUS_APPROVAL_EDITOR);
+                    variables.put(ArticleConstant.PROCESS_VARIABLES_KEY_EDIT1,"zhubian1");
+                    variables.put(ArticleConstant.PROCESS_VARIABLES_KEY_EDIT2,"zhubian2");
+                }else{
+                    article.setStatus(ArticleConstant.STATUS_BACK_EDIT);
+                }
+
                 break;
             case ArticleConstant.PROCESS_NODE_EDITOR1_APPROVAL:
                 //主编1 审核
@@ -121,18 +130,26 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> impleme
         super.updateById(article);
         if(StringUtils.isNotBlank(articleAuditDto.getComment())){
             //保存审核信息
-            ApiResponse apiResponse = taskClient.addComments(articleAuditDto.getTaskId(),articleAuditDto.getProcessInstanceId(),articleAuditDto.getComment());
-            if(SparkHttpStatus.SUCCESS.getCode() != apiResponse.getCode()){
+            ApiResponse apiResponse = taskClient.addComments(articleAuditDto.getTaskId(),articleAuditDto.getProcessInstanceId(),articleAuditDto.getComment(),UserUtils.getLoginUser().getUsername());
+            if(!SparkHttpStatus.SUCCESS.getCode().equals(apiResponse.getCode())){
                 log.error("添加批注失败",apiResponse.getData());
                 throw new BusinessException("添加批注失败!");
             }
         }
         //执行工作流
-        ApiResponse apiResponse = taskClient.executeTask(articleAuditDto.getTaskId(), ActionEnum.COMPLETE.getAction(),"",false,variables);
-        if(SparkHttpStatus.SUCCESS.getCode() != apiResponse.getCode()){
+        ExecuteTaskRequest executeTaskRequest = ExecuteTaskRequest.builder().taskId(articleAuditDto.getTaskId()).action(ActionEnum.COMPLETE.getAction()).variables(variables).build();
+        executeTask(executeTaskRequest);
+    }
+
+    /**
+     * 执行工作流
+     * @param executeTaskRequest
+     */
+    private void executeTask(ExecuteTaskRequest executeTaskRequest){
+        ApiResponse apiResponse = taskClient.executeTask(executeTaskRequest.getTaskId(), executeTaskRequest);
+        if(!SparkHttpStatus.SUCCESS.getCode().equals(apiResponse.getCode())){
             log.error("执行工作流失败",apiResponse.getData());
             throw new BusinessException("执行工作流失败!");
         }
     }
-
 }

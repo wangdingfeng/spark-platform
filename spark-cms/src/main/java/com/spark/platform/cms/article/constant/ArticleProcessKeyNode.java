@@ -13,7 +13,7 @@ public enum ArticleProcessKeyNode {
 
     group_leader_pass("group_leader_approve","组长审核成功",true,"GROUP_EDITOR"),
     group_leader_fail("group_leader_approve","组长审核失败",false,"SUBMIT_APPROVAL"),
-    submit_approval_pass("submit_approval","退回提交",true,"SUBMIT_APPROVAL"),
+    submit_approval_pass("submit_approval","退回提交",true,"GROUP_LEADER_APPROVAL"),
     submit_approval_fail("submit_approval","退回修改关闭",false,"OVER"),
     system_judge_pass("system_judge","系统判断通过",true,"PASS"),
     system_judge_fail("system_judge","系统判断通过",false,"SUBMIT_APPROVAL");

@@ -4,10 +4,16 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.ImmutableMap;
 import com.spark.platform.cms.article.constant.ArticleConstant;
 import com.spark.platform.cms.article.constant.ArticleProcessKeyNode;
+import com.spark.platform.cms.article.entity.Article;
+import com.spark.platform.cms.article.service.ArticleService;
+import com.spark.platform.common.base.enums.SparkHttpStatus;
+import com.spark.platform.common.base.exception.BusinessException;
+import com.spark.platform.common.base.support.ApiResponse;
 import com.spark.platform.common.utils.SpringContextHolder;
 import com.spark.platform.flowable.api.enums.ActionEnum;
 import com.spark.platform.flowable.api.enums.RedisTopicName;
 import com.spark.platform.flowable.api.feign.client.TaskClient;
+import com.spark.platform.flowable.api.request.ExecuteTaskRequest;
 import com.spark.platform.flowable.api.vo.TaskVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.connection.Message;
@@ -75,7 +81,18 @@ public class RedisChannelListener implements MessageListener {
         TaskClient taskClient = SpringContextHolder.getBean(TaskClient.class);
         ArticleProcessKeyNode articleProcessKeyNode = ArticleProcessKeyNode.getProcessNextKeyNodeByKey(taskVO.getTaskDefinitionKey(),flag);
         Map<String, Object> map = ImmutableMap.of(ArticleConstant.PROCESS_NODE_SYSTEM_JUDGE.toUpperCase()+ArticleConstant.SUBMIT_SUFFIX, articleProcessKeyNode.getTargetNode());
-        taskClient.executeTask(taskVO.getId(), ActionEnum.COMPLETE.getAction(),"",false,map);
+        ExecuteTaskRequest executeTaskRequest = ExecuteTaskRequest.builder().action(ActionEnum.COMPLETE.getAction()).variables(map).build();
+        ApiResponse response = taskClient.executeTask(taskVO.getId(), executeTaskRequest);
+        if(!SparkHttpStatus.SUCCESS.getCode().equals(response.getCode())){
+            log.error("调用工作流失败");
+            throw new BusinessException("调用工作流失败");
+        }
+        //更新文章状态
+        ArticleService articleService = SpringContextHolder.getBean(ArticleService.class);
+        Article article = new Article();
+        article.setId(Long.parseLong(taskVO.getBusinessKey()));
+        article.setStatus(flag == true ? ArticleConstant.STATUS_PASS : ArticleConstant.STATUS_BACK_EDIT);
+        articleService.updateById(article);
         log.info("系统判断结束");
     }
 

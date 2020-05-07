@@ -2,6 +2,8 @@ package com.spark.platform.cms.article.entity;
 
 import java.time.LocalDateTime;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.spark.platform.common.base.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
@@ -28,6 +30,7 @@ public class Article extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "主键")
+    @TableId(type = IdType.AUTO)
     private Long id;
 
     @ApiModelProperty(value = "标题")
@@ -43,7 +46,7 @@ public class Article extends BaseEntity {
     private String link;
 
     @ApiModelProperty(value = "平台")
-    private String platform;
+    private String platforms;
 
     @ApiModelProperty(value = "是否原创")
     private String isOriginal;
@@ -56,6 +59,9 @@ public class Article extends BaseEntity {
 
     @ApiModelProperty(value = "发布时间")
     private LocalDateTime publishTime;
+
+    @ApiModelProperty(value = "概括")
+    private String contentShort;
 
 
 }

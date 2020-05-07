@@ -2,6 +2,7 @@ package com.spark.platform.cms.article.controller;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.spark.platform.cms.article.dto.ArticleAuditDto;
 import com.spark.platform.cms.article.entity.Article;
 import com.spark.platform.cms.article.service.ArticleService;
 import com.spark.platform.common.base.support.ApiResponse;
@@ -35,6 +36,12 @@ public class ArticleController extends BaseController {
         return success(articleService.findPage(page,article));
     }
 
+    @GetMapping("/{id}")
+    @ApiOperation(value = "根据id查询")
+    public ApiResponse findById(@PathVariable Long id){
+        return success(articleService.getById(id));
+    }
+
     @PostMapping
     @ApiOperation(value = "保存信息")
     public ApiResponse save(@RequestBody Article article){
@@ -53,6 +60,20 @@ public class ArticleController extends BaseController {
     @ApiOperation(value = "删除")
     public ApiResponse delete(@PathVariable Long id){
         return success(articleService.removeById(id));
+    }
+
+    @PostMapping("/audit")
+    @ApiOperation(value = "审核")
+    public ApiResponse audit(@RequestBody ArticleAuditDto articleAuditDto){
+        articleService.audit(articleAuditDto);
+        return success("操作成功");
+    }
+
+    @PostMapping("/back")
+    @ApiOperation(value = "退回修改")
+    public ApiResponse backSubmit(@RequestBody ArticleAuditDto articleAuditDto){
+        articleService.backEdit(articleAuditDto);
+        return success("操作成功");
     }
 
 }
