@@ -4,11 +4,10 @@ import com.spark.platform.common.base.constants.ServiceNameConstants;
 import com.spark.platform.common.base.support.ApiResponse;
 import com.spark.platform.common.feign.config.FeignRequestInterceptorConfig;
 import com.spark.platform.flowable.api.feign.fallback.TaskFallBackFactory;
+import com.spark.platform.flowable.api.request.ExecuteTaskRequest;
 import com.spark.platform.flowable.api.request.TaskRequestQuery;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 /**
  * @author: wangdingfeng
@@ -20,15 +19,10 @@ public interface TaskClient {
     /**
      * 执行任务
      * @param taskId
-     * @param action
-     * @param assignee
-     * @param localScope
-     * @param variables
      * @return
      */
     @PostMapping(value = "/runtime/tasks/{taskId}")
-    ApiResponse executeTask(@PathVariable String taskId, @RequestParam("action") String action, @RequestParam(value = "assignee") String assignee,
-                            @RequestParam(value = "localScope") boolean localScope, @RequestBody Map<String, Object> variables);
+    ApiResponse executeTask(@PathVariable String taskId, @RequestBody ExecuteTaskRequest executeTaskRequest);
 
     /**
      * 添加批注信息
@@ -38,7 +32,7 @@ public interface TaskClient {
      * @return
      */
     @PostMapping(value = "/runtime/tasks/comment")
-    ApiResponse addComments(@RequestParam String taskId,@RequestParam String processInstanceId,@RequestParam String message);
+    ApiResponse addComments(@RequestParam String taskId,@RequestParam String processInstanceId,@RequestParam String message,@RequestParam String userId);
 
     /**
      *
