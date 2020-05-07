@@ -10,7 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@MapperScan({"com.spark.platform.cms..*.dao"})
+@MapperScan({"com.spark.platform.cms.**.dao"})
 @EnableFeignClients(basePackages = {"com.spark.platform.adminapi.feign.client","com.spark.platform.flowable.api.feign"})
 @ComponentScan(basePackages = {"com.spark.platform"})
 @EnableSwagger2Doc
