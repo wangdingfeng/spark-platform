@@ -160,19 +160,20 @@ public interface ActTaskService {
      * @param taskId            流程任务ID.
      * @param processInstanceId 流程实例ID.
      * @param message           注释信息
+     * @param userId 当前用户id
      * @return
      * @throws Exception
      */
-    Comment addComment(String taskId, String processInstanceId, String message);
+    Comment addComment(String taskId, String processInstanceId, String message,String userId);
 
 
     /**
      * 查询与任务相关的注释信息。
      *
-     * @param taskId 流程任务ID.
+     * @param processInstanceId 流程实例ID.
      * @return
      */
-    List<Comment> getTaskComments(String taskId);
+    List<Comment> getProcessInstanceComments(String processInstanceId);
 
     /**
      * 任务撤回

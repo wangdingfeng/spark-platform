@@ -3,6 +3,7 @@ package com.spark.platform.flowable.biz.controller;
 import com.spark.platform.common.base.support.ApiResponse;
 import com.spark.platform.common.base.support.BaseController;
 import com.spark.platform.flowable.api.enums.ActionEnum;
+import com.spark.platform.flowable.api.request.ExecuteTaskRequest;
 import com.spark.platform.flowable.api.request.TaskRequestQuery;
 import com.spark.platform.flowable.biz.service.ActHistTaskService;
 import com.spark.platform.flowable.biz.service.ActTaskQueryService;
@@ -56,15 +57,15 @@ public class TaskController extends BaseController {
             @ApiImplicitParam(name = "processInstanceId", value = "流程实例ID", required = true, dataType = "String"),
             @ApiImplicitParam(name = "message", value = "批注信息", required = true, dataType = "String"),
     })
-    public ApiResponse addComments(@RequestParam String taskId,@RequestParam String processInstanceId,@RequestParam String message){
-        return success(actTaskService.addComment(taskId,processInstanceId,message));
+    public ApiResponse addComments(@RequestParam String taskId,@RequestParam String processInstanceId,@RequestParam String message, @RequestParam String userId){
+        return success(actTaskService.addComment(taskId,processInstanceId,message,userId));
     }
 
     @GetMapping(value = "/comment")
     @ApiOperation(value = "查询批注信息", produces = "application/json")
-    @ApiImplicitParams({@ApiImplicitParam(name = "taskId", value = "任务ID", required = true, dataType = "String")})
-    public ApiResponse getTaskComments(String taskId) {
-        return success(actTaskService.getTaskComments(taskId));
+    @ApiImplicitParams({@ApiImplicitParam(name = "processInstanceId", value = "流程实例ID", required = true, dataType = "String")})
+    public ApiResponse getTaskComments(String processInstanceId) {
+        return success(actTaskService.getProcessInstanceComments(processInstanceId));
     }
 
     @GetMapping(value = "/his")
@@ -86,10 +87,9 @@ public class TaskController extends BaseController {
             @ApiImplicitParam(name = "assignee", value = "受让人", required = false, dataType = "String"),
             @ApiImplicitParam(name = "localScope", value = "流程参数存储范围", required = false, dataType = "boolean")
     })
-    public ApiResponse executeTask(@PathVariable String taskId, @RequestParam("action") String action, @RequestParam(value = "assignee",required = false) String assignee,
-                                   @RequestParam(value = "localScope",required = false) boolean localScope, @RequestBody Map<String, Object> variables) {
-        Map<String, Object> map = actTaskService.execute(taskId, assignee, action, variables, localScope);
-        return success(ActionEnum.actionOf(action).getName(), map);
+    public ApiResponse executeTask(@PathVariable String taskId, @RequestBody ExecuteTaskRequest executeTaskRequest) {
+        Map<String, Object> map = actTaskService.execute(taskId, executeTaskRequest.getAssignee(), executeTaskRequest.getAction(), executeTaskRequest.getVariables(), executeTaskRequest.isLocalScope());
+        return success(ActionEnum.actionOf(executeTaskRequest.getAction()).getName(), map);
     }
 
     @PutMapping

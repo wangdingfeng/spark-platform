@@ -8,6 +8,7 @@ import com.spark.platform.flowable.api.enums.RedisTopicName;
 import com.spark.platform.flowable.api.vo.TaskVO;
 import com.spark.platform.flowable.biz.service.ActTaskQueryService;
 import lombok.extern.slf4j.Slf4j;
+import org.flowable.engine.RuntimeService;
 import org.flowable.task.api.Task;
 import org.flowable.task.service.delegate.DelegateTask;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -38,6 +39,10 @@ public class MessageRunnableTask implements Runnable {
         TaskVO taskVO = new TaskVO();
         BeanUtil.copyProperties(task, taskVO, "variables");
         taskVO.setVariables(task.getProcessVariables());
+        //查询业务主键
+        RuntimeService runtimeService = SpringContextHolder.getBean(RuntimeService.class);
+        taskVO.setBusinessKey(runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult().getBusinessKey());
+        log.info("发送消息:{}",JSONObject.toJSONString(taskVO));
         redisTemplate.convertAndSend(RedisTopicName.topicName, JSONObject.toJSONString(taskVO));
 
     }

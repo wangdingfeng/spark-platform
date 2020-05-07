@@ -3,16 +3,13 @@ package com.spark.platform.flowable.biz.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import com.google.common.collect.Maps;
 import com.spark.platform.flowable.api.enums.ActionEnum;
-import com.spark.platform.flowable.api.vo.TaskVO;
 import com.spark.platform.flowable.biz.service.ActTaskQueryService;
 import com.spark.platform.flowable.biz.service.ActTaskService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.TaskService;
 import org.flowable.engine.task.Comment;
 import org.flowable.task.api.Task;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -156,14 +153,17 @@ public class ActTaskServiceImpl implements ActTaskService {
     }
 
     @Override
-    public Comment addComment(String taskId, String processInstanceId, String message) {
+    public Comment addComment(String taskId, String processInstanceId, String message,String userId) {
         log.info("----任务或者流程实例添加备注：任务ID:{},流程实例ID{}---------",taskId,processInstanceId);
-        return taskService.addComment(taskId, processInstanceId, message);
+        Comment comment = taskService.addComment(taskId,processInstanceId,message);
+        comment.setUserId(userId);
+        taskService.saveComment(comment);
+        return comment;
     }
 
     @Override
-    public List<Comment> getTaskComments(String taskId) {
-        return taskService.getTaskComments(taskId);
+    public List<Comment> getProcessInstanceComments(String processInstanceId) {
+        return taskService.getProcessInstanceComments(processInstanceId);
     }
 
     @Override

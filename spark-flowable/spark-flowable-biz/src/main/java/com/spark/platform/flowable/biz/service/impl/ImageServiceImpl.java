@@ -140,45 +140,34 @@ public class ImageServiceImpl implements ImageService {
                 HistoricActivityInstance historicActivityInstance;
                 // 循环当前节点的所有流出线
                 // 循环所有历史节点
-                log.info("【开始】-匹配当前节点-ActivityId=【{}】需要高亮显示的流出线", currentActivityId);
-                log.info("循环历史节点");
                 for (int i = 0; i < historicActivityInstanceList.size(); i++) {
                     // 历史节点
                     historicActivityInstance = historicActivityInstanceList.get(i);
-                    log.info("第【{}/{}】个历史节点-ActivityId=[{}]", i + 1, size, historicActivityInstance.getActivityId());
                     // 如果循环历史节点中的id等于当前节点id，从当前历史节点继续先后查找是否有当前节点流程线等于的节点
                     // 历史节点的序号需要大于等于已完成历史节点的序号，防止驳回重审一个节点经过两次是只取第一次的流出线高亮显示，第二次的不显示
                     if (i >= k && historicActivityInstance.getActivityId().equals(currentActivityId)) {
-                        log.info("第[{}]个历史节点和当前节点一致-ActivityId=[{}]", i + 1, historicActivityInstance
-                                .getActivityId());
                         ifStartFind = true;
                         // 跳过当前节点继续查找下一个节点
                         continue;
                     }
                     if (ifStartFind) {
-                        log.info("[开始]-循环当前节点-ActivityId=【{}】的所有流出线", currentActivityId);
-
                         ifFinded = false;
                         for (SequenceFlow sequenceFlow : outgoingFlowList) {
                             // 如果当前节点流程线对应的下级节点在其后面的历史节点中，则该条流程线进行高亮显示
                             // 【问题】
-                            log.info("当前流出线的下级节点=[{}]", sequenceFlow.getTargetRef());
                             if (historicActivityInstance.getActivityId().equals(sequenceFlow.getTargetRef())) {
-                                log.info("当前节点[{}]需高亮显示的流出线=[{}]", currentActivityId, sequenceFlow.getId());
                                 highLightedFlowIdList.add(sequenceFlow.getId());
                                 // 暂时默认找到离当前节点最近的下一级节点即退出循环，否则有多条流出线时将全部被高亮显示
                                 ifFinded = true;
                                 break;
                             }
                         }
-                        log.info("[完成]-循环当前节点-ActivityId=【{}】的所有流出线", currentActivityId);
                     }
                     if (ifFinded) {
                         // 暂时默认找到离当前节点最近的下一级节点即退出历史节点循环，否则有多条流出线时将全部被高亮显示
                         break;
                     }
                 }
-                log.info("【完成】-匹配当前节点-ActivityId=【{}】需要高亮显示的流出线", currentActivityId);
             }
 
         }
@@ -211,9 +200,6 @@ public class ImageServiceImpl implements ImageService {
             List<String> highLightedActivitiIdList = new ArrayList<>();
             for (HistoricActivityInstance historicActivityInstance : historicActivityInstanceList) {
                 highLightedActivitiIdList.add(historicActivityInstance.getActivityId());
-                log.info("已执行的节点[{}-{}-{}-{}]", historicActivityInstance.getId(), historicActivityInstance
-                        .getActivityId(), historicActivityInstance.getActivityName(), historicActivityInstance
-                        .getAssignee());
             }
 
             // 通过流程实例ID获取流程中正在执行的节点
@@ -222,7 +208,6 @@ public class ImageServiceImpl implements ImageService {
             for (Execution execution : runningActivityInstanceList) {
                 if (StringUtils.isNotEmpty(execution.getActivityId())) {
                     runningActivitiIdList.add(execution.getActivityId());
-                    log.info("执行中的节点[{}-{}-{}]", execution.getId(), execution.getActivityId(), execution.getName());
                 }
             }
 
