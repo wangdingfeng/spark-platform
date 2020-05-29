@@ -1,6 +1,11 @@
 server:
   port: 9020
 spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 50MB
+      max-request-size: 100MB
   main:
     allow-bean-definition-overriding: true
   application:
