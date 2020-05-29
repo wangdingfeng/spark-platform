@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <base id="base" href="${basePath}">
+        <!-- build:css display/styles/displaymodel-style.css -->
+        <link type="text/css" rel="stylesheet" href="/flowable/display/jquery.qtip.min.css" />
+        <link type="text/css" rel="stylesheet" href="/flowable/display/displaymodel.css" />
+        <link rel="stylesheet" href="flowable/libs/bootstrap_3.1.1/css/bootstrap.min.css"/>
+    </head>
+<body>
+<div class="box-body" style="padding:10px 20px 0 20px;">
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            <div class="content center-pane" auto-height offset="40">
+                <div>流程说明 : &nbsp;
+                    <span style="color:#017501"><i class="glyphicon glyphicon-stop"></i> 已完成</span> &nbsp;
+                    <span style="color:#FF0000"><i class="glyphicon glyphicon-stop"></i> 进行中</span> &nbsp;
+                    <span style="color:#585858"><i class="glyphicon glyphicon-stop"></i> 未执行</span> &nbsp;
+                </div>
+                <div id="navigationTree" data-text-main-process="流程跟踪"></div>
+                <div id="bpmnModel" data-model-id="${id}" data-history-id="${id}"
+                     data-process-definition-id="" data-model-type="custom"
+                     style="overflow:auto;text-align:center;"></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- endbuild -->
+<script src="/flowable/libs/jquery_1.11.0/jquery.min.js"></script>
+<script type="text/javascript" src="/flowable/display/jquery.qtip.min.js"></script>
+<script type="text/javascript" src="/flowable/display/raphael.min.js"></script>
+<script type="text/javascript" src="/flowable/display/bpmn-draw.js"></script>
+<script type="text/javascript" src="/flowable/display/bpmn-icons.js"></script>
+<script type="text/javascript" src="/flowable/display/Polyline.js"></script>
+<script type="text/javascript" src="/flowable/display/displaymodel.js"></script>
+<!-- endbuild -->
+</body>
+</html>

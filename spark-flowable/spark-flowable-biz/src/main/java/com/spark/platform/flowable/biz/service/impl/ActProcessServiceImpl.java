@@ -1,5 +1,6 @@
 package com.spark.platform.flowable.biz.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
 import com.spark.platform.common.base.constants.ProcessConstants;
@@ -14,6 +15,8 @@ import org.flowable.engine.RepositoryService;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.repository.*;
 import org.flowable.engine.runtime.ProcessInstance;
+import org.flowable.ui.modeler.domain.Model;
+import org.flowable.ui.modeler.serviceapi.ModelService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +40,8 @@ public class ActProcessServiceImpl implements ActProcessService {
 
     @Autowired
     private RuntimeService runtimeService;
+    @Autowired
+    private ModelService modelService;
 
     @Override
     public DeploymentBuilder createDeployment() {
@@ -58,6 +63,25 @@ public class ActProcessServiceImpl implements ActProcessService {
         Deployment deploy = createDeployment().addClasspathResource(bpmnFileUrl).deploy();
         log.info("部署成功，当前部署ID:{}-部署的key{}-部署name;{}",deploy.getId(),deploy.getKey(),deploy.getName());
         return deploy;
+    }
+
+    @Override
+    public DeploymentVO deployByModel(String modelId, String category) {
+        Model model = modelService.getModel(modelId);
+        byte[] bpmnBytes = modelService.getBpmnXML(model);
+        String processName = model.getName();
+        if (!StrUtil.endWith(processName, ".bpmn20.xml")){
+            processName += ".bpmn20.xml";
+        }
+        DeploymentVO deploymentVO = new DeploymentVO();
+        Deployment deployment = repositoryService.createDeployment()
+                .addBytes(processName, bpmnBytes)
+                .name(model.getName())
+                .key(model.getKey())
+                .deploy();
+        //忽略二进制文件（模板文件、模板图片）返回
+        BeanUtils.copyProperties(deployment,deploymentVO,"resources");
+        return deploymentVO;
     }
 
     @Override

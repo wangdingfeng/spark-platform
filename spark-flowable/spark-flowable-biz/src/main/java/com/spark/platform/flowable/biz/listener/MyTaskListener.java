@@ -2,9 +2,9 @@ package com.spark.platform.flowable.biz.listener;
 
 
 import lombok.extern.slf4j.Slf4j;
-import org.flowable.engine.delegate.BaseTaskListener;
 import org.flowable.engine.delegate.TaskListener;
 
+import org.flowable.task.service.delegate.BaseTaskListener;
 import org.flowable.task.service.delegate.DelegateTask;
 import org.springframework.stereotype.Component;
 

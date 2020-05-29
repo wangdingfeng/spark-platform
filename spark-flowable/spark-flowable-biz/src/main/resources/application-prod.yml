@@ -1,16 +1,25 @@
 server:
   port: 9030
 spring:
+  freemarker:
+    suffix: .html
+    template-loader-path: classpath:/templates
+    charset: utf-8
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 50MB
+      max-request-size: 100MB
   main:
     allow-bean-definition-overriding: true
   application:
     name: spark-flowable
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url:  jdbc:mysql://127.0.0.1:3306/spark?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8&nullCatalogMeansCurrent=true
+    url:  jdbc:mysql://127.0.0.1:3306/flowable?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC&nullCatalogMeansCurrent=true
     username: root
     password:
-    name: spark
+    name: flowable
     type: com.alibaba.druid.pool.DruidDataSource
     initial-size: 5
     min-idle: 5
@@ -112,25 +121,29 @@ feign:
 
 # flowable配置
 flowable:
-  async-executor-activate: true
+  async-executor-activate: false
   check-process-definitions: true
   database-schema-update: true
   db-history-used: true
-  mail:
-    server:
-      default-from: flowable@localhost
-      host: localhost
-      password:
-      port: 1025
-      use-ssl: false
-      use-tls: false
-      username:
-  process-definition-location-prefix: classpath*:/processes/
 
-  # 直接放行URL
+#mybatis plus 配置
+mybatis-plus:
+  configuration-properties:
+    # 不要设置库名，否则会出现双库名 bug
+    prefix:
+    # 配置流程引擎参数，详情可见 DatabaseConfiguration
+    blobType: BLOB
+    boolValue: TRUE
+  type-aliases-package: com.spark.platform.flowable.api.entity
+  # 新增 modeler-mybatis-mappings xml 扫描
+  mapper-locations: classpath*:mapper/*.xml,classpath:/META-INF/modeler-mybatis-mappings/*.xml
+
+# 直接放行URL
 ignore:
   urls:
     - /actuator/**
+    - /app/**
+    - /flowable/**
     - /druid/**
     - /runtime/image/**
     - /runtime/tasks/**

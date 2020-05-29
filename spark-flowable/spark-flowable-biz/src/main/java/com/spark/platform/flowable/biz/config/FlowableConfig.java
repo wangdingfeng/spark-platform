@@ -3,8 +3,16 @@ package com.spark.platform.flowable.biz.config;
 import org.flowable.common.engine.impl.history.HistoryLevel;
 import org.flowable.engine.ProcessEngineConfiguration;
 import org.flowable.spring.SpringProcessEngineConfiguration;
+import org.flowable.ui.common.service.idm.RemoteIdmService;
+import org.flowable.ui.modeler.properties.FlowableModelerAppProperties;
+import org.flowable.ui.modeler.rest.app.EditorGroupsResource;
+import org.flowable.ui.modeler.rest.app.EditorUsersResource;
+import org.flowable.ui.modeler.rest.app.StencilSetResource;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -23,6 +31,24 @@ import java.io.IOException;
  * @Version: 1.0
  */
 @Configuration
+@EnableConfigurationProperties(FlowableModelerAppProperties.class)
+@ComponentScan(basePackages = {
+        "org.flowable.ui.modeler.rest.app",
+        "org.flowable.ui.task.service.debugger",
+        "org.flowable.ui.modeler.repository",
+        "org.flowable.ui.modeler.service",
+        "org.flowable.ui.common.service",
+        "org.flowable.ui.common.repository",
+        "org.flowable.ui.common.tenant"}, excludeFilters = {
+        // 移除 RemoteIdmService
+        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = RemoteIdmService.class),
+        // 移除 EditorUsersResource 与 EditorGroupsResource，因为不使用 IDM 部分
+        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = EditorUsersResource.class),
+        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = EditorGroupsResource.class),
+        // 配置文件用自己的
+        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = StencilSetResource.class),
+    }
+)
 public class FlowableConfig {
     @Bean
     public void processEngine(DataSourceTransactionManager transactionManager, DataSource dataSource) throws IOException {

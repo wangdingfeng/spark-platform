@@ -46,6 +46,13 @@ public interface ActProcessService {
      * @return
      */
     Deployment deploy(String url);
+    /**
+     * 通过模型ID 部署流程
+     * @param modelId
+     * @param category
+     * @return
+     */
+    DeploymentVO deployByModel(String modelId,String category);
 
     /**
      * 部署流程定义---通过inputstream流

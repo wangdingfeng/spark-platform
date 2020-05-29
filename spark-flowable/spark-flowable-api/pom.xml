@@ -20,7 +20,7 @@
             <artifactId>spark-common-base</artifactId>
             <version>${spark-common.version}</version>
         </dependency>
-        <!--feign 包含oauth-->
+        <!--feign-->
         <dependency>
             <groupId>com.spark.platform</groupId>
             <artifactId>spark-common-feign</artifactId>
