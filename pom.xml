@@ -53,6 +53,7 @@
         <spring-boot-admin-version>2.2.0</spring-boot-admin-version>
         <ip2-region-version>1.7.2</ip2-region-version>
         <commons-io-version>2.6</commons-io-version>
+        <flowable.version>6.4.2</flowable.version>
         <freemarker.version>2.3.28</freemarker.version>
     </properties>
 
