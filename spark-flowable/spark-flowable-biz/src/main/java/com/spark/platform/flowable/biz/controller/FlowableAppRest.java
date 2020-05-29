@@ -32,6 +32,7 @@ import org.flowable.ui.task.service.editor.mapper.ServiceTaskInfoMapper;
 import org.flowable.ui.task.service.editor.mapper.UserTaskInfoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -49,6 +50,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/app")
+@CrossOrigin
 @Slf4j
 public class FlowableAppRest {
 
