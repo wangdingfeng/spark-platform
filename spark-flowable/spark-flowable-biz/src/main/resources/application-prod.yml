@@ -122,7 +122,7 @@ feign:
 # flowable配置
 flowable:
   async-executor-activate: false
-  check-process-definitions: true
+  check-process-definitions: false
   database-schema-update: true
   db-history-used: true
 
