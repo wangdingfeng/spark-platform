@@ -1,5 +1,14 @@
 # spark-platform
-spark 开发平台
+
+spark 开发平台 作者：polaris.wang
+
+
+![https://img.shields.io/badge/AGPL-3.0-brightgreen](https://img.shields.io/badge/AGPL-3.0-brightgreen)
+![https://img.shields.io/badge/Spring%20Cloud-Hoxton.SR3-brightgreen](https://img.shields.io/badge/Spring%20Cloud-Hoxton.SR3-brightgreen)
+![https://img.shields.io/badge/Spring%20Boot-2.2.6.RELEASE-brightgreen](https://img.shields.io/badge/Spring%20Boot-2.2.6.RELEASE-brightgreen)
+![https://img.shields.io/badge/Flowable-6.4.2-brightgreen](https://img.shields.io/badge/Flowable-6.4.2-brightgreen)
+![https://img.shields.io/badge/Mybatis%20Plus-3.3.1-brightgreen](https://img.shields.io/badge/Mybatis%20Plus-3.3.1-brightgreen)
+
 
 - 基于 Spring Cloud Hoxton 、Spring Boot 2.2、 OAuth2 的RBAC权限管理系统  
 - 基于vue-element-template，更简洁的页面，实现的前后端交互
@@ -50,7 +59,7 @@ Gitee  | [https://gitee.com/dreamfeng/spark-platform](https://gitee.com/dreamfen
 ---|---
 Spring Boot |  2.2.6.RELEASE 
 Spring Cloud | Hoxton.SR3   
-Flowable | 6.4.0
+Flowable | 6.4.2
 Mybatis Plus | 3.3.1
 Spring Boot Admin | 2.2.0
 Security Jwt | 1.0.10.RELEASE
