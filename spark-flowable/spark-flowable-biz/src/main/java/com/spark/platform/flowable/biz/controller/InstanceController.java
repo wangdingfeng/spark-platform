@@ -1,8 +1,10 @@
 package com.spark.platform.flowable.biz.controller;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spark.platform.common.base.support.ApiResponse;
 import com.spark.platform.common.base.support.BaseController;
+import com.spark.platform.flowable.api.DTO.ProcessInstanceDTO;
 import com.spark.platform.flowable.api.enums.ActionEnum;
 import com.spark.platform.flowable.biz.service.ActInstanceService;
 import io.swagger.annotations.Api;
@@ -41,6 +43,12 @@ public class InstanceController extends BaseController {
                                   @RequestParam(value = "businessName") String businessName, @RequestBody Map<String, Object> variables) {
         ProcessInstance pi = actInstanceService.startProcessInstanceByKey(key, businessKey, businessType, businessName, variables);
         return success(pi.getId());
+    }
+
+    @GetMapping
+    @ApiOperation(value = "分页查询流程实例")
+    public ApiResponse page(ProcessInstanceDTO processInstanceDTO, Page page){
+        return success(actInstanceService.findPage(processInstanceDTO,page));
     }
 
     @GetMapping(value = "/{processInstanceId}")

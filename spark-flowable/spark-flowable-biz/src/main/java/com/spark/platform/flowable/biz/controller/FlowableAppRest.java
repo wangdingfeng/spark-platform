@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.spark.platform.flowable.biz.service.ActProcessService;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.flowable.bpmn.model.*;
@@ -52,6 +53,7 @@ import java.util.Set;
 @RequestMapping("/app")
 @CrossOrigin
 @Slf4j
+@Api(value = "FlowableAppRest", tags = {"重写rest接口"})
 public class FlowableAppRest {
 
     @Autowired

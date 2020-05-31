@@ -38,6 +38,12 @@ public class TaskController extends BaseController {
     private ActHistTaskService actHistTaskService;
 
 
+    @GetMapping("/count")
+    @ApiOperation(value = "根据用户ID或者用户组ID，查询该用户代办", produces = "application/json")
+    public ApiResponse count(String userId) {
+        return success(actTaskQueryService.countTaskCandidateOrAssignedOrGroup(userId,null));
+    }
+
     @PostMapping
     @ApiOperation(value = "根据用户ID或者用户组ID，查询该用户代办", produces = "application/json")
     public ApiResponse page(@RequestBody TaskRequestQuery taskRequestQuery) {
