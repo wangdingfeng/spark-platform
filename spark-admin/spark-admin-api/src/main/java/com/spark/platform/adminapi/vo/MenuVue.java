@@ -53,6 +53,10 @@ public class MenuVue{
      * 排序
      */
     private Integer sort;
+    /**
+     * 一直显示根路由
+     */
+    private boolean alwaysShow;
 
     private Meta meta;
 
@@ -70,7 +74,7 @@ public class MenuVue{
         /**
          * 如果设置为true，则不会被 <keep-alive> 缓存(默认 false)
          */
-        private Boolean noCache;
+        private Boolean noCache = true;
 
         public Meta(){
 

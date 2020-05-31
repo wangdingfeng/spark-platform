@@ -20,6 +20,7 @@ import com.spark.platform.adminapi.entity.user.User;
 import com.spark.platform.adminbiz.dao.user.UserDao;
 import com.spark.platform.adminbiz.service.user.UserService;
 import com.spark.platform.common.base.support.WrapperSupport;
+import com.spark.platform.common.config.redis.RedisUtils;
 import com.spark.platform.common.security.model.LoginUser;
 import com.spark.platform.common.security.util.UserUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -56,7 +57,11 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
     @Autowired
     private MenuService menuService;
 
+    @Autowired
+    private RedisUtils redisUtils;
+
     @Override
+    @Cacheable(value = GlobalsConstants.REDIS_USER_CACHE, unless = "#result == null", key = "T(com.spark.platform.common.base.constants.GlobalsConstants).USER_KEY_PREFIX.concat(T(String).valueOf(#username))")
     public UserDTO loadUserByUserName(String username) {
         UserDTO userDto = new UserDTO();
         UserVo userVo = super.baseMapper.findByUserName(username);
@@ -69,7 +74,6 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
     }
 
     @Override
-    @Cacheable(value = GlobalsConstants.REDIS_USER_CACHE, unless = "#result == null", key = "T(com.spark.platform.common.base.constants.GlobalsConstants).USER_KEY_PREFIX.concat(T(String).valueOf(#userId))")
     public User loadUserByUserId(Long userId) {
         return super.baseMapper.findByUserId(userId);
     }
@@ -151,6 +155,8 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
             user.setPassword(passwordEncoder.encode(password));
         }
         super.updateById(user);
+        //清除缓存
+        redisUtils.delete(GlobalsConstants.REDIS_USER_CACHE+"::"+GlobalsConstants.USER_KEY_PREFIX+user.getUsername());
     }
 
     @Override

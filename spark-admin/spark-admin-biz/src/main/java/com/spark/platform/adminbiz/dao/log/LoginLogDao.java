@@ -5,7 +5,9 @@ import com.spark.platform.adminapi.entity.log.LogLogin;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -23,5 +25,22 @@ public interface LoginLogDao extends BaseMapper<LogLogin> {
      */
     @Select("SELECT * FROM sys_log_login WHERE username=#{username} ORDER BY login_time DESC LIMIT 10")
     List<LogLogin> findLately(@Param("username") String username);
+
+    /**
+     * 获取今日登陆ip数
+     * @return
+     */
+    @Select("SELECT COUNT(DISTINCT location_ip) FROM sys_log_login WHERE TO_DAYS(login_time)=TO_DAYS(NOW())")
+    int countTodayIP();
+
+    /**
+     * 获取近七天的统计数据
+     * @return
+     */
+    @Select(" SELECT t1.time,COALESCE (t2.allData, 0) 'allData',COALESCE (t2.myData, 0) 'myData' FROM " +
+            " (SELECT @cdate := date_add(@cdate, INTERVAL - 1 DAY) AS time,0 AS count FROM (SELECT @cdate := date_add(CURDATE(), INTERVAL + 1 DAY) FROM sys_log_login) tmp WHERE @cdate > DATE_SUB(CURDATE(), INTERVAL 7 DAY)) t1 " +
+            " LEFT JOIN (SELECT DATE_FORMAT(login_time,'%Y-%m-%d') 'time',COUNT(1)  'allData',SUM(CASE WHEN username='admin' THEN 1 ELSE 0 END) 'myData' FROM sys_log_login WHERE DATE_SUB(CURDATE(), INTERVAL 7 DAY) <= DATE(login_time) GROUP BY DATE_FORMAT(login_time,'%Y-%m-%d')) t2 " +
+            " ON t1.time=t2.time")
+    List<Map <String,Object>> countMapData();
 
 }

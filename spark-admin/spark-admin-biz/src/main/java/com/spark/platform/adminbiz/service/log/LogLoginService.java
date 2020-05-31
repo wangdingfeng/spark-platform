@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.spark.platform.adminapi.entity.log.LogLogin;
+import com.spark.platform.adminapi.vo.IndexDataVo;
 
 import java.util.List;
 
@@ -30,5 +31,11 @@ public interface LogLoginService extends IService<LogLogin> {
      * @return
      */
     List<LogLogin> findLately(String username);
+
+    /**
+     * 获取首页统计数据
+     * @return
+     */
+    IndexDataVo getIndexData();
 
 }
