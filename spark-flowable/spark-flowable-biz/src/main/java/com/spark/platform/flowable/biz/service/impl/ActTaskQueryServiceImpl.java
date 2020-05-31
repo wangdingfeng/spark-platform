@@ -1,8 +1,10 @@
 package com.spark.platform.flowable.biz.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
+import com.spark.platform.common.utils.BeanCopyUtil;
 import com.spark.platform.flowable.api.enums.VariablesEnum;
 import com.spark.platform.flowable.api.request.TaskRequestQuery;
 import com.spark.platform.flowable.api.vo.TaskVO;
@@ -21,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -79,13 +82,7 @@ public class ActTaskQueryServiceImpl implements ActTaskQueryService {
             taskQuery.processInstanceId(taskRequestQuery.getProcessInstanceId());
         }
         List<Task> tasks = taskQuery.includeProcessVariables().list();
-        List<TaskVO> taskVOS = Lists.newArrayList();
-        tasks.forEach(task -> {
-            TaskVO taskVO = new TaskVO();
-            BeanUtil.copyProperties(task,taskVO,"variables");
-            taskVO.setVariables(task.getProcessVariables());
-            taskVOS.add(taskVO);
-        });
+        List<TaskVO> taskVOS = BeanCopyUtil.copyListProperties(tasks,TaskVO::new);
         return taskVOS;
     }
 
@@ -239,9 +236,9 @@ public class ActTaskQueryServiceImpl implements ActTaskQueryService {
     }
 
     @Override
-    public long countTaskCandidateOrAssignedOrGroup(String userId,String groupId) {
-        if(StringUtils.isBlank(groupId)) this.countTaskCandidateOrAssigned(userId);
-        return createTaskQuery().taskCandidateOrAssigned(userId).taskCandidateGroup(groupId).orderByTaskPriority().desc()
+    public long countTaskCandidateOrAssignedOrGroup(String userId,List<String> groupIds) {
+        if(CollectionUtil.isEmpty(groupIds)) return this.countTaskCandidateOrAssigned(userId);
+        return createTaskQuery().taskCandidateOrAssigned(userId).taskCandidateGroupIn(groupIds).orderByTaskPriority().desc()
                 .orderByTaskCreateTime().asc()
                 .count();
     }

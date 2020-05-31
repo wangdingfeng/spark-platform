@@ -205,7 +205,7 @@ public interface ActTaskQueryService {
      * @param userId 用户标识.
      * @return 活动任务数量.
      */
-    long countTaskCandidateOrAssignedOrGroup(String userId,String groupId);
+    long countTaskCandidateOrAssignedOrGroup(String userId,List<String> groupIds);
 
     /**
      * 通过用户标识(候选人)及查询条件map，统计活动任务数目（用户参与的）

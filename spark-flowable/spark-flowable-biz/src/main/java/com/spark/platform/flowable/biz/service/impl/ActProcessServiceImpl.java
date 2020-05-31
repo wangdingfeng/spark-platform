@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
 import com.spark.platform.common.base.constants.ProcessConstants;
+import com.spark.platform.common.utils.BeanCopyUtil;
 import com.spark.platform.flowable.api.DTO.DeploymentDTO;
 import com.spark.platform.flowable.api.DTO.ProcessDefinitionDTO;
 import com.spark.platform.flowable.api.vo.DeploymentVO;
@@ -170,12 +171,7 @@ public class ActProcessServiceImpl implements ActProcessService {
         }
         long count = processDefinitionQuery.count();
         List<ProcessDefinition> processDefinitionList = processDefinitionQuery.orderByDeploymentId().desc().listPage(firstResult,maxResults);
-        List<ProcessDefinitionVO> processDefinitionVOS = Lists.newArrayList();
-        processDefinitionList.forEach(processDefinition -> {
-            ProcessDefinitionVO vo = new ProcessDefinitionVO();
-            BeanUtils.copyProperties(processDefinition,vo);
-            processDefinitionVOS.add(vo);
-        });
+        List<ProcessDefinitionVO> processDefinitionVOS = BeanCopyUtil.copyListProperties(processDefinitionList,ProcessDefinitionVO::new);
         page.setRecords(processDefinitionVOS);
         page.setTotal(count);
         return page;
@@ -217,13 +213,7 @@ public class ActProcessServiceImpl implements ActProcessService {
         }
         long count = deploymentQuery.count();
         List<Deployment> deployments = deploymentQuery.orderByDeploymenTime().desc().listPage(firstResult,maxResults);
-        List<DeploymentVO> deploymentVOS = Lists.newArrayList();
-        deployments.forEach(deployment -> {
-            DeploymentVO deploymentVO = new DeploymentVO();
-            //忽略二进制文件（模板文件、模板图片）返回
-            BeanUtils.copyProperties(deployment,deploymentVO,"resources");
-            deploymentVOS.add(deploymentVO);
-        });
+        List<DeploymentVO> deploymentVOS = BeanCopyUtil.copyListProperties(deployments,DeploymentVO::new,"resources");
         page.setRecords(deploymentVOS);
         page.setTotal(count);
         return page;

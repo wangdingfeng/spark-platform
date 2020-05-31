@@ -1,9 +1,15 @@
 package com.spark.platform.flowable.biz.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.map.MapUtil;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.spark.platform.common.utils.BeanCopyUtil;
+import com.spark.platform.flowable.api.DTO.ProcessInstanceDTO;
 import com.spark.platform.flowable.api.enums.ActionEnum;
 import com.spark.platform.flowable.api.enums.VariablesEnum;
+import com.spark.platform.flowable.api.vo.ProcessInstanceVo;
 import com.spark.platform.flowable.api.vo.TaskVO;
 import com.spark.platform.flowable.biz.service.ActInstanceService;
 import com.spark.platform.flowable.biz.service.ActTaskQueryService;
@@ -24,6 +30,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -58,6 +65,25 @@ public class ActInstanceServiceImpl implements ActInstanceService {
     @Override
     public ProcessInstance processInstanceId(String processInstanceId) {
         return createProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
+    }
+
+    @Override
+    public Page<ProcessInstanceVo> findPage(ProcessInstanceDTO processInstanceDTO, Page page) {
+        int firstResult = (int)((page.getCurrent()-1)*page.getSize());
+        int maxResults = (int)(page.getCurrent()*page.getSize());
+        ProcessInstanceQuery query = createProcessInstanceQuery();
+        if(StringUtils.isNotBlank(processInstanceDTO.getBusinessKey())){
+            query.processInstanceBusinessKey(processInstanceDTO.getBusinessKey());
+        }
+        if(StringUtils.isNotBlank(processInstanceDTO.getName())){
+            query.processInstanceNameLike(processInstanceDTO.getName());
+        }
+        long count = query.count();
+        List<ProcessInstance> processInstanceList = query.orderByStartTime().desc().listPage(firstResult,maxResults);
+        List<ProcessInstanceVo> processInstanceVos = BeanCopyUtil.copyListProperties(processInstanceList, ProcessInstanceVo::new);
+        page.setRecords(processInstanceVos);
+        page.setTotal(count);
+        return page;
     }
 
     @Override

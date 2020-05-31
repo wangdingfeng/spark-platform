@@ -1,8 +1,12 @@
 package com.spark.platform.flowable.biz.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.spark.platform.flowable.api.DTO.ProcessInstanceDTO;
+import com.spark.platform.flowable.api.vo.ProcessInstanceVo;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.engine.runtime.ProcessInstanceQuery;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,6 +29,14 @@ public interface ActInstanceService  {
      * @return
      */
     ProcessInstance processInstanceId(String processInstanceId);
+
+    /**
+     * 分页查询数据
+     * @param processInstanceDTO
+     * @param page
+     * @return
+     */
+    Page<ProcessInstanceVo> findPage(ProcessInstanceDTO processInstanceDTO, Page page);
 
     /**
      * 查询流程实例
