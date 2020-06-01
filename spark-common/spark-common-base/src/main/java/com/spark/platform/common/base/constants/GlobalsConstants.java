@@ -41,7 +41,7 @@ public class GlobalsConstants {
     /**
      * 缓存中user 全部信息的key
      */
-    public static final String USER_INFO_KEY_PREFIX = "SparkUser_Info";
+    public static final String USER_INFO_KEY_PREFIX = "SparkUser_Info_";
     /**
      * 缓存中字典的key
      */
