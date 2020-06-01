@@ -32,10 +32,4 @@ public interface LogLoginService extends IService<LogLogin> {
      */
     List<LogLogin> findLately(String username);
 
-    /**
-     * 获取首页统计数据
-     * @return
-     */
-    IndexDataVo getIndexData();
-
 }

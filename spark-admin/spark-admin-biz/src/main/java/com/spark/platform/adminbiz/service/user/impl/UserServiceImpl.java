@@ -79,6 +79,7 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
     }
 
     @Override
+    @Cacheable(value = GlobalsConstants.REDIS_USER_CACHE, unless = "#result == null", key = "T(com.spark.platform.common.base.constants.GlobalsConstants).USER_INFO_KEY_PREFIX")
     public UserDTO getUserInfo() {
         UserDTO userDto = new UserDTO();
         LoginUser loginUser = UserUtils.getLoginUser();
@@ -119,6 +120,8 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
         int i = userRoleDao.deleteByUserId(user.getId());
         log.info("删除用户：{}角色:{}个", user.getId(), i);
         userRoleDao.insertBatch(user.getId(),user.getRoles());
+        //删除缓存
+        redisUtils.delete(GlobalsConstants.REDIS_USER_CACHE+"::"+GlobalsConstants.USER_INFO_KEY_PREFIX);
         return super.updateById(user);
     }
 

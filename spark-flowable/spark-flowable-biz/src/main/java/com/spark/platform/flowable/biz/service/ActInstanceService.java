@@ -156,7 +156,7 @@ public interface ActInstanceService  {
      * @return
      * @throws Exception
      */
-    void suspendProcessInstanceById(String processInstanceId) throws Exception;
+    void suspendProcessInstanceById(String processInstanceId);
 
     /**
      * 删除流程实例

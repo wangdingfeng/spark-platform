@@ -10,8 +10,10 @@ import com.spark.platform.adminapi.entity.role.RoleMenu;
 import com.spark.platform.adminbiz.dao.role.RoleDao;
 import com.spark.platform.adminbiz.dao.role.RoleMenuDao;
 import com.spark.platform.adminbiz.service.role.RoleService;
+import com.spark.platform.common.base.constants.GlobalsConstants;
 import com.spark.platform.common.base.exception.BusinessException;
 import com.spark.platform.common.base.support.WrapperSupport;
+import com.spark.platform.common.config.redis.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,6 +38,9 @@ public class RoleServiceImpl extends ServiceImpl<RoleDao, Role> implements RoleS
 
     @Autowired
     private RoleMenuDao roleMenuDao;
+
+    @Autowired
+    private RedisUtils redisUtils;
 
     @Override
     public List<Role> getRoleByUserId(Long userId) {
@@ -68,6 +73,8 @@ public class RoleServiceImpl extends ServiceImpl<RoleDao, Role> implements RoleS
             roleMenu.setMenuId(menuId);
             roleMenuDao.insert(roleMenu);
         }
+        //删除缓存
+        redisUtils.delete(GlobalsConstants.REDIS_USER_CACHE+"::"+GlobalsConstants.USER_INFO_KEY_PREFIX);
 
     }
 

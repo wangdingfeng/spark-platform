@@ -63,8 +63,14 @@ public class ProcessInstanceVo {
 
     private String superExecutionId;
 
+    private String suspensionState;
+
     private Boolean isSuspended;
 
     private Boolean isEnded;
 
+    public void setSuspensionState(String suspensionState) {
+        this.suspensionState = suspensionState;
+        this.isSuspended = "2".equals(suspensionState) ? true:false;
+    }
 }

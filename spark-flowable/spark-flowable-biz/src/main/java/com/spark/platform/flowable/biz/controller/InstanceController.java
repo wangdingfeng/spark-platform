@@ -61,13 +61,13 @@ public class InstanceController extends BaseController {
         return success(objectMap);
     }
 
-    @PutMapping(value = "/{processInstanceId}")
+    @PutMapping(value = "/{processInstanceId}/{action}")
     @ApiOperation(value = "操作流程", notes = "suspend: 挂起流程,activate: 激活流程", produces = "application/json")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "action", value = "任务类型", required = true, dataType = "String"),
             @ApiImplicitParam(name = "processInstanceId", value = "流程实例ID", required = true, dataType = "String")
     })
-    public ApiResponse actionById(@PathVariable String processInstanceId, @RequestParam("action") String action) {
+    public ApiResponse actionById(@PathVariable("processInstanceId") String processInstanceId, @PathVariable("action") String action) {
         actInstanceService.action(action, processInstanceId);
         return success(ActionEnum.actionOf(action).getName());
     }

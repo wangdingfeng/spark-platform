@@ -5,6 +5,7 @@ import cn.hutool.core.map.MapUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.spark.platform.common.security.util.UserUtils;
 import com.spark.platform.common.utils.BeanCopyUtil;
 import com.spark.platform.flowable.api.DTO.ProcessInstanceDTO;
 import com.spark.platform.flowable.api.enums.ActionEnum;
@@ -126,6 +127,7 @@ public class ActInstanceServiceImpl implements ActInstanceService {
         if(MapUtil.isEmpty(variables)) variables = Maps.newHashMap();
         variables.put(VariablesEnum.businessType.toString(),businessType);
         variables.put(VariablesEnum.businessName.toString(),businessName);
+        setAuthenticatedUserId(UserUtils.getLoginUser().getUsername());
         ProcessInstance processInstance = this.startProcessInstanceByKey(processDefinitionKey,businessKey,variables);
         return processInstance;
     }
