@@ -38,7 +38,7 @@ public interface UserService extends IService<User> {
      * 获取用户信息
      * @return
      */
-    UserDTO getUserInfo();
+    UserDTO getUserInfo(String username);
 
     /**
      * 保存用户信息

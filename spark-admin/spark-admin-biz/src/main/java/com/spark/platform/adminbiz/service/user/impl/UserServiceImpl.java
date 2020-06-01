@@ -79,8 +79,8 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
     }
 
     @Override
-    @Cacheable(value = GlobalsConstants.REDIS_USER_CACHE, unless = "#result == null", key = "T(com.spark.platform.common.base.constants.GlobalsConstants).USER_INFO_KEY_PREFIX")
-    public UserDTO getUserInfo() {
+    @Cacheable(value = GlobalsConstants.REDIS_USER_CACHE, unless = "#result == null", key = "T(com.spark.platform.common.base.constants.GlobalsConstants).USER_INFO_KEY_PREFIX.concat(T(String).valueOf(#username))")
+    public UserDTO getUserInfo(String username) {
         UserDTO userDto = new UserDTO();
         LoginUser loginUser = UserUtils.getLoginUser();
         User user = this.getById(loginUser.getId());
