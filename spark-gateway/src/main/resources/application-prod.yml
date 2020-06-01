@@ -50,11 +50,6 @@ spring:
               args:
                 name: flowable-hystrix
                 fallbackUri: forward:/common/fallback
-            - name: RequestRateLimiter
-              args:
-                redis-rate-limiter.replenishRate: 2
-                redis-rate-limiter.burstCapacity: 5
-                key-resolver: "#{@ipKeyResolver}"
         - id: spark-cms
           uri: lb://spark-cms
           predicates:
