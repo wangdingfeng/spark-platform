@@ -33,7 +33,7 @@ public class UserController extends BaseController {
     @GetMapping("/principal")
     @ApiOperation(value = "获取用户DTO")
     public ApiResponse getUserInfo() {
-        return success(userService.getUserInfo());
+        return success(userService.getUserInfo( UserUtils.getLoginUser().getUsername()));
     }
 
     @GetMapping("/{id}")
