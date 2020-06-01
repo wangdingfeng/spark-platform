@@ -26,8 +26,8 @@ public class DruidConfig {
         // IP黑名单(共同存在时，deny优先于allow)
         servletRegistrationBean.addInitParameter("deny", "192.168.1.100");
         //控制台管理用户
-        servletRegistrationBean.addInitParameter("loginUsername", "admin");
-        servletRegistrationBean.addInitParameter("loginPassword", "admin");
+        servletRegistrationBean.addInitParameter("loginUsername", "spark");
+        servletRegistrationBean.addInitParameter("loginPassword", "spark");
         //是否能够重置数据 禁用HTML页面上的“Reset All”功能
         servletRegistrationBean.addInitParameter("resetEnable", "false");
         return servletRegistrationBean;

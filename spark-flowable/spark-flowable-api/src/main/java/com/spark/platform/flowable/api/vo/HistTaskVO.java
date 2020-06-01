@@ -34,7 +34,7 @@ public class HistTaskVO implements Serializable {
     private String scopeType;
     private String scopeDefinitionId;
     private Date createTime;
-    private String endTime;
+    private Date endTime;
     private String durationInMillis;
     private String deleteReason;
     private String name;
