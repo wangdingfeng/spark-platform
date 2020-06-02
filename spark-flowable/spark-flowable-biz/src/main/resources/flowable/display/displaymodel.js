@@ -259,9 +259,24 @@ var request = jQuery.ajax({
     type: 'get',
     url: modelUrl + '?nocaching=' + new Date().getTime()
 });
-
+if(jQuery .blockUI){
+    var html ='<div class="loading-message loading-message-boxed"><img src="/flowable/images/loading-spinner-grey.gif" align=""><span>&nbsp;&nbsp;加载中...</span></div>';
+    $.blockUI({
+        message: html,
+        baseZ: 1000,
+        css: {
+            border: '0',
+            padding: '0',
+            backgroundColor: 'none'
+        },
+        overlayCSS: {
+            backgroundColor: '#555',
+            opacity: 0.1,
+            cursor: 'wait'
+        }
+    });
+}
 request.success(function(data, textStatus, jqXHR) {
-
     if ((!data.elements || data.elements.length == 0) && (!data.pools || data.pools.length == 0)) return;
 
     INITIAL_CANVAS_WIDTH = data.diagramWidth;
@@ -330,8 +345,13 @@ request.success(function(data, textStatus, jqXHR) {
             }
         }
     }
+    if(jQuery .blockUI){
+        $.unblockUI();//解锁界面
+    }
 });
-
 request.error(function(jqXHR, textStatus, errorThrown) {
     alert("error");
+    if(jQuery .blockUI){
+        $.unblockUI();//解锁界面
+    }
 });

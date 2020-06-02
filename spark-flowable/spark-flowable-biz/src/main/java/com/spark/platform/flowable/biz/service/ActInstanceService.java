@@ -2,6 +2,8 @@ package com.spark.platform.flowable.biz.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spark.platform.flowable.api.DTO.ProcessInstanceDTO;
+import com.spark.platform.flowable.api.request.ProcessInstanceCreateRequest;
+import com.spark.platform.flowable.api.vo.IdentityLinkVo;
 import com.spark.platform.flowable.api.vo.ProcessInstanceVo;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.engine.runtime.ProcessInstanceQuery;
@@ -83,15 +85,11 @@ public interface ActInstanceService  {
     /**
      * 启动流程实例---流程定义ID
      *
-     * @param processDefinitionKey 流程定义Key，不能为空.
-     * @param businessKey 业务id
-     * @param businessType 业务type
-     * @param businessName 业务名称
-     * @param variables           流程实例变量。
+     * @param request 流程信息
      * @return
      */
 
-    ProcessInstance startProcessInstanceByKey(String processDefinitionKey, String businessKey, String businessType, String businessName,Map<String, Object> variables);
+    ProcessInstance startProcessInstanceByKey(ProcessInstanceCreateRequest request);
 
     /**
      * 启动流程实例--通过流程定义key、流程实例变量
@@ -222,4 +220,12 @@ public interface ActInstanceService  {
      * @return
      */
     void deleteMultiInstanceExecution(String currentChildExecutionId, boolean flag);
+
+    /**
+     * 获取流程实例的参与人员
+     * @param processInstanceId
+     * @return
+     */
+    List<IdentityLinkVo> getIdentityLinks(String processInstanceId);
+
 }

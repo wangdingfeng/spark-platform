@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,7 +28,7 @@ import java.util.zip.ZipInputStream;
  */
 @RestController
 @RequestMapping("/runtime/process-definitions")
-@Api(value = "Process", tags = {"流程模板"}, description = "注意：如果部署流程定义时指定了tenantId,那么在启动流程实例的时候，也需要传递tenantId，否则报错")
+@Api(value = "Process", tags = {"流程定义"}, description = "注意：如果部署流程定义时指定了tenantId,那么在启动流程实例的时候，也需要传递tenantId，否则报错")
 public class ProcessController extends BaseController {
 
     @Autowired
@@ -104,5 +105,14 @@ public class ProcessController extends BaseController {
         while ((len = resourceAsStream.read(b, 0, 1024)) != -1) {
             response.getOutputStream().write(b, 0, len);
         }
+    }
+
+    @GetMapping("/resource/downloadXml/{deploymentId}")
+    @ApiOperation(value = "下载xml", produces = "application/json")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "deploymentId", value = "流程定义ID", required = true, dataType = "String")
+    })
+    public void downloadXml(HttpServletResponse response, HttpServletRequest request,@PathVariable("deploymentId") String processDefinitionId){
+        actProcessService.downloadXml(response,request,processDefinitionId);
     }
 }

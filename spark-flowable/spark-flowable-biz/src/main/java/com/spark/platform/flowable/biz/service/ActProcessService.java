@@ -9,6 +9,8 @@ import org.flowable.common.engine.api.FlowableObjectNotFoundException;
 import org.flowable.engine.repository.*;
 import org.springframework.lang.Nullable;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 import java.util.zip.ZipInputStream;
 
@@ -181,4 +183,12 @@ public interface ActProcessService {
      * @return
      */
     InputStream resourceRead(String procDefId, String proInsId, String resType);
+
+    /**
+     * 下载xml
+     * @param response
+     * @param request
+     * @param deploymentId
+     */
+    void downloadXml(HttpServletResponse response, HttpServletRequest request, String deploymentId);
 }

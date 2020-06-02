@@ -6,6 +6,7 @@ import com.spark.platform.common.base.support.ApiResponse;
 import com.spark.platform.common.base.support.BaseController;
 import com.spark.platform.flowable.api.DTO.ProcessInstanceDTO;
 import com.spark.platform.flowable.api.enums.ActionEnum;
+import com.spark.platform.flowable.api.request.ProcessInstanceCreateRequest;
 import com.spark.platform.flowable.biz.service.ActInstanceService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -33,15 +34,8 @@ public class InstanceController extends BaseController {
 
     @PostMapping
     @ApiOperation(value = "启动流程实例__通过流程定义key", notes = "实例启动成功，返回当前活动任务", produces = "application/json")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "key", value = "流程定义key", required = true),
-            @ApiImplicitParam(name = "businessKey", value = "业务ID(通常为当前业务主键)"),
-            @ApiImplicitParam(name = "businessType", value = "业务type(通常为当前业务类型)"),
-            @ApiImplicitParam(name = "businessName", value = "业务name(通常为当前业务名称)"),
-    })
-    public ApiResponse startByKey(@RequestParam(value = "key") String key, @RequestParam(value = "businessKey") String businessKey, @RequestParam(value = "businessType") String businessType,
-                                  @RequestParam(value = "businessName") String businessName, @RequestBody Map<String, Object> variables) {
-        ProcessInstance pi = actInstanceService.startProcessInstanceByKey(key, businessKey, businessType, businessName, variables);
+    public ApiResponse startByKey(@RequestBody ProcessInstanceCreateRequest request) {
+        ProcessInstance pi = actInstanceService.startProcessInstanceByKey(request);
         return success(pi.getId());
     }
 
@@ -80,6 +74,12 @@ public class InstanceController extends BaseController {
     public ApiResponse delete(@PathVariable String processInstanceId){
         actInstanceService.deleteProcessInstance(processInstanceId,null);
         return success("删除成功");
+    }
+
+    @ApiOperation(value = "获取人员", notes = "参与流程实例的人员信息", produces = "application/json")
+    @GetMapping(value = "/{processInstanceId}/identitylinks", produces = "application/json")
+    public ApiResponse getIdentityLinks(@PathVariable String processInstanceId){
+        return success(actInstanceService.getIdentityLinks(processInstanceId));
     }
 
     @PostMapping(value = "/{processInstanceId}/identitylinks")

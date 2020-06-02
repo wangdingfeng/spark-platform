@@ -1,21 +1,19 @@
 package com.spark.platform.flowable.biz.service.impl;
 
-import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.map.MapUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.spark.platform.common.security.util.UserUtils;
 import com.spark.platform.common.utils.BeanCopyUtil;
 import com.spark.platform.flowable.api.DTO.ProcessInstanceDTO;
 import com.spark.platform.flowable.api.enums.ActionEnum;
-import com.spark.platform.flowable.api.enums.VariablesEnum;
+import com.spark.platform.flowable.api.request.ProcessInstanceCreateRequest;
+import com.spark.platform.flowable.api.vo.IdentityLinkVo;
 import com.spark.platform.flowable.api.vo.ProcessInstanceVo;
 import com.spark.platform.flowable.api.vo.TaskVO;
 import com.spark.platform.flowable.biz.service.ActInstanceService;
 import com.spark.platform.flowable.biz.service.ActTaskQueryService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.flowable.common.engine.api.FlowableIllegalArgumentException;
 import org.flowable.engine.IdentityService;
 import org.flowable.engine.ManagementService;
 import org.flowable.engine.RuntimeService;
@@ -23,7 +21,9 @@ import org.flowable.engine.TaskService;
 import org.flowable.engine.impl.cmd.AddMultiInstanceExecutionCmd;
 import org.flowable.engine.impl.cmd.DeleteMultiInstanceExecutionCmd;
 import org.flowable.engine.runtime.ProcessInstance;
+import org.flowable.engine.runtime.ProcessInstanceBuilder;
 import org.flowable.engine.runtime.ProcessInstanceQuery;
+import org.flowable.identitylink.api.IdentityLink;
 import org.flowable.task.api.Task;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -120,15 +120,29 @@ public class ActInstanceServiceImpl implements ActInstanceService {
     }
 
     @Override
-    public ProcessInstance startProcessInstanceByKey(String processDefinitionKey,String businessKey,String businessType, String businessName, Map<String, Object> variables) {
-        Assert.notNull(businessKey, "请输入业务id");
-        Assert.notNull(businessType, "请输入业务类型");
-        //系统常量放入variables中
-        if(MapUtil.isEmpty(variables)) variables = Maps.newHashMap();
-        variables.put(VariablesEnum.businessType.toString(),businessType);
-        variables.put(VariablesEnum.businessName.toString(),businessName);
+    public ProcessInstance startProcessInstanceByKey(ProcessInstanceCreateRequest request) {
+        Assert.notNull(request.getBusinessKey(), "请输入业务id");
+        Assert.notNull(request.getBusinessType(), "请输入业务类型");
+        int paramsSet = ((request.getProcessDefinitionId() != null) ? 1 : 0) + ((request.getProcessDefinitionKey() != null) ? 1 : 0);
+        if (paramsSet > 1) {
+            throw new FlowableIllegalArgumentException("Only one of processDefinitionId, processDefinitionKey or message should be set.");
+        }
+        ProcessInstanceBuilder processInstanceBuilder = runtimeService.createProcessInstanceBuilder();
+        if(StringUtils.isNotBlank(request.getProcessDefinitionId())){
+            processInstanceBuilder.processDefinitionId(request.getProcessDefinitionId());
+        }
+        if(StringUtils.isNotBlank(request.getProcessDefinitionKey())){
+            processInstanceBuilder.processDefinitionKey(request.getProcessDefinitionKey());
+        }
+        if(StringUtils.isNotBlank(request.getBusinessKey())){
+            processInstanceBuilder.businessKey(request.getBusinessKey());
+        }
+        if(StringUtils.isNotBlank(request.getTenantId())){
+            processInstanceBuilder.tenantId(request.getTenantId());
+        }
+        processInstanceBuilder.variables(request.getVariables());
         setAuthenticatedUserId(UserUtils.getLoginUser().getUsername());
-        ProcessInstance processInstance = this.startProcessInstanceByKey(processDefinitionKey,businessKey,variables);
+        ProcessInstance processInstance = processInstanceBuilder.start();
         return processInstance;
     }
 
@@ -251,5 +265,11 @@ public class ActInstanceServiceImpl implements ActInstanceService {
     @Override
     public void deleteMultiInstanceExecution(String currentChildExecutionId, boolean flag) {
         managementService.executeCommand(new DeleteMultiInstanceExecutionCmd(currentChildExecutionId, flag));
+    }
+
+    @Override
+    public List<IdentityLinkVo> getIdentityLinks(String processInstanceId) {
+        List<IdentityLink> identityLinks = runtimeService.getIdentityLinksForProcessInstance(processInstanceId);
+        return BeanCopyUtil.copyListProperties(identityLinks, IdentityLinkVo::new);
     }
 }

@@ -74,7 +74,7 @@ public class MenuVue{
         /**
          * 如果设置为true，则不会被 <keep-alive> 缓存(默认 false)
          */
-        private Boolean noCache = true;
+        private Boolean noCache = false;
 
         public Meta(){
 

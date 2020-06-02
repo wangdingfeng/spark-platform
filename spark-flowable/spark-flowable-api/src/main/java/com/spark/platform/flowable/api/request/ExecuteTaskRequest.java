@@ -26,14 +26,12 @@ import java.util.Map;
 @AllArgsConstructor
 @ApiModel(value = "ExecuteTaskRequest",description = "task任务执行")
 public class ExecuteTaskRequest {
-    @ApiModelProperty(value = "任务ID")
-    private String taskId;
     @ApiModelProperty(value = "执行任务类型")
     private String action;
     @ApiModelProperty(value = "受让人")
     private String assignee;
     @ApiModelProperty(value = "流程参数存储范围")
-    private boolean localScope = false;
+    private Boolean localScope = false;
     @ApiModelProperty(value = "参数")
     private Map<String,Object> variables;
 }

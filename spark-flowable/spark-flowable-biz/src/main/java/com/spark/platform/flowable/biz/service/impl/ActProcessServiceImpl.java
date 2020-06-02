@@ -1,8 +1,8 @@
 package com.spark.platform.flowable.biz.service.impl;
 
+import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.google.common.collect.Lists;
 import com.spark.platform.common.base.constants.ProcessConstants;
 import com.spark.platform.common.utils.BeanCopyUtil;
 import com.spark.platform.flowable.api.DTO.DeploymentDTO;
@@ -11,6 +11,7 @@ import com.spark.platform.flowable.api.vo.DeploymentVO;
 import com.spark.platform.flowable.api.vo.ProcessDefinitionVO;
 import com.spark.platform.flowable.biz.service.ActProcessService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.flowable.engine.RepositoryService;
 import org.flowable.engine.RuntimeService;
@@ -23,6 +24,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 import java.util.List;
 import java.util.zip.ZipInputStream;
@@ -234,5 +237,32 @@ public class ActProcessServiceImpl implements ActProcessService {
         }
         InputStream resourceAsStream = repositoryService.getResourceAsStream(processDefinition.getDeploymentId(), resourceName);
         return resourceAsStream;
+    }
+
+    @Override
+    public void downloadXml(HttpServletResponse response, HttpServletRequest request, String processDefinitionId) {
+        try {
+            ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionId(processDefinitionId).singleResult();
+            InputStream inputStream = repositoryService.getResourceAsStream(processDefinition.getDeploymentId(), processDefinition.getResourceName());
+            byte[] data = IoUtil.readBytes(inputStream);
+            response.reset();
+            String fileName = processDefinition.getResourceName();
+            //浏览器设置
+            String userAgent = request.getHeader("User-Agent");
+            if (userAgent.contains("MSIE") || userAgent.contains("Trident")) {
+                //IE浏览器处理
+                fileName = java.net.URLEncoder.encode(fileName, "UTF-8");
+            } else {
+                // 非IE浏览器的处理：
+                fileName = new String(fileName.getBytes("UTF-8"), "ISO-8859-1");
+            }
+            //下载的文件携带这个名称
+            response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
+            response.addHeader("Content-Length", "" + data.length);
+            response.setContentType("application/octet-stream; charset=UTF-8");
+            IOUtils.write(data, response.getOutputStream());
+        }catch (Exception e){
+            log.error("获取流异常!",e);
+        }
     }
 }

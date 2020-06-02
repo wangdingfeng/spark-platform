@@ -23,6 +23,7 @@ import com.spark.platform.flowable.api.enums.VariablesEnum;
 import com.spark.platform.flowable.api.feign.client.InstanceClient;
 import com.spark.platform.flowable.api.feign.client.TaskClient;
 import com.spark.platform.flowable.api.request.ExecuteTaskRequest;
+import com.spark.platform.flowable.api.request.ProcessInstanceCreateRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -70,7 +71,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> impleme
     public void publish(Article article) {
         //放入提交人
         Map<String,Object> variables = ImmutableMap.of(VariablesEnum.submitter.toString(), UserUtils.getLoginUser().getUsername());
-        ApiResponse apiResponse = instanceClient.startByKey(ArticleConstant.PROCESS_KEY,article.getId().toString(),ArticleConstant.PROCESS_BUSINESS_TYPE,article.getTitle(),variables);
+        ProcessInstanceCreateRequest request = new ProcessInstanceCreateRequest(ArticleConstant.PROCESS_KEY,article.getId().toString(),ArticleConstant.PROCESS_BUSINESS_TYPE,article.getTitle(),variables);
+        ApiResponse apiResponse = instanceClient.startByKey(request);
         if(!SparkHttpStatus.SUCCESS.getCode().equals(apiResponse.getCode())){
             log.error("发起工作流失败",apiResponse.getData());
             throw new BusinessException("发起工作流失败!");
@@ -87,8 +89,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> impleme
         //执行工作流
         ArticleProcessKeyNode keyNode = ArticleProcessKeyNode.getProcessNextKeyNodeByKey(articleAuditDto.getTaskDefinitionKey(),articleAuditDto.getResult());
         Map<String,Object> variables = ImmutableMap.of(ArticleConstant.PROCESS_NODE_SUBMIT_APPROVAL.toUpperCase()+ArticleConstant.SUBMIT_SUFFIX,keyNode.getTargetNode());
-        ExecuteTaskRequest executeTaskRequest = ExecuteTaskRequest.builder().taskId(articleAuditDto.getTaskId()).action(ActionEnum.COMPLETE.getAction()).variables(variables).build();
-        executeTask(executeTaskRequest);
+        ExecuteTaskRequest executeTaskRequest = ExecuteTaskRequest.builder().action(ActionEnum.COMPLETE.getAction()).variables(variables).build();
+        executeTask(articleAuditDto.getTaskId(),executeTaskRequest);
     }
 
     @Override
@@ -137,16 +139,16 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> impleme
             }
         }
         //执行工作流
-        ExecuteTaskRequest executeTaskRequest = ExecuteTaskRequest.builder().taskId(articleAuditDto.getTaskId()).action(ActionEnum.COMPLETE.getAction()).variables(variables).build();
-        executeTask(executeTaskRequest);
+        ExecuteTaskRequest executeTaskRequest = ExecuteTaskRequest.builder().action(ActionEnum.COMPLETE.getAction()).variables(variables).build();
+        executeTask(articleAuditDto.getTaskId(),executeTaskRequest);
     }
 
     /**
      * 执行工作流
      * @param executeTaskRequest
      */
-    private void executeTask(ExecuteTaskRequest executeTaskRequest){
-        ApiResponse apiResponse = taskClient.executeTask(executeTaskRequest.getTaskId(), executeTaskRequest);
+    private void executeTask(String taskId,ExecuteTaskRequest executeTaskRequest){
+        ApiResponse apiResponse = taskClient.executeTask(taskId, executeTaskRequest);
         if(!SparkHttpStatus.SUCCESS.getCode().equals(apiResponse.getCode())){
             log.error("执行工作流失败",apiResponse.getData());
             throw new BusinessException("执行工作流失败!");
