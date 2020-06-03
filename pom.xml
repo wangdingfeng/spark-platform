@@ -27,6 +27,7 @@
         <module>spark-control</module>
         <module>spark-flowable</module>
         <module>spark-cms</module>
+        <module>spark-tx-manager</module>
     </modules>
 
 
@@ -55,6 +56,7 @@
         <commons-io-version>2.6</commons-io-version>
         <flowable.version>6.4.2</flowable.version>
         <freemarker.version>2.3.28</freemarker.version>
+        <tx-manager-version>5.0.2.RELEASE</tx-manager-version>
     </properties>
 
     <dependencies>

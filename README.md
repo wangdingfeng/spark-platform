@@ -25,6 +25,7 @@ spark 开发平台 作者：polaris.wang
 2. 工作流集成flowable-modeler 设计流程，并在此基础上添加部署。
 3. 工作流流程图跟踪使用官方的显示的方式。
 4. 登录接口使用缓存，提高系统效率，首页添加一键清除所有缓存。
+5. 分布式事务，文档请参考
  
  _强调_ 接下来开发的功能:内容管理bug修改，导入导出excel、开发文档支持，完善自动生成代码，另开分支添加阿里的配置中心和注册中心。敬请期待
 
@@ -93,6 +94,7 @@ spark-platform
      └── spark-flowable-api -- 通用工作流模块公共api模块
      └── spark-flowable-biz -- 通用工作流模块业务处理模块
 ├── spark-cms -- 内容管理平台
+├── spark-tx-manager -- 分布式事务
 ```
  **平台截图**
  ![输入图片说明](https://images.gitee.com/uploads/images/2020/0502/205849_8b0d2d5c_1890906.png "屏幕截图.png")
