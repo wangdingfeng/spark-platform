@@ -140,5 +140,9 @@ public class GlobalsConstants {
      * 文件存储业务路径
      */
     public static final String FILE_PATH_BIZ = "biz";
+    /**
+     * 超级管理员角色
+     */
+    public static final String ROLE_ADMIN = "role_admin";
 
 }

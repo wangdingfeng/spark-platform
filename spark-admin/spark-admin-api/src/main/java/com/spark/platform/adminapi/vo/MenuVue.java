@@ -71,18 +71,13 @@ public class MenuVue{
          * 设置该路由的图标
          */
         private String icon;
-        /**
-         * 如果设置为true，则不会被 <keep-alive> 缓存(默认 false)
-         */
-        private Boolean noCache = false;
 
         public Meta(){
 
         }
-        public Meta(String title,String icon,Boolean noCache){
+        public Meta(String title,String icon){
             this.title = title;
             this.icon = icon;
-            this.noCache = noCache;
         }
 
         public String getTitle() {
@@ -99,14 +94,6 @@ public class MenuVue{
 
         public void setIcon(String icon) {
             this.icon = icon;
-        }
-
-        public Boolean getNoCache() {
-            return noCache;
-        }
-
-        public void setNoCache(Boolean noCache) {
-            this.noCache = noCache;
         }
     }
 

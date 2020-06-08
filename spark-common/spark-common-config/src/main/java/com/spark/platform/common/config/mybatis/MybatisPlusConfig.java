@@ -3,7 +3,9 @@ package com.spark.platform.common.config.mybatis;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
 
 /**
  * @ProjectName: spark-platform
@@ -21,7 +23,10 @@ public class MybatisPlusConfig {
      * 分页插件
      */
     @Bean
+    @Order(-2)
     public PaginationInterceptor paginationInterceptor() {
-        return new PaginationInterceptor();
+        PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
+        return paginationInterceptor;
     }
+
 }

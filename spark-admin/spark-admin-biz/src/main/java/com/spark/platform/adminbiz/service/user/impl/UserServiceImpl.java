@@ -65,11 +65,16 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
     public UserDTO loadUserByUserName(String username) {
         UserDTO userDto = new UserDTO();
         UserVo userVo = super.baseMapper.findByUserName(username);
-        if(null == userVo) return null;
+        if(null == userVo){
+            return null;
+        }
         userDto.setSysUser(userVo);
+        List<String> permissions = Lists.newArrayList();
+        //查询角色信息
+        permissions.addAll(roleService.getRoleByUserId(userVo.getId()).stream().map(Role::getRoleCode).collect(toList()));
+        permissions.addAll(menuService.findAuthByUserId(userVo.getId()).stream().map(Menu::getPermission).collect(toList()));
         //查询权限
-        List<Menu> menus = menuService.findAuthByUserId(userVo.getId());
-        userDto.setPermissions(menus.stream().map(Menu::getPermission).collect(toList()));
+        userDto.setPermissions(permissions);
         return userDto;
     }
 
@@ -130,7 +135,7 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
         QueryWrapper wrapper = new QueryWrapper<User>();
         WrapperSupport.putParamsLike(wrapper,user,"username","nickname");
         WrapperSupport.putParamsEqual(wrapper,user,"status","deptId");
-        return super.page(page, wrapper);
+        return super.baseMapper.selectPage(page,wrapper);
     }
 
     @Override

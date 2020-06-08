@@ -5,7 +5,6 @@ import com.spark.platform.adminapi.entity.user.User;
 import com.spark.platform.adminapi.vo.UserVo;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -17,7 +16,6 @@ import java.util.List;
  * @Description:
  * @Version: 1.0
  */
-@Repository
 public interface UserDao extends BaseMapper<User> {
 
     /**
