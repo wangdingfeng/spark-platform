@@ -60,12 +60,24 @@ spring:
               args:
                 name: flowable-hystrix
                 fallbackUri: forward:/common/fallback #设置熔断器
+        - id: spark-quartz
+          uri: lb://spark-quartz
+          predicates:
+            - Path=/quartz/**
+          filters:
+            - StripPrefix=1
+            - name: Hystrix
+              args:
+                name: quartz-hystrix
+                fallbackUri: forward:/common/fallback #设置熔断器
   boot:
     admin:
       client:
         url: http://127.0.0.1:9002
         instance:
           prefer-ip: true
+          #分服务器部署一定要配置ip
+          service-url: http://127.0.0.1:9001
 eureka:
   client:
     register-with-eureka: true

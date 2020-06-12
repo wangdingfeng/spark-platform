@@ -57,11 +57,6 @@ spring:
               args:
                 name: flowable-hystrix
                 fallbackUri: forward:/common/fallback #设置熔断器
-            - name: RequestRateLimiter
-              args:
-                redis-rate-limiter.replenishRate: 10
-                redis-rate-limiter.burstCapacity: 10
-                key-resolver: "#{@ipKeyResolver}"
         - id: spark-cms
           uri: lb://spark-cms
           predicates:
@@ -70,12 +65,22 @@ spring:
             - StripPrefix=1
             - name: Hystrix
               args:
-                name: flowable-hystrix
+                name: cms-hystrix
+                fallbackUri: forward:/common/fallback #设置熔断器
+        - id: spark-quartz
+          uri: lb://spark-quartz
+          predicates:
+            - Path=/quartz/**
+          filters:
+            - StripPrefix=1
+            - name: Hystrix
+              args:
+                name: quartz-hystrix
                 fallbackUri: forward:/common/fallback #设置熔断器
   boot:
     admin:
       client:
-        url: http://127.0.0.1:8980
+        url: http://127.0.0.1:9002
         instance:
           prefer-ip: true
 eureka:
