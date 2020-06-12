@@ -21,6 +21,14 @@ import java.util.List;
 public interface RoleDao extends BaseMapper<Role> {
 
     /**
+     * 查询角色code
+     * @param id
+     * @return
+     */
+    @Select("SELECT role_code FROM sys_role WHERE id=#{id}")
+    String getRoleCode(@Param(value = "id") Long id);
+
+    /**
      * 根据用户id查询用户的角色
      *
      * @param userId 用户id

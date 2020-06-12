@@ -94,4 +94,15 @@ public class RoleServiceImpl extends ServiceImpl<RoleDao, Role> implements RoleS
             throw new BusinessException("角色编号重复");
         }
     }
+
+    @Override
+    public boolean delete(Long roleId) {
+        String roleCode = super.baseMapper.getRoleCode(roleId);
+        if(GlobalsConstants.ROLE_ADMIN.equals(roleCode)){
+            throw new BusinessException("超级管路员角色，不允许删除");
+        }
+        return  super.removeById(roleId);
+    }
+
+
 }

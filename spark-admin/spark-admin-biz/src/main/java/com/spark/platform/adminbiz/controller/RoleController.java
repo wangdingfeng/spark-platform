@@ -65,9 +65,9 @@ public class RoleController extends BaseController {
 
     @DeleteMapping("/{id}")
     @ApiOperation(value = "更新角色信息")
-    @PreAuthorize("hasAnyAuthority('role:delete1')")
+    @PreAuthorize("hasAnyAuthority('role:delete')")
     public ApiResponse delete(@PathVariable Long id){
-        return success(roleService.removeById(id));
+        return success(roleService.delete(id));
     }
 
     @GetMapping("/auth")

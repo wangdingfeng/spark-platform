@@ -28,6 +28,7 @@
         <module>spark-flowable</module>
         <module>spark-cms</module>
         <module>spark-tx-manager</module>
+        <module>spark-quartz</module>
     </modules>
 
 

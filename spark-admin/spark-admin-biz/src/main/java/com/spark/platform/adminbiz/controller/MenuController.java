@@ -53,11 +53,6 @@ public class MenuController extends BaseController {
         return success(menuService.findAuthByUserId(userId));
     }
 
-    /**
-     * 获取菜单list
-     * @param name
-     * @return
-     */
     @GetMapping("/list")
     @ApiOperation(value = "获取菜单列表")
     public ApiResponse list(@RequestParam String name){
@@ -68,7 +63,7 @@ public class MenuController extends BaseController {
     @ApiOperation(value = "保存菜单")
     @PreAuthorize("hasAnyAuthority('menu:add')")
     public ApiResponse save(@RequestBody Menu menu){
-        return success(menuService.save(menu));
+        return success(menuService.saveMenu(menu));
     }
 
     @PutMapping

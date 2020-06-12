@@ -59,4 +59,11 @@ public interface RoleService extends IService<Role> {
      * @param roleId 角色id
      */
     void validateRoleCode(String roleCode,Long roleId);
+
+    /**
+     * 删除角色
+     * @param roleId
+     * @return
+     */
+    boolean delete(Long roleId);
 }

@@ -17,6 +17,12 @@ import java.util.List;
  * @Version: 1.0
  */
 public interface MenuService extends IService<Menu> {
+    /**
+     * 保存菜单
+     * @param menu
+     * @return
+     */
+    boolean saveMenu(Menu menu);
 
     /**
      * 查询菜单树

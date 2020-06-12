@@ -3,11 +3,14 @@ package com.spark.platform.adminbiz.service.menu.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.spark.platform.adminapi.entity.authority.Menu;
+import com.spark.platform.adminapi.entity.role.RoleMenu;
 import com.spark.platform.adminapi.vo.MenuVue;
 import com.spark.platform.adminapi.vo.VueTree;
 import com.spark.platform.adminbiz.dao.menu.MenuDao;
+import com.spark.platform.adminbiz.dao.role.RoleMenuDao;
 import com.spark.platform.adminbiz.service.menu.MenuService;
 import com.spark.platform.common.utils.TreeUtils;
+import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +26,21 @@ import java.util.List;
  * @Version: 1.0
  */
 @Service
+@AllArgsConstructor
 public class MenuServiceImpl extends ServiceImpl<MenuDao, Menu> implements MenuService {
+
+    private final RoleMenuDao roleMenuDao;
+
+    @Override
+    public boolean saveMenu(Menu menu) {
+        boolean flag = super.save(menu);
+        //默认给超级管理员添加权限
+        RoleMenu roleMenu = new RoleMenu();
+        roleMenu.setRoleId(1L);
+        roleMenu.setMenuId(menu.getId());
+        roleMenuDao.insert(roleMenu);
+        return flag;
+    }
 
     @Override
     public List<Menu> treeList(String name) {
