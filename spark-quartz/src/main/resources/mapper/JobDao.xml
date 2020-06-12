@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.platform.quartz.dao.JobDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.spark.platform.quartz.entity.Job">
+        <id column="id" property="id" />
+    <result column="create_date" property="createDate" />
+    <result column="creator" property="creator" />
+    <result column="modify_date" property="modifyDate" />
+    <result column="modifier" property="modifier" />
+    <result column="remarks" property="remarks" />
+    <result column="del_flag" property="delFlag" />
+        <result column="name" property="name" />
+        <result column="group" property="group" />
+        <result column="invoke_target" property="invokeTarget" />
+        <result column="cron_expression" property="cronExpression" />
+        <result column="misfire_policy" property="misfirePolicy" />
+        <result column="concurrent" property="concurrent" />
+        <result column="status" property="status" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        create_date,
+        creator,
+        modify_date,
+        modifier,
+        remarks,
+        del_flag,
+        id, name, group, invoke_target, cron_expression, misfire_policy, concurrent, status
+    </sql>
+
+</mapper>
