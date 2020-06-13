@@ -3,13 +3,10 @@ package com.spark.platform.common.config.redis;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.parser.ParserConfig;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.alibaba.fastjson.support.config.FastJsonConfig;
-import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
@@ -27,13 +24,9 @@ import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.SerializationException;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.http.MediaType;
-import org.springframework.http.converter.HttpMessageConverter;
 
 import java.nio.charset.Charset;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author: wangdingfeng
@@ -194,28 +187,6 @@ public class RedisConfig extends CachingConfigurerSupport {
                 log.error("Redis occur handleCacheClearError：", e);
             }
         };
-    }
-
-    /**
-     *  使用@Bean注入fastJsonHttpMessageConvert,fastJson序列化
-     */
-    @Bean
-    public HttpMessageConverters fastJsonHttpMessageConverters(){
-        // 1、需要先定义一个 convert 转换消息的对象;
-        FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();
-        //2、添加fastJson 的配置信息，比如：是否要格式化返回的json数据;
-        FastJsonConfig fastJsonConfig = new FastJsonConfig();
-        fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat);
-
-        //2-1 处理中文乱码问题
-        List<MediaType> fastMediaTypes = new ArrayList<>();
-        fastMediaTypes.add(MediaType.APPLICATION_JSON_UTF8);
-        fastConverter.setSupportedMediaTypes(fastMediaTypes);
-
-        //3、在convert中添加配置信息.
-        fastConverter.setFastJsonConfig(fastJsonConfig);
-        HttpMessageConverter<?> converter = fastConverter;
-        return new HttpMessageConverters(converter);
     }
 
     /**

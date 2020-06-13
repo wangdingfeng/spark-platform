@@ -1,6 +1,8 @@
 package com.spark.platform.adminapi.vo;
 
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.List;
 
 /**
@@ -60,6 +62,7 @@ public class MenuVue{
 
     private Meta meta;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<MenuVue> children;
 
     public static class Meta {

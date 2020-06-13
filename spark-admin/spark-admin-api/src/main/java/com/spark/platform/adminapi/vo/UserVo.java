@@ -39,7 +39,6 @@ public class UserVo implements Serializable {
     /**
      * 密码
      */
-    @JsonIgnore
     private String password;
 
     /**

@@ -1,13 +1,13 @@
 package com.spark.platform.common.security.config;
 
 import com.google.common.collect.Lists;
+import com.spark.platform.common.security.model.LoginUser;
 import org.apache.commons.lang3.StringUtils;
-import org.json.JSONObject;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -23,7 +23,6 @@ import java.util.Map;
  * @Description: 自定义token生成携带的信息
  * @Version: 1.0
  */
-@Component
 public class JwtTokenEnhancer implements TokenEnhancer {
 
     private DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -32,15 +31,21 @@ public class JwtTokenEnhancer implements TokenEnhancer {
     public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
         final Map<String, Object> additionalInfo = new HashMap<>();
         // 给/oauth/token接口加属性roles,author
-        JSONObject jsonObject = new JSONObject(authentication.getPrincipal());
-        List<Object> authorities = jsonObject.getJSONArray("authorities").toList();
+        LoginUser user = (LoginUser) authentication.getPrincipal();
+        List<GrantedAuthority> authorities = user.getAuthorities();
         List<String> roleList = Lists.newArrayList();
-        for (Object authority : authorities) {
-            Map map = (Map) authority;
-            roleList.add((String)map.get("authority"));
+        List<String> permissions = Lists.newArrayList();
+        for (GrantedAuthority authority : authorities) {
+            if(authority.getAuthority().startsWith("role_")){
+                roleList.add(authority.getAuthority());
+            }else{
+                permissions.add(authority.getAuthority());
+            }
+
         }
         String roles = StringUtils.join(roleList,",");
         additionalInfo.put("roles", roles);
+        additionalInfo.put("permissions", permissions);
         additionalInfo.put("author", "spark-auth");
         additionalInfo.put("createTime", df.format(LocalDateTime.now()));
         ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);

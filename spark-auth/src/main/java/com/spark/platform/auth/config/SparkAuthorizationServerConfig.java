@@ -19,7 +19,6 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
-import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
@@ -69,7 +68,7 @@ public class SparkAuthorizationServerConfig extends AuthorizationServerConfigure
                 .userDetailsService(sparkUserDetailService)
                 .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST)
                 //指定token存储位置
-                .tokenStore(tokenStore())
+                .tokenStore(new RedisTokenStore(connectionFactory))
                 .accessTokenConverter(accessTokenConverter())
                 // 自定义jwt生成token方式
                 .tokenEnhancer(tokenEnhancerChain)
@@ -111,14 +110,6 @@ public class SparkAuthorizationServerConfig extends AuthorizationServerConfigure
         //测试用,资源服务使用相同的字符达到一个对称加密的效果,生产时候使用RSA非对称加密方式
         accessTokenConverter.setSigningKey(GlobalsConstants.OAUTH_SIGNING_KEY);
         return accessTokenConverter;
-    }
-
-    /**
-     * token store
-     */
-    @Bean
-    public TokenStore tokenStore() {
-        return new RedisTokenStore(connectionFactory);
     }
 
 }
