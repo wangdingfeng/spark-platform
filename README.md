@@ -26,7 +26,8 @@ spark 开发平台 作者：polaris.wang
 3. 添加定时任务调度管理，提供java ben方式、rest方式和消息队列方式。其中消息队列方式将在2.0后添加rabbitmq的时候实现，敬请期待。
 4. 全局错误信息拦截Assert业务校验错误，错误信息Exception返回，方便quartz接收到错误信息。
 
-####历史更新日志请参考[所有更新日志](https://www.kancloud.cn/polaris_wang/spark/1762693)
+### 文档地址
+ [https://www.kancloud.cn/polaris_wang/spark/1762689](https://www.kancloud.cn/polaris_wang/spark/1762689)
  
  _强调_ 接下来开发的功能:内容管理bug修改，导入导出excel、开发文档支持，完善自动生成代码，另开分支添加阿里的配置中心和注册中心。敬请期待
 
