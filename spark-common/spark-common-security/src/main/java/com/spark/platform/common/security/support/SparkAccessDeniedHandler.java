@@ -19,7 +19,7 @@ import java.util.Map;
  * @Description: 请求拒绝，没有权限
  * @Version: 1.0
  */
-public class MyAccessDeniedHandler implements AccessDeniedHandler {
+public class SparkAccessDeniedHandler implements AccessDeniedHandler {
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException {

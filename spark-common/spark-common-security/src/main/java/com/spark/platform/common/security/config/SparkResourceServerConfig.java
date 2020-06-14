@@ -1,7 +1,7 @@
 package com.spark.platform.common.security.config;
 
-import com.spark.platform.common.security.support.MyAccessDeniedHandler;
-import com.spark.platform.common.security.support.MyAuthExceptionEntryPoint;
+import com.spark.platform.common.security.support.SparkAccessDeniedHandler;
+import com.spark.platform.common.security.support.SparkAuthExceptionEntryPoint;
 import com.spark.platform.common.security.properties.FilterIgnoreProperties;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,9 +66,9 @@ public class SparkResourceServerConfig extends ResourceServerConfigurerAdapter {
     public void configure(ResourceServerSecurityConfigurer resources) {
         resources.tokenStore(tokenStore())
                 //自定义Token异常信息,用于token校验失败返回信息
-                .authenticationEntryPoint(new MyAuthExceptionEntryPoint())
+                .authenticationEntryPoint(new SparkAuthExceptionEntryPoint())
                 //授权异常处理
-                .accessDeniedHandler(new MyAccessDeniedHandler());
+                .accessDeniedHandler(new SparkAccessDeniedHandler());
     }
 
 }
