@@ -88,7 +88,7 @@ public class TaskController extends BaseController {
     @PostMapping(value = "/{taskId}")
     @ApiOperation(value = "执行任务", notes = "任务执行类型 claim：签收 unclaim 反签收 complete 完成 delegate 任务委派 resolve 任务签收完成 返回任务人 assignee 任务转办", produces = "application/json")
     public ApiResponse executeTask(@PathVariable String taskId, @RequestBody ExecuteTaskRequest executeTaskRequest) {
-        Map<String, Object> map = actTaskService.execute(taskId, executeTaskRequest.getAssignee(), executeTaskRequest.getAction(), executeTaskRequest.getVariables(), executeTaskRequest.getLocalScope());
+        Map<String, Object> map = actTaskService.execute(taskId, executeTaskRequest.getAssignee(), executeTaskRequest.getAction(), executeTaskRequest.getVariables(), null == executeTaskRequest.getLocalScope() ? false: executeTaskRequest.getLocalScope());
         return success(ActionEnum.actionOf(executeTaskRequest.getAction()).getName(), map);
     }
 

@@ -81,7 +81,7 @@ public class RedisChannelListener implements MessageListener {
         TaskClient taskClient = SpringContextHolder.getBean(TaskClient.class);
         ArticleProcessKeyNode articleProcessKeyNode = ArticleProcessKeyNode.getProcessNextKeyNodeByKey(taskVO.getTaskDefinitionKey(),flag);
         Map<String, Object> map = ImmutableMap.of(ArticleConstant.PROCESS_NODE_SYSTEM_JUDGE.toUpperCase()+ArticleConstant.SUBMIT_SUFFIX, articleProcessKeyNode.getTargetNode());
-        ExecuteTaskRequest executeTaskRequest = ExecuteTaskRequest.builder().action(ActionEnum.COMPLETE.getAction()).variables(map).build();
+        ExecuteTaskRequest executeTaskRequest = ExecuteTaskRequest.builder().action(ActionEnum.COMPLETE.getAction()).localScope(false).variables(map).build();
         ApiResponse response = taskClient.executeTask(taskVO.getId(), executeTaskRequest);
         if(!SparkHttpStatus.SUCCESS.getCode().equals(response.getCode())){
             log.error("调用工作流失败");

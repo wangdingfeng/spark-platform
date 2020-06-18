@@ -75,7 +75,7 @@ public class MenuController extends BaseController {
 
     @DeleteMapping("/{id}")
     @ApiOperation(value = "删除菜单")
-    @PreAuthorize("hasAnyAuthority('menu:delete1')")
+    @PreAuthorize("hasAnyAuthority('menu:delete')")
     public ApiResponse delete(@PathVariable Long id){
         return success(menuService.removeById(id));
     }

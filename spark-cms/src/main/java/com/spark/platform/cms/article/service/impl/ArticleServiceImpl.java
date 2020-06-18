@@ -30,6 +30,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 /**
@@ -60,6 +61,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> impleme
     @Override
     @Transactional(readOnly = false)
     public void saveArticle(Article article) {
+        article.setPublishTime(ArticleConstant.STATUS_APPROVAL_GROUP.equals(article.getStatus())?LocalDateTime.now():null);
         super.saveOrUpdate(article);
         //判断是否发布
         if(ArticleConstant.STATUS_APPROVAL_GROUP.equals(article.getStatus())){
@@ -139,7 +141,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> impleme
             }
         }
         //执行工作流
-        ExecuteTaskRequest executeTaskRequest = ExecuteTaskRequest.builder().action(ActionEnum.COMPLETE.getAction()).variables(variables).build();
+        ExecuteTaskRequest executeTaskRequest = ExecuteTaskRequest.builder().action(ActionEnum.COMPLETE.getAction()).variables(variables).localScope(false).build();
         executeTask(articleAuditDto.getTaskId(),executeTaskRequest);
     }
 
@@ -148,6 +150,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> impleme
      * @param executeTaskRequest
      */
     private void executeTask(String taskId,ExecuteTaskRequest executeTaskRequest){
+        executeTaskRequest.setLocalScope(false);
         ApiResponse apiResponse = taskClient.executeTask(taskId, executeTaskRequest);
         if(!SparkHttpStatus.SUCCESS.getCode().equals(apiResponse.getCode())){
             log.error("执行工作流失败",apiResponse.getData());

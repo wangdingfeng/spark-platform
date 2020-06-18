@@ -143,6 +143,7 @@ public class ActInstanceServiceImpl implements ActInstanceService {
         processInstanceBuilder.variables(request.getVariables());
         setAuthenticatedUserId(UserUtils.getLoginUser().getUsername());
         ProcessInstance processInstance = processInstanceBuilder.start();
+        log.info("发起流程成功，流程ID:{}",processInstance.getId());
         return processInstance;
     }
 

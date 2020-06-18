@@ -29,6 +29,7 @@
     <select id="findMenuVueByUserName" resultType="com.spark.platform.adminapi.vo.MenuVue">
         SELECT
         m.*,
+        IF(m.component = 'Layout',true,false) 'alwaysShow',
         m.name AS "Meta.title",
         m.icon AS "Meta.icon"
         FROM

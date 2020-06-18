@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.spark.platform.common.base.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -42,6 +43,7 @@ public class Menu extends BaseEntity {
     private String type;
 
     @ApiModelProperty(value = "是否外链")
+    @JsonProperty("iFrame")
     private boolean iFrame;
 
     @ApiModelProperty(value = "路径")

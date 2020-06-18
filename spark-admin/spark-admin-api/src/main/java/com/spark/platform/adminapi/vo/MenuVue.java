@@ -1,8 +1,5 @@
 package com.spark.platform.adminapi.vo;
 
-
-import com.fasterxml.jackson.annotation.JsonInclude;
-
 import java.util.List;
 
 /**
@@ -62,7 +59,6 @@ public class MenuVue{
 
     private Meta meta;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<MenuVue> children;
 
     public static class Meta {
@@ -194,5 +190,13 @@ public class MenuVue{
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public boolean isAlwaysShow() {
+        return alwaysShow;
+    }
+
+    public void setAlwaysShow(boolean alwaysShow) {
+        this.alwaysShow = alwaysShow;
     }
 }
