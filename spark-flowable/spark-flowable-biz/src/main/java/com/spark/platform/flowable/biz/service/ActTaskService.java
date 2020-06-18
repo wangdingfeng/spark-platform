@@ -41,7 +41,7 @@ public interface ActTaskService {
      * @param localScope 存储范围。如果为true，则提供的变量将存储在任务本地（当任务结束后，再也取不到这个值），
      *                   而不是流程实例范围（默认是存放在流程实例中）。
      */
-    Map<String, Object> execute(String taskId, String userId, String action, Map<String,Object> variables,boolean localScope);
+    Map<String, Object> execute(String taskId, String userId, String action, Map<String,Object> variables,Boolean localScope);
 
     /**
      * 任务签收。

@@ -46,8 +46,9 @@ public class ActTaskServiceImpl implements ActTaskService {
     }
 
     @Override
-    public Map<String, Object> execute(String taskId, String userId, String action, Map<String, Object> variables, boolean localScope) {
+    public Map<String, Object> execute(String taskId, String userId, String action, Map<String, Object> variables, Boolean localScope) {
         log.info("-----签收任务ID:{}，签收类型:{},签收人ID:{},---------",taskId,action,userId);
+        localScope = (null == localScope) ? false : localScope;
         Map<String, Object> result = Maps.newHashMap();
         ActionEnum actionEnum = ActionEnum.actionOf(action);
         switch (actionEnum){
