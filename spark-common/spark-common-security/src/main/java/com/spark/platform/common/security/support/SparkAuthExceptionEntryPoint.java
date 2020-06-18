@@ -24,7 +24,7 @@ public class SparkAuthExceptionEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws ServletException {
         SparkHttpStatus resultEnum = SparkHttpStatus.INVALID_TOKEN;
-        Map map = new HashMap();
+        Map map = new HashMap(2);
         map.put("code", resultEnum.getCode());
         map.put("msg", resultEnum.getMessage());
         response.setContentType("application/json");

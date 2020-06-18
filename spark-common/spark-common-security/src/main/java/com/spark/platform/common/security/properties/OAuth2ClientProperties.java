@@ -19,8 +19,6 @@ public class OAuth2ClientProperties {
 
     private String clientSecret;
 
-    // private String resourceIds;
-
     private int accessTokenValidatySeconds;
 
     private int refreshTokenValiditySeconds;

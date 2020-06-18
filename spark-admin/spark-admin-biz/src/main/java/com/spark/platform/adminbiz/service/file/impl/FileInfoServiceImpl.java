@@ -73,7 +73,7 @@ public class FileInfoServiceImpl extends ServiceImpl<FileInfoDao, FileInfo> impl
             fileInfo.setFileCode(fileCode);
             fileInfo.setFileType(fileType);
             Double size = Double.parseDouble(String.valueOf(file.getSize())) / 1024;
-            BigDecimal b = new BigDecimal(size);
+            BigDecimal b = BigDecimal.valueOf(size);
             size = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
             fileInfo.setFileSize(size);
             fileInfo.setFilePath(filePath + File.separator + fileUploadName);

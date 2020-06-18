@@ -100,8 +100,13 @@ public class RedisConfig extends CachingConfigurerSupport {
         return configuration;
     }
 
+    /**
+     * 当有多个管理器的时候，必须使用该注解在一个管理器上注释：表示该管理器为默认的管理器
+     * @param connectionFactory
+     * @return
+     */
     @Bean
-    @Primary//当有多个管理器的时候，必须使用该注解在一个管理器上注释：表示该管理器为默认的管理器
+    @Primary
     public CacheManager cacheManager(RedisConnectionFactory connectionFactory) {
         //初始化一个RedisCacheWriter
         RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(connectionFactory);

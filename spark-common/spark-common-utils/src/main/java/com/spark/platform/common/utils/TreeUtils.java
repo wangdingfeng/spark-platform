@@ -43,11 +43,22 @@ public class TreeUtils {
      */
     public static <T> Collection<T> toTree(@NotNull Collection<T> collection, String id, String parent, String children, @NotNull Class<T> clazz) {
         try {
-            if (collection == null || collection.isEmpty()) return null;// 如果目标集合为空,直接返回一个空树
-            if (StringUtils.isEmpty(id)) id = "id";                     // 如果被依赖字段名称为空则默认为id
-            if (StringUtils.isEmpty(parent)) parent = "pid";         // 如果依赖字段为空则默认为parent
-            if (StringUtils.isEmpty(children)) children = "children";   // 如果子节点集合属性名称为空则默认为children
-
+            // 如果目标集合为空,直接返回一个空树
+            if (collection == null || collection.isEmpty()) {
+                return null;
+            }
+            // 如果被依赖字段名称为空则默认为id
+            if (StringUtils.isEmpty(id)){
+                id = "id";
+            }
+            // 如果依赖字段为空则默认为parent
+            if (StringUtils.isEmpty(parent)) {
+                parent = "pid";
+            }
+            // 如果子节点集合属性名称为空则默认为children
+            if (StringUtils.isEmpty(children)){
+                children = "children";
+            }
             // 初始化根节点集合, 支持 Set 和 List
             Collection<T> roots;
             if (collection.getClass().isAssignableFrom(Set.class)) {
@@ -129,7 +140,9 @@ public class TreeUtils {
         if (children == null) {
             if (collection.getClass().isAssignableFrom(Set.class)) {
                 children = new HashSet<>();
-            } else children = new ArrayList<>();
+            } else{
+                children = new ArrayList<>();
+            }
         }
 
         for (T t : collection) {
@@ -154,7 +167,7 @@ public class TreeUtils {
         boolean flag = false;
         if (parentId == null) {
             flag = true;
-        } else if (parentId instanceof String && (StringUtils.isEmpty(parentId) || parentId.equals("0"))) {
+        } else if (parentId instanceof String && (StringUtils.isEmpty(parentId) || "0".equals(parentId))) {
             flag = true;
         } else if (parentId instanceof Integer && Integer.valueOf(0).equals(parentId)) {
             flag = true;

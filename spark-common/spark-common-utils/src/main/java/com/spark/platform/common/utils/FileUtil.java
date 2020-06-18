@@ -34,7 +34,8 @@ public class FileUtil extends org.apache.commons.io.FileUtils {
         response.setHeader("Content-type", type);
         String byteName = new String(filename.getBytes("utf-8"), "iso-8859-1");
         response.setHeader("Content-Disposition", "attachment;filename=" + byteName);
-        response.setContentType("APPLICATION/OCTET-STREAM");//返回格式为流
+        //返回格式为流
+        response.setContentType("APPLICATION/OCTET-STREAM");
         OutputStream outputStream = response.getOutputStream();
         byte[] buff = new byte[1024];
         BufferedInputStream bis = null;

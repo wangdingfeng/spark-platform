@@ -25,7 +25,7 @@ public class SparkAccessDeniedHandler implements AccessDeniedHandler {
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         SparkHttpStatus resultEnum = SparkHttpStatus.UNAUTHORIZED;
-        Map map = new HashMap();
+        Map map = new HashMap(2);
         map.put("code", resultEnum.getCode());
         map.put("msg", resultEnum.getMessage());
         response.setContentType("application/json");

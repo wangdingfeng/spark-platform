@@ -158,7 +158,9 @@ public class WrapperSupport {
     private static StringBuilder joinColumn(String aliasName, String propName) {
         StringBuilder whereColumn = new StringBuilder();
         String column = camel4underline(propName);
-        if (StringUtils.isNotBlank(aliasName)) whereColumn.append(aliasName).append(".");
+        if (StringUtils.isNotBlank(aliasName)){
+            whereColumn.append(aliasName).append(".");
+        }
         whereColumn.append(column);
         return whereColumn;
     }
@@ -170,7 +172,7 @@ public class WrapperSupport {
      * @return
      */
     public static String camel4underline(String param) {
-        if (param == null || param.equals("")) {
+        if (null == param || "".equals(param)) {
             return "";
         }
         StringBuilder builder = new StringBuilder(param);
@@ -247,7 +249,8 @@ public class WrapperSupport {
         // 返回相应字段属性值
         for (Field item : fieldList) {
             if (item.getName().equals(fieldName)) {
-                return item; //子类存在则直接返回
+                //子类存在则直接返回
+                return item;
             }
         }
         return null;

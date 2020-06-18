@@ -96,11 +96,11 @@ public class SparkWebResponseExceptionTranslator implements WebResponseException
         public ForbiddenException(String msg, Throwable t) {
             super(msg, t);
         }
-
+        @Override
         public String getOAuth2ErrorCode() {
             return "access_denied";
         }
-
+        @Override
         public int getHttpErrorCode() {
             return 403;
         }
@@ -113,11 +113,11 @@ public class SparkWebResponseExceptionTranslator implements WebResponseException
         public ServerErrorException(String msg, Throwable t) {
             super(msg, t);
         }
-
+        @Override
         public String getOAuth2ErrorCode() {
             return "server_error";
         }
-
+        @Override
         public int getHttpErrorCode() {
             return 500;
         }
@@ -130,11 +130,11 @@ public class SparkWebResponseExceptionTranslator implements WebResponseException
         public UnauthorizedException(String msg, Throwable t) {
             super(msg, t);
         }
-
+        @Override
         public String getOAuth2ErrorCode() {
             return "unauthorized";
         }
-
+        @Override
         public int getHttpErrorCode() {
             return 401;
         }
@@ -147,11 +147,11 @@ public class SparkWebResponseExceptionTranslator implements WebResponseException
         public MethodNotAllowed(String msg, Throwable t) {
             super(msg, t);
         }
-
+        @Override
         public String getOAuth2ErrorCode() {
             return "method_not_allowed";
         }
-
+        @Override
         public int getHttpErrorCode() {
             return 405;
         }
@@ -164,11 +164,11 @@ public class SparkWebResponseExceptionTranslator implements WebResponseException
         public InvalidException(Throwable t) {
             super("用户名或密码错误", t);
         }
-
+        @Override
         public String getOAuth2ErrorCode() {
             return "invalid_exception";
         }
-
+        @Override
         public int getHttpErrorCode() {
             return 426;
         }

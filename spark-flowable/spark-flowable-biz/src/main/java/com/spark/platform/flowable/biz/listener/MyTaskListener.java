@@ -2,11 +2,14 @@ package com.spark.platform.flowable.biz.listener;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.flowable.engine.delegate.TaskListener;
 
 import org.flowable.task.service.delegate.BaseTaskListener;
 import org.flowable.task.service.delegate.DelegateTask;
 import org.springframework.stereotype.Component;
+
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 /**
  * @ProjectName: spark-platform
@@ -28,9 +31,8 @@ public class MyTaskListener implements TaskListener {
             case BaseTaskListener.EVENTNAME_CREATE:
                 log.info("当前监听创建事件:create");
                 //开启消息发送线程
-                Thread thread = new Thread(
-                        new MessageRunnableTask(delegateTask));
-                thread.start();
+                ScheduledThreadPoolExecutor scheduledThreadPoolExecutor = new ScheduledThreadPoolExecutor(1,new BasicThreadFactory.Builder().namingPattern("task-thread-pool-%d").daemon(true).build());
+                scheduledThreadPoolExecutor.submit(new MessageRunnableTask(delegateTask));
                 break;
             case BaseTaskListener.EVENTNAME_ASSIGNMENT:
                 log.info("当前监听指派事件:assignment");

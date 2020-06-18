@@ -32,7 +32,7 @@ public class LoginUser implements UserDetails {
         super();
     }
 
-    public LoginUser(String username, String password,String nickname,Integer status, List<GrantedAuthority> authorities) {
+    public LoginUser(String username, String password, String nickname, Integer status, List<GrantedAuthority> authorities) {
         this.password = password;
         this.username = username;
         this.nickname = nickname;
@@ -84,6 +84,7 @@ public class LoginUser implements UserDetails {
     }
 
 
+    @Override
     public String getPassword() {
         return password;
     }
@@ -92,6 +93,7 @@ public class LoginUser implements UserDetails {
         this.password = password;
     }
 
+    @Override
     public String getUsername() {
         return username;
     }
@@ -116,6 +118,7 @@ public class LoginUser implements UserDetails {
         this.deptId = deptId;
     }
 
+    @Override
     public List<GrantedAuthority> getAuthorities() {
         return authorities;
     }
@@ -124,6 +127,7 @@ public class LoginUser implements UserDetails {
         this.authorities = authorities;
     }
 
+    @Override
     public boolean isAccountNonExpired() {
         return !BizConstants.USER_STATUS_EXPIRED.equals(this.status);
     }
@@ -132,6 +136,7 @@ public class LoginUser implements UserDetails {
         this.accountNonExpired = accountNonExpired;
     }
 
+    @Override
     public boolean isAccountNonLocked() {
         return !BizConstants.USER_STATUS_LOCKED.equals(this.status);
     }
@@ -140,6 +145,7 @@ public class LoginUser implements UserDetails {
         this.accountNonLocked = accountNonLocked;
     }
 
+    @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
@@ -148,6 +154,7 @@ public class LoginUser implements UserDetails {
         this.credentialsNonExpired = credentialsNonExpired;
     }
 
+    @Override
     public boolean isEnabled() {
         return BizConstants.USER_STATUS_NORMAL.equals(this.status);
     }

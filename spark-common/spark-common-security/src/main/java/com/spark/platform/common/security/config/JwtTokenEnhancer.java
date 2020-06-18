@@ -1,6 +1,7 @@
 package com.spark.platform.common.security.config;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.spark.platform.common.security.model.LoginUser;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
@@ -29,7 +30,7 @@ public class JwtTokenEnhancer implements TokenEnhancer {
 
     @Override
     public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
-        final Map<String, Object> additionalInfo = new HashMap<>();
+        final Map<String, Object> additionalInfo = Maps.newHashMap();
         // 给/oauth/token接口加属性roles,author
         LoginUser user = (LoginUser) authentication.getPrincipal();
         List<GrantedAuthority> authorities = user.getAuthorities();

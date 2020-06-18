@@ -27,6 +27,8 @@ import java.net.UnknownHostException;
 public class AddressUtils {
 
     private static final String LOCAL_IP = "0:0:0:0:0:0:0:1";
+    private static final String LOCAL_IP_127 = "127.0.0.1";
+    private static final String UNKNOWN = "unknown";
 
     /**
      * 获取用户ip地址位置信息
@@ -49,21 +51,21 @@ public class AddressUtils {
      */
     public static String getIpAddress(HttpServletRequest request) {
         String ip = request.getHeader("x-forwarded-for");
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
             ip = request.getHeader("Proxy-Client-IP");
         }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
             ip = request.getHeader("WL-Proxy-Client-IP");
         }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
             ip = request.getHeader("HTTP_CLIENT_IP");
         }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
             ip = request.getHeader("HTTP_X_FORWARDED_FOR");
         }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
             ip = request.getRemoteAddr();
-            if ("127.0.0.1".equals(ip) || LOCAL_IP.equals(ip)) {
+            if (LOCAL_IP_127.equals(ip) || LOCAL_IP.equals(ip)) {
                 //根据网卡取本机配置的IP
                 InetAddress inet = null;
                 try {
@@ -97,7 +99,7 @@ public class AddressUtils {
             int algorithm = DbSearcher.BTREE_ALGORITHM;
             DbConfig config = new DbConfig();
             DbSearcher searcher = new DbSearcher(config, file.getPath());
-            Method method = null;
+            Method method;
             switch (algorithm) {
                 case DbSearcher.BTREE_ALGORITHM:
                     method = searcher.getClass().getMethod("btreeSearch", String.class);
@@ -112,7 +114,7 @@ public class AddressUtils {
                     method = searcher.getClass().getMethod("memorySearch", String.class);
                     break;
             }
-            DataBlock dataBlock = null;
+            DataBlock dataBlock;
             if (!Util.isIpAddress(ip)) {
                 log.error("Error: Invalid ip address");
             }
