@@ -6,8 +6,8 @@ spring:
       enabled: true
       max-file-size: 50MB
       max-request-size: 100MB
-  main:
-    allow-bean-definition-overriding: true
+  jackson:
+    default-property-inclusion: non_null
   application:
     name: spark-admin
   datasource:

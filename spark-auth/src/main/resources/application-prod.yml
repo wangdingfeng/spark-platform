@@ -1,8 +1,6 @@
 server:
   port: 9010
 spring:
-  main:
-    allow-bean-definition-overriding: true
   application:
     name: spark-auth
   datasource:
