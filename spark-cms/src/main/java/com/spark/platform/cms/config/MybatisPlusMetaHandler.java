@@ -29,13 +29,14 @@ public class MybatisPlusMetaHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
         //获取当前登录账号
-        String account = getAccount();
+        LoginUser user = getAccount();
         //放入当前操作者信息
-        this.setFieldValByName("creator",account,metaObject);
-        this.setFieldValByName("modifier",account,metaObject);
+        this.setFieldValByName("creator",user.getUsername(),metaObject);
+        this.setFieldValByName("modifier",user.getUsername(),metaObject);
         this.setFieldValByName("createDate",LocalDateTime.now(),metaObject);
         this.setFieldValByName("modifyDate",LocalDateTime.now(),metaObject);
         this.setFieldValByName("delFlag",0,metaObject);
+        this.setFieldValByName("deptId",user.getDeptId(),metaObject);
     }
 
     /**
@@ -45,8 +46,8 @@ public class MybatisPlusMetaHandler implements MetaObjectHandler {
     @Override
     public void updateFill(MetaObject metaObject) {
         //获取当前登录账号
-        String account = getAccount();
-        this.setFieldValByName("modifier",account,metaObject);
+        LoginUser user = getAccount();
+        this.setFieldValByName("modifier",user.getUsername(),metaObject);
         this.setFieldValByName("modifyDate", LocalDateTime.now(),metaObject);
     }
 
@@ -54,11 +55,13 @@ public class MybatisPlusMetaHandler implements MetaObjectHandler {
      * 获取当前登录账号
      * @return
      */
-    private String getAccount(){
+    private LoginUser getAccount(){
         LoginUser user = UserUtils.getLoginUser();
         if(null == user){
-           return GlobalsConstants.DEFAULT_USER_SYSTEM;
+            user = new LoginUser();
+            user.setUsername(GlobalsConstants.DEFAULT_USER_SYSTEM);
+           return user;
         }
-        return user.getUsername();
+        return user;
     }
 }
