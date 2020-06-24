@@ -5,11 +5,11 @@
     <parent>
         <groupId>com.spark.platform</groupId>
         <artifactId>spark-flowable</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
     <artifactId>spark-flowable-biz</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.1-SNAPSHOT</version>
     <name>spark-flowable-biz</name>
     <description>工作流服务</description>
 

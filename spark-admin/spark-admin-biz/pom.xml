@@ -5,11 +5,11 @@
     <parent>
         <groupId>com.spark.platform</groupId>
         <artifactId>spark-admin</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
     <artifactId>spark-admin-biz</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.1-SNAPSHOT</version>
     <name>spark-admin-biz</name>
     <description>admin 服务</description>
 

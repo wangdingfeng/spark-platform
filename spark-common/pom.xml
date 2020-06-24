@@ -5,11 +5,11 @@
 	<parent>
 		<groupId>com.spark.platform</groupId>
 		<artifactId>spark-platform</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0.1-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
 	</parent>
 	<artifactId>spark-common</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<name>spark-common</name>
 	<description>公共包</description>
 	<packaging>pom</packaging>

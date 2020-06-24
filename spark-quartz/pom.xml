@@ -5,11 +5,11 @@
     <parent>
         <groupId>com.spark.platform</groupId>
         <artifactId>spark-platform</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>spark-quartz</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.1-SNAPSHOT</version>
     <name>spark-quartz</name>
     <description>定时任务调度服务</description>
 
