@@ -28,7 +28,7 @@
         <dependency>
             <groupId>com.spark.platform</groupId>
             <artifactId>spark-common-config</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${spark-common.version}</version>
         </dependency>
         <!--undertow容器-->
         <dependency>
