@@ -4,14 +4,14 @@
  Source Server         :
  Source Server Type    : MySQL
  Source Server Version : 50729
- Source Host           : 
+ Source Host           :
  Source Schema         : spark
 
  Target Server Type    : MySQL
  Target Server Version : 50729
  File Encoding         : 65001
 
- Date: 07/05/2020 17:12:13
+ Date: 24/06/2020 17:36:17
 */
 
 SET NAMES utf8mb4;
@@ -31,7 +31,7 @@ CREATE TABLE `cms_article`  (
   `is_original` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否原创',
   `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '内容',
   `status` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '状态 0 暂存 1 退回修改 2 组长审核 3 主编审核 4 审核通过 5 审核不通过',
-  `publish_time` datetime(0) NULL DEFAULT NULL COMMENT '状态 0 暂存 1 退回修改 2 组长审核 3 主编审核 4 审核通过 5 审核不通过',
+  `publish_time` datetime(0) NULL DEFAULT NULL COMMENT '发布时间',
   `create_date` datetime(0) NOT NULL COMMENT '创建时间',
   `creator` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '创建人',
   `modify_date` datetime(0) NOT NULL COMMENT '修改时间',
@@ -39,14 +39,15 @@ CREATE TABLE `cms_article`  (
   `remarks` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
   `del_flag` int(1) NOT NULL COMMENT '是否删除 (0 是  1否)',
   `content_short` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '概括',
+  `dept_id` int(10) NULL DEFAULT NULL COMMENT '部门ID',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '文章' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '文章' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cms_article
 -- ----------------------------
-INSERT INTO `cms_article` VALUES (1, 'Plans for the Next Iteration of Vue.js', 'polaris.wang', 3, '', '[\"a-platform\"]', '1', '<p>Last week at<a href=\"https://vuejs.london/summary\" rel=\"nofollow\">Vue.js London</a>I gave a brief sneak peek of what&rsquo;s coming in the next major version of Vue. This post provides an in-depth overview of the plan.</p>\n<h3>Why a new majorversion?</h3>\n<p>Vue 2.0 was released<a href=\"https://medium.com/the-vue-point/vue-2-0-is-here-ef1f26acf4b8\" rel=\"nofollow\">exactly two years ago</a>(how time flies!). During this period, the core has remained backwards compatible with five minor releases. We&rsquo;ve accumulated a number of ideas that would bring improvements, but they were held off because they would result in breaking changes. At the same time, the JavaScript ecosystem and the language itself has been evolving rapidly. There are greatly improved tools that could enhance our workflow, and many new language features that could unlock simpler, more complete, and more efficient solutions to the problems Vue is trying to solve. What&rsquo;s more exciting is that we are seeing ES2015 support becoming a baseline for all major evergreen browsers. Vue 3.0 aims to leverage these new language features to make Vue core smaller, faster, and more powerful.</p>\n<p>Vue 3.0 is currently in prototyping phase, and we have already implemented a runtime close to feature-parity with 2.x.<strong>Many of the items listed below are either already implemented, or confirmed to be feasible. Ones that are not yet implemented or still in exploration phase are marked with a *.</strong></p>\n<h4>Other Runtime Improvements</h4>\n<blockquote>TL;DR: smaller, faster, tree-shakable features, fragments &amp; portals, custom renderer API.</blockquote>\n<h4>Compiler Improvements*</h4>\n<blockquote>TL;DR: tree-shaking friendly output, more AOT optimizations, parser with better error info and source map support.</blockquote>\n<h4>IE11 Support*</h4>\n<blockquote>TL;DR: it will be supported, but in a separate build with the same reactivity limitations of Vue 2.x.</blockquote>\n<p>The new codebase currently targets evergreen browsers only and assumes baseline native ES2015 support. But alas, we know a lot of our users still need to support IE11 for the foreseeable future. Most of the ES2015 features used can be transpiled / polyfilled for IE11, with the exception for Proxies. Our plan is to implement an alternative observer with the same API, but using the good old ES5<code>Object.defineProperty</code>API. A separate build of Vue 3.x will be distributed using this observer implementation. However, this build will be subject to the same change detection caveats of Vue 2.x and thus not fully compatible with the &ldquo;modern&rdquo; build of 3.x. We are aware that this imposes some inconvenience for library authors as they will need to be aware of compatibility for two different builds, but we will make sure to provide clear guidelines on this when we reach that stage.</p>\n<h3>How Do We GetThere</h3>\n<p>First of all, although we are announcing it today, we do not have a definitive timeline yet. What we do know at the moment is the steps we will be taking to get there:</p>\n<h4>1. Internal Feedback for the Runtime Prototype</h4>\n<p>This is the phase we are in right now. Currently, we already have a working runtime prototype that includes the new observer, Virtual DOM and component implementation. We have invited a group of authors of influential community projects to provide feedback for the internal changes, and would like to make sure they are comfortable with the changes before moving forward. We want to ensure that important libraries in the ecosystem will be ready at the same time when we release 3.0, so that users relying on those projects can upgrade easily.</p>\n<h4>2. Public Feedback viaRFCs</h4>\n<p>Once we gain a certain level of confidence in the new design, for each breaking change we will be opening a dedicated RFC issue which includes:</p>\n<p>We will anticipate public feedback from the wider community to help us consolidate these ideas.</p>\n<h4>3. Introduce Compatible Features in 2.x &amp;2.x-next</h4>\n<p>We are not forgetting about 2.x! In fact, we plan to use 2.x to progressively accustom users to the new changes. We will be gradually introducing confirmed API changes into 2.x via opt-in adaptors, and 2.x-next will allow users to try out the new Proxy-based observer.</p>\n<p>The last minor release in 2.x will become LTS and continue to receive bug and security fixes for 18 months when 3.0 is released.</p>\n<h4>4. AlphaPhase</h4>\n<p>Next, we will finish up the compiler and server-side rendering parts of 3.0 and start making alpha releases. These will mostly be for stability testing purposes in small greenfield apps.</p>\n<h4>5. BetaPhase</h4>\n<p>During beta phase, our main goal is updating support libraries and tools like Vue Router, Vuex, Vue CLI, Vue DevTools and make sure they work smoothly with the new core. We will also be working with major library authors from the community to help them get ready for 3.0.</p>\n<h4>6. RCPhase</h4>\n<p>Once we consider the API and codebase stable, we will enter RC phase with API freeze. During this phase we will also work on a &ldquo;compat build&rdquo;: a build of 3.0 that includes compatibility layers for 2.x API. This build will also ship with a flag you can turn on to emit deprecation warnings for 2.x API usage in your app. The compat build can be used as a guide to upgrade your app to 3.0.</p>\n<h4>7. IE11build</h4>\n<p>The last task before the final release will be the IE11 compatibility build as mentioned above.</p>\n<h4>8. FinalRelease</h4>\n<p>In all honesty, we don&rsquo;t know when this will happen yet, but likely in 2019. Again, we care more about shipping something that is solid and stable rather than hitting specific dates. There is a lot of work to be done, but we are excited for what&rsquo;s coming next!</p>', '4', '2020-05-04 15:32:18', '2020-05-04 15:32:24', 'admin', '2020-05-07 16:40:48', 'system', NULL, 0, '测试');
-INSERT INTO `cms_article` VALUES (3, 'VUE 文章审核', 'polaris.wang', 3, '', '[\"a-platform\"]', NULL, '<p>Last week at<a href=\"https://vuejs.london/summary\" rel=\"nofollow\">Vue.js London</a>I gave a brief sneak peek of what&rsquo;s coming in the next major version of Vue. This post provides an in-depth overview of the plan.</p>\n<h3>Why a new majorversion?</h3>\n<p>Vue 2.0 was released<a href=\"https://medium.com/the-vue-point/vue-2-0-is-here-ef1f26acf4b8\" rel=\"nofollow\">exactly two years ago</a>(how time flies!). During this period, the core has remained backwards compatible with five minor releases. We&rsquo;ve accumulated a number of ideas that would bring improvements, but they were held off because they would result in breaking changes. At the same time, the JavaScript ecosystem and the language itself has been evolving rapidly. There are greatly improved tools that could enhance our workflow, and many new language features that could unlock simpler, more complete, and more efficient solutions to the problems Vue is trying to solve. What&rsquo;s more exciting is that we are seeing ES2015 support becoming a baseline for all major evergreen browsers. Vue 3.0 aims to leverage these new language features to make Vue core smaller, faster, and more powerful.</p>\n<p>Vue 3.0 is currently in prototyping phase, and we have already implemented a runtime close to feature-parity with 2.x.<strong>Many of the items listed below are either already implemented, or confirmed to be feasible. Ones that are not yet implemented or still in exploration phase are marked with a *.</strong></p>\n<h4>Other Runtime Improvements</h4>\n<blockquote>TL;DR: smaller, faster, tree-shakable features, fragments &amp; portals, custom renderer API.</blockquote>\n<h4>Compiler Improvements*</h4>\n<blockquote>TL;DR: tree-shaking friendly output, more AOT optimizations, parser with better error info and source map support.</blockquote>\n<h4>IE11 Support*</h4>\n<blockquote>TL;DR: it will be supported, but in a separate build with the same reactivity limitations of Vue 2.x.</blockquote>\n<p>The new codebase currently targets evergreen browsers only and assumes baseline native ES2015 support. But alas, we know a lot of our users still need to support IE11 for the foreseeable future. Most of the ES2015 features used can be transpiled / polyfilled for IE11, with the exception for Proxies. Our plan is to implement an alternative observer with the same API, but using the good old ES5<code>Object.defineProperty</code>API. A separate build of Vue 3.x will be distributed using this observer implementation. However, this build will be subject to the same change detection caveats of Vue 2.x and thus not fully compatible with the &ldquo;modern&rdquo; build of 3.x. We are aware that this imposes some inconvenience for library authors as they will need to be aware of compatibility for two different builds, but we will make sure to provide clear guidelines on this when we reach that stage.</p>\n<h3>How Do We GetThere</h3>\n<p>First of all, although we are announcing it today, we do not have a definitive timeline yet. What we do know at the moment is the steps we will be taking to get there:</p>\n<h4>1. Internal Feedback for the Runtime Prototype</h4>\n<p>This is the phase we are in right now. Currently, we already have a working runtime prototype that includes the new observer, Virtual DOM and component implementation. We have invited a group of authors of influential community projects to provide feedback for the internal changes, and would like to make sure they are comfortable with the changes before moving forward. We want to ensure that important libraries in the ecosystem will be ready at the same time when we release 3.0, so that users relying on those projects can upgrade easily.</p>\n<h4>2. Public Feedback viaRFCs</h4>\n<p>Once we gain a certain level of confidence in the new design, for each breaking change we will be opening a dedicated RFC issue which includes:</p>\n<p>We will anticipate public feedback from the wider community to help us consolidate these ideas.</p>\n<h4>3. Introduce Compatible Features in 2.x &amp;2.x-next</h4>\n<p>We are not forgetting about 2.x! In fact, we plan to use 2.x to progressively accustom users to the new changes. We will be gradually introducing confirmed API changes into 2.x via opt-in adaptors, and 2.x-next will allow users to try out the new Proxy-based observer.</p>\n<p>The last minor release in 2.x will become LTS and continue to receive bug and security fixes for 18 months when 3.0 is released.</p>\n<h4>4. AlphaPhase</h4>\n<p>Next, we will finish up the compiler and server-side rendering parts of 3.0 and start making alpha releases. These will mostly be for stability testing purposes in small greenfield apps.</p>\n<h4>5. BetaPhase</h4>\n<p>During beta phase, our main goal is updating support libraries and tools like Vue Router, Vuex, Vue CLI, Vue DevTools and make sure they work smoothly with the new core. We will also be working with major library authors from the community to help them get ready for 3.0.</p>\n<h4>6. RCPhase</h4>\n<p>Once we consider the API and codebase stable, we will enter RC phase with API freeze. During this phase we will also work on a &ldquo;compat build&rdquo;: a build of 3.0 that includes compatibility layers for 2.x API. This build will also ship with a flag you can turn on to emit deprecation warnings for 2.x API usage in your app. The compat build can be used as a guide to upgrade your app to 3.0.</p>\n<h4>7. IE11build</h4>\n<p>The last task before the final release will be the IE11 compatibility build as mentioned above.</p>\n<h4>8. FinalRelease</h4>\n<p>In all honesty, we don&rsquo;t know when this will happen yet, but likely in 2019. Again, we care more about shipping something that is solid and stable rather than hitting specific dates. There is a lot of work to be done, but we are excited for what&rsquo;s coming next!</p>', '2', '2020-05-07 16:47:43', '2020-05-07 16:47:56', 'admin', '2020-05-07 16:47:56', 'admin', NULL, 0, 'VUE');
+INSERT INTO `cms_article` VALUES (1, 'Vue文章', 'polaris.wang', 3, '', '[\"a-platform\"]', '1', '<p>Last week at<a href=\"https://vuejs.london/summary\" rel=\"nofollow\">Vue.js London</a>I gave a brief sneak peek of what&rsquo;s coming in the next major version of Vue. This post provides an in-depth overview of the plan.</p>\n<h3>Why a new majorversion?</h3>\n<p>Vue 2.0 was released<a href=\"https://medium.com/the-vue-point/vue-2-0-is-here-ef1f26acf4b8\" rel=\"nofollow\">exactly two years ago</a>(how time flies!). During this period, the core has remained backwards compatible with five minor releases. We&rsquo;ve accumulated a number of ideas that would bring improvements, but they were held off because they would result in breaking changes. At the same time, the JavaScript ecosystem and the language itself has been evolving rapidly. There are greatly improved tools that could enhance our workflow, and many new language features that could unlock simpler, more complete, and more efficient solutions to the problems Vue is trying to solve. What&rsquo;s more exciting is that we are seeing ES2015 support becoming a baseline for all major evergreen browsers. Vue 3.0 aims to leverage these new language features to make Vue core smaller, faster, and more powerful.</p>\n<p>Vue 3.0 is currently in prototyping phase, and we have already implemented a runtime close to feature-parity with 2.x.<strong>Many of the items listed below are either already implemented, or confirmed to be feasible. Ones that are not yet implemented or still in exploration phase are marked with a *.</strong></p>\n<h4>Other Runtime Improvements</h4>\n<blockquote>TL;DR: smaller, faster, tree-shakable features, fragments &amp; portals, custom renderer API.</blockquote>\n<h4>Compiler Improvements*</h4>\n<blockquote>TL;DR: tree-shaking friendly output, more AOT optimizations, parser with better error info and source map support.</blockquote>\n<h4>IE11 Support*</h4>\n<blockquote>TL;DR: it will be supported, but in a separate build with the same reactivity limitations of Vue 2.x.</blockquote>\n<p>The new codebase currently targets evergreen browsers only and assumes baseline native ES2015 support. But alas, we know a lot of our users still need to support IE11 for the foreseeable future. Most of the ES2015 features used can be transpiled / polyfilled for IE11, with the exception for Proxies. Our plan is to implement an alternative observer with the same API, but using the good old ES5<code>Object.defineProperty</code>API. A separate build of Vue 3.x will be distributed using this observer implementation. However, this build will be subject to the same change detection caveats of Vue 2.x and thus not fully compatible with the &ldquo;modern&rdquo; build of 3.x. We are aware that this imposes some inconvenience for library authors as they will need to be aware of compatibility for two different builds, but we will make sure to provide clear guidelines on this when we reach that stage.</p>\n<h3>How Do We GetThere</h3>\n<p>First of all, although we are announcing it today, we do not have a definitive timeline yet. What we do know at the moment is the steps we will be taking to get there:</p>\n<h4>1. Internal Feedback for the Runtime Prototype</h4>\n<p>This is the phase we are in right now. Currently, we already have a working runtime prototype that includes the new observer, Virtual DOM and component implementation. We have invited a group of authors of influential community projects to provide feedback for the internal changes, and would like to make sure they are comfortable with the changes before moving forward. We want to ensure that important libraries in the ecosystem will be ready at the same time when we release 3.0, so that users relying on those projects can upgrade easily.</p>\n<h4>2. Public Feedback viaRFCs</h4>\n<p>Once we gain a certain level of confidence in the new design, for each breaking change we will be opening a dedicated RFC issue which includes:</p>\n<p>We will anticipate public feedback from the wider community to help us consolidate these ideas.</p>\n<h4>3. Introduce Compatible Features in 2.x &amp;2.x-next</h4>\n<p>We are not forgetting about 2.x! In fact, we plan to use 2.x to progressively accustom users to the new changes. We will be gradually introducing confirmed API changes into 2.x via opt-in adaptors, and 2.x-next will allow users to try out the new Proxy-based observer.</p>\n<p>The last minor release in 2.x will become LTS and continue to receive bug and security fixes for 18 months when 3.0 is released.</p>\n<h4>4. AlphaPhase</h4>\n<p>Next, we will finish up the compiler and server-side rendering parts of 3.0 and start making alpha releases. These will mostly be for stability testing purposes in small greenfield apps.</p>\n<h4>5. BetaPhase</h4>\n<p>During beta phase, our main goal is updating support libraries and tools like Vue Router, Vuex, Vue CLI, Vue DevTools and make sure they work smoothly with the new core. We will also be working with major library authors from the community to help them get ready for 3.0.</p>\n<h4>6. RCPhase</h4>\n<p>Once we consider the API and codebase stable, we will enter RC phase with API freeze. During this phase we will also work on a &ldquo;compat build&rdquo;: a build of 3.0 that includes compatibility layers for 2.x API. This build will also ship with a flag you can turn on to emit deprecation warnings for 2.x API usage in your app. The compat build can be used as a guide to upgrade your app to 3.0.</p>\n<h4>7. IE11build</h4>\n<p>The last task before the final release will be the IE11 compatibility build as mentioned above.</p>\n<h4>8. FinalRelease</h4>\n<p>In all honesty, we don&rsquo;t know when this will happen yet, but likely in 2019. Again, we care more about shipping something that is solid and stable rather than hitting specific dates. There is a lot of work to be done, but we are excited for what&rsquo;s coming next!</p>', '0', NULL, '2020-06-18 15:11:55', 'admin', '2020-06-22 16:57:54', 'admin', NULL, 0, 'vue', 7);
+INSERT INTO `cms_article` VALUES (2, 'TinyMCE 编辑器', 'polaris.wang', 3, '', '[\"a-platform\"]', '1', '<p style=\"text-align: center; font-size: 15px;\">&nbsp;</p>\n<h2 style=\"text-align: center;\">Welcome to the TinyMCE Cloud demo!</h2>\n<h5 style=\"text-align: center;\">Note, this includes some \"enterprise/premium\" features.<br />Visit the <a href=\"pricing\">pricing page</a> to learn more about our premium plugins.</h5>\n<p>Please try out the features provided in this full featured example.</p>\n<h2>Got questions or need help?</h2>\n<ul>\n<li>Our <a class=\"mceNonEditable\" href=\"http://www.sparkplatform.cn/\">documentation</a> is a great resource for learning how to configure TinyMCE.</li>\n<li>Have a specific question? Visit the <a class=\"mceNonEditable\" href=\"https://community.tiny.cloud/forum/\">Community Forum</a>.</li>\n<li>We also offer enterprise grade support as part of <a href=\"pricing\">TinyMCE premium subscriptions</a>.</li>\n</ul>\n<h2>A simple table to play with</h2>\n<table style=\"text-align: center; border-collapse: collapse; width: 100%;\">\n<thead>\n<tr>\n<th>Product</th>\n<th>Cost</th>\n<th>Really?</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>TinyMCE Cloud</td>\n<td>Get started for free</td>\n<td>YES!</td>\n</tr>\n<tr>\n<td>Plupload</td>\n<td>Free</td>\n<td>YES!</td>\n</tr>\n</tbody>\n</table>\n<h2>Found a bug?</h2>\n<p>If you think you have found a bug please create an issue on the <a href=\"https://github.com/tinymce/tinymce/issues\">GitHub repo</a> to report it to the developers.</p>\n<h2>Finally ...</h2>\n<p>Don\'t forget to check out our other product <a href=\"http://www.plupload.com\" target=\"_blank\" rel=\"noopener\">Plupload</a>, your ultimate upload solution featuring HTML5 upload support.</p>\n<p>Thanks for supporting TinyMCE! We hope it helps you and your users create great content.<br />All the best from the TinyMCE team.</p>', '0', '2020-06-18 22:29:13', '2020-06-18 22:29:13', 'admin', '2020-06-18 22:34:51', 'system', NULL, 0, 'TinyMCE', 7);
 
 -- ----------------------------
 -- Table structure for sys_dept
@@ -68,7 +69,7 @@ CREATE TABLE `sys_dept`  (
   `remarks` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
   `del_flag` bit(1) NULL DEFAULT NULL COMMENT '状态',
   PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '部门表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '部门表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_dept
@@ -81,6 +82,8 @@ INSERT INTO `sys_dept` VALUES (5, 4, NULL, '文章一部', '文章一部', NULL,
 INSERT INTO `sys_dept` VALUES (6, 2, NULL, '测试部', '测试部', NULL, 1, 10, '2020-03-21 13:03:00', 'admin', '2020-03-21 13:03:00', 'admin', NULL, b'0');
 INSERT INTO `sys_dept` VALUES (7, 2, NULL, '研发部', '研发部', NULL, 0, 10, '2020-03-21 13:04:01', 'admin', '2020-03-21 13:04:01', 'admin', NULL, b'0');
 INSERT INTO `sys_dept` VALUES (8, 6, NULL, '测试一部', '测试一部门', NULL, 0, 10, '2020-03-21 13:05:09', 'admin', '2020-03-21 13:05:09', 'admin', NULL, b'0');
+INSERT INTO `sys_dept` VALUES (9, 0, NULL, 'spark user', 'spark 测试公司', '火星2号根据地', 0, 10, '2020-05-29 13:27:39', 'admin', '2020-05-29 13:27:39', 'admin', NULL, b'0');
+INSERT INTO `sys_dept` VALUES (10, 9, NULL, '测试部', '测试部', 'user/test', 1, 10, '2020-05-29 13:41:20', 'admin', '2020-05-29 13:41:32', 'admin', NULL, b'0');
 
 -- ----------------------------
 -- Table structure for sys_dict
@@ -98,7 +101,7 @@ CREATE TABLE `sys_dict`  (
   `remarks` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
   `del_flag` bit(1) NULL DEFAULT NULL COMMENT '状态',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '字典表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '字典表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_dict
@@ -108,6 +111,12 @@ INSERT INTO `sys_dict` VALUES (2, '性别', 'sex', '0 女 1 男', '2020-04-29 21
 INSERT INTO `sys_dict` VALUES (3, '文件状态', 'file_status', '文件状态 0 未绑定 1已绑定', '2020-05-02 09:53:31', 'admin', '2020-05-02 09:54:18', 'admin', NULL, b'0');
 INSERT INTO `sys_dict` VALUES (4, '流程业务类型', 'processs_type', '用于业务流程类型', '2020-05-02 09:55:00', 'admin', '2020-05-02 09:55:00', 'admin', NULL, b'0');
 INSERT INTO `sys_dict` VALUES (5, '文章状态', 'article_status', '0 暂存 1 退回修改 2 组长审核 3 主编审核 4 审核通过 5 审核不通过', '2020-05-07 13:53:09', 'admin', '2020-05-07 13:53:09', 'admin', NULL, b'0');
+INSERT INTO `sys_dict` VALUES (6, '是否', 'yes_no', '0 否 1 是', '2020-06-11 10:13:07', 'admin', '2020-06-11 10:24:54', 'admin', NULL, b'0');
+INSERT INTO `sys_dict` VALUES (7, '执行任务策略', 'quartz_misfire_policy', '定时任务调度', '2020-06-11 10:14:42', 'admin', '2020-06-11 10:24:47', 'admin', NULL, b'0');
+INSERT INTO `sys_dict` VALUES (8, '定时任务状态', 'quartz_status', '0 暂停 1 正常', '2020-06-11 13:50:12', 'admin', '2020-06-11 13:50:12', 'admin', NULL, b'0');
+INSERT INTO `sys_dict` VALUES (9, '定时任务日志状态', 'quartz_log_status', '0 正常 1 失败', '2020-06-11 16:37:25', 'admin', '2020-06-11 16:37:25', 'admin', NULL, b'0');
+INSERT INTO `sys_dict` VALUES (10, '定时任务组', 'quartz_group', 'DEFAULT 默认 SYSTEM 系统 BUSINESS', '2020-06-11 17:28:03', 'admin', '2020-06-11 17:28:03', 'admin', NULL, b'0');
+INSERT INTO `sys_dict` VALUES (11, '任务类型', 'quartz_type', '0 bean类型 1 rest类型 2 消息队列', '2020-06-12 11:55:49', 'admin', '2020-06-12 11:55:49', 'admin', NULL, b'0');
 
 -- ----------------------------
 -- Table structure for sys_dict_item
@@ -130,7 +139,7 @@ CREATE TABLE `sys_dict_item`  (
   `value1` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `value2` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '字典子表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 33 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '字典子表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_dict_item
@@ -144,13 +153,29 @@ INSERT INTO `sys_dict_item` VALUES (6, 2, 'sex', '女', '0', 10, '', '2020-04-29
 INSERT INTO `sys_dict_item` VALUES (7, 2, 'sex', '男', '1', 11, '', '2020-04-29 21:30:07', 'admin', '2020-04-29 21:30:07', 'admin', NULL, b'0', NULL, NULL);
 INSERT INTO `sys_dict_item` VALUES (8, 3, 'file_status', '未绑定', '0', 10, '', '2020-05-02 09:53:55', 'admin', '2020-05-02 09:53:55', 'admin', NULL, b'0', NULL, NULL);
 INSERT INTO `sys_dict_item` VALUES (9, 3, 'file_status', '已绑定', '1', 11, '', '2020-05-02 09:54:04', 'admin', '2020-05-02 09:54:04', 'admin', NULL, b'0', NULL, NULL);
-INSERT INTO `sys_dict_item` VALUES (10, 4, 'processs_type', '文章审核', 'PROCESS_ARTICLE', 10, '文章审核流程', '2020-05-02 09:55:53', 'admin', '2020-05-02 09:55:53', 'admin', NULL, b'0', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES (10, 4, 'processs_type', '文章审核', 'PROCESS_ARTICLE', 10, '文章审核流程', '2020-05-02 09:55:53', 'admin', '2020-06-18 15:12:51', 'admin', NULL, b'0', '/article/task', NULL);
 INSERT INTO `sys_dict_item` VALUES (11, 5, 'article_status', '暂存', '0', 10, '', '2020-05-07 13:53:25', 'admin', '2020-05-07 13:53:25', 'admin', NULL, b'0', NULL, NULL);
 INSERT INTO `sys_dict_item` VALUES (12, 5, 'article_status', '退回修改', '1', 10, '', '2020-05-07 13:53:35', 'admin', '2020-05-07 13:53:35', 'admin', NULL, b'0', NULL, NULL);
 INSERT INTO `sys_dict_item` VALUES (13, 5, 'article_status', '组长审核', '2', 10, '', '2020-05-07 13:53:43', 'admin', '2020-05-07 13:53:43', 'admin', NULL, b'0', NULL, NULL);
 INSERT INTO `sys_dict_item` VALUES (14, 5, 'article_status', '主编审核', '3', 10, '', '2020-05-07 13:53:48', 'admin', '2020-05-07 13:53:48', 'admin', NULL, b'0', NULL, NULL);
 INSERT INTO `sys_dict_item` VALUES (15, 5, 'article_status', '审核通过', '4', 10, '', '2020-05-07 13:53:54', 'admin', '2020-05-07 13:53:54', 'admin', NULL, b'0', NULL, NULL);
 INSERT INTO `sys_dict_item` VALUES (16, 5, 'article_status', '审核不通过', '5', 10, '', '2020-05-07 13:53:59', 'admin', '2020-05-07 13:53:59', 'admin', NULL, b'0', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES (17, 6, '是否', '否', '0', 11, '', '2020-06-11 10:13:24', 'admin', '2020-06-11 10:13:49', 'admin', NULL, b'0', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES (18, 6, '是否', '是', '1', 10, '', '2020-06-11 10:13:45', 'admin', '2020-06-11 10:13:45', 'admin', NULL, b'0', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES (19, 7, '执行任务策略', '默认', '0', 10, '', '2020-06-11 10:15:03', 'admin', '2020-06-11 10:15:03', 'admin', NULL, b'0', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES (20, 7, '执行任务策略', '立即触发执行', '1', 11, '', '2020-06-11 10:15:11', 'admin', '2020-06-11 10:15:15', 'admin', NULL, b'0', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES (21, 7, '执行任务策略', '触发一次执行', '2', 14, '', '2020-06-11 10:15:27', 'admin', '2020-06-11 10:16:07', 'admin', NULL, b'0', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES (22, 7, '执行任务策略', '不触发立即执行', '3', 18, '', '2020-06-11 10:15:58', 'admin', '2020-06-11 10:15:58', 'admin', NULL, b'0', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES (23, 8, 'quartz_status', '暂停', '0', 10, '', '2020-06-11 13:50:33', 'admin', '2020-06-11 13:50:33', 'admin', NULL, b'0', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES (24, 8, 'quartz_status', '正常', '1', 11, '', '2020-06-11 13:50:41', 'admin', '2020-06-11 13:50:41', 'admin', NULL, b'0', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES (25, 9, 'quartz_log_status', '正常', '0', 10, '', '2020-06-11 16:37:37', 'admin', '2020-06-11 16:37:37', 'admin', NULL, b'0', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES (26, 9, 'quartz_log_status', '失败', '1', 11, '', '2020-06-11 16:37:42', 'admin', '2020-06-11 16:37:50', 'admin', NULL, b'0', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES (27, 10, 'quartz_group', '默认', 'DEFAULT', 10, '', '2020-06-11 17:28:15', 'admin', '2020-06-11 17:28:15', 'admin', NULL, b'0', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES (28, 10, 'quartz_group', '系统', 'SYSTEM', 11, '', '2020-06-11 17:28:31', 'admin', '2020-06-11 17:28:31', 'admin', NULL, b'0', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES (29, 10, 'quartz_group', '业务', 'BUSINESS', 12, '', '2020-06-11 17:28:45', 'admin', '2020-06-11 17:28:45', 'admin', NULL, b'0', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES (30, 11, 'quartz_type', 'java bean', '0', 10, '', '2020-06-12 11:56:23', 'admin', '2020-06-12 11:56:47', 'admin', NULL, b'0', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES (31, 11, 'quartz_type', 'rest请求', '1', 11, '', '2020-06-12 11:56:56', 'admin', '2020-06-12 11:57:11', 'admin', NULL, b'0', NULL, NULL);
+INSERT INTO `sys_dict_item` VALUES (32, 11, 'quartz_type', '消息队列', '2', 12, '', '2020-06-12 11:57:04', 'admin', '2020-06-12 11:57:14', 'admin', NULL, b'0', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for sys_file_info
@@ -182,6 +207,36 @@ INSERT INTO `sys_file_info` VALUES (1, 'c54dc1f48449446388fd5737d065326b', '空�
 INSERT INTO `sys_file_info` VALUES (2, '035f388d041f434db5943a59fbff54f4', '我的头像.jpg', 'jpg', 20, 'temp/2020-04-19/035f388d041f434db5943a59fbff54f4.jpg', NULL, NULL, '0', '2020-04-19 11:42:45', 'admin', '2020-04-19 11:42:45', 'admin', NULL, b'0');
 
 -- ----------------------------
+-- Table structure for sys_job
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_job`;
+CREATE TABLE `sys_job`  (
+  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '任务ID',
+  `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '任务名称',
+  `job_group` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'DEFAULT' COMMENT '任务组名',
+  `type` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '调用类型 0 bean类型 1 rest类型 2 消息队列',
+  `invoke_target` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '调用目标字符串',
+  `cron_expression` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT 'cron执行表达式',
+  `misfire_policy` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '3' COMMENT '计划执行错误策略（1立即执行 2执行一次 3放弃执行）',
+  `concurrent` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '1' COMMENT '是否并发执行（1允许 0禁止）',
+  `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '0' COMMENT '状态(1-正常，0-锁定)',
+  `create_date` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `creator` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
+  `modify_date` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
+  `modifier` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '修改人',
+  `remarks` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
+  `del_flag` bit(1) NULL DEFAULT NULL COMMENT '状态',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '定时任务调度表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_job
+-- ----------------------------
+INSERT INTO `sys_job` VALUES (1, '系统测试（无参）', 'DEFAULT', '0', 'simpleTask.doNoParams', '0/10 * * * * ? *', '3', '1', '0', '2020-06-10 16:45:49', NULL, '2020-06-23 00:03:19', 'admin', NULL, b'0');
+INSERT INTO `sys_job` VALUES (2, '系统测试（有参）', 'DEFAULT', '0', 'simpleTask.doParams(\'spark\')', '0/15 * * * * ? *', '3', '1', '0', '2020-06-10 16:45:51', NULL, '2020-06-13 22:46:14', 'admin', NULL, b'0');
+INSERT INTO `sys_job` VALUES (3, '系统测试（多参）', 'DEFAULT', '0', 'simpleTask.doMultipleParams(\'saprk\', true, 2000L, 316.50D, 100)', '0/20 * * * * ? *', '3', '1', '0', '2020-06-10 16:45:53', NULL, '2020-06-13 22:46:28', 'admin', NULL, b'0');
+
+-- ----------------------------
 -- Table structure for sys_menu
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_menu`;
@@ -204,7 +259,7 @@ CREATE TABLE `sys_menu`  (
   `remarks` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
   `del_flag` bit(1) NULL DEFAULT NULL COMMENT '状态',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 46 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 52 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_menu
@@ -237,7 +292,7 @@ INSERT INTO `sys_menu` VALUES (25, '注册中心', 23, '1', b'1', 'http://106.13
 INSERT INTO `sys_menu` VALUES (26, 'Admin监控', 23, '1', b'1', 'http://www.sparkplatform.cn:9002', NULL, '', b'0', '', 40, '2020-03-22 14:12:05', 'admin', '2020-05-07 16:55:10', 'admin', NULL, b'0');
 INSERT INTO `sys_menu` VALUES (27, '系统日志', 23, '1', b'0', '/log', 'sys/log/index', '', b'0', '', 5, '2020-03-25 10:02:45', 'admin', '2020-05-02 09:37:16', 'admin', NULL, b'0');
 INSERT INTO `sys_menu` VALUES (28, '协同管理', 0, '0', b'0', 'act', 'Layout', '', b'0', 'act', 5, '2020-04-03 20:41:47', 'admin', '2020-05-07 16:58:13', 'admin', NULL, b'0');
-INSERT INTO `sys_menu` VALUES (29, '待办事项', 28, '1', b'0', '/tasks', 'act/tasks/index', '', b'0', 'guide', 10, '2020-04-06 14:47:36', 'admin', '2020-05-02 09:36:28', 'admin', NULL, b'0');
+INSERT INTO `sys_menu` VALUES (29, '待办事项', 28, '1', b'0', '/tasks', 'act/tasks/index', '', b'0', 'guide', 10, '2020-04-06 14:47:36', 'admin', '2020-05-30 11:06:53', 'admin', NULL, b'0');
 INSERT INTO `sys_menu` VALUES (30, '已办事项', 28, '1', b'0', '/histasks', 'act/histasks/index', '', b'0', 'handle', 20, '2020-04-06 14:48:34', 'admin', '2020-05-02 09:36:34', 'admin', NULL, b'0');
 INSERT INTO `sys_menu` VALUES (31, '流程管理', 28, '1', b'0', '/process', 'act/process/index', '', b'0', 'model', 30, '2020-04-06 14:50:20', 'admin', '2020-05-02 09:36:41', 'admin', NULL, b'0');
 INSERT INTO `sys_menu` VALUES (32, '研发工具', 0, '0', b'0', 'wrench', 'Layout', '', b'0', 'wrench', 20, '2020-04-15 15:20:55', 'admin', '2020-05-03 11:11:28', 'admin', NULL, b'0');
@@ -249,11 +304,14 @@ INSERT INTO `sys_menu` VALUES (37, '新增', 22, '2', b'0', '', NULL, 'oauth:add
 INSERT INTO `sys_menu` VALUES (38, '编辑', 22, '2', b'0', '', NULL, 'oauth:edit', b'0', '', 10, '2020-04-26 11:37:48', 'admin', '2020-04-26 11:37:48', 'admin', NULL, b'0');
 INSERT INTO `sys_menu` VALUES (39, '删除', 22, '2', b'0', '', NULL, 'oauth:delete', b'0', '', 10, '2020-04-26 11:38:07', 'admin', '2020-04-26 11:38:07', 'admin', NULL, b'0');
 INSERT INTO `sys_menu` VALUES (40, '内容平台', 0, '0', b'0', 'cms', 'Layout', '', b'0', 'international', 9, '2020-05-03 11:12:52', 'admin', '2020-05-07 16:58:24', 'admin', NULL, b'0');
-INSERT INTO `sys_menu` VALUES (41, '文章列表', 40, '1', b'0', '/article-list', 'cms/article/index', '', b'0', 'loggers', 10, '2020-05-03 11:14:06', 'admin', '2020-05-03 11:14:18', 'admin', NULL, b'0');
-INSERT INTO `sys_menu` VALUES (42, '添加文章', 40, '1', b'0', '/article-create', 'cms/article/create', '', b'0', 'edit', 9, '2020-05-03 11:15:47', 'admin', '2020-05-04 14:55:08', 'admin', NULL, b'0');
-INSERT INTO `sys_menu` VALUES (43, '编辑文章', 40, '1', b'0', '/article-edit', 'cms/article/edit', '', b'1', '', 10, '2020-05-04 14:57:14', 'admin', '2020-05-06 11:33:34', 'admin', NULL, b'0');
-INSERT INTO `sys_menu` VALUES (44, '处理文章', 40, '1', b'0', '/article-task', 'cms/article/task', '', b'1', '', 16, '2020-05-04 17:13:16', 'admin', '2020-05-06 13:42:16', 'admin', NULL, b'0');
+INSERT INTO `sys_menu` VALUES (41, '文章列表', 40, '1', b'0', '/article/list', 'cms/article/list', '', b'0', 'loggers', 10, '2020-05-03 11:14:06', 'admin', '2020-06-18 14:54:03', 'admin', NULL, b'0');
 INSERT INTO `sys_menu` VALUES (45, '数据库监控', 23, '1', b'0', 'http://49.232.72.173:9020/druid', NULL, '', b'0', '', 50, '2020-05-07 16:57:11', 'admin', '2020-05-07 16:58:01', 'admin', NULL, b'0');
+INSERT INTO `sys_menu` VALUES (46, '流程设计', 28, '1', b'0', '/model', 'act/model/index', '', b'0', 'act', 25, '2020-05-29 17:22:35', 'admin', '2020-05-30 11:07:02', 'admin', NULL, b'0');
+INSERT INTO `sys_menu` VALUES (47, '实例管理', 28, '1', b'0', '/instance', 'act/instance/index', '', b'0', 'star', 90, '2020-06-01 17:50:35', 'admin', '2020-06-01 17:50:35', 'admin', NULL, b'0');
+INSERT INTO `sys_menu` VALUES (48, '定时任务', 1, '1', b'0', '/quartz', 'sys/quartz/index', '', b'0', 'clock', 60, '2020-06-12 14:55:32', 'admin', '2020-06-12 14:56:31', 'admin', NULL, b'0');
+INSERT INTO `sys_menu` VALUES (49, '新增', 48, '2', b'0', '', NULL, 'quartz:add', b'0', '', 10, '2020-06-12 14:56:55', 'admin', '2020-06-12 14:56:55', 'admin', NULL, b'0');
+INSERT INTO `sys_menu` VALUES (50, '编辑', 48, '2', b'0', '', NULL, 'quartz:edit', b'0', '', 11, '2020-06-12 14:57:11', 'admin', '2020-06-12 14:57:11', 'admin', NULL, b'0');
+INSERT INTO `sys_menu` VALUES (51, '删除', 48, '2', b'0', '', NULL, 'quartz:delete', b'0', '', 13, '2020-06-12 14:57:25', 'admin', '2020-06-12 14:57:25', 'admin', NULL, b'0');
 
 -- ----------------------------
 -- Table structure for sys_oauth_client_details
@@ -308,7 +366,7 @@ INSERT INTO `sys_role` VALUES (2, '系统管理员', 'role_system', '我是', 7,
 INSERT INTO `sys_role` VALUES (3, '测试角色', 'role_test', '', 2, NULL, NULL, '2020-03-19 22:56:06', 'admin', '2020-03-19 22:56:06', 'admin', NULL, 1);
 INSERT INTO `sys_role` VALUES (4, '测试角色1', 'role_test1', '', 2, NULL, NULL, '2020-03-19 23:01:32', 'admin', '2020-03-19 23:01:32', 'admin', NULL, 1);
 INSERT INTO `sys_role` VALUES (5, '文章审核组长', 'role_group_leader', '文章审核组长', 5, '文章一部', NULL, '2020-04-14 16:49:52', 'admin', '2020-04-14 16:50:19', 'admin', NULL, 0);
-INSERT INTO `sys_role` VALUES (6, '主编', 'role_editor_manage', '主编', 5, '文章一部', NULL, '2020-04-14 16:55:45', 'admin', '2020-04-14 16:55:45', 'admin', NULL, 0);
+INSERT INTO `sys_role` VALUES (6, '主编', 'role_editor_manage', '主编', 5, '文章一部', NULL, '2020-04-14 16:55:45', 'admin', '2020-05-29 12:01:41', 'admin', NULL, 0);
 
 -- ----------------------------
 -- Table structure for sys_role_menu
@@ -319,7 +377,7 @@ CREATE TABLE `sys_role_menu`  (
   `role_id` bigint(11) NULL DEFAULT NULL COMMENT '角色id',
   `menu_id` bigint(11) NULL DEFAULT NULL COMMENT '菜单id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 590 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色菜单表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 641 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色菜单表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_role_menu
@@ -348,51 +406,54 @@ INSERT INTO `sys_role_menu` VALUES (285, 2, 28);
 INSERT INTO `sys_role_menu` VALUES (286, 2, 29);
 INSERT INTO `sys_role_menu` VALUES (287, 2, 30);
 INSERT INTO `sys_role_menu` VALUES (288, 2, 31);
-INSERT INTO `sys_role_menu` VALUES (545, 1, 1);
-INSERT INTO `sys_role_menu` VALUES (546, 1, 2);
-INSERT INTO `sys_role_menu` VALUES (547, 1, 3);
-INSERT INTO `sys_role_menu` VALUES (548, 1, 4);
-INSERT INTO `sys_role_menu` VALUES (549, 1, 5);
-INSERT INTO `sys_role_menu` VALUES (550, 1, 6);
-INSERT INTO `sys_role_menu` VALUES (551, 1, 7);
-INSERT INTO `sys_role_menu` VALUES (552, 1, 8);
-INSERT INTO `sys_role_menu` VALUES (553, 1, 9);
-INSERT INTO `sys_role_menu` VALUES (554, 1, 10);
-INSERT INTO `sys_role_menu` VALUES (555, 1, 11);
-INSERT INTO `sys_role_menu` VALUES (556, 1, 12);
-INSERT INTO `sys_role_menu` VALUES (557, 1, 13);
-INSERT INTO `sys_role_menu` VALUES (558, 1, 14);
-INSERT INTO `sys_role_menu` VALUES (559, 1, 15);
-INSERT INTO `sys_role_menu` VALUES (560, 1, 16);
-INSERT INTO `sys_role_menu` VALUES (561, 1, 17);
-INSERT INTO `sys_role_menu` VALUES (562, 1, 18);
-INSERT INTO `sys_role_menu` VALUES (563, 1, 19);
-INSERT INTO `sys_role_menu` VALUES (564, 1, 20);
-INSERT INTO `sys_role_menu` VALUES (565, 1, 21);
-INSERT INTO `sys_role_menu` VALUES (566, 1, 22);
-INSERT INTO `sys_role_menu` VALUES (567, 1, 37);
-INSERT INTO `sys_role_menu` VALUES (568, 1, 38);
-INSERT INTO `sys_role_menu` VALUES (569, 1, 39);
-INSERT INTO `sys_role_menu` VALUES (570, 1, 35);
-INSERT INTO `sys_role_menu` VALUES (571, 1, 23);
-INSERT INTO `sys_role_menu` VALUES (572, 1, 24);
-INSERT INTO `sys_role_menu` VALUES (573, 1, 25);
-INSERT INTO `sys_role_menu` VALUES (574, 1, 26);
-INSERT INTO `sys_role_menu` VALUES (575, 1, 27);
-INSERT INTO `sys_role_menu` VALUES (576, 1, 36);
-INSERT INTO `sys_role_menu` VALUES (577, 1, 45);
-INSERT INTO `sys_role_menu` VALUES (578, 1, 28);
-INSERT INTO `sys_role_menu` VALUES (579, 1, 29);
-INSERT INTO `sys_role_menu` VALUES (580, 1, 30);
-INSERT INTO `sys_role_menu` VALUES (581, 1, 31);
-INSERT INTO `sys_role_menu` VALUES (582, 1, 32);
-INSERT INTO `sys_role_menu` VALUES (583, 1, 33);
-INSERT INTO `sys_role_menu` VALUES (584, 1, 34);
-INSERT INTO `sys_role_menu` VALUES (585, 1, 40);
-INSERT INTO `sys_role_menu` VALUES (586, 1, 41);
-INSERT INTO `sys_role_menu` VALUES (587, 1, 42);
-INSERT INTO `sys_role_menu` VALUES (588, 1, 43);
-INSERT INTO `sys_role_menu` VALUES (589, 1, 44);
+INSERT INTO `sys_role_menu` VALUES (590, 1, 1);
+INSERT INTO `sys_role_menu` VALUES (591, 1, 2);
+INSERT INTO `sys_role_menu` VALUES (592, 1, 3);
+INSERT INTO `sys_role_menu` VALUES (593, 1, 4);
+INSERT INTO `sys_role_menu` VALUES (594, 1, 5);
+INSERT INTO `sys_role_menu` VALUES (595, 1, 6);
+INSERT INTO `sys_role_menu` VALUES (596, 1, 7);
+INSERT INTO `sys_role_menu` VALUES (597, 1, 8);
+INSERT INTO `sys_role_menu` VALUES (598, 1, 9);
+INSERT INTO `sys_role_menu` VALUES (599, 1, 10);
+INSERT INTO `sys_role_menu` VALUES (600, 1, 11);
+INSERT INTO `sys_role_menu` VALUES (601, 1, 12);
+INSERT INTO `sys_role_menu` VALUES (602, 1, 13);
+INSERT INTO `sys_role_menu` VALUES (603, 1, 14);
+INSERT INTO `sys_role_menu` VALUES (604, 1, 15);
+INSERT INTO `sys_role_menu` VALUES (605, 1, 16);
+INSERT INTO `sys_role_menu` VALUES (606, 1, 17);
+INSERT INTO `sys_role_menu` VALUES (607, 1, 18);
+INSERT INTO `sys_role_menu` VALUES (608, 1, 19);
+INSERT INTO `sys_role_menu` VALUES (609, 1, 20);
+INSERT INTO `sys_role_menu` VALUES (610, 1, 21);
+INSERT INTO `sys_role_menu` VALUES (611, 1, 22);
+INSERT INTO `sys_role_menu` VALUES (612, 1, 37);
+INSERT INTO `sys_role_menu` VALUES (613, 1, 38);
+INSERT INTO `sys_role_menu` VALUES (614, 1, 39);
+INSERT INTO `sys_role_menu` VALUES (615, 1, 35);
+INSERT INTO `sys_role_menu` VALUES (616, 1, 23);
+INSERT INTO `sys_role_menu` VALUES (617, 1, 24);
+INSERT INTO `sys_role_menu` VALUES (618, 1, 25);
+INSERT INTO `sys_role_menu` VALUES (619, 1, 26);
+INSERT INTO `sys_role_menu` VALUES (620, 1, 27);
+INSERT INTO `sys_role_menu` VALUES (621, 1, 36);
+INSERT INTO `sys_role_menu` VALUES (622, 1, 45);
+INSERT INTO `sys_role_menu` VALUES (623, 1, 28);
+INSERT INTO `sys_role_menu` VALUES (624, 1, 29);
+INSERT INTO `sys_role_menu` VALUES (625, 1, 30);
+INSERT INTO `sys_role_menu` VALUES (626, 1, 31);
+INSERT INTO `sys_role_menu` VALUES (627, 1, 46);
+INSERT INTO `sys_role_menu` VALUES (628, 1, 32);
+INSERT INTO `sys_role_menu` VALUES (629, 1, 33);
+INSERT INTO `sys_role_menu` VALUES (630, 1, 34);
+INSERT INTO `sys_role_menu` VALUES (631, 1, 40);
+INSERT INTO `sys_role_menu` VALUES (632, 1, 41);
+INSERT INTO `sys_role_menu` VALUES (636, 1, 47);
+INSERT INTO `sys_role_menu` VALUES (637, 1, 48);
+INSERT INTO `sys_role_menu` VALUES (638, 1, 49);
+INSERT INTO `sys_role_menu` VALUES (639, 1, 50);
+INSERT INTO `sys_role_menu` VALUES (640, 1, 51);
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -429,7 +490,7 @@ INSERT INTO `sys_user` VALUES (9, 'test1', '测试用户1', '$2a$10$NsOBCqf3LOXi
 INSERT INTO `sys_user` VALUES (10, 'spark', '火花', '$2a$10$a6TPwO6wnXbouCwfowwb/.MqnfKgs3bxW3EwH7SUiUHeF4PfJYK7e', 1, '123123', '123@qq.com', 'others/14.jpg', 3, '研发一部', 1, '2020-03-19 20:31:04', 'admin', '2020-04-20 19:01:12', 'admin', '1', 0);
 INSERT INTO `sys_user` VALUES (11, 'zhubian2', '主编2', '$2a$10$kXbLvWcO3i155u7pTbjR4uCabdytnKNKUMB4ozaLCu5htDzVVKH4u', 0, '1231232199', '123@qq.com', 'sunny/5.jpg', 5, '文章一部', 1, '2020-03-19 20:47:09', 'admin', '2020-04-14 22:14:23', 'admin', '主编', 0);
 INSERT INTO `sys_user` VALUES (12, 'zhubian1', '主编1', '$2a$10$RtbN3jyBh5Zvd0H99PkYwuH6zmsMfN37bEZkyow78Dh/KTn0C4Ev.', 1, '1999999999', '12312312@qq.com', 'others/14.jpg', 5, '文章一部', 1, '2020-03-21 19:56:30', 'admin', '2020-04-14 17:28:40', 'admin', NULL, 0);
-INSERT INTO `sys_user` VALUES (13, 'zuzhang', '组长', '$2a$10$DMb.Gx/GbX657UT6Z5/Lx.AOYRZhHsK0/KWlflqxlNxhhoZmbAPz6', 0, '12312312323', '123555@qq.com', 'others/1.jpg', 5, '文章一部', 1, '2020-04-14 16:54:44', 'admin', '2020-04-14 17:28:33', 'admin', '组长', 0);
+INSERT INTO `sys_user` VALUES (13, 'zuzhang', '组长', '$2a$10$DMb.Gx/GbX657UT6Z5/Lx.AOYRZhHsK0/KWlflqxlNxhhoZmbAPz6', 0, '12312312323', '123555@qq.com', 'others/10.jpg', 5, '文章一部', 1, '2020-04-14 16:54:44', 'admin', '2020-05-07 17:24:55', 'zuzhang', '组长', 0);
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -452,34 +513,5 @@ INSERT INTO `sys_user_role` VALUES (22, 2, 8);
 INSERT INTO `sys_user_role` VALUES (26, 2, 10);
 INSERT INTO `sys_user_role` VALUES (29, 1, 1);
 INSERT INTO `sys_user_role` VALUES (30, 5, 1);
-
-
-CREATE TABLE `sys_log_api` (
-  `id` bigint(11) NOT NULL AUTO_INCREMENT,
-  `url` varchar(100) DEFAULT NULL COMMENT 'url',
-  `method` varchar(128) DEFAULT NULL COMMENT '方法名',
-  `params` text COMMENT '参数',
-  `create_time` datetime DEFAULT NULL COMMENT '访问时间',
-  `times` int(11) DEFAULT NULL COMMENT '耗时',
-  `creator` varchar(32) DEFAULT NULL COMMENT '访问用户',
-  `ip` varchar(50) DEFAULT NULL COMMENT '访问ip',
-  `address` varchar(64) DEFAULT NULL COMMENT '地址',
-  `description` varchar(64) DEFAULT NULL COMMENT '描述',
-  `status` int(3) DEFAULT NULL COMMENT '状态',
-  `error_log` text COMMENT '错误日志',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=1258323580937121795 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='日志表请求日志表';
-
-
-CREATE TABLE `sys_log_login` (
-  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `username` varchar(32) DEFAULT NULL COMMENT '登录用户账号',
-  `system` varchar(128) DEFAULT NULL COMMENT '登录系统',
-  `browser` varchar(128) DEFAULT NULL COMMENT '登录浏览器',
-  `login_time` datetime DEFAULT NULL COMMENT '登录时间',
-  `location` varchar(128) DEFAULT NULL COMMENT '登录地点',
-  `location_ip` varchar(128) DEFAULT NULL COMMENT '登录ip',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=135 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='登录日志';
 
 SET FOREIGN_KEY_CHECKS = 1;
