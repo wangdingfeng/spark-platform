@@ -16,7 +16,7 @@
             information_schema.TABLES 
         WHERE
             TABLE_SCHEMA = #{tableSchema}
-            AND LEFT(TABLE_NAME,3) != 'act'
+            AND LEFT(TABLE_NAME,4) != 'qrtz'
             <if test="tableName != null and tableName != ''">
                 AND TABLE_NAME =#{tableName}
             </if>
