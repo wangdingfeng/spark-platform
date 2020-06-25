@@ -7,7 +7,7 @@ spring:
     name: spark-tx-manager
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url:  jdbc:mysql://127.0.0.1:3306/spark?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+    url:  jdbc:mysql://mysql.example.com:3306/spark?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
     username: root
     password:
     name: spark
@@ -35,7 +35,7 @@ spring:
           #          分服务器部署一定要配置ip
           service-url: http://127.0.0.1:9020
   redis:
-    host: 127.0.0.1
+    host: redis.example.com
     port: 6379
     timeout: 10000
     database: 0
@@ -83,7 +83,7 @@ management:
 tx-lcn:
   manager:
     #TxManager Host Ip
-    host: 127.0.0.1
+    host: redis.example.com
     port: 8070
     #后台登录密码
     admin-key: 123456
