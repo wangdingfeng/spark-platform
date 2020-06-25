@@ -76,7 +76,7 @@ Spring Boot Admin | 2.2.0
 Security Jwt | 1.0.10.RELEASE
 
 #### 模块说明
-```lua
+```
 spark-platform 
 ├── spark-auth -- 授权服务 oauth2
 └── spark-common -- 系统公共模块 
