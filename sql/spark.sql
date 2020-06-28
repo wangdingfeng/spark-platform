@@ -515,3 +515,60 @@ INSERT INTO `sys_user_role` VALUES (29, 1, 1);
 INSERT INTO `sys_user_role` VALUES (30, 5, 1);
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+-- ----------------------------
+-- Table structure for sys_job_log
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_job_log`;
+CREATE TABLE `sys_job_log`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '任务日志ID',
+  `job_id` int(10) NULL DEFAULT NULL COMMENT '任务ID',
+  `job_name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '任务名称',
+  `job_group` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '任务组名',
+  `invoke_target` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '调用目标字符串',
+  `times` int(10) NULL DEFAULT NULL COMMENT '执行时间',
+  `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '0' COMMENT '执行状态（0正常 1失败）',
+  `start_time` datetime(3) NULL DEFAULT NULL COMMENT '开始时间',
+  `end_time` datetime(3) NULL DEFAULT NULL COMMENT '结束时间',
+  `create_time` datetime(3) NULL DEFAULT NULL COMMENT '创建时间',
+  `exception_info` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '异常信息',
+  `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 170 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '定时任务调度日志表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for sys_log_api
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_log_api`;
+CREATE TABLE `sys_log_api`  (
+  `id` bigint(11) NOT NULL AUTO_INCREMENT,
+  `url` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'url',
+  `method` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '方法名',
+  `params` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '参数',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '访问时间',
+  `times` int(11) NULL DEFAULT NULL COMMENT '耗时',
+  `creator` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '访问用户',
+  `ip` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '访问ip',
+  `address` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '地址',
+  `description` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
+  `status` int(3) NULL DEFAULT NULL COMMENT '状态',
+  `error_log` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '错误日志',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1277060031237365762 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '日志表请求日志表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for sys_log_login
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_log_login`;
+CREATE TABLE `sys_log_login`  (
+  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `username` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '登录用户账号',
+  `system` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '登录系统',
+  `browser` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '登录浏览器',
+  `login_time` datetime(0) NULL DEFAULT NULL COMMENT '登录时间',
+  `location` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '登录地点',
+  `location_ip` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '登录ip',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 416 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '登录日志' ROW_FORMAT = Dynamic;
+
+SET FOREIGN_KEY_CHECKS = 1;
