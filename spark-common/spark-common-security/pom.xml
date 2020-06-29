@@ -5,11 +5,11 @@
     <parent>
         <groupId>com.spark.platform</groupId>
         <artifactId>spark-common</artifactId>
-        <version>1.0.1-SNAPSHOT</version>
+        <version>2.0.1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>spark-common-security</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>2.0.1</version>
     <name>spark-common-security</name>
     <description>security包</description>
     <packaging>jar</packaging>
