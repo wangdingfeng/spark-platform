@@ -1,4 +1,4 @@
-package com.spark.platform.common.base.datasource.emuns;
+package com.spark.platform.common.datasource.emuns;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

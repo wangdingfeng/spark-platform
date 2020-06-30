@@ -19,6 +19,7 @@
 		<module>spark-common-base</module>
 		<module>spark-common-config</module>
 		<module>spark-common-feign</module>
+		<module>spark-common-datasource</module>
 		<module>spark-common-security</module>
 		<module>spark-common-log</module>
 		<module>spark-common-utils</module>

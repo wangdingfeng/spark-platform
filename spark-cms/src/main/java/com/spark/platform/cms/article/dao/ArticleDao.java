@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.spark.platform.cms.article.entity.Article;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.spark.platform.common.base.datasource.annotation.DataScope;
+import com.spark.platform.common.datasource.annotation.DataScope;
 import org.apache.ibatis.annotations.Param;
 
 /**

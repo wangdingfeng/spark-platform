@@ -38,7 +38,7 @@
         <!--公共security包 包含admin api 及 包含base-->
         <dependency>
             <groupId>com.spark.platform</groupId>
-            <artifactId>spark-common-security</artifactId>
+            <artifactId>spark-common-datasource</artifactId>
             <version>${spark-common.version}</version>
         </dependency>
         <dependency>
