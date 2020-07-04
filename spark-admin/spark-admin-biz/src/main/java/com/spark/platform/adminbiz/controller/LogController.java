@@ -7,6 +7,7 @@ import com.spark.platform.adminbiz.service.log.LogApiService;
 import com.spark.platform.adminbiz.service.log.LogLoginService;
 import com.spark.platform.common.base.support.ApiResponse;
 import com.spark.platform.common.base.support.BaseController;
+import com.spark.platform.common.log.annotation.ApiLog;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -41,12 +42,14 @@ public class LogController extends BaseController {
     }
 
     @PostMapping("/log/api")
+    @ApiLog(ignore = true)
     @ApiOperation(value = "保存日志信息")
     public ApiResponse save(@RequestBody LogApi apiLog) {
         return success(apiLogService.save(apiLog));
     }
 
     @PostMapping("/login-log/api")
+    @ApiLog(ignore = true)
     @ApiOperation(value = "保存登录日志信息")
     public ApiResponse save(@RequestBody LogLogin loginLog) {
         return success(loginLogService.save(loginLog));

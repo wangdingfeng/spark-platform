@@ -5,6 +5,7 @@ import com.spark.platform.adminapi.entity.user.User;
 import com.spark.platform.common.base.support.BaseController;
 import com.spark.platform.adminbiz.service.user.UserService;
 import com.spark.platform.common.base.support.ApiResponse;
+import com.spark.platform.common.log.annotation.ApiLog;
 import com.spark.platform.common.security.util.UserUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -43,6 +44,7 @@ public class UserController extends BaseController {
     }
 
     @GetMapping("/api")
+    @ApiLog(ignore = true)
     @ApiOperation(value = "根据用户名获取用户信息")
     public ApiResponse getUserByUserName(@RequestParam String username) {
         return success(userService.loadUserByUserName(username));

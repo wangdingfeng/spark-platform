@@ -9,7 +9,6 @@
         <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
     <artifactId>spark-admin-biz</artifactId>
-    <version>2.0.1</version>
     <name>spark-admin-biz</name>
     <description>admin 服务，提供系统设置业务</description>
 
@@ -32,12 +31,6 @@
             <groupId>com.spring4all</groupId>
             <artifactId>swagger-spring-boot-starter</artifactId>
             <version>${swagger-spring-boot-starter.version}</version>
-        </dependency>
-        <!--公共 工具包 -->
-        <dependency>
-            <groupId>com.spark.platform</groupId>
-            <artifactId>spark-common-utils</artifactId>
-            <version>${spark-common.version}</version>
         </dependency>
         <dependency>
             <groupId>com.spark.platform</groupId>

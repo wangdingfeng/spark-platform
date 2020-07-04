@@ -2,7 +2,7 @@ package com.spark.platform.common.security.config;
 
 import com.spark.platform.common.security.support.SparkAccessDeniedHandler;
 import com.spark.platform.common.security.support.SparkAuthExceptionEntryPoint;
-import com.spark.platform.common.security.properties.FilterIgnoreProperties;
+import com.spark.platform.common.security.properties.SparkFilterIgnoreProperties;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 public class SparkResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Autowired
-    private FilterIgnoreProperties ignorePropertiesConfig;
+    private SparkFilterIgnoreProperties ignorePropertiesConfig;
     @Autowired
     private RedisConnectionFactory redisConnectionFactory;
 

@@ -24,15 +24,10 @@ public enum DataScopeTypeEnum {
      * 本级
      */
     THIS_LEVEL(2, "本级"),
-
-    /**
-     * 本级以及子级
-     */
-    THIS_LEVEL_CHILDREN(3,"本级以及子级"),
     /**
      * 自定义
      */
-    CUSTOMIZE(4, "自定义");
+    CUSTOMIZE(3, "自定义");
 
     private int type;
 

@@ -99,10 +99,15 @@ public class GlobalsConstants {
      */
     public static final String OAUTH_SECURITY_PREFIX = "security.oauth2.client";
 
+
     /**
      * security  过滤url 配置
      */
-    public static final String FILTER_IGNORE = "ignore";
+    public static final String SPARK_FILTER_IGNORE = "spark.ignore";
+    /**
+     * 日志配置
+     */
+    public static final String SPARK_LOG_FILTER = "spark.log";
 
     /**
      * 成功标记
@@ -141,8 +146,12 @@ public class GlobalsConstants {
      */
     public static final String FILE_PATH_BIZ = "biz";
     /**
+     * 角色前缀
+     */
+    public static final String ROLE_PREFIX = "ROLE_";
+    /**
      * 超级管理员角色
      */
-    public static final String ROLE_ADMIN = "role_admin";
+       public static final String ROLE_ADMIN = "ROLE_ADMIN";
 
 }

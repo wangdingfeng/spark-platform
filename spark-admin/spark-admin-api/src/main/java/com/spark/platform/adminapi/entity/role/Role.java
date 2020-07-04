@@ -46,6 +46,12 @@ public class Role extends BaseEntity {
 
     @ApiModelProperty(value = "状态")
     private String status;
+
+    @ApiModelProperty(value = "数据权限类型")
+    private Integer dsType;
+
+    @ApiModelProperty(value = "自定数据权限")
+    private String dsScope;
     /**
      * 角色对应的菜单
      */

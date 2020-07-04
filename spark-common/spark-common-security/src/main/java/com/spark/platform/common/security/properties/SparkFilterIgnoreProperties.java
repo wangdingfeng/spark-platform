@@ -19,9 +19,9 @@ import java.util.List;
  */
 @Data
 @Configuration
-@ConditionalOnExpression("!'${ignore}'.isEmpty()")
-@ConfigurationProperties(prefix = GlobalsConstants.FILTER_IGNORE)
-public class FilterIgnoreProperties {
+@ConditionalOnExpression("!'${spark.ignore}'.isEmpty()")
+@ConfigurationProperties(prefix = GlobalsConstants.SPARK_FILTER_IGNORE)
+public class SparkFilterIgnoreProperties {
 	/**
 	 * 放行终端配置，网关不校验此处的终端
 	 */

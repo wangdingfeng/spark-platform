@@ -2,7 +2,7 @@ server:
   port: 9030
 spring:
   application:
-    name: spark-flowable
+    name: @parent.artifactId@
   main:
     allow-bean-definition-overriding: true
   profiles:

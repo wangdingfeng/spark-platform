@@ -10,8 +10,6 @@ import com.google.common.collect.Lists;
 import com.spark.platform.common.base.constants.GlobalsConstants;
 import com.spark.platform.common.datasource.annotation.DataScope;
 import com.spark.platform.common.datasource.emuns.DataScopeTypeEnum;
-import com.spark.platform.common.security.model.LoginUser;
-import com.spark.platform.common.security.util.UserUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jsqlparser.expression.operators.conditional.AndExpression;
@@ -28,7 +26,9 @@ import org.apache.ibatis.plugin.*;
 import org.apache.ibatis.reflection.MetaObject;
 import org.apache.ibatis.reflection.SystemMetaObject;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
@@ -138,14 +138,14 @@ public class DataScopeInterceptor extends AbstractSqlParserHandler implements In
      * @return
      */
     private String dataScopeSql(String sql, DataScope dataScope) throws Throwable {
-        LoginUser user = UserUtils.getLoginUser();
-        if (null == user) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (null == authentication) {
             return sql;
         }
         // 获取用户角色code
-        List<String> roleIdList = user.getAuthorities()
+        List<String> roleIdList = authentication.getAuthorities()
                 .stream().map(GrantedAuthority::getAuthority)
-                .filter(authority -> authority.startsWith("role_"))
+                .filter(authority -> authority.startsWith(GlobalsConstants.ROLE_PREFIX))
                 .collect(Collectors.toList());
         //如果是超级管理员角色 不做任何数据权限
         if (roleIdList.contains(GlobalsConstants.ROLE_ADMIN)) {
@@ -176,9 +176,11 @@ public class DataScopeInterceptor extends AbstractSqlParserHandler implements In
             customizeList = Lists.newArrayList();
             customizeList.addAll(Arrays.asList(dsScope.split(",")));
         } else {
+            //获取当前用户信息
+            Entity user = Db.use(dataSource).get("sys_user","username",authentication.getName());
             //注解式权限
             if (dataScope.customize().length == 0) {
-                customizeList = Lists.newArrayList(user.getDeptId().toString());
+                customizeList = Lists.newArrayList(user.get(dataScope.field()).toString());
             }
         }
         String dataScopeSql = StringUtils.format("%s.%s in (%s)", mainTableName, dataScope.field(), CollUtil.join(customizeList, ","));

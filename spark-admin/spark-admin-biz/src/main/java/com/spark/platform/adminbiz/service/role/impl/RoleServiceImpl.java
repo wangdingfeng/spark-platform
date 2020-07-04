@@ -50,7 +50,8 @@ public class RoleServiceImpl extends ServiceImpl<RoleDao, Role> implements RoleS
     @Override
     public IPage findPage(Role role, Page page) {
         QueryWrapper queryWrapper = new QueryWrapper<Role>();
-        WrapperSupport.putParamsLike(queryWrapper,role,"roleName");
+        WrapperSupport.putParamsLike(queryWrapper,role,"roleName","roleCode");
+        WrapperSupport.putParamsEqual(queryWrapper,role,"deptId");
         return roleDao.selectPage(page,queryWrapper);
     }
 
@@ -85,6 +86,11 @@ public class RoleServiceImpl extends ServiceImpl<RoleDao, Role> implements RoleS
 
     @Override
     public void validateRoleCode(String roleCode,Long roleId) {
+        roleCode  = roleCode.toUpperCase();
+        //判断是否包含
+        if(!roleCode.startsWith(GlobalsConstants.ROLE_PREFIX)){
+            throw new BusinessException("角色编号应该包含ROLE_");
+        }
         QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
         if (null != roleId) {
             queryWrapper.ne("id", roleId);

@@ -39,6 +39,9 @@ public class Dept extends BaseEntity {
     @ApiModelProperty(value = "父部门id")
     private Long pid;
 
+    @ApiModelProperty(value = "父部门层级")
+    private String pids;
+
     @ApiModelProperty(value = "简称")
     private String simpleName;
 

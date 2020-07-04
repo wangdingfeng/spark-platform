@@ -5,6 +5,7 @@ import com.spark.platform.adminapi.vo.MenuVue;
 import com.spark.platform.adminbiz.service.menu.MenuService;
 import com.spark.platform.common.base.support.ApiResponse;
 import com.spark.platform.common.base.support.BaseController;
+import com.spark.platform.common.log.annotation.ApiLog;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -48,6 +49,7 @@ public class MenuController extends BaseController {
     }
 
     @GetMapping("/api/auth")
+    @ApiLog(ignore = true)
     @ApiOperation(value = "根据用户获取菜单信息")
     public ApiResponse findAuthByUserId(@RequestParam Long userId){
         return success(menuService.findAuthByUserId(userId));

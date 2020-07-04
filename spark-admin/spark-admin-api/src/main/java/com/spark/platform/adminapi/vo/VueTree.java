@@ -1,5 +1,7 @@
 package com.spark.platform.adminapi.vo;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,10 +24,12 @@ import java.util.List;
 @NoArgsConstructor
 public class VueTree {
 
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     private String label;
 
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long pid;
 
     private List<VueTree> children;

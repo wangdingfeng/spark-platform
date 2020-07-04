@@ -86,6 +86,9 @@ public class AddressUtils {
      * @return
      */
     public static String getCityInfo(String ip) {
+        if(LOCAL_IP.equals(ip) || LOCAL_IP_127.equals(ip)){
+            return "0|0|0|内网IP|内网IP";
+        }
         try {
             String dbPath = AddressUtils.class.getResource("/ip2region/ip2region.db").getPath();
             File file = new File(dbPath);

@@ -1,6 +1,7 @@
 package com.spark.platform.adminbiz.controller;
 
 import com.spark.platform.adminapi.entity.dept.Dept;
+import com.spark.platform.adminapi.vo.VueTree;
 import com.spark.platform.adminbiz.service.dept.DeptService;
 import com.spark.platform.common.base.support.ApiResponse;
 import com.spark.platform.common.base.support.BaseController;
@@ -9,6 +10,8 @@ import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author: wangdingfeng
@@ -25,19 +28,19 @@ public class DeptController extends BaseController {
 
     @GetMapping("/list")
     @ApiOperation(value = "部门列表")
-    public ApiResponse list(Dept dept){
+    public ApiResponse<List<Dept>> list(Dept dept){
         return success(deptService.list(dept));
     }
 
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id获取部门信息")
-    public ApiResponse findById(@PathVariable Long id){
+    public ApiResponse<Dept> findById(@PathVariable Long id){
         return success(deptService.getById(id));
     }
 
     @GetMapping("/tree")
     @ApiOperation(value = "获取部门树")
-    public ApiResponse getTree(boolean isRoot){
+    public ApiResponse<List<VueTree>> getTree(boolean isRoot){
         return success(deptService.getTree(isRoot));
     }
 
@@ -45,14 +48,14 @@ public class DeptController extends BaseController {
     @ApiOperation(value = "保存部门信息")
     @PreAuthorize("hasAnyAuthority('dept:add')")
     public ApiResponse save(@RequestBody Dept dept){
-        return success(deptService.save(dept));
+        return success(deptService.saveOrUpdate(dept));
     }
 
     @PutMapping
     @ApiOperation(value = "更新部门信息")
     @PreAuthorize("hasAnyAuthority('dept:edit')")
     public ApiResponse update(@RequestBody Dept dept){
-        return success(deptService.updateById(dept));
+        return success(deptService.saveOrUpdate(dept));
     }
 
     @DeleteMapping("/{id}")

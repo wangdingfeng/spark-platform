@@ -25,5 +25,13 @@ public interface DeptDao extends BaseMapper<Dept> {
     @ResultType(VueTree.class)
     List<VueTree> getTree();
 
+    /**
+     * 获取父节点的层级
+     * @param id
+     * @return
+     */
+    @Select("SELECT pids FROM sys_dept WHERE id=#{id}")
+    String getPidsById(Long id);
+
 
 }

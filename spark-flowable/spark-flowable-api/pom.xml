@@ -9,7 +9,6 @@
         <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
     <artifactId>spark-flowable-api</artifactId>
-    <version>2.0.1</version>
     <name>spark-flowable-api</name>
     <description>工作流暴露接口</description>
 

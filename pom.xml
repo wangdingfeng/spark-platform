@@ -47,6 +47,7 @@
         <security-jwt.version>1.0.10.RELEASE</security-jwt.version>
         <jjwt.version>0.9.1</jjwt.version>
         <swagger.version>2.9.2</swagger.version>
+        <guava.veriosn>27.0-jre</guava.veriosn>
         <hutool.version>4.6.5</hutool.version>
         <commons-pool2.version>2.7.0</commons-pool2.version>
         <swagger-spring-boot-starter.version>1.9.1.RELEASE</swagger-spring-boot-starter.version>

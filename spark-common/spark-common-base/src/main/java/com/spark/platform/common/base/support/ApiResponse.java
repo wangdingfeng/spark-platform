@@ -16,7 +16,7 @@ import java.io.Serializable;
  */
 @Data
 @NoArgsConstructor
-public class ApiResponse implements Serializable {
+public class ApiResponse<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -24,7 +24,7 @@ public class ApiResponse implements Serializable {
 
     private String msg;
 
-    private Object data;
+    private T data;
 
     public ApiResponse(Integer code, String msg) {
         this.code = code;
@@ -35,7 +35,7 @@ public class ApiResponse implements Serializable {
         this.msg = sparkHttpStatus.getMessage();
     }
 
-    public ApiResponse(Integer code, String msg,Object data) {
+    public ApiResponse(Integer code, String msg,T data) {
         this.code = code;
         this.msg = msg;
         this.data = data;
