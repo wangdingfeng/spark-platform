@@ -22,8 +22,8 @@ import com.spark.platform.adminbiz.service.gen.GenService;
 import com.spark.platform.common.config.datasource.DataSourceProperties;
 import com.spark.platform.common.config.properties.SparkProperties;
 import com.spark.platform.common.utils.FileUtil;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
@@ -43,17 +43,13 @@ import java.util.List;
  * @Version: 1.0
  */
 @Service
+@AllArgsConstructor
 @Slf4j
 public class GenServiceImpl implements GenService {
 
-    @Autowired
-    private GenDao genDao;
-
-    @Autowired
-    private DataSourceProperties dataSourceProperties;
-
-    @Autowired
-    private SparkProperties sparkProperties;
+    private final GenDao genDao;
+    private final DataSourceProperties dataSourceProperties;
+    private final SparkProperties sparkProperties;
 
     @Override
     public IPage tableInfoPage(Page page, String tableName) {

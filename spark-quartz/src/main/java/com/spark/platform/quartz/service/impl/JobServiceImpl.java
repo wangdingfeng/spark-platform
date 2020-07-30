@@ -69,7 +69,7 @@ public class JobServiceImpl extends ServiceImpl<JobDao, Job> implements JobServi
      * @param jobId
      */
     @Override
-    @Transactional
+    @Transactional(readOnly = false)
     public boolean deleteJob(Long jobId) {
         Job job = super.getById(jobId);
         boolean flag = super.removeById(jobId);
@@ -85,7 +85,7 @@ public class JobServiceImpl extends ServiceImpl<JobDao, Job> implements JobServi
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = false)
     public boolean changeStatus(Long jobId,String status) {
         Assert.notNull(ScheduleConstants.Status.getEnum(status),"任务状态不存在");
         boolean flag = false;
@@ -142,7 +142,7 @@ public class JobServiceImpl extends ServiceImpl<JobDao, Job> implements JobServi
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = false)
     public void run(Long jobId){
         Job properties = super.getById(jobId);
         String jobGroup = properties.getJobGroup();
@@ -158,7 +158,7 @@ public class JobServiceImpl extends ServiceImpl<JobDao, Job> implements JobServi
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = false)
     public boolean saveJob(Job job) {
         if(!checkCronExpressionIsValid(job.getCronExpression())){
             throw new BusinessException("cron表达式无效");
@@ -178,7 +178,7 @@ public class JobServiceImpl extends ServiceImpl<JobDao, Job> implements JobServi
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = false)
     public boolean updateJob(Job job) {
         boolean flag = super.updateById(job);
         String jobGroup = StringUtils.isEmpty(job.getJobGroup()) ? super.getById(job.getId()).getJobGroup() : job.getJobGroup();

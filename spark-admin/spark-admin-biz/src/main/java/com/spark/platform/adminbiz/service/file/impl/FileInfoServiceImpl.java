@@ -19,9 +19,9 @@ import com.spark.platform.common.base.exception.BusinessException;
 import com.spark.platform.common.base.support.WrapperSupport;
 import com.spark.platform.common.config.properties.SparkProperties;
 import com.spark.platform.common.utils.FileUtil;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -43,11 +43,11 @@ import java.util.List;
  * @since 2020-04-18
  */
 @Service
+@AllArgsConstructor
 @Slf4j
 public class FileInfoServiceImpl extends ServiceImpl<FileInfoDao, FileInfo> implements FileInfoService {
 
-    @Autowired
-    private SparkProperties sparkProperties;
+    private final SparkProperties sparkProperties;
 
     @Override
     public FileInfo upload(MultipartFile file) {

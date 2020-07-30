@@ -4,26 +4,23 @@ import cn.hutool.http.useragent.UserAgent;
 import cn.hutool.http.useragent.UserAgentUtil;
 import com.alibaba.fastjson.JSON;
 import com.spark.platform.adminapi.dto.UserDTO;
-import com.spark.platform.adminapi.entity.authority.Menu;
 import com.spark.platform.adminapi.entity.log.LogLogin;
 import com.spark.platform.adminapi.feign.client.LogClient;
-import com.spark.platform.adminapi.feign.client.MenuClient;
 import com.spark.platform.adminapi.feign.client.UserClient;
 import com.spark.platform.adminapi.vo.UserVo;
 import com.spark.platform.common.base.constants.BizConstants;
-import com.spark.platform.adminapi.entity.user.User;
 import com.spark.platform.common.base.exception.CommonException;
 import com.spark.platform.common.base.support.ApiResponse;
 import com.spark.platform.common.security.model.LoginUser;
 import com.spark.platform.common.utils.AddressUtils;
+import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -32,6 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 /**
  * @author: wangdingfeng
@@ -42,12 +40,11 @@ import java.util.List;
  * @Version: 1.0
  */
 @Service
+@AllArgsConstructor
 public class SparkUserDetailService implements UserDetailsService {
 
-    @Autowired
-    private UserClient userClient;
-    @Autowired
-    private LogClient logClient;
+    private final UserClient userClient;
+    private final LogClient logClient;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -79,22 +76,30 @@ public class SparkUserDetailService implements UserDetailsService {
         loginUser.setId(user.getId());
         loginUser.setDeptId(user.getDeptId());
         //保存登录日志
-        saveLoginLog(username);
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = attributes.getRequest();
+        saveLoginLog(username,request);
         return loginUser;
     }
 
     /**
      * 保存登录日志信息
      */
-    private void saveLoginLog(String username) {
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = attributes.getRequest();
-        String ip = AddressUtils.getIpAddress(request);
-        String location = AddressUtils.getCityInfo(ip);
-        UserAgent userAgent = UserAgentUtil.parse(request.getHeader("user-agent"));
-        String os = userAgent.getOs().getName();
-        String browser = userAgent.getBrowser().getName();
-        LogLogin loginLog = new LogLogin(username, os, browser, LocalDateTime.now(), location, ip);
-        logClient.saveLoginLog(loginLog);
+    private void saveLoginLog(final String username,final HttpServletRequest request) {
+        ScheduledThreadPoolExecutor scheduledThreadPoolExecutor = new ScheduledThreadPoolExecutor(1,new BasicThreadFactory.Builder().namingPattern("user-thread-pool-%d").daemon(true).build());
+        scheduledThreadPoolExecutor.submit(new Runnable() {
+            @Override
+            public void run() {
+                String ip = AddressUtils.getIpAddress(request);
+                String location = AddressUtils.getCityInfo(ip);
+                UserAgent userAgent = UserAgentUtil.parse(request.getHeader("user-agent"));
+                String os = userAgent.getOs().getName();
+                String browser = userAgent.getBrowser().getName();
+                LogLogin loginLog = new LogLogin(username, os, browser, LocalDateTime.now(), location, ip);
+                logClient.saveLoginLog(loginLog);
+            }
+        });
+
+
     }
 }

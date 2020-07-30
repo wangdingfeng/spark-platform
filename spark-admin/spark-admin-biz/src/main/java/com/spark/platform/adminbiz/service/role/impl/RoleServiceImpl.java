@@ -14,8 +14,8 @@ import com.spark.platform.common.base.constants.GlobalsConstants;
 import com.spark.platform.common.base.exception.BusinessException;
 import com.spark.platform.common.base.support.WrapperSupport;
 import com.spark.platform.common.config.redis.RedisUtils;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,17 +30,13 @@ import java.util.List;
  * @Version: 1.0
  */
 @Service
+@AllArgsConstructor
 @Slf4j
 public class RoleServiceImpl extends ServiceImpl<RoleDao, Role> implements RoleService {
 
-    @Autowired
-    private RoleDao roleDao;
-
-    @Autowired
-    private RoleMenuDao roleMenuDao;
-
-    @Autowired
-    private RedisUtils redisUtils;
+    private final RoleDao roleDao;
+    private final RoleMenuDao roleMenuDao;
+    private final RedisUtils redisUtils;
 
     @Override
     public List<Role> getRoleByUserId(Long userId) {

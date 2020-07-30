@@ -14,7 +14,7 @@ import com.spark.platform.adminbiz.service.dict.DictService;
 import com.spark.platform.common.base.constants.GlobalsConstants;
 import com.spark.platform.common.base.support.WrapperSupport;
 import com.spark.platform.common.config.redis.RedisUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -28,13 +28,11 @@ import java.util.Map;
  * @Description: 字典
  */
 @Service
+@AllArgsConstructor
 public class DictServiceImpl extends ServiceImpl<DictDao, Dict> implements DictService {
 
-    @Autowired
-    private  DictItemDao dictItemDao;
-
-    @Autowired
-    private RedisUtils redisUtils;
+    private final DictItemDao dictItemDao;
+    private final RedisUtils redisUtils;
 
     @Override
     public IPage findPage(Dict dict, Page page) {
