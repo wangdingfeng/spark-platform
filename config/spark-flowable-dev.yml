@@ -1,0 +1,136 @@
+spring:
+  freemarker:
+    suffix: .html
+    template-loader-path: classpath:/templates
+    charset: utf-8
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 50MB
+      max-request-size: 100MB
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/flowable-dev?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC&nullCatalogMeansCurrent=true
+    username: root
+    password: 123456
+    name: flowable-dev
+    type: com.alibaba.druid.pool.DruidDataSource
+    initial-size: 5
+    min-idle: 5
+    max-active: 20
+    max-wait: 30000
+    time-between-eviction-runs-millis: 60000
+    min-evictable-idle-time-millis: 300000
+    validation-query: select '1' from dual
+    test-while-idle: true
+    test-on-borrow: false
+    test-on-return: false
+    pool-prepared-statements: true
+    max-open-prepared-statements: 20
+    max-pool-prepared-statement-per-connection-size: 20
+  boot:
+    admin:
+      client:
+        url: http://127.0.0.1:8980
+        instance:
+          prefer-ip: true
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    timeout: 10000
+    database: 0
+    password:
+    lettuce:
+      pool:
+        max-active: 300
+        max-idle: 100
+        max-wait: -1
+        min-idle: 20
+      shutdown-timeout: 10000
+
+management:
+  metrics:
+    web:
+      server:
+        auto-time-requests: false
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    bus-refresh:
+      enabled: true
+
+swagger:
+  base-package: com.spark.platform.flowable.biz
+  enabled: true
+  description: spark 工作流服务
+  version: V1.0
+  license: Apache License, Version 2.0
+  license-url: https://www.apache.org/licenses/LICENSE-2.0.html
+  authorization:
+    key-name: Authorization
+  contact:
+    name: wangdingfeng
+    email: wangdingfeng@live.com
+
+ribbon:
+  ReadTimeout: 10000 #请求处理的超时时间
+  ConnectTimeout: 5000 #请求连接的超时时间
+  MaxAutoRetries: 1 #对当前实例的重试次数
+  MaxAutoRetriesNextServer: 2 #切换实例的重试次数
+  eureka:
+    enabled: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+
+#熔断器开启
+feign:
+  hystrix:
+    enabled: true
+  okhttp:
+    enabled: true
+  httpclient:
+    enabled: false
+
+# flowable配置
+flowable:
+  # 关闭异步，不关闭历史数据的插入就是异步的，会在同一个事物里面，无法回滚 开发可开启会提高些效率，上线需要关闭
+  async-executor-activate: true
+  check-process-definitions: false #是否需要自动部署流程定义。
+  database-schema-update: true # 数据库schema更新策略。'
+  db-history-used: true # 是否要使用db历史。'
+
+#mybatis plus 配置
+mybatis-plus:
+  configuration-properties:
+    # 不要设置库名，否则会出现双库名 bug
+    prefix:
+    # 配置流程引擎参数，详情可见 DatabaseConfiguration
+    blobType: BLOB
+    boolValue: TRUE
+  type-aliases-package: com.spark.platform.flowable.api.entity
+  # 新增 modeler-mybatis-mappings xml 扫描
+  mapper-locations: classpath*:mapper/*.xml,classpath:/META-INF/modeler-mybatis-mappings/*.xml
+
+# 直接放行URL
+spark:
+  # 直接放行URL
+  ignore:
+    urls:
+    - /actuator/**
+    - /app/**
+    - /flowable/**
+    - /druid/**
+    - /runtime/tasks/**
+    - /runtime/process-definitions/resource/**
+    - /v2/api-docs
+    - /swagger-ui.html
+    - /swagger-resources/**
+    - /webjars/**

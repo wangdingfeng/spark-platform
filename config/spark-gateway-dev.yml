@@ -1,0 +1,100 @@
+spring:
+  redis:
+    host: 127.0.0.1
+    password:
+    port: 6379
+  cloud:
+    #设置路由规则
+    gateway:
+      #是否与服务注册于发现组件进行结合，通过 serviceId 转发到具体的服务实例。
+      #默认为 false，设为 true 便开启通过服务中心的自动根据 serviceId 创建路由的功能
+      ##表示将请求路径的服务名配置改成小写  因为服务注册的时候，向注册中心注册时将服务名转成大写的了
+      #lower-case-service-id: true
+      locator:
+        enabled: true
+      routes:
+        - id: spark-auth
+          #代表从注册中心获取服务，且以lb(load-balance)负载均衡方式转发
+          uri: lb://spark-auth
+          predicates:
+            - Path=/auth/**
+          #过滤器 设置所有的 方法都会自动添加foo=bar
+          filters:
+            #StripPrefix=2就代表截取路径的个数，这样配置后， PATH 就必须是 XXX/auth
+            - StripPrefix=1
+            - name: Hystrix
+              args:
+                name: oauth-hystrix
+                fallbackUri: forward:/common/fallback #设置熔断器
+        - id: spark-admin
+          uri: lb://spark-admin
+          predicates:
+            - Path=/admin/**
+          filters:
+            - StripPrefix=1
+            - name: Hystrix
+              args:
+                name: admin-hystrix
+                fallbackUri: forward:/common/fallback #设置熔断器
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 10 #允许用户每秒处理多少个请求
+                redis-rate-limiter.burstCapacity: 10  #令牌桶的容量，允许在一秒钟内完成的最大请求数
+                key-resolver: "#{@ipKeyResolver}" #使用SpEL按名称引用bean
+        - id: spark-flowable
+          uri: lb://spark-flowable
+          predicates:
+            - Path=/flow/**
+          filters:
+            - StripPrefix=1
+            - name: Hystrix
+              args:
+                name: flowable-hystrix
+                fallbackUri: forward:/common/fallback #设置熔断器
+        - id: spark-cms
+          uri: lb://spark-cms
+          predicates:
+            - Path=/cms/**
+          filters:
+            - StripPrefix=1
+            - name: Hystrix
+              args:
+                name: cms-hystrix
+                fallbackUri: forward:/common/fallback #设置熔断器
+        - id: spark-quartz
+          uri: lb://spark-quartz
+          predicates:
+            - Path=/quartz/**
+          filters:
+            - StripPrefix=1
+            - name: Hystrix
+              args:
+                name: quartz-hystrix
+                fallbackUri: forward:/common/fallback #设置熔断器
+  boot:
+    admin:
+      client:
+        url: http://127.0.0.1:9002
+        instance:
+          prefer-ip: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 30000
+
+management:
+  metrics:
+    web:
+      server:
+        auto-time-requests: false
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    bus-refresh:
+      enabled: true
