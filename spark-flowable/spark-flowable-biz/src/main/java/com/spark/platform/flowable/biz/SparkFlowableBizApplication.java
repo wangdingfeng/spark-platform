@@ -1,5 +1,6 @@
 package com.spark.platform.flowable.biz;
 
+import com.spark.platform.common.security.annotation.EnableSparkResourceServer;
 import com.spark.platform.flowable.biz.config.DatabaseAutoConfiguration;
 import com.spring4all.swagger.EnableSwagger2Doc;
 import org.springframework.boot.SpringApplication;
@@ -13,9 +14,8 @@ import org.springframework.context.annotation.Import;
 @Import(value={DatabaseAutoConfiguration.class})
 @SpringBootApplication
 @EnableDiscoveryClient
+@EnableSparkResourceServer
 @EnableSwagger2Doc
-@EnableFeignClients(basePackages = "com.spark.platform.adminapi.feign.client")
-@ComponentScan(basePackages = {"com.spark.platform"})
 public class SparkFlowableBizApplication {
 
     public static void main(String[] args) {
