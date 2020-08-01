@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.spark.platform.adminapi.entity.authority.Menu;
 import com.spark.platform.common.base.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -55,6 +54,6 @@ public class Dept extends BaseEntity {
     private Integer deptType;
 
     @TableField(exist = false)
-    private List<Menu> children;
+    private List<Dept> children;
 
 }

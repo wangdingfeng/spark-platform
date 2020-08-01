@@ -1,5 +1,6 @@
 package com.spark.platform.gateway.config;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +22,7 @@ public class RequestRateConfig {
      * @return
      */
     @Bean
+    @ConditionalOnProperty(name = "rate.key-resolver.ip")
     public KeyResolver ipKeyResolver() {
         return exchange -> Mono.just(exchange.getRequest().getRemoteAddress().getHostName());
     }
@@ -29,7 +31,8 @@ public class RequestRateConfig {
      * 通过用户user 实现限流
      * @return
      */
-//    @Bean
+    @Bean
+    @ConditionalOnProperty(name = "rate.key-resolver.user")
     public KeyResolver userKeyResolver() {
         return exchange -> Mono.just(exchange.getRequest().getQueryParams().getFirst("user"));
     }
@@ -38,8 +41,9 @@ public class RequestRateConfig {
      * 通过用户url 实现限流
      * @return
      */
-//    @Bean
-    public KeyResolver uriKeyResolver() {
+    @Bean
+    @ConditionalOnProperty(name = "rate.key-resolver.url")
+    public KeyResolver urLKeyResolver() {
         return exchange -> Mono.just(exchange.getRequest().getURI().getPath());
     }
 }

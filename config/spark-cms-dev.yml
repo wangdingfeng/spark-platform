@@ -25,9 +25,12 @@ spring:
   boot:
     admin:
       client:
-        url: http://127.0.0.1:8980
+        url: http://127.0.0.1:9002
         instance:
           prefer-ip: true
+          service-url: http://127.0.0.1:9040
+        username: spark
+        password: spark
   redis:
     host: 127.0.0.1
     port: 6379
@@ -109,13 +112,13 @@ spark:
   # 直接放行URL
   ignore:
     urls:
-    - /actuator/**
-    - /druid/**
-    - /**/api/**
-    - /v2/api-docs
-    - /swagger-ui.html
-    - /swagger-resources/**
-    - /webjars/**
+      - /actuator/**
+      - /druid/**
+      - /**/api/**
+      - /v2/api-docs
+      - /swagger-ui.html
+      - /swagger-resources/**
+      - /webjars/**
   #  文件保存路径
   file-path: E:/spark/file
 

@@ -77,7 +77,9 @@ spring:
         url: http://127.0.0.1:9002
         instance:
           prefer-ip: true
-
+          service-url: http://127.0.0.1:9001
+        username: spark
+        password: spark
 hystrix:
   command:
     default:
@@ -95,6 +97,11 @@ management:
     web:
       exposure:
         include: "*"
-  endpoint:
     bus-refresh:
       enabled: true
+# 限流策略 提供三种 ip 用户 地址
+rate:
+  key-resolver:
+    ip: true
+    user: false
+    url: false

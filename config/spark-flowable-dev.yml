@@ -31,9 +31,12 @@ spring:
   boot:
     admin:
       client:
-        url: http://127.0.0.1:8980
+        url: http://127.0.0.1:9002
         instance:
           prefer-ip: true
+          service-url: http://127.0.0.1:9030
+        username: spark
+        password: spark
   redis:
     host: 127.0.0.1
     port: 6379
@@ -109,12 +112,6 @@ flowable:
 
 #mybatis plus 配置
 mybatis-plus:
-  configuration-properties:
-    # 不要设置库名，否则会出现双库名 bug
-    prefix:
-    # 配置流程引擎参数，详情可见 DatabaseConfiguration
-    blobType: BLOB
-    boolValue: TRUE
   type-aliases-package: com.spark.platform.flowable.api.entity
   # 新增 modeler-mybatis-mappings xml 扫描
   mapper-locations: classpath*:mapper/*.xml,classpath:/META-INF/modeler-mybatis-mappings/*.xml
@@ -124,13 +121,13 @@ spark:
   # 直接放行URL
   ignore:
     urls:
-    - /actuator/**
-    - /app/**
-    - /flowable/**
-    - /druid/**
-    - /runtime/tasks/**
-    - /runtime/process-definitions/resource/**
-    - /v2/api-docs
-    - /swagger-ui.html
-    - /swagger-resources/**
-    - /webjars/**
+      - /actuator/**
+      - /app/**
+      - /flowable/**
+      - /druid/**
+      - /runtime/tasks/**
+      - /runtime/process-definitions/resource/**
+      - /v2/api-docs
+      - /swagger-ui.html
+      - /swagger-resources/**
+      - /webjars/**

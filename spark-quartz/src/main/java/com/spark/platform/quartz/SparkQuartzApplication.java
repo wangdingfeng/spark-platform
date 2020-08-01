@@ -1,5 +1,6 @@
 package com.spark.platform.quartz;
 
+import com.spark.platform.common.security.annotation.EnableSparkResourceServer;
 import com.spring4all.swagger.EnableSwagger2Doc;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -11,8 +12,7 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @EnableDiscoveryClient
 @MapperScan({"com.spark.platform.quartz.**.dao"})
-@EnableFeignClients(basePackages = {"com.spark.platform.adminapi.feign.client"})
-@ComponentScan(basePackages = {"com.spark.platform"})
+@EnableSparkResourceServer
 @EnableSwagger2Doc
 public class SparkQuartzApplication {
 

@@ -1,0 +1,15 @@
+server:
+  port: 9002
+spring:
+  application:
+    name: @artifactId@
+  profiles:
+    active: @profiles.active@
+  cloud:
+    nacos:
+      config:
+        server-addr: @nacos-url@
+        file-extension: yml
+        group: DEFAULT_GROUP
+      discovery:
+        server-addr: @nacos-url@

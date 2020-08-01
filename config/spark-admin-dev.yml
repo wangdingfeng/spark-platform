@@ -30,9 +30,12 @@ spring:
   boot:
     admin:
       client:
-        url: http://127.0.0.1:8980
+        url: http://127.0.0.1:9002
         instance:
           prefer-ip: true
+          service-url: http://127.0.0.1:9020
+        username: spark
+        password: spark
   redis:
     host: 127.0.0.1
     port: 6379
@@ -46,6 +49,7 @@ spring:
         max-wait: -1
         min-idle: 20
       shutdown-timeout: 10000
+
 mybatis-plus:
   mapper-locations: classpath*:mapper/*.xml
   type-aliases-package: com.spark.platform.adminapi.entity
@@ -58,7 +62,7 @@ mybatis-plus:
     defaultStatementTimeout: 1000
     jdbc-type-for-null: null
     call-setters-on-nulls: true
-    
+
 management:
   metrics:
     web:
