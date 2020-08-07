@@ -2,6 +2,8 @@ package com.spark.platform.adminbiz.dao.dict;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.spark.platform.adminapi.entity.dict.DictItem;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -22,4 +24,12 @@ public interface DictItemDao extends BaseMapper<DictItem> {
      * @return
      */
     List<DictItem> selectAll();
+
+    /**
+     * 通过 父id 更新type
+     * @param type
+     * @param pid 父id
+     */
+    @Update("UPDATE sys_dict_item SET type=#{type} WHERE pid = #{pid}")
+    void updateType(@Param("type")String type,@Param("pid") Long pid);
 }

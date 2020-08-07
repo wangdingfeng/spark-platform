@@ -355,6 +355,8 @@ CREATE TABLE `sys_role`  (
   `modifier` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '修改人',
   `remarks` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
   `del_flag` int(1) NOT NULL COMMENT '是否删除 (0 是  1否)',
+  `ds_type` int(1) DEFAULT NULL COMMENT '数据权限类型',
+  `ds_scope` varchar(255) DEFAULT NULL COMMENT '自定义数据权限',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色表' ROW_FORMAT = Dynamic;
 

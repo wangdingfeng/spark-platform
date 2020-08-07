@@ -6,6 +6,7 @@ import com.spark.platform.adminapi.feign.client.AuthorityClient;
 import com.spark.platform.common.base.enums.SparkHttpStatus;
 import com.spark.platform.common.base.exception.CommonException;
 import com.spark.platform.common.base.support.ApiResponse;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -33,11 +34,11 @@ import java.util.Arrays;
  * @Version: 1.0
  */
 @Service
+@AllArgsConstructor
 @Slf4j
 public class SparkClientDetailsService implements ClientDetailsService {
 
-    @Autowired
-    private AuthorityClient authorityClient;
+    private final AuthorityClient authorityClient;
 
     @Override
     public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {

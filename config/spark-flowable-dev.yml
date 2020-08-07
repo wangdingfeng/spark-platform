@@ -1,0 +1,126 @@
+spring:
+  freemarker:
+    suffix: .html
+    template-loader-path: classpath:/templates
+    charset: utf-8
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 50MB
+      max-request-size: 100MB
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/flowable-dev?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC&nullCatalogMeansCurrent=true
+    username: root
+    password: 123456
+    name: flowable-dev
+    type: com.alibaba.druid.pool.DruidDataSource
+    initial-size: 5
+    min-idle: 5
+    max-active: 20
+    max-wait: 30000
+    time-between-eviction-runs-millis: 60000
+    min-evictable-idle-time-millis: 300000
+    validation-query: select '1' from dual
+    test-while-idle: true
+    test-on-borrow: false
+    test-on-return: false
+    pool-prepared-statements: true
+    max-open-prepared-statements: 20
+    max-pool-prepared-statement-per-connection-size: 20
+  boot:
+    admin:
+      client:
+        url: http://127.0.0.1:9002
+        instance:
+          prefer-ip: true
+          service-url: http://127.0.0.1:9030
+        username: spark
+        password: spark
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    timeout: 10000
+    database: 0
+    password:
+    lettuce:
+      pool:
+        max-active: 300
+        max-idle: 100
+        max-wait: -1
+        min-idle: 20
+      shutdown-timeout: 10000
+
+management:
+  metrics:
+    web:
+      server:
+        auto-time-requests: false
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    bus-refresh:
+      enabled: true
+
+swagger:
+  base-package: com.spark.platform.flowable.biz
+  enabled: true
+  description: spark 工作流服务
+  version: V1.0
+  license: Apache License, Version 2.0
+  license-url: https://www.apache.org/licenses/LICENSE-2.0.html
+  authorization:
+    key-name: Authorization
+  contact:
+    name: wangdingfeng
+    email: wangdingfeng@live.com
+
+ribbon:
+  ReadTimeout: 10000
+  ConnectTimeout: 5000
+  MaxAutoRetries: 1
+  MaxAutoRetriesNextServer: 2
+  eureka:
+    enabled: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+
+feign:
+  hystrix:
+    enabled: true
+  okhttp:
+    enabled: true
+  httpclient:
+    enabled: false
+
+flowable:
+  async-executor-activate: true
+  check-process-definitions: false
+  database-schema-update: true
+  db-history-used: true
+
+mybatis-plus:
+  type-aliases-package: com.spark.platform.flowable.api.entity
+  mapper-locations: classpath*:mapper/*.xml,classpath:/META-INF/modeler-mybatis-mappings/*.xml
+
+spark:
+  ignore:
+    urls:
+      - /actuator/**
+      - /app/**
+      - /flowable/**
+      - /druid/**
+      - /runtime/tasks/**
+      - /runtime/process-definitions/resource/**
+      - /v2/api-docs
+      - /swagger-ui.html
+      - /swagger-resources/**
+      - /webjars/**

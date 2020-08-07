@@ -80,7 +80,7 @@ public class DictController extends BaseController {
     @PutMapping
     @ApiOperation(value = "更新字典信息")
     public ApiResponse update(@RequestBody Dict dict){
-        return success(dictService.updateById(dict));
+        return success(dictService.updateDict(dict));
     }
 
     @PutMapping("/item")

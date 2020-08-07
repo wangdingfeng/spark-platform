@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
@@ -34,7 +35,7 @@ import java.time.Duration;
  * @Description: redis 配置
  */
 @Configuration
-@EnableCaching
+@ConditionalOnProperty(value = "spark.redis.enable", havingValue = "true", matchIfMissing = true)
 public class RedisConfig extends CachingConfigurerSupport {
 
     private static final Logger log = LoggerFactory.getLogger(RedisConfig.class);

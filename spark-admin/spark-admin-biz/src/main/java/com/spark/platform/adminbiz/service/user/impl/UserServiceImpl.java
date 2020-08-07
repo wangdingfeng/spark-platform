@@ -23,10 +23,10 @@ import com.spark.platform.common.base.support.WrapperSupport;
 import com.spark.platform.common.config.redis.RedisUtils;
 import com.spark.platform.common.security.model.LoginUser;
 import com.spark.platform.common.security.util.UserUtils;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -45,20 +45,14 @@ import static java.util.stream.Collectors.toList;
  * @Version: 1.0
  */
 @Service
+@AllArgsConstructor
 @Slf4j
 public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserService {
 
-    @Autowired
-    private UserRoleDao userRoleDao;
-
-    @Autowired
-    private RoleService roleService;
-
-    @Autowired
-    private MenuService menuService;
-
-    @Autowired
-    private RedisUtils redisUtils;
+    private final UserRoleDao userRoleDao;
+    private final RoleService roleService;
+    private final MenuService menuService;
+    private final RedisUtils redisUtils;
 
     @Override
     @Cacheable(value = GlobalsConstants.REDIS_USER_CACHE, unless = "#result == null", key = "T(com.spark.platform.common.base.constants.GlobalsConstants).USER_KEY_PREFIX.concat(T(String).valueOf(#username))")

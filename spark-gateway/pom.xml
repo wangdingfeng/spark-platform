@@ -5,11 +5,11 @@
     <parent>
         <groupId>com.spark.platform</groupId>
         <artifactId>spark-platform</artifactId>
-        <version>1.0.1-SNAPSHOT</version>
+        <version>2.0.1</version>
         <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
     <artifactId>spark-gateway</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>2.0.1</version>
     <name>spark-gateway</name>
     <description>gateway网关服务</description>
 
@@ -18,9 +18,14 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
+        <!-- nacos -->
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
         <!--hystrix熔断降级-->
         <dependency>

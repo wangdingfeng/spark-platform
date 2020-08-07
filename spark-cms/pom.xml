@@ -5,15 +5,24 @@
     <parent>
         <groupId>com.spark.platform</groupId>
         <artifactId>spark-platform</artifactId>
-        <version>1.0.1-SNAPSHOT</version>
+        <version>2.0.1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>spark-cms</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>2.0.1</version>
     <name>spark-cms</name>
     <description>内容管理平台</description>
 
     <dependencies>
+        <!-- nacos -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
         <!-- for swagger -->
         <dependency>
             <groupId>com.spring4all</groupId>
@@ -34,6 +43,11 @@
         </dependency>
         <dependency>
             <groupId>com.spark.platform</groupId>
+            <artifactId>spark-common-datasource</artifactId>
+            <version>${spark-common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.spark.platform</groupId>
             <artifactId>spark-flowable-api</artifactId>
             <version>${spark-common.version}</version>
         </dependency>
@@ -41,11 +55,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-        <!--eureka client-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
         <!--undertow容器-->
         <dependency>

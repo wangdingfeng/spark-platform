@@ -26,6 +26,13 @@ public interface DictService extends IService<Dict> {
     IPage findPage(Dict dict, Page page);
 
     /**
+     * 更新字典数据
+     * @param dict
+     * @return
+     */
+    boolean updateDict(Dict dict);
+
+    /**
      * 获取所有的字典map
      * @return
      */

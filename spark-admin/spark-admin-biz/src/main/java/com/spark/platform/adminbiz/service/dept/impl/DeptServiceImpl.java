@@ -42,4 +42,15 @@ public class DeptServiceImpl extends ServiceImpl<DeptDao,Dept> implements DeptSe
         }
         return vueTrees;
     }
+
+    @Override
+    public boolean saveOrUpdate(Dept entity) {
+        String pids = "0";
+        if(entity.getPid().compareTo(0L) != 0){
+            //是否是根节点
+            pids = super.baseMapper.getPidsById(entity.getPid()) + "," + entity.getPid();
+        }
+        entity.setPids(pids);
+        return super.saveOrUpdate(entity);
+    }
 }

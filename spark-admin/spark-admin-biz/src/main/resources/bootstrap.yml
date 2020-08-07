@@ -1,0 +1,17 @@
+server:
+  port: 9020
+spring:
+  application:
+    name: @parent.artifactId@
+  profiles:
+    active: @profiles.active@
+  cloud:
+    nacos:
+      config:
+        server-addr: @nacos-url@
+        file-extension: yml
+        group: DEFAULT_GROUP
+      discovery:
+        server-addr: @nacos-url@
+#        ip: 127.0.0.1
+#        port: 9020

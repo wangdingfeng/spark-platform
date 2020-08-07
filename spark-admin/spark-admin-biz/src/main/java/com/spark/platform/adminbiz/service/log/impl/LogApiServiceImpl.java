@@ -26,7 +26,7 @@ public class LogApiServiceImpl extends ServiceImpl<ApiLogDao, LogApi> implements
     public IPage findPage(LogApi apiLog, Page page) {
         QueryWrapper wrapper = new QueryWrapper();
         wrapper.orderByDesc("create_time");
-        WrapperSupport.putParamsLike(wrapper,apiLog,"creator");
+        WrapperSupport.putParamsLike(wrapper,apiLog,"creator","description","url");
         WrapperSupport.putParamsDateBetween(wrapper,apiLog.getCreateTimeStr(),"~","create_time");
         return super.page(page,wrapper);
     }

@@ -5,6 +5,7 @@ import com.spark.platform.adminapi.entity.authority.OauthClientDetails;
 import com.spark.platform.adminbiz.service.authority.OauthClientDetailsService;
 import com.spark.platform.common.base.support.BaseController;
 import com.spark.platform.common.base.support.ApiResponse;
+import com.spark.platform.common.log.annotation.ApiLog;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -30,6 +31,7 @@ public class AuthorityController extends BaseController {
 
 
     @GetMapping("/api/info")
+    @ApiLog(ignore = true)
     @ApiOperation(value = "根据clientId获取认证客户端详情信息")
     public ApiResponse getOauthClientDetailsByClientId(@RequestParam String clientId) {
         return success(oauthClientDetailsService.findOauthClientDetailsByClientId(clientId));

@@ -22,6 +22,6 @@ public class JobLogServiceImpl extends ServiceImpl<JobLogDao, JobLog> implements
 
     @Override
     public IPage findPage(JobLog jobLog, Page page) {
-        return super.page(page, Wrappers.query(jobLog));
+        return super.page(page, Wrappers.query(jobLog).orderByAsc("modify_date"));
     }
 }

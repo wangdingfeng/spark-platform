@@ -53,6 +53,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> impleme
     @Override
     public IPage findPage(Page page, Article article) {
         QueryWrapper wrapper = new QueryWrapper<Article>();
+        wrapper.orderByDesc("modify_date");
         WrapperSupport.putParamsLike(wrapper,article,"title","author");
         WrapperSupport.putParamsEqual(wrapper,article,"platforms","status");
         return super.baseMapper.selectPage(page,wrapper);

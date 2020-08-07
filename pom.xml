@@ -13,13 +13,12 @@
 
     <groupId>com.spark.platform</groupId>
     <artifactId>spark-platform</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
-    <description>spark 平台</description>
+    <version>2.0.1</version>
+    <description>Spark 开发平台</description>
     <name>spark-platform</name>
     <packaging>pom</packaging>
 
     <modules>
-        <module>spark-eureka</module>
         <module>spark-common</module>
         <module>spark-auth</module>
         <module>spark-admin</module>
@@ -35,11 +34,12 @@
     <properties>
         <java.version>1.8</java.version>
         <spring-boot.version>2.2.6.RELEASE</spring-boot.version>
-        <spring-cloud.version>Hoxton.SR3</spring-cloud.version>
+        <spring-cloud.version>Hoxton.SR4</spring-cloud.version>
+        <spring-cloud-alibaba.version>2.2.1.RELEASE</spring-cloud-alibaba.version>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <spark-admin.version>1.0.1-SNAPSHOT</spark-admin.version>
-        <spark-common.version>1.0.1-SNAPSHOT</spark-common.version>
-        <spark-fowable-api.version>1.0.1-SNAPSHOT</spark-fowable-api.version>
+        <spark-admin.version>2.0.1</spark-admin.version>
+        <spark-common.version>2.0.1</spark-common.version>
+        <spark-fowable-api.version>2.0.1</spark-fowable-api.version>
         <fastjson.version>1.2.70</fastjson.version>
         <mybatis-plus.version>3.3.1</mybatis-plus.version>
         <druid.version>1.1.22</druid.version>
@@ -47,6 +47,7 @@
         <security-jwt.version>1.0.10.RELEASE</security-jwt.version>
         <jjwt.version>0.9.1</jjwt.version>
         <swagger.version>2.9.2</swagger.version>
+        <guava.veriosn>27.0-jre</guava.veriosn>
         <hutool.version>4.6.5</hutool.version>
         <commons-pool2.version>2.7.0</commons-pool2.version>
         <swagger-spring-boot-starter.version>1.9.1.RELEASE</swagger-spring-boot-starter.version>
@@ -56,6 +57,7 @@
         <flowable.version>6.4.2</flowable.version>
         <freemarker.version>2.3.28</freemarker.version>
         <tx-manager-version>5.0.2.RELEASE</tx-manager-version>
+        <nacos-url>127.0.0.1:8848</nacos-url>
     </properties>
 
     <dependencies>
@@ -112,6 +114,14 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!--spring cloud alibaba-->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <!--web-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -126,6 +136,48 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <build>
+        <finalName>${project.name}</finalName>
+        <resources>
+            <!-- 解决二进制制文件不能显示的问题-->
+            <resource>
+                <directory>${project.basedir}/src/main/resources</directory>
+                <filtering>true</filtering>
+                <excludes>
+                    <exclude>ip2region/**</exclude>
+                    <exclude>flowable/**</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>${project.basedir}/src/main/resources</directory>
+                <filtering>false</filtering>
+                <includes>
+                    <include>ip2region/**</include>
+                    <include>flowable/**</include>
+                </includes>
+            </resource>
+        </resources>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot.version}</version>
+                    <configuration>
+                        <finalName>${project.build.finalName}</finalName>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 
 
     <repositories>
@@ -165,4 +217,17 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <profiles.active>dev</profiles.active>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+    </profiles>
+
 </project>

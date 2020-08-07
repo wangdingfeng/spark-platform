@@ -19,7 +19,7 @@ import java.util.List;
 public interface UserService extends IService<User> {
 
     /**
-     * 根据用户名称查询用户
+     * 登录接口使用 根据用户名查询用户信息
      *
      * @param username 用户名
      * @return User

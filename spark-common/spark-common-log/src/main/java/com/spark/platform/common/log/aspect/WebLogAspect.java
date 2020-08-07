@@ -1,14 +1,15 @@
 package com.spark.platform.common.log.aspect;
 
 import cn.hutool.core.util.URLUtil;
-import com.google.common.collect.Lists;
 import com.spark.platform.adminapi.entity.log.LogApi;
 import com.spark.platform.common.base.support.ApiResponse;
+import com.spark.platform.common.log.annotation.ApiLog;
 import com.spark.platform.common.log.event.ApiLogEvent;
 import com.spark.platform.common.utils.AddressUtils;
 import com.spark.platform.common.utils.SpringContextHolder;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -21,7 +22,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.List;
 
 
 /**
@@ -52,15 +52,22 @@ public class WebLogAspect {
         if(result instanceof ApiResponse){
             code = ((ApiResponse)result).getCode();
         }
-        //过滤不需要记录的日志
-        List<String> filter = Lists.newArrayList("/log/api","/login-log/api","/authority/api/info","/user/api","/menu/api/auth");
+
         RequestAttributes ra = RequestContextHolder.getRequestAttributes();
         ServletRequestAttributes sra = (ServletRequestAttributes) ra;
         HttpServletRequest request = sra.getRequest();
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         //获取 swagger 注解
         ApiOperation apiOperation = signature.getMethod().getAnnotation(ApiOperation.class);
-        if(!filter.contains(request.getRequestURI())){
+        String description = null != apiOperation ? apiOperation.value() : "";
+        //过滤不需要记录的日志
+        ApiLog apiLogAnno = signature.getMethod().getAnnotation(ApiLog.class);
+        Boolean flag = false;
+        if(null != apiLogAnno){
+            flag = apiLogAnno.ignore();
+            description = StringUtils.isNotBlank(apiLogAnno.value()) ? apiLogAnno.value() : description;
+        }
+        if(!flag){
             LogApi apiLog = new LogApi();
             apiLog.setCreateTime(LocalDateTime.now());
             apiLog.setCreator(getUsername());
@@ -70,7 +77,7 @@ public class WebLogAspect {
             apiLog.setUrl(URLUtil.getPath(request.getRequestURI()));
             String ip = AddressUtils.getIpAddress(request);
             apiLog.setIp(ip);
-            apiLog.setDescription(apiOperation.value());
+            apiLog.setDescription(description);
             apiLog.setTimes(endTime - startTime);
             apiLog.setAddress(AddressUtils.getCityInfo(ip));
             apiLog.setStatus(code);

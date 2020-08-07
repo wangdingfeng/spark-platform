@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
  * @Description: Oauth 授权管理
  * @Version: 1.0
  */
-@Service("oauthClientDetailsService")
+@Service
 public class OauthClientDetailsServiceImpl extends ServiceImpl<OauthClientDetailsDao, OauthClientDetails> implements OauthClientDetailsService {
 
     @Override

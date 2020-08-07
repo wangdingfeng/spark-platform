@@ -5,11 +5,11 @@
 	<parent>
 		<groupId>com.spark.platform</groupId>
 		<artifactId>spark-platform</artifactId>
-		<version>1.0.1-SNAPSHOT</version>
+		<version>2.0.1</version>
 		<relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
 	</parent>
 	<artifactId>spark-common</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>2.0.1</version>
 	<name>spark-common</name>
 	<description>公共包</description>
 	<packaging>pom</packaging>
@@ -19,6 +19,7 @@
 		<module>spark-common-base</module>
 		<module>spark-common-config</module>
 		<module>spark-common-feign</module>
+		<module>spark-common-datasource</module>
 		<module>spark-common-security</module>
 		<module>spark-common-log</module>
 		<module>spark-common-utils</module>

@@ -1,0 +1,99 @@
+spring:
+  redis:
+    host: 127.0.0.1
+    password:
+    port: 6379
+  cloud:
+    gateway:
+      locator:
+        enabled: true
+      routes:
+        - id: spark-auth
+          uri: lb://spark-auth
+          predicates:
+            - Path=/auth/**
+          filters:
+            - StripPrefix=1
+            - name: Hystrix
+              args:
+                name: oauth-hystrix
+                fallbackUri: forward:/common/fallback
+        - id: spark-admin
+          uri: lb://spark-admin
+          predicates:
+            - Path=/admin/**
+          filters:
+            - StripPrefix=1
+            - name: Hystrix
+              args:
+                name: admin-hystrix
+                fallbackUri: forward:/common/fallback
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 10
+                redis-rate-limiter.burstCapacity: 10
+                key-resolver: "#{@ipKeyResolver}"
+        - id: spark-flowable
+          uri: lb://spark-flowable
+          predicates:
+            - Path=/flow/**
+          filters:
+            - StripPrefix=1
+            - name: Hystrix
+              args:
+                name: flowable-hystrix
+                fallbackUri: forward:/common/fallback
+        - id: spark-cms
+          uri: lb://spark-cms
+          predicates:
+            - Path=/cms/**
+          filters:
+            - StripPrefix=1
+            - name: Hystrix
+              args:
+                name: cms-hystrix
+                fallbackUri: forward:/common/fallback
+        - id: spark-quartz
+          uri: lb://spark-quartz
+          predicates:
+            - Path=/quartz/**
+          filters:
+            - StripPrefix=1
+            - name: Hystrix
+              args:
+                name: quartz-hystrix
+                fallbackUri: forward:/common/fallback
+  boot:
+    admin:
+      client:
+        url: http://127.0.0.1:9002
+        instance:
+          prefer-ip: true
+          service-url: http://127.0.0.1:9001
+        username: spark
+        password: spark
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 30000
+
+management:
+  metrics:
+    web:
+      server:
+        auto-time-requests: false
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+    bus-refresh:
+      enabled: true
+
+rate:
+  key-resolver:
+    ip: true
+    user: false
+    url: false

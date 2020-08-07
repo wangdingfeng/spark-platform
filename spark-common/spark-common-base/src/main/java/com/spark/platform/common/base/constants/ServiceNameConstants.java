@@ -13,10 +13,10 @@ public class ServiceNameConstants {
     /**
      * admin
      */
-    public static final String SPARK_ADMIN = "SPARK-ADMIN";
+    public static final String SPARK_ADMIN = "spark-admin";
     /**
      * 工作流
      */
-    public static final String SPARK_FLOWABLE  = "SPARK-FLOWABLE";
+    public static final String SPARK_FLOWABLE  = "spark-flowable";
 
 }

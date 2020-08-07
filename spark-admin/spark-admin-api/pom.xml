@@ -5,11 +5,10 @@
     <parent>
         <groupId>com.spark.platform</groupId>
         <artifactId>spark-admin</artifactId>
-        <version>1.0.1-SNAPSHOT</version>
+        <version>2.0.1</version>
         <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
     <artifactId>spark-admin-api</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
     <name>spark-admin-api</name>
     <description>admin 暴露接口</description>
 

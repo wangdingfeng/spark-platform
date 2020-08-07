@@ -14,8 +14,8 @@ import com.spark.platform.common.base.constants.GlobalsConstants;
 import com.spark.platform.common.base.exception.BusinessException;
 import com.spark.platform.common.base.support.WrapperSupport;
 import com.spark.platform.common.config.redis.RedisUtils;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,17 +30,13 @@ import java.util.List;
  * @Version: 1.0
  */
 @Service
+@AllArgsConstructor
 @Slf4j
 public class RoleServiceImpl extends ServiceImpl<RoleDao, Role> implements RoleService {
 
-    @Autowired
-    private RoleDao roleDao;
-
-    @Autowired
-    private RoleMenuDao roleMenuDao;
-
-    @Autowired
-    private RedisUtils redisUtils;
+    private final RoleDao roleDao;
+    private final RoleMenuDao roleMenuDao;
+    private final RedisUtils redisUtils;
 
     @Override
     public List<Role> getRoleByUserId(Long userId) {
@@ -50,7 +46,8 @@ public class RoleServiceImpl extends ServiceImpl<RoleDao, Role> implements RoleS
     @Override
     public IPage findPage(Role role, Page page) {
         QueryWrapper queryWrapper = new QueryWrapper<Role>();
-        WrapperSupport.putParamsLike(queryWrapper,role,"roleName");
+        WrapperSupport.putParamsLike(queryWrapper,role,"roleName","roleCode");
+        WrapperSupport.putParamsEqual(queryWrapper,role,"deptId");
         return roleDao.selectPage(page,queryWrapper);
     }
 
@@ -85,6 +82,11 @@ public class RoleServiceImpl extends ServiceImpl<RoleDao, Role> implements RoleS
 
     @Override
     public void validateRoleCode(String roleCode,Long roleId) {
+        roleCode  = roleCode.toUpperCase();
+        //判断是否包含
+        if(!roleCode.startsWith(GlobalsConstants.ROLE_PREFIX)){
+            throw new BusinessException("角色编号应该包含ROLE_");
+        }
         QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
         if (null != roleId) {
             queryWrapper.ne("id", roleId);

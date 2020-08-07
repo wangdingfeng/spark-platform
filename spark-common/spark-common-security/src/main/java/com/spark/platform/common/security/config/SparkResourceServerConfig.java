@@ -2,11 +2,12 @@ package com.spark.platform.common.security.config;
 
 import com.spark.platform.common.security.support.SparkAccessDeniedHandler;
 import com.spark.platform.common.security.support.SparkAuthExceptionEntryPoint;
-import com.spark.platform.common.security.properties.FilterIgnoreProperties;
+import com.spark.platform.common.security.properties.SparkFilterIgnoreProperties;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -27,13 +28,14 @@ import org.springframework.web.bind.annotation.CrossOrigin;
  * 优先级低于AuthorizationServerConfigurerAdapter
  * @Version: 1.0
  */
-@Configuration
 @EnableResourceServer
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableFeignClients(basePackages = "com.spark.platform.**.feign")
+@ComponentScan(basePackages = {"com.spark.platform"})
 public class SparkResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Autowired
-    private FilterIgnoreProperties ignorePropertiesConfig;
+    private SparkFilterIgnoreProperties ignorePropertiesConfig;
     @Autowired
     private RedisConnectionFactory redisConnectionFactory;
 

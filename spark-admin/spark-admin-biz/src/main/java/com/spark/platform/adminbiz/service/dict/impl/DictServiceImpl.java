@@ -14,9 +14,10 @@ import com.spark.platform.adminbiz.service.dict.DictService;
 import com.spark.platform.common.base.constants.GlobalsConstants;
 import com.spark.platform.common.base.support.WrapperSupport;
 import com.spark.platform.common.config.redis.RedisUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -28,13 +29,11 @@ import java.util.Map;
  * @Description: 字典
  */
 @Service
+@AllArgsConstructor
 public class DictServiceImpl extends ServiceImpl<DictDao, Dict> implements DictService {
 
-    @Autowired
-    private  DictItemDao dictItemDao;
-
-    @Autowired
-    private RedisUtils redisUtils;
+    private final DictItemDao dictItemDao;
+    private final RedisUtils redisUtils;
 
     @Override
     public IPage findPage(Dict dict, Page page) {
@@ -43,6 +42,18 @@ public class DictServiceImpl extends ServiceImpl<DictDao, Dict> implements DictS
         WrapperSupport.putParamsLike(wrapper,dict,"name");
         WrapperSupport.putParamsEqual(wrapper,dict,"type");
         return super.page(page,wrapper);
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public boolean updateDict(Dict dict) {
+        //查询类型是否修改
+        Dict source = super.getById(dict.getId());
+        if(!dict.getType().equals(source.getType())){
+            //修改子项的type
+            dictItemDao.updateType(dict.getType(),dict.getId());
+        }
+        return super.updateById(dict);
     }
 
     @Override

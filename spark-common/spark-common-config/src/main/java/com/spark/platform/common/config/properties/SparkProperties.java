@@ -20,4 +20,8 @@ public class SparkProperties {
      * 文件路径
      */
     private String filePath;
+    /**
+     * redis缓存
+     */
+    SparkRedisProperties redis = new SparkRedisProperties();
 }
