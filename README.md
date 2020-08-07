@@ -1,4 +1,4 @@
-# spark-platform
+# spark-platform V2.0
 
 spark 开发平台 作者：polaris.wang
 
@@ -18,15 +18,12 @@ spark 开发平台 作者：polaris.wang
 - 提供代码生成器、封装Mybatis plus 查询，提高开发效率
 
  _### 如果您喜欢，请小手抖一下，帮作者点个赞_  :smile: 
- ### 如果大家有什么建议或者问题，请在Issues中提交，作者会一一的回复，希望大家一起让这个开源项目变的更好，我的本意是大家一起学习，所以此项目完全免费。您的点赞和建议是作者维护这个项目的最大动力，感谢！
-
-## 2020-08-07 开发者会上线2.0版本，请大家期待,2.0相比于1.0 代码进行了优化，模块更细化，引入更简单。
-
-### 2020-06-12 更新日志
-1. 角色授权页面更改、不允许删除超级管理员角色。
-2. 新建菜单的时候默认分配给超级管理员角色。
-3. 添加定时任务调度管理，提供java ben方式、rest方式和消息队列方式。其中消息队列方式将在2.0后添加rabbitmq的时候实现，敬请期待。
-4. 全局错误信息拦截Assert业务校验错误，错误信息Exception返回，方便quartz接收到错误信息。
+ ### 如果大家有什么建议或者问题，请在Issues中提交，作者会一一的回复，希望大家一起让这个开源项目变的更好，我的本意是大家一起学习，所以此项目不收取任何的费用，完全免费。您的点赞和建议是作者维护这个项目的最大动力，感谢！
+### 需要1.0的童鞋请移步到 [SPARK 1.0](https://gitee.com/dreamfeng/spark-platform/tree/1.0/)
+### 2020-07-30 更新日志
+1. 使用nacos注册中心配置中心。
+2. 修改字典修改type不能同步子表的bug。
+3. 代码风格进行统一，前端页面代码进行统一。
 
 ### 文档地址
  [https://www.kancloud.cn/polaris_wang/spark/1762689](https://www.kancloud.cn/polaris_wang/spark/1762689)
@@ -71,7 +68,8 @@ Gitee  | [https://gitee.com/dreamfeng/spark-platform](https://gitee.com/dreamfen
 依赖 | 版本
 ---|---
 Spring Boot |  2.2.6.RELEASE 
-Spring Cloud | Hoxton.SR3   
+Spring Cloud | Hoxton.SR4   
+Nacos | 1.30   
 Flowable | 6.4.2
 Mybatis Plus | 3.3.1
 Spring Boot Admin | 2.2.0
