@@ -3,9 +3,10 @@
 spark 开发平台 作者：polaris.wang
 
 
-![https://img.shields.io/badge/AGPL-3.0-brightgreen](https://img.shields.io/badge/AGPL-3.0-brightgreen)
+![https://img.shields.io/badge/Apache-2.0-brightgreen](https://img.shields.io/badge/Apache-2.0-brightgreen)
 ![https://img.shields.io/badge/Spring%20Cloud-Hoxton.SR3-brightgreen](https://img.shields.io/badge/Spring%20Cloud-Hoxton.SR3-brightgreen)
 ![https://img.shields.io/badge/Spring%20Boot-2.2.6.RELEASE-brightgreen](https://img.shields.io/badge/Spring%20Boot-2.2.6.RELEASE-brightgreen)
+![https://img.shields.io/badge/Nacos-1.3-brightgreen](https://img.shields.io/badge/Nacos-1.3-brightgreen)
 ![https://img.shields.io/badge/Flowable-6.4.2-brightgreen](https://img.shields.io/badge/Flowable-6.4.2-brightgreen)
 ![https://img.shields.io/badge/Mybatis%20Plus-3.3.1-brightgreen](https://img.shields.io/badge/Mybatis%20Plus-3.3.1-brightgreen)
 
