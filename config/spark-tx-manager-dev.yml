@@ -71,15 +71,11 @@ management:
   endpoint:
     bus-refresh:
       enabled: true
-# TxManager Host Ip
 tx-lcn:
   manager:
-    #TxManager Host Ip
     host: 127.0.0.1
     port: 8070
-    #后台登录密码
     admin-key: 123456
-    # 开启日志
   logger:
     enabled: true
 logging:

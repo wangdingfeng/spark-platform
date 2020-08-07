@@ -84,10 +84,10 @@ swagger:
     email: wangdingfeng@live.com
 
 ribbon:
-  ReadTimeout: 10000 #请求处理的超时时间
-  ConnectTimeout: 5000 #请求连接的超时时间
-  MaxAutoRetries: 1 #对当前实例的重试次数
-  MaxAutoRetriesNextServer: 2 #切换实例的重试次数
+  ReadTimeout: 10000
+  ConnectTimeout: 5000
+  MaxAutoRetries: 1
+  MaxAutoRetriesNextServer: 2
   eureka:
     enabled: true
 
@@ -99,7 +99,6 @@ hystrix:
           thread:
             timeoutInMilliseconds: 60000
 
-#熔断器开启
 feign:
   hystrix:
     enabled: true
@@ -109,7 +108,6 @@ feign:
     enabled: false
 
 spark:
-  # 直接放行URL
   ignore:
     urls:
       - /actuator/**
@@ -119,7 +117,6 @@ spark:
       - /swagger-ui.html
       - /swagger-resources/**
       - /webjars/**
-  #  文件保存路径
   file-path: E:/spark/file
 
 tx-lcn:
@@ -128,5 +125,4 @@ tx-lcn:
       dtx:
         enabled: true
   client:
-    #默认之配置为TM的本机默认端口
     manager-address: 127.0.0.1:8070
