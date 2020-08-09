@@ -95,7 +95,7 @@ spark-platform
      ├── spark-common-base -- 基本公共类
      ├── spark-common-config -- 公共配置类
      ├── spark-common-feigh -- 公共feigh类
-     ├── spark-common-datasource -- 公共feigh类
+     ├── spark-common-datasource -- 数据权限
      ├── spark-common-security -- 安全工具类
      └── spark-common-utils -- 工具类
      └── spark-common-log -- 日志记录
