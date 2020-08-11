@@ -51,7 +51,7 @@ public class Dept extends BaseEntity {
     private String address;
 
     @ApiModelProperty(value = "部门类型(0 公司1部门)")
-    private Integer deptType;
+    private String deptType;
 
     @TableField(exist = false)
     private List<Dept> children;
