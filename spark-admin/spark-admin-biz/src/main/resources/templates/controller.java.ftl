@@ -58,13 +58,13 @@ public class ${table.controllerName} {
 
   @PutMapping
   @ApiOperation(value = "更新${table.comment!}信息")
-  public ApiResponse save(@RequestBody ${entity} ${entity ? uncap_first}){
+  public ApiResponse update(@RequestBody ${entity} ${entity ? uncap_first}){
    return success(${table.serviceName ? uncap_first}.updateById(${entity ? uncap_first}));
   }
 
   @DeleteMapping("/{id}")
   @ApiOperation(value = "删除${table.comment!}")
-  public ApiResponse save(@PathVariable Long id){
+  public ApiResponse delete(@PathVariable Long id){
    return success(${table.serviceName ? uncap_first}.removeById(id));
   }
 
