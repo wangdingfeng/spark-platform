@@ -12,6 +12,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 /**
  * @author: wangdingfeng
  * @ProjectName: spark-platform
@@ -46,7 +48,7 @@ public class AuthorityController extends BaseController {
     @PostMapping
     @ApiOperation(value = "保存信息")
     @PreAuthorize("hasAnyAuthority('oauth:add')")
-    public ApiResponse save(@RequestBody OauthClientDetails oauthClientDetails){
+    public ApiResponse save(@RequestBody @Valid OauthClientDetails oauthClientDetails){
         oauthClientDetailsService.save(oauthClientDetails);
         return success(oauthClientDetails);
     }
@@ -54,7 +56,7 @@ public class AuthorityController extends BaseController {
     @PutMapping
     @ApiOperation(value = "更新信息")
     @PreAuthorize("hasAnyAuthority('oauth:edit')")
-    public ApiResponse update(@RequestBody OauthClientDetails oauthClientDetails){
+    public ApiResponse update(@RequestBody @Valid OauthClientDetails oauthClientDetails){
         return success(oauthClientDetailsService.updateById(oauthClientDetails));
     }
 

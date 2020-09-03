@@ -3,6 +3,7 @@ package com.spark.platform.common.utils;
 import cn.hutool.core.io.resource.ClassPathResource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.lionsoul.ip2region.DataBlock;
 import org.lionsoul.ip2region.DbConfig;
 import org.lionsoul.ip2region.DbSearcher;
@@ -119,7 +120,7 @@ public class AddressUtils {
                 log.error("Error: Invalid ip address");
             }
             dataBlock = (DataBlock) method.invoke(searcher, ip);
-            return dataBlock.getRegion();
+            return StringUtils.replace(dataBlock.getRegion(),"|0","");
         } catch (Exception e) {
             log.error("获取地址信息异常：{}", e);
         }

@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 /**
@@ -34,6 +35,7 @@ public class Menu extends BaseEntity {
     private Long id;
 
     @ApiModelProperty(value = "菜单名称")
+    @NotBlank(message = "菜单名称不能为空")
     private String name;
 
     @ApiModelProperty(value = "父级菜单主键")

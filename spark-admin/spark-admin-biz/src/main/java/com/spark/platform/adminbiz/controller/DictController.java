@@ -13,6 +13,8 @@ import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 /**
  * @author: wangdingfeng
  * @Date: 2020/3/20 22:42
@@ -65,27 +67,27 @@ public class DictController extends BaseController {
 
     @PostMapping
     @ApiOperation(value = "保存字典信息")
-    public ApiResponse save(@RequestBody Dict dict){
+    public ApiResponse save(@RequestBody @Valid Dict dict){
         dictService.save(dict);
         return success(dict);
     }
 
     @PostMapping("/item")
     @ApiOperation(value = "保存字典子表信息")
-    public ApiResponse saveItem(@RequestBody DictItem dictItem){
+    public ApiResponse saveItem(@RequestBody @Valid DictItem dictItem){
         dictItemService.save(dictItem);
         return success(dictItem);
     }
 
     @PutMapping
     @ApiOperation(value = "更新字典信息")
-    public ApiResponse update(@RequestBody Dict dict){
+    public ApiResponse update(@RequestBody @Valid Dict dict){
         return success(dictService.updateDict(dict));
     }
 
     @PutMapping("/item")
     @ApiOperation(value = "更新字典子表信息")
-    public ApiResponse updateItem(@RequestBody DictItem dictItem){
+    public ApiResponse updateItem(@RequestBody @Valid DictItem dictItem){
         return success(dictItemService.updateById(dictItem));
     }
 

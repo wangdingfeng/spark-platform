@@ -5,6 +5,9 @@ import com.spark.platform.common.base.enums.SparkHttpStatus;
 import com.spark.platform.common.base.support.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -41,6 +44,21 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = IllegalArgumentException.class)
     public ApiResponse defaultErrorHandler(IllegalArgumentException e) {
         log.error("校验异常信息:{}",e.getMessage(),e);
+        return new ApiResponse(SparkHttpStatus.COMMON_FAIL.getCode(),e.getMessage(),e);
+    }
+
+    /**
+     * 捕获MethodArgumentNotValidException异常
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ApiResponse handleMethodArgumentNotValid(MethodArgumentNotValidException e) {
+        log.error("校验异常信息:{}",e.getMessage(),e);
+        BindingResult bindingResult = e.getBindingResult();
+        for (FieldError fieldError : bindingResult.getFieldErrors()) {
+            return new ApiResponse(SparkHttpStatus.COMMON_FAIL.getCode(),fieldError.getDefaultMessage());
+        }
         return new ApiResponse(SparkHttpStatus.COMMON_FAIL.getCode(),e.getMessage(),e);
     }
 

@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 /**
@@ -30,18 +31,22 @@ public class OauthClientDetails implements Serializable {
     private Long id;
 
     @ApiModelProperty(value = "客户端(client)id")
+    @NotBlank(message = "授权ID不能为空")
     private String clientId;
 
     @ApiModelProperty(value = "客户端所能访问的资源id集合")
     private String resourceIds;
 
     @ApiModelProperty(value = "客户端(client)的访问密匙")
+    @NotBlank(message = "密钥不能为空")
     private String clientSecret;
 
     @ApiModelProperty(value = "客户端申请的权限范围")
+    @NotBlank(message = "授权作用域不能为空")
     private String scope;
 
     @ApiModelProperty(value = "客户端支持的grant_type授权类型 password 密码模式")
+    @NotBlank(message = "授权模式不能为空")
     private String authorizedGrantTypes;
 
     @ApiModelProperty(value = "重定向地址 逗号隔开")

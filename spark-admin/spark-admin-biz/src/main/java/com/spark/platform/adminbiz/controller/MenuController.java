@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
@@ -44,8 +45,7 @@ public class MenuController extends BaseController {
     @GetMapping("/index")
     @ApiOperation(value = "根据用户获取菜单信息")
     public ApiResponse build(Principal principal){
-        List<MenuVue> menuVues = menuService.findMenuTree(principal.getName());
-        return success(menuVues);
+        return success(menuService.findMenuTree(principal.getName()));
     }
 
     @GetMapping("/api/auth")
@@ -64,7 +64,7 @@ public class MenuController extends BaseController {
     @PostMapping
     @ApiOperation(value = "保存菜单")
     @PreAuthorize("hasAnyAuthority('menu:add')")
-    public ApiResponse save(@RequestBody Menu menu){
+    public ApiResponse save(@RequestBody @Valid Menu menu){
         return success(menuService.saveMenu(menu));
     }
 

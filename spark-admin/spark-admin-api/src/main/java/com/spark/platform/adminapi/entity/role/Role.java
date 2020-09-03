@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 /**
@@ -30,9 +31,11 @@ public class Role extends BaseEntity {
     private Long id;
 
     @ApiModelProperty(value = "角色名称")
+    @NotBlank(message = "角色名称不能为空")
     private String roleName;
 
     @ApiModelProperty(value = "角色编号")
+    @NotBlank(message = "角色编号不能为空")
     private String roleCode;
 
     @ApiModelProperty(value = "描述")

@@ -14,6 +14,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * <p>
  * 文章
@@ -36,6 +38,7 @@ public class Article extends BaseEntity {
     private Long id;
 
     @ApiModelProperty(value = "标题")
+    @NotBlank(message = "标题不能为空")
     private String title;
 
     @ApiModelProperty(value = "作者")

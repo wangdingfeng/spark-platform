@@ -9,6 +9,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+
 
 /**
  * @author: wangdingfeng
@@ -28,9 +30,11 @@ public class Dict extends BaseEntity{
     private Long id;
 
     @ApiModelProperty(value = "字典名称")
+    @NotBlank(message = "字典名称不能为空")
     private String name;
 
     @ApiModelProperty(value = "字典类型")
+    @NotBlank(message = "字典类型不能为空")
     private String type;
 
     @ApiModelProperty(value = "描述")

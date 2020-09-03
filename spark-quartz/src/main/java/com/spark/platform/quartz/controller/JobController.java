@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.spark.platform.common.base.support.BaseController;
 
+import javax.validation.Valid;
+
 /**
  * <p>
  * 定时任务调度表 前端控制器
@@ -52,14 +54,14 @@ public class JobController extends BaseController {
     @PostMapping
     @ApiOperation(value = "保存信息")
     @PreAuthorize("hasAnyAuthority('quartz:add')")
-    public ApiResponse save(@RequestBody Job job){
+    public ApiResponse save(@RequestBody @Valid Job job){
         return success(jobService.saveJob(job));
     }
 
     @PutMapping
     @ApiOperation(value = "更新信息")
     @PreAuthorize("hasAnyAuthority('quartz:edit')")
-    public ApiResponse update(@RequestBody Job job){
+    public ApiResponse update(@RequestBody @Valid Job job){
         return success(jobService.updateJob(job));
     }
 

@@ -9,6 +9,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * @ProjectName: spark-platform
  * @Package: com.spark.platform.adminapi.entity.dict
@@ -34,9 +36,11 @@ public class DictItem extends BaseEntity {
     private String type;
 
     @ApiModelProperty(value = "字典标签值")
+    @NotBlank(message = "字典标签值不能为空")
     private String label;
 
     @ApiModelProperty(value = "字典值")
+    @NotBlank(message = "字典值不能为空")
     private String value;
 
     @ApiModelProperty(value = "排序")

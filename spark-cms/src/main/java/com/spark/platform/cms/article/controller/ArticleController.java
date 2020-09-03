@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.spark.platform.common.base.support.BaseController;
 
+import javax.validation.Valid;
+
 /**
  * <p>
  * 文章 前端控制器
@@ -44,7 +46,7 @@ public class ArticleController extends BaseController {
 
     @PostMapping
     @ApiOperation(value = "保存信息")
-    public ApiResponse save(@RequestBody Article article){
+    public ApiResponse save(@RequestBody @Valid Article article){
         articleService.saveArticle(article);
         return success("操作成功");
     }

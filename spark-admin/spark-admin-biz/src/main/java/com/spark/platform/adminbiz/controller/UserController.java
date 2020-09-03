@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 
 
 /**
@@ -59,7 +60,7 @@ public class UserController extends BaseController {
     @PostMapping
     @ApiOperation(value = "保存用户数据")
     @PreAuthorize("hasAnyAuthority('user:add')")
-    public ApiResponse save(@RequestBody User user) {
+    public ApiResponse save(@RequestBody @Valid User user) {
         return success(userService.saveUser(user));
     }
 

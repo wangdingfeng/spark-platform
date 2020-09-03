@@ -10,6 +10,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * <p>
  * 定时任务调度表
@@ -32,18 +34,23 @@ public class Job extends BaseEntity {
     private Long id;
 
     @ApiModelProperty(value = "任务名称")
+    @NotNull(message = "任务名称不能为空")
     private String name;
 
     @ApiModelProperty(value = "任务组名")
+    @NotNull(message = "任务组名不能为空")
     private String jobGroup;
 
     @ApiModelProperty(value = "任务类型 0 bean类型 1 rest类型 2 消息队列")
+    @NotNull(message = "任务类型不能为空")
     private String type;
 
     @ApiModelProperty(value = "调用目标字符串")
+    @NotNull(message = "调用目标字符串不能为空")
     private String invokeTarget;
 
     @ApiModelProperty(value = "cron执行表达式")
+    @NotNull(message = "执行表达式不能为空")
     private String cronExpression;
 
     @ApiModelProperty(value = "计划执行错误策略（1立即执行 2执行一次 3放弃执行）")

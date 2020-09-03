@@ -10,6 +10,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -36,15 +38,18 @@ public class Dept extends BaseEntity {
     private Integer sort;
 
     @ApiModelProperty(value = "父部门id")
+    @NotNull(message = "上级部门不能为空")
     private Long pid;
 
     @ApiModelProperty(value = "父部门层级")
     private String pids;
 
     @ApiModelProperty(value = "简称")
+    @NotBlank(message = "简称不能为空")
     private String simpleName;
 
     @ApiModelProperty(value = "全称")
+    @NotBlank(message = "全称不能为空")
     private String fullName;
 
     @ApiModelProperty(value = "地址")

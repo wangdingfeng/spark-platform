@@ -13,6 +13,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 /**
  * @author: wangdingfeng
  * @ProjectName: spark-platform
@@ -52,14 +54,14 @@ public class RoleController extends BaseController {
     @PostMapping
     @ApiOperation(value = "保存角色信息")
     @PreAuthorize("hasAnyAuthority('role:add')")
-    public ApiResponse save(@RequestBody Role role){
+    public ApiResponse save(@RequestBody @Valid Role role){
         return success(roleService.saveOrUpdateRole(role));
     }
 
     @PutMapping
     @ApiOperation(value = "更新角色信息")
     @PreAuthorize("hasAnyAuthority('role:edit')")
-    public ApiResponse update(@RequestBody Role role){
+    public ApiResponse update(@RequestBody @Valid Role role){
         return success(roleService.saveOrUpdateRole(role));
     }
 

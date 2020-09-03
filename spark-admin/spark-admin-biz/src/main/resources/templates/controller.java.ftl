@@ -77,7 +77,7 @@ public class ${table.controllerName} {
 
   @GetMapping("/{id}")
   @ApiOperation(value = "根据id获取${table.comment!}信息")
-  public ApiResponse getRoleByUserId(@PathVariable Long id) {
+  public ApiResponse getById(@PathVariable Long id) {
    return success(${table.serviceName ? uncap_first}.getById(id));
   }
 

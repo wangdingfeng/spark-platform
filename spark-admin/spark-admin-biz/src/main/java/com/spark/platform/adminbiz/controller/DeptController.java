@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -47,15 +48,15 @@ public class DeptController extends BaseController {
     @PostMapping
     @ApiOperation(value = "保存部门信息")
     @PreAuthorize("hasAnyAuthority('dept:add')")
-    public ApiResponse save(@RequestBody Dept dept){
-        return success(deptService.saveOrUpdate(dept));
+    public ApiResponse save(@RequestBody @Valid Dept dept){
+        return success(deptService.save(dept));
     }
 
     @PutMapping
     @ApiOperation(value = "更新部门信息")
     @PreAuthorize("hasAnyAuthority('dept:edit')")
-    public ApiResponse update(@RequestBody Dept dept){
-        return success(deptService.saveOrUpdate(dept));
+    public ApiResponse update(@RequestBody @Valid Dept dept){
+        return success(deptService.updateById(dept));
     }
 
     @DeleteMapping("/{id}")

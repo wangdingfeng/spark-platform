@@ -11,6 +11,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -33,10 +35,12 @@ public class User extends BaseEntity {
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    @ApiModelProperty(value = "用户名")
+    @ApiModelProperty(value = "账号")
+    @NotBlank(message = "账号不能为空")
     private String username;
 
-    @ApiModelProperty(value = "用户昵称")
+    @ApiModelProperty(value = "真实姓名")
+    @NotBlank(message = "真实姓名")
     private String nickname;
 
     @JsonIgnore
@@ -56,6 +60,7 @@ public class User extends BaseEntity {
     private String avatar;
 
     @ApiModelProperty(value = "部门ID")
+    @NotNull(message = "部门ID不能为空")
     private Long deptId;
 
     @ApiModelProperty(value = "部门名称")
