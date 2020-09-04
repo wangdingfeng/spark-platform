@@ -1,5 +1,9 @@
 # spark-platform V2.0
 
+
+### 如果主页网站无法显示请使用[码云预览](http://dreamfeng.gitee.io/spark-admin/)
+
+
 SPARK 开发平台 作者：polaris.wang
 
  _如果您喜欢，请伸出您的小手，帮作者点个赞_  :smile: 
