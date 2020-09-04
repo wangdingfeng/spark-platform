@@ -355,21 +355,20 @@ CREATE TABLE `sys_role`  (
   `modifier` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '修改人',
   `remarks` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
   `del_flag` int(1) NOT NULL COMMENT '是否删除 (0 是  1否)',
-  `ds_type` int(1) DEFAULT NULL COMMENT '数据权限类型',
-  `ds_scope` varchar(255) DEFAULT NULL COMMENT '自定义数据权限',
+  `ds_type` int(1) NULL DEFAULT NULL COMMENT '数据权限类型',
+  `ds_scope` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '自定义数据权限',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
-INSERT INTO `sys_role` VALUES (1, '超级管理员', 'ROLE_ADMIN', '超级管理员', 7, '研发部', NULL, '2020-03-19 22:54:10', 'admin', '2020-04-27 15:06:47', 'admin', NULL, 0);
-INSERT INTO `sys_role` VALUES (2, '系统管理员', 'ROLE_SYSTEM', '我是', 7, '研发部', NULL, '2020-03-19 22:55:31', 'admin', '2020-04-27 15:06:54', 'admin', NULL, 0);
-INSERT INTO `sys_role` VALUES (3, '测试角色', 'ROLE_TEST', '', 2, NULL, NULL, '2020-03-19 22:56:06', 'admin', '2020-03-19 22:56:06', 'admin', NULL, 1);
-INSERT INTO `sys_role` VALUES (4, '测试角色1', 'ROLE_TEST_1', '', 2, NULL, NULL, '2020-03-19 23:01:32', 'admin', '2020-03-19 23:01:32', 'admin', NULL, 1);
-INSERT INTO `sys_role` VALUES (5, '文章审核组长', 'ROLE_GROUP_LEADER', '文章审核组长', 5, '文章一部', NULL, '2020-04-14 16:49:52', 'admin', '2020-04-14 16:50:19', 'admin', NULL, 0);
-INSERT INTO `sys_role` VALUES (6, '主编', 'ROLE_EDITOR_MANAGE', '主编', 5, '文章一部', NULL, '2020-04-14 16:55:45', 'admin', '2020-05-29 12:01:41', 'admin', NULL, 0);
-
+INSERT INTO `sys_role` VALUES (1, '超级管理员', 'ROLE_ADMIN', '超级管理员', 7, '研发部', NULL, '2020-03-19 22:54:10', 'admin', '2020-08-19 19:19:55', 'admin', NULL, 0, 1, NULL);
+INSERT INTO `sys_role` VALUES (2, '系统管理员', 'ROLE_SYSTEM', '我是', 7, '研发部', NULL, '2020-03-19 22:55:31', 'admin', '2020-04-27 15:06:54', 'admin', NULL, 0, NULL, NULL);
+INSERT INTO `sys_role` VALUES (3, '测试角色', 'ROLE_TEST', '', 2, NULL, NULL, '2020-03-19 22:56:06', 'admin', '2020-03-19 22:56:06', 'admin', NULL, 1, NULL, NULL);
+INSERT INTO `sys_role` VALUES (4, '测试角色1', 'ROLE_TEST_1', '', 2, NULL, NULL, '2020-03-19 23:01:32', 'admin', '2020-03-19 23:01:32', 'admin', NULL, 1, NULL, NULL);
+INSERT INTO `sys_role` VALUES (5, '文章审核组长', 'ROLE_GROUP_LEADER', '文章审核组长', 5, '文章一部', NULL, '2020-04-14 16:49:52', 'admin', '2020-08-12 16:14:08', 'admin', NULL, 0, 3, '0');
+INSERT INTO `sys_role` VALUES (6, '主编', 'ROLE_EDITOR_MANAGE', '主编', 5, '文章一部', NULL, '2020-04-14 16:55:45', 'admin', '2020-05-29 12:01:41', 'admin', NULL, 0, NULL, NULL);
 -- ----------------------------
 -- Table structure for sys_role_menu
 -- ----------------------------
