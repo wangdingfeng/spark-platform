@@ -363,12 +363,12 @@ CREATE TABLE `sys_role`  (
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
-INSERT INTO `sys_role` VALUES (1, '超级管理员', 'role_admin', '超级管理员', 7, '研发部', NULL, '2020-03-19 22:54:10', 'admin', '2020-04-27 15:06:47', 'admin', NULL, 0);
-INSERT INTO `sys_role` VALUES (2, '系统管理员', 'role_system', '我是', 7, '研发部', NULL, '2020-03-19 22:55:31', 'admin', '2020-04-27 15:06:54', 'admin', NULL, 0);
-INSERT INTO `sys_role` VALUES (3, '测试角色', 'role_test', '', 2, NULL, NULL, '2020-03-19 22:56:06', 'admin', '2020-03-19 22:56:06', 'admin', NULL, 1);
-INSERT INTO `sys_role` VALUES (4, '测试角色1', 'role_test1', '', 2, NULL, NULL, '2020-03-19 23:01:32', 'admin', '2020-03-19 23:01:32', 'admin', NULL, 1);
-INSERT INTO `sys_role` VALUES (5, '文章审核组长', 'role_group_leader', '文章审核组长', 5, '文章一部', NULL, '2020-04-14 16:49:52', 'admin', '2020-04-14 16:50:19', 'admin', NULL, 0);
-INSERT INTO `sys_role` VALUES (6, '主编', 'role_editor_manage', '主编', 5, '文章一部', NULL, '2020-04-14 16:55:45', 'admin', '2020-05-29 12:01:41', 'admin', NULL, 0);
+INSERT INTO `sys_role` VALUES (1, '超级管理员', 'ROLE_ADMIN', '超级管理员', 7, '研发部', NULL, '2020-03-19 22:54:10', 'admin', '2020-04-27 15:06:47', 'admin', NULL, 0);
+INSERT INTO `sys_role` VALUES (2, '系统管理员', 'ROLE_SYSTEM', '我是', 7, '研发部', NULL, '2020-03-19 22:55:31', 'admin', '2020-04-27 15:06:54', 'admin', NULL, 0);
+INSERT INTO `sys_role` VALUES (3, '测试角色', 'ROLE_TEST', '', 2, NULL, NULL, '2020-03-19 22:56:06', 'admin', '2020-03-19 22:56:06', 'admin', NULL, 1);
+INSERT INTO `sys_role` VALUES (4, '测试角色1', 'ROLE_TEST_1', '', 2, NULL, NULL, '2020-03-19 23:01:32', 'admin', '2020-03-19 23:01:32', 'admin', NULL, 1);
+INSERT INTO `sys_role` VALUES (5, '文章审核组长', 'ROLE_GROUP_LEADER', '文章审核组长', 5, '文章一部', NULL, '2020-04-14 16:49:52', 'admin', '2020-04-14 16:50:19', 'admin', NULL, 0);
+INSERT INTO `sys_role` VALUES (6, '主编', 'ROLE_EDITOR_MANAGE', '主编', 5, '文章一部', NULL, '2020-04-14 16:55:45', 'admin', '2020-05-29 12:01:41', 'admin', NULL, 0);
 
 -- ----------------------------
 -- Table structure for sys_role_menu
