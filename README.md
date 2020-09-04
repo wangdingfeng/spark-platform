@@ -1,5 +1,9 @@
 # spark-platform V2.0
 
+
+### 如果主页网站无法显示请使用[码云预览](http://dreamfeng.gitee.io/spark-admin/)
+
+
 SPARK 开发平台 作者：polaris.wang
 
  _如果您喜欢，请伸出您的小手，帮作者点个赞_  :smile: 
@@ -25,11 +29,11 @@ SPARK 开发平台 作者：polaris.wang
  ### 如果大家有什么建议或者问题，请在Issues中提交，作者会一一的回复，希望大家一起让这个开源项目变的更好，我的本意是大家一起学习，所以此项目完全开源，完全免费。您的点赞和建议是作者维护这个项目的最大动力，感谢！
 ### 需要1.0的童鞋请移步到 [SPARK 1.0](https://gitee.com/dreamfeng/spark-platform/tree/1.0/)
 
-### 2020-07-30 更新日志
-1. 使用nacos注册中心配置中心。
-2. 修改字典修改type不能同步子表的bug。
-3. 代码风格进行统一，前端页面代码进行统一。
-4. 配置方式更简单整洁。
+### 2020-09-03 更新日志
+1. 修改测试流程图。
+2. 添加保存更新必填项后台校验。
+3. ip地址删除掉|0。
+4. 文章分页bug修复。
 
 ### 文档地址
  [https://www.kancloud.cn/polaris_wang/spark/1762689](https://www.kancloud.cn/polaris_wang/spark/1762689)
