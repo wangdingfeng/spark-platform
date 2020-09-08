@@ -57,7 +57,9 @@
         <flowable.version>6.4.2</flowable.version>
         <freemarker.version>2.3.28</freemarker.version>
         <tx-manager-version>5.0.2.RELEASE</tx-manager-version>
+        <logstash-logback.verison>5.3</logstash-logback.verison>
         <nacos-url>127.0.0.1:8848</nacos-url>
+        <logstash-url>localhost:4560</logstash-url>
     </properties>
 
     <dependencies>
@@ -95,6 +97,12 @@
             <groupId>de.codecentric</groupId>
             <artifactId>spring-boot-admin-starter-client</artifactId>
             <version>${spring-boot-admin-version}</version>
+        </dependency>
+        <!--logstash-logback-->
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+            <version>${logstash-logback.verison}</version>
         </dependency>
     </dependencies>
 
