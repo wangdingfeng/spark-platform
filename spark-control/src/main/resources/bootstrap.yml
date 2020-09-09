@@ -13,6 +13,3 @@ spring:
         group: DEFAULT_GROUP
       discovery:
         server-addr: @nacos-url@
-
-  logstash:
-    service: @logstash-url@
