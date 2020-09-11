@@ -1,6 +1,8 @@
 package com.spark.platform.adminbiz.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.spark.platform.adminapi.entity.gen.TableColumnInfo;
 import com.spark.platform.adminapi.vo.GeneratorConfigVo;
 import com.spark.platform.adminbiz.service.gen.GenService;
 import com.spark.platform.common.base.support.ApiResponse;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * @ProjectName: spark-platform
@@ -35,13 +38,13 @@ public class GenController extends BaseController {
 
     @GetMapping("/page")
     @ApiOperation(value = "分页查询数据表")
-    public ApiResponse page(Page page, String tableName){
+    public ApiResponse<IPage> page(Page page, String tableName){
         return success(genService.tableInfoPage(page,tableName));
     }
 
     @GetMapping("/column")
     @ApiOperation(value = "查询表字段信息")
-    public ApiResponse column(@RequestParam String tableName){
+    public ApiResponse<List<TableColumnInfo>> column(@RequestParam String tableName){
         return success(genService.findTableColumnInfo(tableName));
     }
 

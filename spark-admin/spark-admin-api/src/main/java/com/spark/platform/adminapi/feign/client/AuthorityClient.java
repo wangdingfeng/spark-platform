@@ -18,7 +18,11 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @FeignClient(contextId = "authorityClient", name = ServiceNameConstants.SPARK_ADMIN, configuration = FeignRequestInterceptorConfig.class, fallbackFactory = AuthorityClientFallBackFactory.class)
 public interface AuthorityClient {
-
+    /**
+     * 根据clientId获取认证客户端详情信息
+     * @param clientId
+     * @return
+     */
     @GetMapping("/authority/api/info")
     ApiResponse getOauthClientDetailsByClientId(@RequestParam String clientId);
 }

@@ -2,6 +2,7 @@ package com.spark.platform.adminbiz.controller;
 
 import com.spark.platform.adminapi.entity.authority.Menu;
 import com.spark.platform.adminapi.vo.MenuVue;
+import com.spark.platform.adminapi.vo.VueTree;
 import com.spark.platform.adminbiz.service.menu.MenuService;
 import com.spark.platform.common.base.support.ApiResponse;
 import com.spark.platform.common.base.support.BaseController;
@@ -44,47 +45,47 @@ public class MenuController extends BaseController {
 
     @GetMapping("/index")
     @ApiOperation(value = "根据用户获取菜单信息")
-    public ApiResponse build(Principal principal){
+    public ApiResponse<List<MenuVue>> build(Principal principal){
         return success(menuService.findMenuTree(principal.getName()));
     }
 
     @GetMapping("/api/auth")
     @ApiLog(ignore = true)
     @ApiOperation(value = "根据用户获取菜单信息")
-    public ApiResponse findAuthByUserId(@RequestParam Long userId){
+    public ApiResponse<List<Menu>> findAuthByUserId(@RequestParam Long userId){
         return success(menuService.findAuthByUserId(userId));
     }
 
     @GetMapping("/list")
     @ApiOperation(value = "获取菜单列表")
-    public ApiResponse list(@RequestParam String name){
+    public ApiResponse<List<Menu>> list(@RequestParam String name){
         return success(menuService.treeList(name));
     }
 
     @PostMapping
     @ApiOperation(value = "保存菜单")
     @PreAuthorize("hasAnyAuthority('menu:add')")
-    public ApiResponse save(@RequestBody @Valid Menu menu){
+    public ApiResponse<Boolean> save(@RequestBody @Valid Menu menu){
         return success(menuService.saveMenu(menu));
     }
 
     @PutMapping
     @ApiOperation(value = "更新菜单")
     @PreAuthorize("hasAnyAuthority('menu:edit')")
-    public ApiResponse update(@RequestBody Menu menu){
+    public ApiResponse<Boolean> update(@RequestBody Menu menu){
         return success(menuService.updateById(menu));
     }
 
     @DeleteMapping("/{id}")
     @ApiOperation(value = "删除菜单")
     @PreAuthorize("hasAnyAuthority('menu:delete')")
-    public ApiResponse delete(@PathVariable Long id){
+    public ApiResponse<Boolean> delete(@PathVariable Long id){
         return success(menuService.removeById(id));
     }
 
     @GetMapping("/tree")
     @ApiOperation(value = "获取菜单树")
-    public ApiResponse getTree(){
+    public ApiResponse<List<VueTree>> getTree(){
         return success(menuService.getMenuTree());
     }
 

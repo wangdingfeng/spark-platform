@@ -1,6 +1,8 @@
 package com.spark.platform.adminapi.feign.client;
 
 
+import com.spark.platform.adminapi.dto.UserDTO;
+import com.spark.platform.adminapi.entity.user.User;
 import com.spark.platform.common.base.constants.ServiceNameConstants;
 import com.spark.platform.common.feign.config.FeignRequestInterceptorConfig;
 import com.spark.platform.adminapi.feign.fallback.UserClientFallBackFactory;
@@ -20,10 +22,19 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @FeignClient(contextId = "userClient", name = ServiceNameConstants.SPARK_ADMIN, configuration = FeignRequestInterceptorConfig.class, fallbackFactory = UserClientFallBackFactory.class)
 public interface UserClient {
-
+    /**
+     * 通过账号获取用户信息
+     * @param username 账号
+     * @return
+     */
     @GetMapping("/user/api")
-    ApiResponse getUserByUserName(@RequestParam String username);
+    ApiResponse<UserDTO> getUserByUserName(@RequestParam String username);
 
+    /**
+     * 通过id获取用户
+     * @param id
+     * @return
+     */
     @GetMapping("/user/info/{id}")
-    ApiResponse getUserByUserId(@PathVariable Long id);
+    ApiResponse<User> getUserByUserId(@PathVariable Long id);
 }

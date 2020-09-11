@@ -1,7 +1,9 @@
 package com.spark.platform.adminbiz.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spark.platform.adminapi.entity.role.Role;
+import com.spark.platform.adminapi.entity.user.User;
 import com.spark.platform.adminbiz.service.menu.MenuService;
 import com.spark.platform.adminbiz.service.role.RoleService;
 import com.spark.platform.adminbiz.service.user.UserService;
@@ -14,6 +16,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * @author: wangdingfeng
@@ -35,46 +38,46 @@ public class RoleController extends BaseController {
 
     @GetMapping("/{id}")
     @ApiOperation(value = "根据用户id获取用户角色信息")
-    public ApiResponse getRoleByUserId(@PathVariable Long id) {
+    public ApiResponse<List<Role>> getRoleByUserId(@PathVariable Long id) {
         return success(roleService.getRoleByUserId(id));
     }
 
     @PostMapping("/page")
     @ApiOperation(value = "获取角色列表分页")
-    public ApiResponse page(Role role, Page page){
+    public ApiResponse<IPage> page(Role role, Page page){
         return success(roleService.findPage(role,page));
     }
 
     @GetMapping("/all")
     @ApiOperation(value = "获取所有角色")
-    public ApiResponse getRoleAll(){
+    public ApiResponse<List<Role>> getRoleAll(){
         return success(roleService.findAllRole());
     }
 
     @PostMapping
     @ApiOperation(value = "保存角色信息")
     @PreAuthorize("hasAnyAuthority('role:add')")
-    public ApiResponse save(@RequestBody @Valid Role role){
+    public ApiResponse<Role> save(@RequestBody @Valid Role role){
         return success(roleService.saveOrUpdateRole(role));
     }
 
     @PutMapping
     @ApiOperation(value = "更新角色信息")
     @PreAuthorize("hasAnyAuthority('role:edit')")
-    public ApiResponse update(@RequestBody @Valid Role role){
+    public ApiResponse<Role> update(@RequestBody @Valid Role role){
         return success(roleService.saveOrUpdateRole(role));
     }
 
     @DeleteMapping("/{id}")
     @ApiOperation(value = "更新角色信息")
     @PreAuthorize("hasAnyAuthority('role:delete')")
-    public ApiResponse delete(@PathVariable Long id){
+    public ApiResponse<Boolean> delete(@PathVariable Long id){
         return success(roleService.delete(id));
     }
 
     @GetMapping("/auth")
     @ApiOperation(value = "根据角色id获取权限")
-    public ApiResponse getRoleAuth(@RequestParam Long id){
+    public ApiResponse<List<Long>> getRoleAuth(@RequestParam Long id){
         return success(menuService.getMenuIdsByRole(id));
     }
 
@@ -88,7 +91,7 @@ public class RoleController extends BaseController {
 
     @GetMapping("/users/{id}")
     @ApiOperation(value = "根据角色id获取角色下对应的用户")
-    public ApiResponse findUsersByRoleId(@PathVariable Long id){
+    public ApiResponse<List<User>> findUsersByRoleId(@PathVariable Long id){
         return success(userService.findUsersByRoleId(id));
     }
 

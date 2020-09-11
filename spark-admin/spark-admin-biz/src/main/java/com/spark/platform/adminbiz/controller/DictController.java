@@ -1,5 +1,6 @@
 package com.spark.platform.adminbiz.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spark.platform.adminapi.entity.dict.Dict;
@@ -14,6 +15,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author: wangdingfeng
@@ -31,75 +34,75 @@ public class DictController extends BaseController {
 
     @PostMapping("/page")
     @ApiOperation(value = "字典列表")
-    public ApiResponse page(Dict dict, Page page){
+    public ApiResponse<IPage> page(Dict dict, Page page){
         return success(dictService.findPage(dict,page));
     }
 
     @PostMapping("/page/item")
     @ApiOperation(value = "字典子列表")
-    public ApiResponse pageItem(DictItem dictItem,Page page){
+    public ApiResponse<IPage> pageItem(DictItem dictItem,Page page){
         return success(dictItemService.page(page, Wrappers.query(dictItem).orderByAsc("sort")));
     }
 
     @GetMapping
     @ApiOperation(value = "获取所有的字典项")
-    public ApiResponse getAll(){
+    public ApiResponse<Map<String, List<DictItem>>> getAll(){
         return success(dictService.selectAllMap());
     }
 
     @GetMapping("/type/{type}")
     @ApiOperation(value = "通过type查询菜单子项")
-    public ApiResponse findItemType(@PathVariable String type){
+    public ApiResponse<List<DictItem>> findItemType(@PathVariable String type){
         return success(dictItemService.findItemType(type));
     }
 
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id获取字典信息")
-    public ApiResponse findById(@PathVariable Long id){
+    public ApiResponse<Dict> findById(@PathVariable Long id){
         return success(dictService.getById(id));
     }
 
     @GetMapping("/item/{id}")
     @ApiOperation(value = "根据id获取字典信息")
-    public ApiResponse findItemById(@PathVariable Long id){
+    public ApiResponse<DictItem> findItemById(@PathVariable Long id){
         return success(dictItemService.getById(id));
     }
 
     @PostMapping
     @ApiOperation(value = "保存字典信息")
-    public ApiResponse save(@RequestBody @Valid Dict dict){
+    public ApiResponse<Dict> save(@RequestBody @Valid Dict dict){
         dictService.save(dict);
         return success(dict);
     }
 
     @PostMapping("/item")
     @ApiOperation(value = "保存字典子表信息")
-    public ApiResponse saveItem(@RequestBody @Valid DictItem dictItem){
+    public ApiResponse<DictItem> saveItem(@RequestBody @Valid DictItem dictItem){
         dictItemService.save(dictItem);
         return success(dictItem);
     }
 
     @PutMapping
     @ApiOperation(value = "更新字典信息")
-    public ApiResponse update(@RequestBody @Valid Dict dict){
+    public ApiResponse<Boolean> update(@RequestBody @Valid Dict dict){
         return success(dictService.updateDict(dict));
     }
 
     @PutMapping("/item")
     @ApiOperation(value = "更新字典子表信息")
-    public ApiResponse updateItem(@RequestBody @Valid DictItem dictItem){
+    public ApiResponse<Boolean> updateItem(@RequestBody @Valid DictItem dictItem){
         return success(dictItemService.updateById(dictItem));
     }
 
     @DeleteMapping("/{id}")
     @ApiOperation(value = "删除字典信息")
-    public ApiResponse delete(@PathVariable Long id){
+    public ApiResponse<Boolean> delete(@PathVariable Long id){
         return success(dictService.removeById(id));
     }
 
     @DeleteMapping("/item/{id}")
     @ApiOperation(value = "删除字典子表信息")
-    public ApiResponse deleteItem(@PathVariable Long id){
+    public ApiResponse<Boolean> deleteItem(@PathVariable Long id){
         return success(dictItemService.removeById(id));
     }
 

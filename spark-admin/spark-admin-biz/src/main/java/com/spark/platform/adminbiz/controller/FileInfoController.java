@@ -1,6 +1,7 @@
 package com.spark.platform.adminbiz.controller;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spark.platform.adminapi.dto.FileInfoDTO;
 import com.spark.platform.adminapi.entity.file.FileInfo;
@@ -15,6 +16,7 @@ import com.spark.platform.common.base.support.BaseController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * <p>
@@ -34,7 +36,7 @@ public class FileInfoController extends BaseController {
 
     @PostMapping(value = "/upload",headers = "content-type=multipart/form-data")
     @ApiOperation(value = "上传文件")
-    public ApiResponse upload(@RequestParam MultipartFile file) {
+    public ApiResponse<FileInfo> upload(@RequestParam MultipartFile file) {
         return success(fileInfoService.upload(file));
     }
 
@@ -47,19 +49,19 @@ public class FileInfoController extends BaseController {
 
     @GetMapping("/page")
     @ApiOperation(value = "分页查询")
-    public ApiResponse page(Page page, FileInfo fileInfo) {
+    public ApiResponse<IPage> page(Page page, FileInfo fileInfo) {
         return success(fileInfoService.findPage(page, fileInfo));
     }
 
     @GetMapping("/biz")
     @ApiOperation(value = "业务查询")
-    public ApiResponse findByBiz(@RequestParam String bizId, @RequestParam String bizType) {
+    public ApiResponse<List<FileInfo>> findByBiz(@RequestParam String bizId, @RequestParam String bizType) {
         return success(fileInfoService.findByBiz(bizId, bizType));
     }
 
     @GetMapping("/{id}")
     @ApiOperation(value = "业务查询")
-    public ApiResponse getById(@PathVariable Long id) {
+    public ApiResponse<FileInfo> getById(@PathVariable Long id) {
         return success(fileInfoService.getById(id));
     }
 
@@ -71,7 +73,7 @@ public class FileInfoController extends BaseController {
 
     @DeleteMapping("/{id}")
     @ApiOperation(value = "删除文件")
-    public ApiResponse delete(@PathVariable Long id){
+    public ApiResponse<Boolean> delete(@PathVariable Long id){
         return success(fileInfoService.removeById(id));
     }
 

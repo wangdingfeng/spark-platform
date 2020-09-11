@@ -1,5 +1,7 @@
 package com.spark.platform.adminapi.vo;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -12,25 +14,21 @@ import lombok.Data;
  * @Version: 1.0
  */
 @Data
+@ApiModel(value = "GeneratorConfigVo",description = "代码生成配置")
 public class GeneratorConfigVo {
-    /**
-     * 表名
-     */
+
+    @ApiModelProperty(value = "表名")
     private String tableName;
-    /**
-     * 作者
-     */
+
+    @ApiModelProperty(value = "作者")
     private String author;
-    /**
-     * 项目名
-     */
+
+    @ApiModelProperty(value = "项目名")
     private String projectName;
-    /**
-     * 模块名
-     */
+
+    @ApiModelProperty(value = "模块名")
     private String modelName;
-    /**
-     * 父类包名
-     */
+
+    @ApiModelProperty(value = "父类包名")
     private String parentPackage;
 }

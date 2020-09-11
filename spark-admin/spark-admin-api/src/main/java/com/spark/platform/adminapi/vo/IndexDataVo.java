@@ -1,41 +1,38 @@
 package com.spark.platform.adminapi.vo;
 
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.List;
 
 /**
  * @author: wangdingfeng
  * @Date: 2020/5/31 10:45
- * @Description:
+ * @Description: 主页信息VO
  */
+@ApiModel(value = "IndexDataVo",description = "主页信息VO")
 public class IndexDataVo {
 
-    /**
-     * 今日登陆ip数
-     */
+    @ApiModelProperty(value = "今日登陆ip数")
     private int todayIPNum;
-    /**
-     * 访问量
-     */
+
+    @ApiModelProperty(value = "访问量")
     private int visits;
-    /**
-     * 流量数据
-     */
+
+    @ApiModelProperty(value = "流量数据")
     private VisitsVo visitsVo;
 
 
     public static class VisitsVo {
-        /**
-         * 时间段
-         */
+
+        @ApiModelProperty(value = "时间段")
         private List<String> dates;
-        /**
-         * 我的数据
-         */
+
+        @ApiModelProperty(value = "我的数据")
         private List<Integer> myData;
-        /**
-         * 全部数据
-         */
+
+        @ApiModelProperty(value = "全部数据")
         private List<Integer> allData;
 
         public List<String> getDates() {
