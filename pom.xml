@@ -58,6 +58,7 @@
         <freemarker.version>2.3.28</freemarker.version>
         <tx-manager-version>5.0.2.RELEASE</tx-manager-version>
         <logstash-logback.verison>5.3</logstash-logback.verison>
+        <jackson-module-jaxb.veison>2.11.2</jackson-module-jaxb.veison>
         <nacos-url>127.0.0.1:8848</nacos-url>
         <logstash-url>localhost:4560</logstash-url>
     </properties>
