@@ -1,5 +1,6 @@
 package com.spark.platform.adminbiz.controller;
 
+import com.spark.platform.adminapi.vo.IndexDataVo;
 import com.spark.platform.adminbiz.service.index.IndexService;
 import com.spark.platform.common.base.support.ApiResponse;
 import com.spark.platform.common.base.support.BaseController;
@@ -24,7 +25,7 @@ public class IndexController extends BaseController {
 
     @GetMapping("/getData")
     @ApiOperation(value = "首页信息统计")
-    public ApiResponse getData(){
+    public ApiResponse<IndexDataVo> getData(){
         return success(indexService.getIndexData());
     }
 

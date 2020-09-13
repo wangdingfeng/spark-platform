@@ -1,5 +1,8 @@
 package com.spark.platform.adminapi.vo;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.List;
 
 /**
@@ -11,64 +14,53 @@ import java.util.List;
  * @Date: 2020/3/16 15:47
  * @Version: 1.0
  */
+@ApiModel(value = "MenuVue",description = "vue菜单")
 public class MenuVue{
 
+    @ApiModelProperty(value = "ID")
     private Long id;
-    /**
-     * 菜单名称
-     */
+
+    @ApiModelProperty(value = "菜单名称")
     private String name;
 
-    /**
-     * 父级菜单主键
-     */
+    @ApiModelProperty(value = "父级菜单主键")
     private Long pid;
-    /**
-     * 是否外链
-     */
+
+    @ApiModelProperty(value = "是否外链")
     private boolean iFrame;
 
-    /**
-     * 路径
-     */
+    @ApiModelProperty(value = "路径")
     private String path;
-    /**
-     * 组件路径
-     */
+
+    @ApiModelProperty(value = "组件路径")
     private String component;
-    /**
-     * 权限
-     */
+
+    @ApiModelProperty(value = "权限")
     private String permission;
-    /**
-     * 是否隐藏
-     */
+
+    @ApiModelProperty(value = "是否隐藏")
     private boolean hidden;
-    /**
-     * 图标
-     */
+
+    @ApiModelProperty(value = "图标")
     private String icon;
-    /**
-     * 排序
-     */
+
+    @ApiModelProperty(value = "排序")
     private Integer sort;
-    /**
-     * 一直显示根路由
-     */
+
+    @ApiModelProperty(value = "一直显示根路由")
     private boolean alwaysShow;
 
+    @ApiModelProperty(value = "菜单详细信息")
     private Meta meta;
 
     private List<MenuVue> children;
 
     public static class Meta {
-        /**
-         * 设置该路由在侧边栏和面包屑中展示的名字
-         */
+
+        @ApiModelProperty(value = "设置该路由在侧边栏和面包屑中展示的名字")
         private String title;
-        /**
-         * 设置该路由的图标
-         */
+
+        @ApiModelProperty(value = "设置该路由的图标")
         private String icon;
 
         public Meta(){

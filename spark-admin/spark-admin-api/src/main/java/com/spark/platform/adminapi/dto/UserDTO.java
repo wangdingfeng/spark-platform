@@ -2,6 +2,8 @@ package com.spark.platform.adminapi.dto;
 
 import com.spark.platform.adminapi.vo.MenuVue;
 import com.spark.platform.adminapi.vo.UserVo;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,27 +20,23 @@ import java.util.List;
  */
 @Data
 @NoArgsConstructor
+@ApiModel(value = "UserDTO",description = "用户集合")
 public class UserDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    /**
-     * 用户
-     * */
+
+    @ApiModelProperty(value = "用户")
     private UserVo sysUser;
-    /**
-     * 角色
-     * */
+
+    @ApiModelProperty(value = "角色")
     private List<String> roles;
-    /**
-     * 角色名称
-     * */
+
+    @ApiModelProperty(value = "角色名称")
     private List<String> roleNames;
-    /**
-     * 菜单
-     * */
+
+    @ApiModelProperty(value = "菜单")
     private List<MenuVue> menus;
-    /**
-     * 权限
-     * */
+
+    @ApiModelProperty(value = "权限")
     private List<String> permissions;
 }

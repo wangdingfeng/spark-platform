@@ -1,5 +1,6 @@
 package com.spark.platform.adminbiz.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spark.platform.adminapi.entity.authority.OauthClientDetails;
 import com.spark.platform.adminbiz.service.authority.OauthClientDetailsService;
@@ -35,20 +36,20 @@ public class AuthorityController extends BaseController {
     @GetMapping("/api/info")
     @ApiLog(ignore = true)
     @ApiOperation(value = "根据clientId获取认证客户端详情信息")
-    public ApiResponse getOauthClientDetailsByClientId(@RequestParam String clientId) {
+    public ApiResponse<OauthClientDetails> getOauthClientDetailsByClientId(@RequestParam String clientId) {
         return success(oauthClientDetailsService.findOauthClientDetailsByClientId(clientId));
     }
 
     @PostMapping("/page")
     @ApiOperation(value = "分页查询")
-    public ApiResponse page(OauthClientDetails oauthClientDetails, Page page){
+    public ApiResponse<IPage> page(OauthClientDetails oauthClientDetails, Page page){
         return success(oauthClientDetailsService.findPage(oauthClientDetails,page));
     }
 
     @PostMapping
     @ApiOperation(value = "保存信息")
     @PreAuthorize("hasAnyAuthority('oauth:add')")
-    public ApiResponse save(@RequestBody @Valid OauthClientDetails oauthClientDetails){
+    public ApiResponse<OauthClientDetails> save(@RequestBody @Valid OauthClientDetails oauthClientDetails){
         oauthClientDetailsService.save(oauthClientDetails);
         return success(oauthClientDetails);
     }
@@ -56,14 +57,14 @@ public class AuthorityController extends BaseController {
     @PutMapping
     @ApiOperation(value = "更新信息")
     @PreAuthorize("hasAnyAuthority('oauth:edit')")
-    public ApiResponse update(@RequestBody @Valid OauthClientDetails oauthClientDetails){
+    public ApiResponse<Boolean> update(@RequestBody @Valid OauthClientDetails oauthClientDetails){
         return success(oauthClientDetailsService.updateById(oauthClientDetails));
     }
 
     @DeleteMapping("/{id}")
     @ApiOperation(value = "删除")
     @PreAuthorize("hasAnyAuthority('oauth:delete1')")
-    public ApiResponse delete(@PathVariable Long id){
+    public ApiResponse<Boolean> delete(@PathVariable Long id){
         return success(oauthClientDetailsService.removeById(id));
     }
 

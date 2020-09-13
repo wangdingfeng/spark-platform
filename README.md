@@ -4,6 +4,7 @@
 ### 如果主页网站无法显示请使用[码云预览](http://dreamfeng.gitee.io/spark-admin/)
 #### 交流群上线，群号:1137679743
 
+
 SPARK 开发平台 作者：polaris.wang
 
  _如果您喜欢，请伸出您的小手，帮作者点个赞_  :smile: 
@@ -29,11 +30,12 @@ SPARK 开发平台 作者：polaris.wang
  ### 如果大家有什么建议或者问题，请在Issues中提交，作者会一一的回复，希望大家一起让这个开源项目变的更好，我的本意是大家一起学习，所以此项目完全开源，完全免费。您的点赞和建议是作者维护这个项目的最大动力，感谢！
 ### 需要1.0的童鞋请移步到 [SPARK 1.0](https://gitee.com/dreamfeng/spark-platform/tree/1.0/)
 
-### 2020-09-03 更新日志
+### 2020-09-08 更新日志
 1. 修改测试流程图。
 2. 添加保存更新必填项后台校验。
 3. ip地址删除掉|0。
 4. 文章分页bug修复。
+5. 添加logstash日志系统。[文档地址](https://www.kancloud.cn/polaris_wang/spark/1908807)
 
 ### 文档地址
  [https://www.kancloud.cn/polaris_wang/spark/1762689](https://www.kancloud.cn/polaris_wang/spark/1762689)

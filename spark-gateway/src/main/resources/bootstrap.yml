@@ -15,3 +15,5 @@ spring:
         server-addr: @nacos-url@
 #        ip: 127.0.0.1
 #        port: 9001
+logstash:
+  service: @logstash-url@

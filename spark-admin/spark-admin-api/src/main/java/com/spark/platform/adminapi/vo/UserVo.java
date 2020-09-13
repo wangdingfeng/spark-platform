@@ -1,11 +1,11 @@
 package com.spark.platform.adminapi.vo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * @author: wangdingfeng
@@ -17,58 +17,41 @@ import java.time.LocalDateTime;
  */
 @Data
 @NoArgsConstructor
+@ApiModel(value = "UserVo",description = "UserVo")
 public class UserVo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * id
-     * */
+    @ApiModelProperty(value = "ID")
     private Long id;
 
-    /**
-     * 用户名
-     */
+    @ApiModelProperty(value = "用户名")
     private String username;
 
-    /**
-     * 用户昵称
-     */
+    @ApiModelProperty(value = "用户昵称")
     private String nickname;
 
-    /**
-     * 密码
-     */
+    @ApiModelProperty(value = "密码")
     private String password;
 
-    /**
-     * 性别
-     */
+    @ApiModelProperty(value = "性别")
     private Integer sex;
 
-    /**
-     * 手机号
-     */
+    @ApiModelProperty(value = "手机号")
     private String phone;
 
-    /**
-     * 邮箱
-     */
+    @ApiModelProperty(value = "邮箱")
     private String email;
-    /**
-     * 状态
-     */
+
+    @ApiModelProperty(value = "状态")
     private Integer status;
-    /**
-     * 头像
-     */
+
+    @ApiModelProperty(value = "头像")
     private String avatar;
 
-    /**
-     * 部门id 一个用户只有 一个部门
-     */
+    @ApiModelProperty(value = "部门id 一个用户只有 一个部门")
     private Long deptId;
 
-
+    @ApiModelProperty(value = "token")
     private String token;
 }

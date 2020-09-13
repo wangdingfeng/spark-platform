@@ -1,6 +1,8 @@
 package com.spark.platform.adminbiz.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.spark.platform.adminapi.dto.UserDTO;
 import com.spark.platform.adminapi.entity.user.User;
 import com.spark.platform.common.base.support.BaseController;
 import com.spark.platform.adminbiz.service.user.UserService;
@@ -14,6 +16,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 
 /**
@@ -34,47 +37,47 @@ public class UserController extends BaseController {
 
     @GetMapping("/principal")
     @ApiOperation(value = "获取用户DTO")
-    public ApiResponse getUserInfo() {
-        return success(userService.getUserInfo( UserUtils.getLoginUser().getUsername()));
+    public ApiResponse<UserDTO> getUserInfo() {
+        return success(userService.getUserInfo(UserUtils.getLoginUser().getUsername()));
     }
 
     @GetMapping("/{id}")
     @ApiOperation(value = "根据用户id获取用户信息")
-    public ApiResponse getUserByUserId(@PathVariable Long id) {
+    public ApiResponse<User> getUserByUserId(@PathVariable Long id) {
         return success(userService.loadUserByUserId(id));
     }
 
     @GetMapping("/api")
     @ApiLog(ignore = true)
     @ApiOperation(value = "根据用户名获取用户信息")
-    public ApiResponse getUserByUserName(@RequestParam String username) {
+    public ApiResponse<UserDTO> getUserByUserName(@RequestParam String username) {
         return success(userService.loadUserByUserName(username));
     }
 
     @PostMapping("/page")
     @ApiOperation(value = "获取用户列表分页")
-    public ApiResponse page(User user, Page page) {
+    public ApiResponse<IPage> page(User user, Page page) {
         return success(userService.findPage(user, page));
     }
 
     @PostMapping
     @ApiOperation(value = "保存用户数据")
     @PreAuthorize("hasAnyAuthority('user:add')")
-    public ApiResponse save(@RequestBody @Valid User user) {
+    public ApiResponse<User> save(@RequestBody @Valid User user) {
         return success(userService.saveUser(user));
     }
 
     @DeleteMapping("/{id}")
     @ApiOperation(value = "删除用户")
     @PreAuthorize("hasAnyAuthority('user:delete')")
-    public ApiResponse delete(@PathVariable Long id) {
+    public ApiResponse<Boolean> delete(@PathVariable Long id) {
         return success(userService.removeById(id));
     }
 
     @PutMapping
     @ApiOperation(value = "更新用户数据")
     @PreAuthorize("hasAnyAuthority('user:edit')")
-    public ApiResponse update(@RequestBody User user) {
+    public ApiResponse<Boolean> update(@RequestBody User user) {
         return success(userService.updateUser(user));
     }
 
@@ -96,7 +99,7 @@ public class UserController extends BaseController {
 
     @GetMapping("/roles/{id}")
     @ApiOperation(value = "根据用户id获取角色ids")
-    public ApiResponse getRolIdsByUserId(@PathVariable Long id) {
+    public ApiResponse<List<Long>> getRolIdsByUserId(@PathVariable Long id) {
         return success(userService.findRolIdsByUserId(id));
     }
 }

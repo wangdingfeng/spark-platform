@@ -18,7 +18,11 @@ import org.springframework.web.bind.annotation.PathVariable;
  */
 @FeignClient(contextId = "roleClient", name = ServiceNameConstants.SPARK_ADMIN, configuration = FeignRequestInterceptorConfig.class, fallbackFactory = RoleClientFallBackFactory.class)
 public interface RoleClient {
-
-    @GetMapping("/role/info/{id}")
+    /**
+     * 根据用户id获取用户角色信息
+     * @param id
+     * @return
+     */
+    @GetMapping("/role/{id}")
     ApiResponse getRoleByUserId(@PathVariable Long id);
 }
