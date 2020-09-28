@@ -35,6 +35,7 @@ import java.time.Duration;
  * @Description: redis 配置
  */
 @Configuration
+@EnableCaching
 @ConditionalOnProperty(value = "spark.redis.enable", havingValue = "true", matchIfMissing = true)
 public class RedisConfig extends CachingConfigurerSupport {
 
