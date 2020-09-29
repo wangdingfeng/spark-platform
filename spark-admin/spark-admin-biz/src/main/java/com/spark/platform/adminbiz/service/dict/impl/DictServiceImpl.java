@@ -7,13 +7,13 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.spark.platform.adminapi.entity.dict.Dict;
-import com.spark.platform.adminapi.entity.dict.DictItem;
 import com.spark.platform.adminbiz.dao.dict.DictDao;
 import com.spark.platform.adminbiz.dao.dict.DictItemDao;
 import com.spark.platform.adminbiz.service.dict.DictService;
 import com.spark.platform.common.base.constants.GlobalsConstants;
 import com.spark.platform.common.base.support.WrapperSupport;
-import com.spark.platform.common.config.redis.RedisUtils;
+import com.spark.platform.common.base.utils.RedisUtils;
+import com.spark.platform.common.base.vo.DictVo;
 import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -58,12 +58,12 @@ public class DictServiceImpl extends ServiceImpl<DictDao, Dict> implements DictS
 
     @Override
     @Cacheable(value = GlobalsConstants.REDIS_DICT_CACHE, unless = "#result == null",key ="T(com.spark.platform.common.base.constants.GlobalsConstants).DICT_KEY_All_PREFIX")
-    public Map<String, List<DictItem>> selectAllMap() {
-        List<DictItem> dictItems = dictItemDao.selectAll();
-        Map<String, List<DictItem>> map = Maps.newHashMap();
+    public Map<String, List<DictVo>> selectAllMap() {
+        List<DictVo> dictItems = dictItemDao.selectAll();
+        Map<String, List<DictVo>> map = Maps.newHashMap();
         dictItems.forEach(dictItem -> {
             if(map.containsKey(dictItem.getType())){
-                List<DictItem> itemList =  map.get(dictItem.getType());
+                List<DictVo> itemList =  map.get(dictItem.getType());
                 itemList.add(dictItem);
                 map.put(dictItem.getType(),itemList);
             }else{
@@ -77,7 +77,6 @@ public class DictServiceImpl extends ServiceImpl<DictDao, Dict> implements DictS
     public void resetCache() {
         //删除缓存
         redisUtils.delete(GlobalsConstants.REDIS_DICT_CACHE+"::"+GlobalsConstants.DICT_KEY_All_PREFIX);
-        this.selectAllMap();
     }
 
 }

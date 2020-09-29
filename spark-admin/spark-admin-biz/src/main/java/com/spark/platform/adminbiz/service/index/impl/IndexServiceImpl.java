@@ -6,7 +6,7 @@ import com.spark.platform.adminapi.vo.IndexDataVo;
 import com.spark.platform.adminbiz.dao.log.LoginLogDao;
 import com.spark.platform.adminbiz.service.index.IndexService;
 import com.spark.platform.common.base.constants.GlobalsConstants;
-import com.spark.platform.common.config.redis.RedisUtils;
+import com.spark.platform.common.base.utils.RedisUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

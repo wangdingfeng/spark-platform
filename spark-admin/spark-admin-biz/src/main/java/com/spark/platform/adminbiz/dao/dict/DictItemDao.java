@@ -2,6 +2,7 @@ package com.spark.platform.adminbiz.dao.dict;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.spark.platform.adminapi.entity.dict.DictItem;
+import com.spark.platform.common.base.vo.DictVo;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
@@ -23,7 +24,7 @@ public interface DictItemDao extends BaseMapper<DictItem> {
      * 查询所有的字典项
      * @return
      */
-    List<DictItem> selectAll();
+    List<DictVo> selectAll();
 
     /**
      * 通过 父id 更新type

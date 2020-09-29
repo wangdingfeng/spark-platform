@@ -13,7 +13,7 @@ import com.spark.platform.adminbiz.service.role.RoleService;
 import com.spark.platform.common.base.constants.GlobalsConstants;
 import com.spark.platform.common.base.exception.BusinessException;
 import com.spark.platform.common.base.support.WrapperSupport;
-import com.spark.platform.common.config.redis.RedisUtils;
+import com.spark.platform.common.base.utils.RedisUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

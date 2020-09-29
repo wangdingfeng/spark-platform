@@ -126,6 +126,17 @@ public class WrapperSupport {
         }
     }
 
+    /**
+     * TODO 时间参数
+     * @param wrapper
+     * @param value   值
+     * @param split   切割字段
+     * @param column  sql查询列
+     */
+    public static void putParamsDateBetween(QueryWrapper wrapper, String value, String split, String column) {
+        putParamsDateBetween(wrapper,"",value,split,column);
+    }
+
 
     /**
      * TODO 时间参数
@@ -135,13 +146,14 @@ public class WrapperSupport {
      * @param split   切割字段
      * @param column  sql查询列
      */
-    public static void putParamsDateBetween(QueryWrapper wrapper, String value, String split, String column) {
+    public static void putParamsDateBetween(QueryWrapper wrapper,String aliasName,String value, String split, String column) {
         if (StringUtils.isNotBlank(value)) {
+            StringBuilder whereColumn = joinColumn(aliasName, column);
             String[] dataArg = value.split(split);
             try {
                 Date beginOfDay = beginOfDay(DateUtils.parseDate(dataArg[0], "yyyy-MM-dd HH:mm:ss"));
                 Date endOfDay = endOfDay(DateUtils.parseDate(dataArg[1], "yyyy-MM-dd HH:mm:ss"));
-                wrapper.between(column, beginOfDay, endOfDay);
+                wrapper.between(whereColumn, beginOfDay, endOfDay);
             } catch (ParseException e) {
                 log.error("转换时间出错", e);
             }

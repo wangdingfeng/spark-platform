@@ -57,4 +57,9 @@
         WHERE id = #{userId}
     </select>
 
+    <select id="export" resultType="com.spark.platform.adminapi.vo.UserExcelVo">
+        select * from sys_user
+        ${ew.customSqlSegment}
+    </select>
+
 </mapper>

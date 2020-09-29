@@ -9,7 +9,7 @@ import com.spark.platform.cms.article.service.ArticleService;
 import com.spark.platform.common.base.enums.SparkHttpStatus;
 import com.spark.platform.common.base.exception.BusinessException;
 import com.spark.platform.common.base.support.ApiResponse;
-import com.spark.platform.common.utils.SpringContextHolder;
+import com.spark.platform.common.base.utils.SpringContextHolder;
 import com.spark.platform.flowable.api.enums.ActionEnum;
 import com.spark.platform.flowable.api.enums.RedisTopicName;
 import com.spark.platform.flowable.api.feign.client.TaskClient;
