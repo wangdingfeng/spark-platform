@@ -2,7 +2,7 @@
 
 
 ### 如果主页网站无法显示请使用[码云预览](http://dreamfeng.gitee.io/spark-admin/)
-#### 交流群上线，群号:1137679743
+#### 交流群上线，QQ群号:1137679743
 
 
 SPARK 开发平台 作者：polaris.wang
