@@ -87,12 +87,12 @@ Gitee  | [https://gitee.com/dreamfeng/spark-platform](https://gitee.com/dreamfen
 
 依赖 | 版本
 ---|---
-Spring Boot |  2.2.6.RELEASE 
-Spring Cloud | Hoxton.SR4   
+Spring Boot |  2.3.3.RELEASE 
+Spring Cloud | Hoxton.SR8   
 Nacos | 1.30   
 Flowable | 6.4.2
 Mybatis Plus | 3.3.1
-Spring Boot Admin | 2.2.0
+Spring Boot Admin | 2.2.3
 Security Jwt | 1.0.10.RELEASE
 
 #### 模块说明
