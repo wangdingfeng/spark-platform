@@ -3,7 +3,7 @@ package com.spark.platform.quartz.util;
 import cn.hutool.core.exceptions.ExceptionUtil;
 import com.spark.platform.common.base.constants.BizConstants;
 import com.spark.platform.common.base.constants.ScheduleConstants;
-import com.spark.platform.common.utils.SpringContextHolder;
+import com.spark.platform.common.base.utils.SpringContextHolder;
 import com.spark.platform.quartz.entity.Job;
 import com.spark.platform.quartz.entity.JobLog;
 import com.spark.platform.quartz.service.JobLogService;

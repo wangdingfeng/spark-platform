@@ -3,7 +3,7 @@ package com.spark.platform.flowable.biz.listener;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.thread.ThreadUtil;
 import com.alibaba.fastjson.JSONObject;
-import com.spark.platform.common.utils.SpringContextHolder;
+import com.spark.platform.common.base.utils.SpringContextHolder;
 import com.spark.platform.flowable.api.enums.RedisTopicName;
 import com.spark.platform.flowable.api.vo.TaskVO;
 import com.spark.platform.flowable.biz.service.ActTaskQueryService;

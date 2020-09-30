@@ -15,6 +15,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -101,5 +102,11 @@ public class UserController extends BaseController {
     @ApiOperation(value = "根据用户id获取角色ids")
     public ApiResponse<List<Long>> getRolIdsByUserId(@PathVariable Long id) {
         return success(userService.findRolIdsByUserId(id));
+    }
+
+    @GetMapping("/export")
+    @ApiOperation(value = "导出用户信息")
+    public void export(User user, HttpServletResponse response) throws Exception{
+        userService.exportExcel(user,response);
     }
 }

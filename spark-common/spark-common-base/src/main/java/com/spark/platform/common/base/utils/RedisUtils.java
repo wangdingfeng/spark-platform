@@ -1,4 +1,4 @@
-package com.spark.platform.common.config.redis;
+package com.spark.platform.common.base.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.DataType;

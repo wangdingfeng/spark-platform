@@ -20,7 +20,7 @@
         id, pid, value, label, type, description,create_date
     </sql>
 
-    <select id="selectAll" resultType="DictItem">
+    <select id="selectAll" resultType="com.spark.platform.common.base.vo.DictVo">
         SELECT
             d.type,
             dt.label,

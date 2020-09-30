@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.spark.platform.adminapi.dto.UserDTO;
 import com.spark.platform.adminapi.entity.user.User;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -92,4 +93,11 @@ public interface UserService extends IService<User> {
      * @return
      */
     List<User> findUsersByRoleId(Long roleId);
+
+    /**
+     * 导出excel
+     * @param user 用户
+     * @param response
+     */
+    void exportExcel(User user, HttpServletResponse response) throws Exception;
 }

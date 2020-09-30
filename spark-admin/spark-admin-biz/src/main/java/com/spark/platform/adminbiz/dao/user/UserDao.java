@@ -1,7 +1,10 @@
 package com.spark.platform.adminbiz.dao.user;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.spark.platform.adminapi.entity.user.User;
+import com.spark.platform.adminapi.vo.UserExcelVo;
 import com.spark.platform.adminapi.vo.UserVo;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -38,4 +41,11 @@ public interface UserDao extends BaseMapper<User> {
      */
     @Select("SELECT u.* FROM sys_user u JOIN sys_user_role ur ON u.id=ur.user_id WHERE ur.role_id=#{roleId}")
     List<User> findUsersByRoleId(@Param(value = "roleId")Long roleId);
+
+    /**
+     * 导出excel
+     * @param wrapper 查询条件
+     * @return
+     */
+    List<UserExcelVo> export(@Param(Constants.WRAPPER) Wrapper wrapper);
 }

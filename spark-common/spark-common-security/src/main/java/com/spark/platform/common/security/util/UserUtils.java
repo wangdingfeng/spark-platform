@@ -4,7 +4,7 @@ import com.spark.platform.adminapi.dto.UserDTO;
 import com.spark.platform.adminapi.entity.user.User;
 import com.spark.platform.adminapi.feign.client.UserClient;
 import com.spark.platform.common.security.model.LoginUser;
-import com.spark.platform.common.utils.SpringContextHolder;
+import com.spark.platform.common.base.utils.SpringContextHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 

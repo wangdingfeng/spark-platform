@@ -2,7 +2,7 @@
 
 
 ### 如果主页网站无法显示请使用[码云预览](http://dreamfeng.gitee.io/spark-admin/)
-#### 交流群上线，群号:1137679743
+#### 交流群上线，QQ群号:1137679743
 
 
 SPARK 开发平台 作者：polaris.wang
@@ -30,12 +30,14 @@ SPARK 开发平台 作者：polaris.wang
  ### 如果大家有什么建议或者问题，请在Issues中提交，作者会一一的回复，希望大家一起让这个开源项目变的更好，我的本意是大家一起学习，所以此项目完全开源，完全免费。您的点赞和建议是作者维护这个项目的最大动力，感谢！
 ### 需要1.0的童鞋请移步到 [SPARK 1.0](https://gitee.com/dreamfeng/spark-platform/tree/1.0/)
 
-### 2020-09-08 更新日志
+### 2020-09-29 更新日志
 1. 修改测试流程图。
 2. 添加保存更新必填项后台校验。
 3. ip地址删除掉|0。
 4. 文章分页bug修复。
 5. 添加logstash日志系统。[文档地址](https://www.kancloud.cn/polaris_wang/spark/1908807)
+6. boot和cloud 版本更新
+7. 添加导出excel(基于easyexcel支持字典翻译)，例子请参考用户信息导出。
 
 ### 文档地址
  [https://www.kancloud.cn/polaris_wang/spark/1762689](https://www.kancloud.cn/polaris_wang/spark/1762689)
@@ -85,12 +87,12 @@ Gitee  | [https://gitee.com/dreamfeng/spark-platform](https://gitee.com/dreamfen
 
 依赖 | 版本
 ---|---
-Spring Boot |  2.2.6.RELEASE 
-Spring Cloud | Hoxton.SR4   
+Spring Boot |  2.3.3.RELEASE 
+Spring Cloud | Hoxton.SR8   
 Nacos | 1.30   
 Flowable | 6.4.2
 Mybatis Plus | 3.3.1
-Spring Boot Admin | 2.2.0
+Spring Boot Admin | 2.2.3
 Security Jwt | 1.0.10.RELEASE
 
 #### 模块说明
@@ -138,6 +140,7 @@ spark-platform
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/0502/210505_dd8d86d8_1890906.png "屏幕截图.png")
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/0502/210541_e9f22e3c_1890906.png "屏幕截图.png")
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/0809/101850_d13ffd50_1890906.png "屏幕截图.png")
+![nacos](https://images.gitee.com/uploads/images/2020/0930/174546_bb42ea24_1890906.png "屏幕截图.png")
 
  ** :heart: 贡献**
  

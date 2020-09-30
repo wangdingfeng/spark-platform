@@ -29,9 +29,6 @@ import java.util.List;
 @ApiModel(value = "User",description = "用户设置")
 public class User extends BaseEntity {
 
-    /**
-     * id
-     */
     @TableId(type = IdType.AUTO)
     private Long id;
 

@@ -6,7 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.spark.platform.common.base.constants.ScheduleConstants;
 import com.spark.platform.common.base.enums.SparkHttpStatus;
 import com.spark.platform.common.base.support.ApiResponse;
-import com.spark.platform.common.utils.SpringContextHolder;
+import com.spark.platform.common.base.utils.SpringContextHolder;
 import com.spark.platform.quartz.entity.Job;
 import org.apache.commons.lang3.StringUtils;
 

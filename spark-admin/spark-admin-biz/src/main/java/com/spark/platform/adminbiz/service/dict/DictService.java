@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.spark.platform.adminapi.entity.dict.Dict;
 import com.spark.platform.adminapi.entity.dict.DictItem;
 import com.spark.platform.adminapi.vo.VueTree;
+import com.spark.platform.common.base.vo.DictVo;
 
 import java.util.List;
 import java.util.Map;
@@ -36,7 +37,7 @@ public interface DictService extends IService<Dict> {
      * 获取所有的字典map
      * @return
      */
-    Map<String,List<DictItem>> selectAllMap();
+    Map<String,List<DictVo>> selectAllMap();
 
     /**
      * 重置字典缓存

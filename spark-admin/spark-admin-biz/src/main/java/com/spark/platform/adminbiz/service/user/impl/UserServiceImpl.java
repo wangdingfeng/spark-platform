@@ -1,5 +1,7 @@
 package com.spark.platform.adminbiz.service.user.impl;
 
+import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.support.ExcelTypeEnum;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -10,6 +12,7 @@ import com.spark.platform.adminapi.entity.authority.Menu;
 import com.spark.platform.adminapi.entity.role.Role;
 import com.spark.platform.adminapi.entity.user.UserRole;
 import com.spark.platform.adminapi.vo.MenuVue;
+import com.spark.platform.adminapi.vo.UserExcelVo;
 import com.spark.platform.adminapi.vo.UserVo;
 import com.spark.platform.adminbiz.dao.user.UserRoleDao;
 import com.spark.platform.adminbiz.service.menu.MenuService;
@@ -20,7 +23,7 @@ import com.spark.platform.adminapi.entity.user.User;
 import com.spark.platform.adminbiz.dao.user.UserDao;
 import com.spark.platform.adminbiz.service.user.UserService;
 import com.spark.platform.common.base.support.WrapperSupport;
-import com.spark.platform.common.config.redis.RedisUtils;
+import com.spark.platform.common.base.utils.RedisUtils;
 import com.spark.platform.common.security.model.LoginUser;
 import com.spark.platform.common.security.util.UserUtils;
 import lombok.AllArgsConstructor;
@@ -31,6 +34,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletResponse;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -126,10 +131,19 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
 
     @Override
     public IPage findPage(User user, Page page) {
+        return super.baseMapper.selectPage(page,buildWhere(user));
+    }
+
+    /**
+     * 构建查询条件
+     * @param user
+     * @return
+     */
+    private QueryWrapper buildWhere(User user){
         QueryWrapper wrapper = new QueryWrapper<User>();
         WrapperSupport.putParamsLike(wrapper,user,"username","nickname");
         WrapperSupport.putParamsEqual(wrapper,user,"status","deptId");
-        return super.baseMapper.selectPage(page,wrapper);
+        return wrapper;
     }
 
     @Override
@@ -200,5 +214,15 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
     @Override
     public List<User> findUsersByRoleId(Long roleId) {
         return super.baseMapper.findUsersByRoleId(roleId);
+    }
+
+    @Override
+    public void exportExcel(User user, HttpServletResponse response) throws Exception {
+        List<UserExcelVo> excelList = super.baseMapper.export(buildWhere(user));
+        response.setContentType("application/vnd.ms-excel");
+        response.setCharacterEncoding("utf-8");
+        String fileName = URLEncoder.encode("用户信息", "UTF-8");
+        response.setHeader("Content-disposition", "attachment;filename=" + fileName + ExcelTypeEnum.XLSX.getValue());
+        EasyExcel.write(response.getOutputStream(), UserExcelVo.class).autoCloseStream(Boolean.FALSE).sheet("用户信息").doWrite(excelList);
     }
 }

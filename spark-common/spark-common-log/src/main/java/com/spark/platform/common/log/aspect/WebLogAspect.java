@@ -6,7 +6,7 @@ import com.spark.platform.common.base.support.ApiResponse;
 import com.spark.platform.common.log.annotation.ApiLog;
 import com.spark.platform.common.log.event.ApiLogEvent;
 import com.spark.platform.common.utils.AddressUtils;
-import com.spark.platform.common.utils.SpringContextHolder;
+import com.spark.platform.common.base.utils.SpringContextHolder;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
