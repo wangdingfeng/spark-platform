@@ -2,7 +2,7 @@
 
 
 ### 如果主页网站无法显示请使用[码云预览](http://dreamfeng.gitee.io/spark-admin/)
-#### 交流群上线，群号:1137679743
+#### 交流群上线，QQ群号:1137679743
 
 
 SPARK 开发平台 作者：polaris.wang
@@ -10,9 +10,9 @@ SPARK 开发平台 作者：polaris.wang
  _如果您喜欢，请伸出您的小手，帮作者点个赞_  :smile: 
 
 
-![https://img.shields.io/badge/Apache-2.0-brightgreen](https://img.shields.io/badge/Apache-2.0-brightgreen)
-![https://img.shields.io/badge/Spring%20Cloud-Hoxton.SR3-brightgreen](https://img.shields.io/badge/Spring%20Cloud-Hoxton.SR3-brightgreen)
-![https://img.shields.io/badge/Spring%20Boot-2.2.6.RELEASE-brightgreen](https://img.shields.io/badge/Spring%20Boot-2.2.6.RELEASE-brightgreen)
+![Apache](https://img.shields.io/badge/Apache-2.0-brightgreen)
+![cloud版本](https://img.shields.io/badge/Spring%20Cloud-Hoxton.SR8-brightgreen)
+![boot版本](https://img.shields.io/badge/Spring%20Boot-2.3.3.RELEASE-brightgreen)
 ![https://img.shields.io/badge/Nacos-1.3-brightgreen](https://img.shields.io/badge/Nacos-1.3-brightgreen)
 ![https://img.shields.io/badge/Flowable-6.4.2-brightgreen](https://img.shields.io/badge/Flowable-6.4.2-brightgreen)
 ![https://img.shields.io/badge/Mybatis%20Plus-3.3.1-brightgreen](https://img.shields.io/badge/Mybatis%20Plus-3.3.1-brightgreen)
@@ -87,12 +87,12 @@ Gitee  | [https://gitee.com/dreamfeng/spark-platform](https://gitee.com/dreamfen
 
 依赖 | 版本
 ---|---
-Spring Boot |  2.2.6.RELEASE 
-Spring Cloud | Hoxton.SR4   
+Spring Boot |  2.3.3.RELEASE 
+Spring Cloud | Hoxton.SR8   
 Nacos | 1.30   
 Flowable | 6.4.2
 Mybatis Plus | 3.3.1
-Spring Boot Admin | 2.2.0
+Spring Boot Admin | 2.2.3
 Security Jwt | 1.0.10.RELEASE
 
 #### 模块说明
@@ -140,6 +140,7 @@ spark-platform
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/0502/210505_dd8d86d8_1890906.png "屏幕截图.png")
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/0502/210541_e9f22e3c_1890906.png "屏幕截图.png")
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/0809/101850_d13ffd50_1890906.png "屏幕截图.png")
+![nacos](https://images.gitee.com/uploads/images/2020/0930/174546_bb42ea24_1890906.png "屏幕截图.png")
 
  ** :heart: 贡献**
  
