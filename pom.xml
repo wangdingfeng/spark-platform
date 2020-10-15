@@ -238,6 +238,13 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
         </profile>
+        <!--线上环境-->
+        <profile>
+            <id>prod</id>
+            <properties>
+                <profiles.active>prod</profiles.active>
+            </properties>
+        </profile>
     </profiles>
 
 </project>
