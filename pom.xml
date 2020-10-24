@@ -244,6 +244,9 @@
             <properties>
                 <profiles.active>prod</profiles.active>
             </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
         </profile>
     </profiles>
 
