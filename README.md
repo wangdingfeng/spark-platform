@@ -7,7 +7,7 @@
 
 SPARK 开发平台 作者：polaris.wang
 
- _如果您喜欢，请伸出您的小手，帮作者点个赞_  :smile: 
+ _如果您喜欢，请伸出您的小手，给作者点个赞，感谢您的支持_  :smile: 
 
 
 ![Apache](https://img.shields.io/badge/Apache-2.0-brightgreen)
