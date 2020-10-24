@@ -57,7 +57,7 @@ public class DictServiceImpl extends ServiceImpl<DictDao, Dict> implements DictS
     }
 
     @Override
-    @Cacheable(value = GlobalsConstants.REDIS_DICT_CACHE, unless = "#result == null",key ="T(com.spark.platform.common.base.constants.GlobalsConstants).DICT_KEY_All_PREFIX")
+    @Cacheable(value = GlobalsConstants.REDIS_DICT_CACHE, unless = "#result == null",key ="T(com.spark.platform.common.base.constants.GlobalsConstants).DICT_KEY_ALL_PREFIX")
     public Map<String, List<DictVo>> selectAllMap() {
         List<DictVo> dictItems = dictItemDao.selectAll();
         Map<String, List<DictVo>> map = Maps.newHashMap();
@@ -76,7 +76,7 @@ public class DictServiceImpl extends ServiceImpl<DictDao, Dict> implements DictS
     @Override
     public void resetCache() {
         //删除缓存
-        redisUtils.delete(GlobalsConstants.REDIS_DICT_CACHE+"::"+GlobalsConstants.DICT_KEY_All_PREFIX);
+        redisUtils.delete(GlobalsConstants.REDIS_DICT_CACHE+"::"+GlobalsConstants.DICT_KEY_ALL_PREFIX);
     }
 
 }

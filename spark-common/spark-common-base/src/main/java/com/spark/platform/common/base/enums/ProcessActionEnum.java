@@ -25,7 +25,11 @@ public enum ProcessActionEnum {
     private String action;
     private String name;
 
-
+    /**
+     * 操作类型
+     * @param action
+     * @return
+     */
     public static ProcessActionEnum actionOf(String action) {
         for(ProcessActionEnum actionEnum : values()){
             if(actionEnum.getAction().equals(action)){

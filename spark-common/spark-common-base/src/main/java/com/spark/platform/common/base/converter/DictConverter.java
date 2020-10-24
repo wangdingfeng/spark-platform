@@ -64,7 +64,7 @@ public class DictConverter implements Converter<Object> {
         DictProperty dictProperty = field.getAnnotation(DictProperty.class);
         if(null != dictProperty){
             String type = dictProperty.type();
-            String json = redisUtils.get(GlobalsConstants.REDIS_DICT_CACHE+"::"+GlobalsConstants.DICT_KEY_All_PREFIX);
+            String json = redisUtils.get(GlobalsConstants.REDIS_DICT_CACHE+"::"+GlobalsConstants.DICT_KEY_ALL_PREFIX);
             //获取字典
             Map<String, JSONArray> map = JSON.parseObject(json,Map.class);
             JSONArray jsonArray = map.get(type);

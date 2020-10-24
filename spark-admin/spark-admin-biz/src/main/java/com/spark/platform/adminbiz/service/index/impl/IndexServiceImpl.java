@@ -58,7 +58,7 @@ public class IndexServiceImpl implements IndexService {
         Set<String> clientKeys = redisUtils.keys(GlobalsConstants.REDIS_CLIENT_CACHE+"::"+GlobalsConstants.CLIENT_DETAILS_KEY+"*");
         redisUtils.delete( clientKeys);
         //删除字典缓存
-        redisUtils.delete(GlobalsConstants.REDIS_DICT_CACHE+"::"+GlobalsConstants.DICT_KEY_All_PREFIX);
+        redisUtils.delete(GlobalsConstants.REDIS_DICT_CACHE+"::"+GlobalsConstants.DICT_KEY_ALL_PREFIX);
         //删除用户缓存
         Set<String> userKeys = redisUtils.keys(GlobalsConstants.REDIS_USER_CACHE+"::"+GlobalsConstants.USER_KEY_PREFIX+"*");
         redisUtils.delete( userKeys);

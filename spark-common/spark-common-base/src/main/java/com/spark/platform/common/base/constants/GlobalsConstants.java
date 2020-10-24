@@ -45,7 +45,7 @@ public class GlobalsConstants {
     /**
      * 缓存中字典的key
      */
-    public static final String DICT_KEY_All_PREFIX = "SparkAllDict";
+    public static final String DICT_KEY_ALL_PREFIX = "SparkAllDict";
     /**
      * 缓存中user的key
      */
