@@ -3,7 +3,7 @@
 <mapper namespace="com.spark.platform.adminbiz.dao.log.LoginLogDao">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.spark.platform.adminapi.entity.log.LogLogin">
+    <resultMap id="BaseResultMap" type="com.spark.platform.admin.api.entity.log.LogLogin">
         <id column="id" property="id" />
         <result column="username" property="username" />
         <result column="system" property="system" />

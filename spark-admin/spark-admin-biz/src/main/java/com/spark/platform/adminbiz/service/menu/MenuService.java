@@ -1,9 +1,9 @@
 package com.spark.platform.adminbiz.service.menu;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.spark.platform.adminapi.entity.authority.Menu;
-import com.spark.platform.adminapi.vo.MenuVue;
-import com.spark.platform.adminapi.vo.VueTree;
+import com.spark.platform.admin.api.entity.authority.Menu;
+import com.spark.platform.admin.api.vo.MenuVue;
+import com.spark.platform.admin.api.vo.VueTree;
 
 import java.util.List;
 

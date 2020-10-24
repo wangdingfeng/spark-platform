@@ -3,9 +3,9 @@ package com.spark.platform.adminbiz.dao.user;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
-import com.spark.platform.adminapi.entity.user.User;
-import com.spark.platform.adminapi.vo.UserExcelVo;
-import com.spark.platform.adminapi.vo.UserVo;
+import com.spark.platform.admin.api.entity.user.User;
+import com.spark.platform.admin.api.vo.UserExcelVo;
+import com.spark.platform.admin.api.vo.UserVo;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 

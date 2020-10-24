@@ -1,8 +1,8 @@
 package com.spark.platform.common.log.listener;
 
 
-import com.spark.platform.adminapi.entity.log.LogApi;
-import com.spark.platform.adminapi.feign.client.LogClient;
+import com.spark.platform.admin.api.entity.log.LogApi;
+import com.spark.platform.admin.api.feign.client.LogClient;
 import com.spark.platform.common.log.event.ApiLogEvent;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

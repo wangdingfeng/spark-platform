@@ -2,15 +2,14 @@ package com.spark.platform.adminbiz.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.spark.platform.adminapi.entity.gen.TableColumnInfo;
-import com.spark.platform.adminapi.vo.GeneratorConfigVo;
+import com.spark.platform.admin.api.entity.gen.TableColumnInfo;
+import com.spark.platform.admin.api.vo.GeneratorConfigVo;
 import com.spark.platform.adminbiz.service.gen.GenService;
 import com.spark.platform.common.base.support.ApiResponse;
 import com.spark.platform.common.base.support.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

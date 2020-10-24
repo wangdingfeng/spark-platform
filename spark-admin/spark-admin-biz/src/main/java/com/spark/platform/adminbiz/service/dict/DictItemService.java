@@ -1,7 +1,7 @@
 package com.spark.platform.adminbiz.service.dict;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.spark.platform.adminapi.entity.dict.DictItem;
+import com.spark.platform.admin.api.entity.dict.DictItem;
 
 import java.util.List;
 

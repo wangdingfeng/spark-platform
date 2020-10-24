@@ -1,6 +1,6 @@
 package com.spark.platform.adminbiz.service.index;
 
-import com.spark.platform.adminapi.vo.IndexDataVo;
+import com.spark.platform.admin.api.vo.IndexDataVo;
 
 /**
  * @ProjectName: spark-platform

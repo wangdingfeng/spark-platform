@@ -1,11 +1,10 @@
 package com.spark.platform.adminbiz.dao.log;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.spark.platform.adminapi.entity.log.LogLogin;
+import com.spark.platform.admin.api.entity.log.LogLogin;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 

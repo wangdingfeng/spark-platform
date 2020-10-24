@@ -1,8 +1,8 @@
 package com.spark.platform.adminbiz.service.dept;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.spark.platform.adminapi.entity.dept.Dept;
-import com.spark.platform.adminapi.vo.VueTree;
+import com.spark.platform.admin.api.entity.dept.Dept;
+import com.spark.platform.admin.api.vo.VueTree;
 
 import java.util.List;
 

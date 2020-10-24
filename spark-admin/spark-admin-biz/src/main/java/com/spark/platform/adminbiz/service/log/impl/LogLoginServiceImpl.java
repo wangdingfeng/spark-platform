@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.spark.platform.adminapi.entity.log.LogLogin;
+import com.spark.platform.admin.api.entity.log.LogLogin;
 import com.spark.platform.adminbiz.dao.log.LoginLogDao;
 import com.spark.platform.adminbiz.service.log.LogLoginService;
 import com.spark.platform.common.base.support.WrapperSupport;

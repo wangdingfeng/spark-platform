@@ -1,6 +1,6 @@
 package com.spark.platform.adminbiz.controller;
 
-import com.spark.platform.adminapi.vo.IndexDataVo;
+import com.spark.platform.admin.api.vo.IndexDataVo;
 import com.spark.platform.adminbiz.service.index.IndexService;
 import com.spark.platform.common.base.support.ApiResponse;
 import com.spark.platform.common.base.support.BaseController;

@@ -1,7 +1,7 @@
 package com.spark.platform.adminbiz.dao.dict;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.spark.platform.adminapi.entity.dict.DictItem;
+import com.spark.platform.admin.api.entity.dict.DictItem;
 import com.spark.platform.common.base.vo.DictVo;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;

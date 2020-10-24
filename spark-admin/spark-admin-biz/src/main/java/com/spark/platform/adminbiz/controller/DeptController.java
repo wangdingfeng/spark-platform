@@ -1,7 +1,7 @@
 package com.spark.platform.adminbiz.controller;
 
-import com.spark.platform.adminapi.entity.dept.Dept;
-import com.spark.platform.adminapi.vo.VueTree;
+import com.spark.platform.admin.api.entity.dept.Dept;
+import com.spark.platform.admin.api.vo.VueTree;
 import com.spark.platform.adminbiz.service.dept.DeptService;
 import com.spark.platform.common.base.support.ApiResponse;
 import com.spark.platform.common.base.support.BaseController;

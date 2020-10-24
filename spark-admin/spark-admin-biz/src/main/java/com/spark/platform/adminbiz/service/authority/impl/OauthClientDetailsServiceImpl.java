@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.spark.platform.adminbiz.service.authority.OauthClientDetailsService;
 import com.spark.platform.common.base.constants.GlobalsConstants;
-import com.spark.platform.adminapi.entity.authority.OauthClientDetails;
+import com.spark.platform.admin.api.entity.authority.OauthClientDetails;
 import com.spark.platform.adminbiz.dao.authority.OauthClientDetailsDao;
 import com.spark.platform.common.base.support.WrapperSupport;
 import org.springframework.cache.annotation.Cacheable;

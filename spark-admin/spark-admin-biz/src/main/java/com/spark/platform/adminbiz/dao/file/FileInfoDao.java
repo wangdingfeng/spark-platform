@@ -1,7 +1,7 @@
 package com.spark.platform.adminbiz.dao.file;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.spark.platform.adminapi.entity.file.FileInfo;
+import com.spark.platform.admin.api.entity.file.FileInfo;
 
 
 /**

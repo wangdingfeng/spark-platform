@@ -1,7 +1,7 @@
 package com.spark.platform.adminbiz.dao.log;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.spark.platform.adminapi.entity.log.LogApi;
+import com.spark.platform.admin.api.entity.log.LogApi;
 import org.springframework.stereotype.Repository;
 
 /**

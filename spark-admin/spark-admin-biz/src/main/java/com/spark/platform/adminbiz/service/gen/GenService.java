@@ -2,8 +2,8 @@ package com.spark.platform.adminbiz.service.gen;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.spark.platform.adminapi.entity.gen.TableColumnInfo;
-import com.spark.platform.adminapi.vo.GeneratorConfigVo;
+import com.spark.platform.admin.api.entity.gen.TableColumnInfo;
+import com.spark.platform.admin.api.vo.GeneratorConfigVo;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.spark.platform.adminbiz.dao.dict;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.spark.platform.adminapi.entity.dict.Dict;
+import com.spark.platform.admin.api.entity.dict.Dict;
 import org.springframework.stereotype.Repository;
 
 

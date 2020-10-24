@@ -1,10 +1,9 @@
 package com.spark.platform.adminbiz.dao.gen;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.spark.platform.adminapi.entity.gen.TableColumnInfo;
-import com.spark.platform.adminapi.entity.gen.TableInfo;
+import com.spark.platform.admin.api.entity.gen.TableColumnInfo;
+import com.spark.platform.admin.api.entity.gen.TableInfo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 

@@ -3,7 +3,7 @@
 <mapper namespace="com.spark.platform.adminbiz.dao.gen.GenDao">
 
 
-    <select id="tableInfoPage" resultType="com.spark.platform.adminapi.entity.gen.TableInfo">
+    <select id="tableInfoPage" resultType="com.spark.platform.admin.api.entity.gen.TableInfo">
         SELECT
             TABLE_NAME,
             ENGINE,
@@ -22,7 +22,7 @@
             </if>
     </select>
 
-    <select id="findTableColumnInfo" resultType="com.spark.platform.adminapi.entity.gen.TableColumnInfo">
+    <select id="findTableColumnInfo" resultType="com.spark.platform.admin.api.entity.gen.TableColumnInfo">
         SELECT
             TABLE_SCHEMA,
             COLUMN_NAME,

@@ -1,17 +1,14 @@
 package com.spark.platform.common.security.service;
 
 import com.alibaba.fastjson.JSON;
-import com.spark.platform.adminapi.entity.authority.OauthClientDetails;
-import com.spark.platform.adminapi.feign.client.AuthorityClient;
+import com.spark.platform.admin.api.entity.authority.OauthClientDetails;
+import com.spark.platform.admin.api.feign.client.AuthorityClient;
 import com.spark.platform.common.base.enums.SparkHttpStatus;
 import com.spark.platform.common.base.exception.CommonException;
 import com.spark.platform.common.base.support.ApiResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.ClientDetailsService;

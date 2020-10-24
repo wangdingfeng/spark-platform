@@ -2,7 +2,7 @@ package com.spark.platform.adminbiz.service.index.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.google.common.collect.Lists;
-import com.spark.platform.adminapi.vo.IndexDataVo;
+import com.spark.platform.admin.api.vo.IndexDataVo;
 import com.spark.platform.adminbiz.dao.log.LoginLogDao;
 import com.spark.platform.adminbiz.service.index.IndexService;
 import com.spark.platform.common.base.constants.GlobalsConstants;

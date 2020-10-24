@@ -1,7 +1,7 @@
 package com.spark.platform.common.log.aspect;
 
 import cn.hutool.core.util.URLUtil;
-import com.spark.platform.adminapi.entity.log.LogApi;
+import com.spark.platform.admin.api.entity.log.LogApi;
 import com.spark.platform.common.base.support.ApiResponse;
 import com.spark.platform.common.log.annotation.ApiLog;
 import com.spark.platform.common.log.event.ApiLogEvent;

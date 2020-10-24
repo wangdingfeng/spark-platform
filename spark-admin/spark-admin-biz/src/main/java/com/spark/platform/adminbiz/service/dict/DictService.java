@@ -3,9 +3,7 @@ package com.spark.platform.adminbiz.service.dict;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.spark.platform.adminapi.entity.dict.Dict;
-import com.spark.platform.adminapi.entity.dict.DictItem;
-import com.spark.platform.adminapi.vo.VueTree;
+import com.spark.platform.admin.api.entity.dict.Dict;
 import com.spark.platform.common.base.vo.DictVo;
 
 import java.util.List;

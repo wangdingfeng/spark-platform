@@ -2,10 +2,10 @@ package com.spark.platform.adminbiz.service.menu.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.spark.platform.adminapi.entity.authority.Menu;
-import com.spark.platform.adminapi.entity.role.RoleMenu;
-import com.spark.platform.adminapi.vo.MenuVue;
-import com.spark.platform.adminapi.vo.VueTree;
+import com.spark.platform.admin.api.entity.authority.Menu;
+import com.spark.platform.admin.api.entity.role.RoleMenu;
+import com.spark.platform.admin.api.vo.MenuVue;
+import com.spark.platform.admin.api.vo.VueTree;
 import com.spark.platform.adminbiz.dao.menu.MenuDao;
 import com.spark.platform.adminbiz.dao.role.RoleMenuDao;
 import com.spark.platform.adminbiz.service.menu.MenuService;

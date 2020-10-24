@@ -1,8 +1,8 @@
 package com.spark.platform.adminbiz.dao.dept;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.spark.platform.adminapi.entity.dept.Dept;
-import com.spark.platform.adminapi.vo.VueTree;
+import com.spark.platform.admin.api.entity.dept.Dept;
+import com.spark.platform.admin.api.vo.VueTree;
 import org.apache.ibatis.annotations.ResultType;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;

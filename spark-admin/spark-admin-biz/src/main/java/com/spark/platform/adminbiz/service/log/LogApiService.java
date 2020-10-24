@@ -3,7 +3,7 @@ package com.spark.platform.adminbiz.service.log;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.spark.platform.adminapi.entity.log.LogApi;
+import com.spark.platform.admin.api.entity.log.LogApi;
 
 /**
  * @ProjectName: spark-platform

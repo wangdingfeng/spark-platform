@@ -1,8 +1,8 @@
 package com.spark.platform.common.security.util;
 
-import com.spark.platform.adminapi.dto.UserDTO;
-import com.spark.platform.adminapi.entity.user.User;
-import com.spark.platform.adminapi.feign.client.UserClient;
+import com.spark.platform.admin.api.dto.UserDTO;
+import com.spark.platform.admin.api.entity.user.User;
+import com.spark.platform.admin.api.feign.client.UserClient;
 import com.spark.platform.common.security.model.LoginUser;
 import com.spark.platform.common.base.utils.SpringContextHolder;
 import lombok.extern.slf4j.Slf4j;

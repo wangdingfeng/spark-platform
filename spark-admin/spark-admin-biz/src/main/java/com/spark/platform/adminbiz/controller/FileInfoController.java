@@ -3,8 +3,8 @@ package com.spark.platform.adminbiz.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.spark.platform.adminapi.dto.FileInfoDTO;
-import com.spark.platform.adminapi.entity.file.FileInfo;
+import com.spark.platform.admin.api.dto.FileInfoDTO;
+import com.spark.platform.admin.api.entity.file.FileInfo;
 import com.spark.platform.adminbiz.service.file.FileInfoService;
 import com.spark.platform.common.base.support.ApiResponse;
 import io.swagger.annotations.Api;

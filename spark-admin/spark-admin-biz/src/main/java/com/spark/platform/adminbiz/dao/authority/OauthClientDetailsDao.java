@@ -1,7 +1,7 @@
 package com.spark.platform.adminbiz.dao.authority;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.spark.platform.adminapi.entity.authority.OauthClientDetails;
+import com.spark.platform.admin.api.entity.authority.OauthClientDetails;
 import org.springframework.stereotype.Repository;
 
 /**

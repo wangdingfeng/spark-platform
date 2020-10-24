@@ -1,9 +1,9 @@
 package com.spark.platform.adminbiz.dao.menu;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.spark.platform.adminapi.entity.authority.Menu;
-import com.spark.platform.adminapi.vo.MenuVue;
-import com.spark.platform.adminapi.vo.VueTree;
+import com.spark.platform.admin.api.entity.authority.Menu;
+import com.spark.platform.admin.api.vo.MenuVue;
+import com.spark.platform.admin.api.vo.VueTree;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.ResultType;
 import org.apache.ibatis.annotations.Select;

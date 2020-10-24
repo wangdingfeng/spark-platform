@@ -1,11 +1,10 @@
 package com.spark.platform.adminbiz;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.common.collect.Lists;
-import com.spark.platform.adminapi.dto.FileInfoDTO;
-import com.spark.platform.adminapi.entity.file.FileInfo;
-import com.spark.platform.adminapi.vo.GeneratorConfigVo;
+import com.spark.platform.admin.api.dto.FileInfoDTO;
+import com.spark.platform.admin.api.entity.file.FileInfo;
+import com.spark.platform.admin.api.vo.GeneratorConfigVo;
 import com.spark.platform.adminbiz.service.file.FileInfoService;
 import com.spark.platform.adminbiz.service.gen.GenService;
 import com.spark.platform.common.base.support.WrapperSupport;

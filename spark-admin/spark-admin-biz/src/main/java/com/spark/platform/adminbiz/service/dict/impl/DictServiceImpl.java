@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.spark.platform.adminapi.entity.dict.Dict;
+import com.spark.platform.admin.api.entity.dict.Dict;
 import com.spark.platform.adminbiz.dao.dict.DictDao;
 import com.spark.platform.adminbiz.dao.dict.DictItemDao;
 import com.spark.platform.adminbiz.service.dict.DictService;

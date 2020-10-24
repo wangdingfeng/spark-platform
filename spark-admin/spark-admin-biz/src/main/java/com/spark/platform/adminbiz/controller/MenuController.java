@@ -1,8 +1,8 @@
 package com.spark.platform.adminbiz.controller;
 
-import com.spark.platform.adminapi.entity.authority.Menu;
-import com.spark.platform.adminapi.vo.MenuVue;
-import com.spark.platform.adminapi.vo.VueTree;
+import com.spark.platform.admin.api.entity.authority.Menu;
+import com.spark.platform.admin.api.vo.MenuVue;
+import com.spark.platform.admin.api.vo.VueTree;
 import com.spark.platform.adminbiz.service.menu.MenuService;
 import com.spark.platform.common.base.support.ApiResponse;
 import com.spark.platform.common.base.support.BaseController;
@@ -10,7 +10,6 @@ import com.spark.platform.common.log.annotation.ApiLog;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -2,8 +2,8 @@ package com.spark.platform.adminbiz.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.spark.platform.adminapi.entity.role.Role;
-import com.spark.platform.adminapi.entity.user.User;
+import com.spark.platform.admin.api.entity.role.Role;
+import com.spark.platform.admin.api.entity.user.User;
 import com.spark.platform.adminbiz.service.menu.MenuService;
 import com.spark.platform.adminbiz.service.role.RoleService;
 import com.spark.platform.adminbiz.service.user.UserService;

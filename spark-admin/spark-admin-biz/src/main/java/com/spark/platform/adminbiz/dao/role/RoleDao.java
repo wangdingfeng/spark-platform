@@ -1,7 +1,7 @@
 package com.spark.platform.adminbiz.dao.role;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.spark.platform.adminapi.entity.role.Role;
+import com.spark.platform.admin.api.entity.role.Role;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.ResultType;
 import org.apache.ibatis.annotations.Select;

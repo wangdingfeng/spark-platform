@@ -3,7 +3,7 @@
 <mapper namespace="com.spark.platform.adminbiz.dao.file.FileInfoDao">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.spark.platform.adminapi.entity.file.FileInfo">
+    <resultMap id="BaseResultMap" type="com.spark.platform.admin.api.entity.file.FileInfo">
         <id column="id" property="id" />
     <result column="create_date" property="createDate" />
     <result column="creator" property="creator" />

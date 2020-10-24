@@ -1,7 +1,7 @@
 package com.spark.platform.adminbiz.dao.user;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.spark.platform.adminapi.entity.user.UserRole;
+import com.spark.platform.admin.api.entity.user.UserRole;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;

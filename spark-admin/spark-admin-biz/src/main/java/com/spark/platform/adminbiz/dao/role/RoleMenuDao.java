@@ -1,7 +1,7 @@
 package com.spark.platform.adminbiz.dao.role;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.spark.platform.adminapi.entity.role.RoleMenu;
+import com.spark.platform.admin.api.entity.role.RoleMenu;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
