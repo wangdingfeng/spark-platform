@@ -334,12 +334,6 @@ public class ActTaskQueryServiceImpl implements ActTaskQueryService {
         if (StringUtils.isNotBlank(taskRequestQuery.getProcessInstanceId())) {
             taskQuery.processInstanceId(taskRequestQuery.getProcessInstanceId());
         }
-        if (StringUtils.isNotBlank(taskRequestQuery.getUserId())) {
-            taskQuery.taskAssignee(taskRequestQuery.getUserId());
-        }
-        if (CollectionUtil.isNotEmpty(taskRequestQuery.getGroupIds())) {
-            taskQuery.taskCandidateGroupIn(taskRequestQuery.getGroupIds());
-        }
         if (StringUtils.isNotBlank(taskRequestQuery.getBusinessKey())) {
             taskQuery.processInstanceBusinessKey(taskRequestQuery.getBusinessKey());
         }
