@@ -5,12 +5,12 @@ import com.google.common.collect.Maps;
 import com.spark.platform.flowable.api.enums.ActionEnum;
 import com.spark.platform.flowable.biz.service.ActTaskQueryService;
 import com.spark.platform.flowable.biz.service.ActTaskService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.TaskService;
 import org.flowable.engine.task.Comment;
 import org.flowable.task.api.Task;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -24,16 +24,12 @@ import java.util.Map;
  */
 @Service
 @Slf4j
+@AllArgsConstructor
 public class ActTaskServiceImpl implements ActTaskService {
 
-    @Autowired
-    private TaskService taskService;
-
-    @Autowired
-    private RuntimeService runtimeService;
-
-    @Autowired
-    private ActTaskQueryService actTaskQueryService;
+    private final TaskService taskService;
+    private final RuntimeService runtimeService;
+    private final ActTaskQueryService actTaskQueryService;
 
     @Override
     public void setVariableLocal(String taskId, String variableName, Object value) {

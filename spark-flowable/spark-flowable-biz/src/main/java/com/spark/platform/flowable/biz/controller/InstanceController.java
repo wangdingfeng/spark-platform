@@ -1,10 +1,10 @@
 package com.spark.platform.flowable.biz.controller;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spark.platform.common.base.support.ApiResponse;
 import com.spark.platform.common.base.support.BaseController;
-import com.spark.platform.flowable.api.DTO.ProcessInstanceDTO;
+import com.spark.platform.flowable.api.dto.PageDTO;
+import com.spark.platform.flowable.api.dto.ProcessInstanceDTO;
 import com.spark.platform.flowable.api.enums.ActionEnum;
 import com.spark.platform.flowable.api.request.ProcessInstanceCreateRequest;
 import com.spark.platform.flowable.biz.service.ActInstanceService;
@@ -12,8 +12,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import lombok.AllArgsConstructor;
 import org.flowable.engine.runtime.ProcessInstance;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -26,11 +26,10 @@ import java.util.Map;
 @RestController
 @RequestMapping("runtime/process-instances")
 @Api(value = "Instance", tags = {"流程实例"})
+@AllArgsConstructor
 public class InstanceController extends BaseController {
 
-    @Autowired
-    private ActInstanceService actInstanceService;
-
+    private final ActInstanceService actInstanceService;
 
     @PostMapping
     @ApiOperation(value = "启动流程实例__通过流程定义key", notes = "实例启动成功，返回当前活动任务", produces = "application/json")
@@ -41,7 +40,7 @@ public class InstanceController extends BaseController {
 
     @GetMapping
     @ApiOperation(value = "分页查询流程实例")
-    public ApiResponse page(ProcessInstanceDTO processInstanceDTO, Page page){
+    public ApiResponse page(ProcessInstanceDTO processInstanceDTO, PageDTO page){
         return success(actInstanceService.findPage(processInstanceDTO,page));
     }
 

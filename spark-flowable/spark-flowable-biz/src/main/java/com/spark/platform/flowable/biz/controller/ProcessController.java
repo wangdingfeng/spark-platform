@@ -1,16 +1,16 @@
 package com.spark.platform.flowable.biz.controller;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spark.platform.common.base.support.ApiResponse;
 import com.spark.platform.common.base.support.BaseController;
-import com.spark.platform.flowable.api.DTO.ProcessDefinitionDTO;
+import com.spark.platform.flowable.api.dto.PageDTO;
+import com.spark.platform.flowable.api.dto.ProcessDefinitionDTO;
 import com.spark.platform.flowable.api.vo.DeploymentVO;
 import com.spark.platform.flowable.biz.service.ActProcessService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,19 +24,19 @@ import java.util.zip.ZipInputStream;
 /**
  * @author: wangdingfeng
  * @Date: 2020/4/5 13:48
- * @Description:
+ * @Description: 流程定义
  */
 @RestController
 @RequestMapping("/runtime/process-definitions")
 @Api(value = "Process", tags = {"流程定义"}, description = "注意：如果部署流程定义时指定了tenantId,那么在启动流程实例的时候，也需要传递tenantId，否则报错")
+@AllArgsConstructor
 public class ProcessController extends BaseController {
 
-    @Autowired
-    private ActProcessService actProcessService;
+    private final ActProcessService actProcessService;
 
     @GetMapping
     @ApiOperation(value = "分页查询流程定义实例")
-    public ApiResponse page(ProcessDefinitionDTO processDefinitionDTO,Page page){
+    public ApiResponse page(ProcessDefinitionDTO processDefinitionDTO, PageDTO page){
         return success(actProcessService.listDefinitionPage(processDefinitionDTO,page));
     }
 

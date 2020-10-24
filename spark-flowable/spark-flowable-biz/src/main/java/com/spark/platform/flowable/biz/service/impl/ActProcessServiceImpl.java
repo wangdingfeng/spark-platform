@@ -2,25 +2,29 @@ package com.spark.platform.flowable.biz.service.impl;
 
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spark.platform.common.base.constants.ProcessConstants;
 import com.spark.platform.common.utils.BeanCopyUtil;
-import com.spark.platform.flowable.api.DTO.DeploymentDTO;
-import com.spark.platform.flowable.api.DTO.ProcessDefinitionDTO;
+import com.spark.platform.flowable.api.dto.DeploymentDTO;
+import com.spark.platform.flowable.api.dto.PageDTO;
+import com.spark.platform.flowable.api.dto.ProcessDefinitionDTO;
 import com.spark.platform.flowable.api.vo.DeploymentVO;
 import com.spark.platform.flowable.api.vo.ProcessDefinitionVO;
 import com.spark.platform.flowable.biz.service.ActProcessService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.flowable.engine.RepositoryService;
 import org.flowable.engine.RuntimeService;
-import org.flowable.engine.repository.*;
+import org.flowable.engine.repository.Deployment;
+import org.flowable.engine.repository.DeploymentBuilder;
+import org.flowable.engine.repository.DeploymentQuery;
+import org.flowable.engine.repository.ProcessDefinition;
+import org.flowable.engine.repository.ProcessDefinitionQuery;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.ui.modeler.domain.Model;
 import org.flowable.ui.modeler.serviceapi.ModelService;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -37,15 +41,12 @@ import java.util.zip.ZipInputStream;
  */
 @Service
 @Slf4j
+@AllArgsConstructor
 public class ActProcessServiceImpl implements ActProcessService {
 
-    @Autowired
-    private RepositoryService repositoryService;
-
-    @Autowired
-    private RuntimeService runtimeService;
-    @Autowired
-    private ModelService modelService;
+    private final RepositoryService repositoryService;
+    private final RuntimeService runtimeService;
+    private final ModelService modelService;
 
     @Override
     public DeploymentBuilder createDeployment() {
@@ -65,7 +66,7 @@ public class ActProcessServiceImpl implements ActProcessService {
     @Override
     public Deployment deploy(String bpmnFileUrl) {
         Deployment deploy = createDeployment().addClasspathResource(bpmnFileUrl).deploy();
-        log.info("部署成功，当前部署ID:{}-部署的key{}-部署name;{}",deploy.getId(),deploy.getKey(),deploy.getName());
+        log.info("部署成功，当前部署ID:{}-部署的key{}-部署name;{}", deploy.getId(), deploy.getKey(), deploy.getName());
         return deploy;
     }
 
@@ -74,8 +75,8 @@ public class ActProcessServiceImpl implements ActProcessService {
         Model model = modelService.getModel(modelId);
         byte[] bpmnBytes = modelService.getBpmnXML(model);
         String processName = model.getName();
-        if (!StrUtil.endWith(processName, ".bpmn20.xml")){
-            processName += ".bpmn20.xml";
+        if (!StrUtil.endWith(processName, ProcessConstants.BPMN20_FILE_SUFFIX)) {
+            processName += ProcessConstants.BPMN20_FILE_SUFFIX;
         }
         DeploymentVO deploymentVO = new DeploymentVO();
         Deployment deployment = repositoryService.createDeployment()
@@ -84,14 +85,14 @@ public class ActProcessServiceImpl implements ActProcessService {
                 .key(model.getKey())
                 .deploy();
         //忽略二进制文件（模板文件、模板图片）返回
-        BeanUtils.copyProperties(deployment,deploymentVO,"resources");
+        BeanUtils.copyProperties(deployment, deploymentVO, ProcessConstants.RESOURCES);
         return deploymentVO;
     }
 
     @Override
     public Deployment deploy(String url, String pngUrl) {
         Deployment deploy = createDeployment().addClasspathResource(url).addClasspathResource(pngUrl).deploy();
-        log.info("部署成功，当前部署ID:{}-部署的key{}-部署name;{}",deploy.getId(),deploy.getKey(),deploy.getName());
+        log.info("部署成功，当前部署ID:{}-部署的key{}-部署name;{}", deploy.getId(), deploy.getKey(), deploy.getName());
         return deploy;
     }
 
@@ -101,21 +102,21 @@ public class ActProcessServiceImpl implements ActProcessService {
                 .name(name).category(category).tenantId(tenantId).deploy();
         DeploymentVO deploymentVO = new DeploymentVO();
         //忽略二进制文件（模板文件、模板图片）返回
-        BeanUtils.copyProperties(deployment,deploymentVO,"resources");
+        BeanUtils.copyProperties(deployment, deploymentVO, ProcessConstants.RESOURCES);
         return deploymentVO;
     }
 
     @Override
     public Deployment deployBpmnAndDrl(String url, String drlUrl) {
         Deployment deploy = createDeployment().addClasspathResource(url).addClasspathResource(drlUrl).deploy();
-        log.info("部署成功，当前部署ID:{}-部署的key{}-部署name;{}",deploy.getId(),deploy.getKey(),deploy.getName());
+        log.info("部署成功，当前部署ID:{}-部署的key{}-部署name;{}", deploy.getId(), deploy.getKey(), deploy.getName());
         return deploy;
     }
 
     @Override
     public Deployment deploy(String url, String name, String category) {
         Deployment deploy = createDeployment().addClasspathResource(url).name(name).category(category).deploy();
-        log.info("部署成功，当前部署ID:{}-部署的key{}-部署name;{}",deploy.getId(),deploy.getKey(),deploy.getName());
+        log.info("部署成功，当前部署ID:{}-部署的key{}-部署name;{}", deploy.getId(), deploy.getKey(), deploy.getName());
         return deploy;
     }
 
@@ -123,7 +124,7 @@ public class ActProcessServiceImpl implements ActProcessService {
     public Deployment deploy(String url, String pngUrl, String name, String category) {
         Deployment deploy = createDeployment().addClasspathResource(url).addClasspathResource(pngUrl)
                 .name(name).category(category).deploy();
-        log.info("部署成功，当前部署ID:{}-部署的key{}-部署name;{}",deploy.getId(),deploy.getKey(),deploy.getName());
+        log.info("部署成功，当前部署ID:{}-部署的key{}-部署name;{}", deploy.getId(), deploy.getKey(), deploy.getName());
         return deploy;
     }
 
@@ -144,7 +145,7 @@ public class ActProcessServiceImpl implements ActProcessService {
                 .deploy();
         DeploymentVO deploymentVO = new DeploymentVO();
         //忽略二进制文件（模板文件、模板图片）返回
-        BeanUtils.copyProperties(deployment,deploymentVO,"resources");
+        BeanUtils.copyProperties(deployment, deploymentVO, ProcessConstants.RESOURCES);
         return deploymentVO;
 
     }
@@ -159,22 +160,20 @@ public class ActProcessServiceImpl implements ActProcessService {
     }
 
     @Override
-    public Page<ProcessDefinitionVO> listDefinitionPage(ProcessDefinitionDTO processDefinitionDTO, Page page) {
-        int firstResult = (int)((page.getCurrent()-1)*page.getSize());
-        int maxResults = (int)(page.getCurrent()*page.getSize());
+    public PageDTO<ProcessDefinitionVO> listDefinitionPage(ProcessDefinitionDTO processDefinitionDTO, PageDTO page) {
         ProcessDefinitionQuery processDefinitionQuery = createProcessDefinitionQuery();
-        if(StringUtils.isNotBlank(processDefinitionDTO.getName())){
-            processDefinitionQuery.processDefinitionNameLike(processDefinitionDTO.getName());
+        if (StringUtils.isNotBlank(processDefinitionDTO.getName())) {
+            processDefinitionQuery.processDefinitionNameLike(ProcessConstants.contactLike(processDefinitionDTO.getName()));
         }
-        if(StringUtils.isNotBlank(processDefinitionDTO.getKey())){
-            processDefinitionQuery.processDefinitionKeyLike(processDefinitionDTO.getKey());
+        if (StringUtils.isNotBlank(processDefinitionDTO.getKey())) {
+            processDefinitionQuery.processDefinitionKeyLike(ProcessConstants.contactLike(processDefinitionDTO.getKey()));
         }
-        if(StringUtils.isNotBlank(processDefinitionDTO.getCategory())){
-            processDefinitionQuery.processDefinitionCategoryLike(processDefinitionDTO.getCategory());
+        if (StringUtils.isNotBlank(processDefinitionDTO.getCategory())) {
+            processDefinitionQuery.processDefinitionCategoryLike(ProcessConstants.contactLike(processDefinitionDTO.getCategory()));
         }
         long count = processDefinitionQuery.count();
-        List<ProcessDefinition> processDefinitionList = processDefinitionQuery.orderByDeploymentId().desc().listPage(firstResult,maxResults);
-        List<ProcessDefinitionVO> processDefinitionVOS = BeanCopyUtil.copyListProperties(processDefinitionList,ProcessDefinitionVO::new);
+        List<ProcessDefinition> processDefinitionList = processDefinitionQuery.orderByDeploymentId().desc().listPage(page.getFirstResult(), page.getMaxResults());
+        List<ProcessDefinitionVO> processDefinitionVOS = BeanCopyUtil.copyListProperties(processDefinitionList, ProcessDefinitionVO::new);
         page.setRecords(processDefinitionVOS);
         page.setTotal(count);
         return page;
@@ -196,27 +195,25 @@ public class ActProcessServiceImpl implements ActProcessService {
 
     @Override
     public void deleteDeployment(String deploymentId, boolean cascade) {
-        repositoryService.deleteDeployment(deploymentId,cascade);
-        log.info("删除部署流程成功，部署id:{}",deploymentId);
+        repositoryService.deleteDeployment(deploymentId, cascade);
+        log.info("删除部署流程成功，部署id:{}", deploymentId);
     }
 
     @Override
-    public Page<DeploymentVO> listPage(DeploymentDTO deploymentDTO, Page page) {
-        int firstResult = (int)((page.getCurrent()-1)*page.getSize());
-        int maxResults = (int)(page.getCurrent()*page.getSize());
+    public PageDTO<DeploymentVO> listPage(DeploymentDTO deploymentDTO, PageDTO page) {
         DeploymentQuery deploymentQuery = createDeploymentQuery();
-        if(StringUtils.isNotBlank(deploymentDTO.getDeploymentName())){
-            deploymentQuery.deploymentNameLike(deploymentDTO.getDeploymentName());
+        if (StringUtils.isNotBlank(deploymentDTO.getDeploymentName())) {
+            deploymentQuery.deploymentNameLike(ProcessConstants.contactLike(deploymentDTO.getDeploymentName()));
         }
-        if(StringUtils.isNotBlank(deploymentDTO.getDeploymentKey())){
-            deploymentQuery.deploymentKeyLike(deploymentDTO.getDeploymentKey());
+        if (StringUtils.isNotBlank(deploymentDTO.getDeploymentKey())) {
+            deploymentQuery.deploymentKeyLike(ProcessConstants.contactLike(deploymentDTO.getDeploymentKey()));
         }
-        if(StringUtils.isNotBlank(deploymentDTO.getCategory())){
-            deploymentQuery.deploymentCategoryLike(deploymentDTO.getCategory());
+        if (StringUtils.isNotBlank(deploymentDTO.getCategory())) {
+            deploymentQuery.deploymentCategoryLike(ProcessConstants.contactLike(deploymentDTO.getCategory()));
         }
         long count = deploymentQuery.count();
-        List<Deployment> deployments = deploymentQuery.orderByDeploymenTime().desc().listPage(firstResult,maxResults);
-        List<DeploymentVO> deploymentVOS = BeanCopyUtil.copyListProperties(deployments,DeploymentVO::new,"resources");
+        List<Deployment> deployments = deploymentQuery.orderByDeploymenTime().desc().listPage(page.getFirstResult(), page.getMaxResults());
+        List<DeploymentVO> deploymentVOS = BeanCopyUtil.copyListProperties(deployments, DeploymentVO::new, ProcessConstants.RESOURCES);
         page.setRecords(deploymentVOS);
         page.setTotal(count);
         return page;
@@ -224,15 +221,15 @@ public class ActProcessServiceImpl implements ActProcessService {
 
     @Override
     public InputStream resourceRead(String procDefId, String proInsId, String resType) {
-        if (StringUtils.isBlank(procDefId)){
+        if (StringUtils.isBlank(procDefId)) {
             ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(proInsId).singleResult();
             procDefId = processInstance.getProcessDefinitionId();
         }
         ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionId(procDefId).singleResult();
         String resourceName = "";
-        if (resType.equals("image")) {
+        if (ProcessConstants.IMAGE.equals(resType)) {
             resourceName = processDefinition.getDiagramResourceName();
-        } else if (resType.equals("xml")) {
+        } else if (ProcessConstants.XML.equals(resType)) {
             resourceName = processDefinition.getResourceName();
         }
         InputStream resourceAsStream = repositoryService.getResourceAsStream(processDefinition.getDeploymentId(), resourceName);
@@ -261,8 +258,8 @@ public class ActProcessServiceImpl implements ActProcessService {
             response.addHeader("Content-Length", "" + data.length);
             response.setContentType("application/octet-stream; charset=UTF-8");
             IOUtils.write(data, response.getOutputStream());
-        }catch (Exception e){
-            log.error("获取流异常!",e);
+        } catch (Exception e) {
+            log.error("获取流异常!", e);
         }
     }
 }

@@ -152,6 +152,11 @@ public class GlobalsConstants {
     /**
      * 超级管理员角色
      */
-       public static final String ROLE_ADMIN = "ROLE_ADMIN";
+    public static final String ROLE_ADMIN = "ROLE_ADMIN";
+    /**
+     * like条件
+     */
+    public static final String LIKE_CHARACTER = "%";
+
 
 }

@@ -4,11 +4,14 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
+import com.spark.platform.common.base.constants.GlobalsConstants;
+import com.spark.platform.common.base.constants.ProcessConstants;
 import com.spark.platform.common.utils.BeanCopyUtil;
 import com.spark.platform.flowable.api.enums.VariablesEnum;
 import com.spark.platform.flowable.api.request.TaskRequestQuery;
 import com.spark.platform.flowable.api.vo.TaskVO;
 import com.spark.platform.flowable.biz.service.ActTaskQueryService;
+import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.flowable.engine.HistoryService;
 import org.flowable.engine.RuntimeService;
@@ -19,30 +22,24 @@ import org.flowable.task.api.TaskQuery;
 import org.flowable.task.api.history.HistoricTaskInstance;
 import org.flowable.task.api.history.HistoricTaskInstanceQuery;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 /**
  * @author: wangdingfeng
  * @Date: 2020/4/4 22:34
- * @Description:
+ * @Description: 任务查询
  */
 @Service
+@AllArgsConstructor
 public class ActTaskQueryServiceImpl implements ActTaskQueryService {
 
-    @Autowired
-    private TaskService taskService;
-
-    @Autowired
-    private HistoryService historyService;
-
-    @Autowired
-    private RuntimeService runtimeService;
+    private final TaskService taskService;
+    private final HistoryService historyService;
+    private final RuntimeService runtimeService;
 
     @Override
     public TaskQuery createTaskQuery() {
@@ -63,33 +60,30 @@ public class ActTaskQueryServiceImpl implements ActTaskQueryService {
     public TaskVO queryTaskVOById(String taskId) {
         Task task = createTaskQuery().taskId(taskId).singleResult();
         TaskVO taskVO = new TaskVO();
-        BeanUtils.copyProperties(task, taskVO,"variables");
+        BeanUtils.copyProperties(task, taskVO, "variables");
         return taskVO;
     }
 
     @Override
     public List<TaskVO> queryByParams(TaskRequestQuery taskRequestQuery) {
-        TaskQuery taskQuery = createTaskQuery();
-        if(StringUtils.isNotBlank(taskRequestQuery.getTaskId())){
+        TaskQuery taskQuery = buildQueryParams(taskRequestQuery);
+        if (StringUtils.isNotBlank(taskRequestQuery.getTaskId())) {
             //任务id查询单条记录
             Task task = createTaskQuery().taskId(taskRequestQuery.getTaskId()).includeProcessVariables().singleResult();
             TaskVO taskVO = new TaskVO();
-            BeanUtil.copyProperties(task,taskVO,"variables");
+            BeanUtil.copyProperties(task, taskVO, "variables");
             taskVO.setVariables(task.getProcessVariables());
             return Lists.newArrayList(taskVO);
         }
-        if(StringUtils.isNotBlank(taskRequestQuery.getProcessInstanceId())){
-            taskQuery.processInstanceId(taskRequestQuery.getProcessInstanceId());
-        }
         List<Task> tasks = taskQuery.includeProcessVariables().list();
-        List<TaskVO> taskVOS = BeanCopyUtil.copyListProperties(tasks,TaskVO::new);
+        List<TaskVO> taskVOS = BeanCopyUtil.copyListProperties(tasks, TaskVO::new);
         return taskVOS;
     }
 
     @Override
     public List<Task> taskCandidateUser(String candidateUser, int page, int pageSize) {
-        int firstResult = (page-1)*pageSize;
-        int maxResults = page*pageSize;
+        int firstResult = (page - 1) * pageSize;
+        int maxResults = page * pageSize;
         return createTaskQuery().taskCandidateUser(candidateUser)
                 .orderByTaskPriority().desc()
                 .orderByTaskCreateTime().asc()
@@ -98,8 +92,8 @@ public class ActTaskQueryServiceImpl implements ActTaskQueryService {
 
     @Override
     public List<Task> taskAssignee(String assignee, int page, int pageSize) {
-        int firstResult = (page-1)*pageSize;
-        int maxResults = page*pageSize;
+        int firstResult = (page - 1) * pageSize;
+        int maxResults = page * pageSize;
         return createTaskQuery().taskAssignee(assignee).orderByTaskPriority().desc()
                 .orderByTaskCreateTime().asc()
                 .listPage(firstResult, maxResults);
@@ -115,7 +109,9 @@ public class ActTaskQueryServiceImpl implements ActTaskQueryService {
 
     @Override
     public List<Task> taskCandidateOrAssignedOrGroup(String userId, String groupId) {
-        if(StringUtils.isBlank(groupId)) return this.taskCandidateOrAssigned(userId);
+        if (StringUtils.isBlank(groupId)) {
+            return this.taskCandidateOrAssigned(userId);
+        }
         return createTaskQuery().taskCandidateOrAssigned(userId).taskCandidateGroup(groupId).includeProcessVariables()
                 .orderByTaskPriority().desc()
                 .orderByTaskCreateTime().desc()
@@ -124,26 +120,21 @@ public class ActTaskQueryServiceImpl implements ActTaskQueryService {
 
     @Override
     public Page<TaskVO> taskCandidateOrAssignedOrGroupPage(TaskRequestQuery query) {
-        int firstResult = (int)((query.getCurrent()-1)*query.getSize());
-        int maxResults = (int)(query.getCurrent()*query.getSize());
-        TaskQuery taskQuery = createTaskQuery().taskCandidateOrAssigned(query.getUserId()).taskCandidateGroupIn(query.getGroupIds());
-        if(StringUtils.isNotBlank(query.getBusinessKey())){
-            taskQuery.processInstanceBusinessKey(query.getBusinessKey());
+        TaskQuery taskQuery = buildQueryParams(query);
+        if (StringUtils.isNotBlank(query.getBusinessType())) {
+            taskQuery.processVariableValueEquals(VariablesEnum.businessType.toString(), query.getBusinessType());
         }
-        if(StringUtils.isNotBlank(query.getBusinessType())){
-            taskQuery.processVariableValueEquals(VariablesEnum.businessType.toString(),query.getBusinessType());
-        }
-        if(StringUtils.isNotBlank(query.getBusinessName())){
-            taskQuery.processVariableValueLike(VariablesEnum.businessName.toString(),query.getBusinessName());
+        if (StringUtils.isNotBlank(query.getBusinessName())) {
+            taskQuery.processVariableValueLike(VariablesEnum.businessName.toString(), ProcessConstants.contactLike(query.getBusinessName()));
         }
         List<Task> taskList = taskQuery.includeProcessVariables()
                 .orderByTaskPriority().desc()
                 .orderByTaskCreateTime().desc()
-                .listPage(firstResult,maxResults);
+                .listPage(query.getFirstResult(), query.getMaxResults());
         List<TaskVO> voList = Lists.newArrayList();
         taskList.forEach(task -> {
             TaskVO taskVO = new TaskVO();
-            BeanUtil.copyProperties(task,taskVO);
+            BeanUtil.copyProperties(task, taskVO);
             //查询业务主键
             taskVO.setBusinessKey(runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult().getBusinessKey());
             //放入流程参数
@@ -151,15 +142,15 @@ public class ActTaskQueryServiceImpl implements ActTaskQueryService {
             voList.add(taskVO);
         });
         Long count = taskQuery.count();
-        Page page =new Page(query.getCurrent(),query.getSize(),count);
+        Page page = new Page(query.getCurrent(), query.getSize(), count);
         page.setRecords(voList);
         return page;
     }
 
     @Override
     public List<HistoricTaskInstance> taskAssigneeHistory(String assignee, int page, int pageSize) {
-        int firstResult = (page-1)*pageSize;
-        int maxResults = page*pageSize;
+        int firstResult = (page - 1) * pageSize;
+        int maxResults = page * pageSize;
         return createHistoricTaskInstanceQuery().taskAssignee(assignee).orderByTaskPriority().desc()
                 .orderByTaskCreateTime().asc()
                 .listPage(firstResult, maxResults);
@@ -167,6 +158,7 @@ public class ActTaskQueryServiceImpl implements ActTaskQueryService {
 
     /**
      * 构建自定义流程参数查询
+     *
      * @param args
      * @return
      */
@@ -175,7 +167,7 @@ public class ActTaskQueryServiceImpl implements ActTaskQueryService {
         if (args != null && args.size() > 0) {
             for (Map.Entry<String, Object> entry : args.entrySet()) {
                 if (VariablesEnum.businessName.toString().equals(entry.getKey()) || VariablesEnum.businessType.toString().equals(entry.getKey())) {
-                    tq.processVariableValueLike(entry.getKey(), String.valueOf(entry.getValue()));
+                    tq.processVariableValueLike(entry.getKey(), ProcessConstants.contactLike(String.valueOf(entry.getValue())));
                 } else {
                     tq.processVariableValueEquals(entry.getKey(), entry.getValue());
                 }
@@ -187,8 +179,8 @@ public class ActTaskQueryServiceImpl implements ActTaskQueryService {
 
     @Override
     public List<Task> taskCandidateUserByCondition(String candidateUser, Map<String, Object> variables, int page, int pageSize) {
-        int firstResult = (page-1)*pageSize;
-        int maxResults = page*pageSize;
+        int firstResult = (page - 1) * pageSize;
+        int maxResults = page * pageSize;
         return buildTaskQueryByVariables(variables).taskCandidateUser(candidateUser)
                 .orderByTaskPriority().desc()
                 .orderByTaskCreateTime().asc()
@@ -197,8 +189,8 @@ public class ActTaskQueryServiceImpl implements ActTaskQueryService {
 
     @Override
     public List<Task> taskAssigneeByCondition(String assignee, Map<String, Object> variables, int page, int pageSize) {
-        int firstResult = (page-1)*pageSize;
-        int maxResults = page*pageSize;
+        int firstResult = (page - 1) * pageSize;
+        int maxResults = page * pageSize;
         return buildTaskQueryByVariables(variables).taskAssignee(assignee).orderByTaskPriority().desc()
                 .orderByTaskCreateTime().asc()
                 .listPage(firstResult, maxResults);
@@ -207,8 +199,8 @@ public class ActTaskQueryServiceImpl implements ActTaskQueryService {
     @Override
     public List<Task> taskCandidateOrAssignedByCondition(String userId, Map<String, Object> variables, int page,
                                                          int pageSize) {
-        int firstResult = (page-1)*pageSize;
-        int maxResults = page*pageSize;
+        int firstResult = (page - 1) * pageSize;
+        int maxResults = page * pageSize;
         return buildTaskQueryByVariables(variables).taskCandidateOrAssigned(userId).orderByTaskPriority().desc()
                 .orderByTaskCreateTime().asc()
                 .listPage(firstResult, maxResults);
@@ -228,6 +220,7 @@ public class ActTaskQueryServiceImpl implements ActTaskQueryService {
                 .orderByTaskCreateTime().asc()
                 .count();
     }
+
     @Override
     public long countTaskCandidateOrAssigned(String userId) {
         return createTaskQuery().taskCandidateOrAssigned(userId).orderByTaskPriority().desc()
@@ -236,8 +229,10 @@ public class ActTaskQueryServiceImpl implements ActTaskQueryService {
     }
 
     @Override
-    public long countTaskCandidateOrAssignedOrGroup(String userId,List<String> groupIds) {
-        if(CollectionUtil.isEmpty(groupIds)) return this.countTaskCandidateOrAssigned(userId);
+    public long countTaskCandidateOrAssignedOrGroup(String userId, List<String> groupIds) {
+        if (CollectionUtil.isEmpty(groupIds)) {
+            return this.countTaskCandidateOrAssigned(userId);
+        }
         return createTaskQuery().taskCandidateOrAssigned(userId).taskCandidateGroupIn(groupIds).orderByTaskPriority().desc()
                 .orderByTaskCreateTime().asc()
                 .count();
@@ -320,11 +315,44 @@ public class ActTaskQueryServiceImpl implements ActTaskQueryService {
 
     @Override
     public List<Task> taskAssigneeByTaskQuery(String assignee, TaskQuery query, int page, int pageSize) {
-        int firstResult = (page-1)*pageSize;
-        int maxResults = page*pageSize;
+        int firstResult = (page - 1) * pageSize;
+        int maxResults = page * pageSize;
         return query.taskAssignee(assignee).orderByTaskPriority().desc()
                 .orderByTaskCreateTime().asc()
                 .listPage(firstResult, maxResults);
+    }
+
+    @Override
+    public TaskQuery buildQueryParams(TaskRequestQuery taskRequestQuery) {
+        TaskQuery taskQuery = createTaskQuery();
+        if (StringUtils.isNotBlank(taskRequestQuery.getUserId())) {
+            taskQuery.taskCandidateOrAssigned(taskRequestQuery.getUserId());
+        }
+        if (CollectionUtil.isNotEmpty(taskRequestQuery.getGroupIds())) {
+            taskQuery.taskCandidateGroupIn(taskRequestQuery.getGroupIds());
+        }
+        if (StringUtils.isNotBlank(taskRequestQuery.getProcessInstanceId())) {
+            taskQuery.processInstanceId(taskRequestQuery.getProcessInstanceId());
+        }
+        if (StringUtils.isNotBlank(taskRequestQuery.getUserId())) {
+            taskQuery.taskAssignee(taskRequestQuery.getUserId());
+        }
+        if (CollectionUtil.isNotEmpty(taskRequestQuery.getGroupIds())) {
+            taskQuery.taskCandidateGroupIn(taskRequestQuery.getGroupIds());
+        }
+        if (StringUtils.isNotBlank(taskRequestQuery.getBusinessKey())) {
+            taskQuery.processInstanceBusinessKey(taskRequestQuery.getBusinessKey());
+        }
+        if (StringUtils.isNotBlank(taskRequestQuery.getBusinessCode())) {
+            taskQuery.processVariableValueLike(VariablesEnum.businessCode.toString(), ProcessConstants.contactLike(taskRequestQuery.getBusinessCode()));
+        }
+        if (StringUtils.isNotBlank(taskRequestQuery.getBusinessType())) {
+            taskQuery.processVariableValueEquals(VariablesEnum.businessType.toString(), taskRequestQuery.getBusinessType());
+        }
+        if (StringUtils.isNotBlank(taskRequestQuery.getBusinessName())) {
+            taskQuery.processVariableValueLike(VariablesEnum.businessName.toString(), ProcessConstants.contactLike(taskRequestQuery.getBusinessName()));
+        }
+        return taskQuery;
     }
 
 }

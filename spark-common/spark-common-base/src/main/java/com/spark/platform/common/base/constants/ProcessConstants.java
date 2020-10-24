@@ -11,4 +11,19 @@ public class ProcessConstants {
      */
     public static final String BPMN_FILE_SUFFIX = ".bpmn";
     public static final String BPMN20_FILE_SUFFIX = ".bpmn20.xml";
+    public static final String RESOURCES = "resources";
+
+    public static final String IMAGE = "image";
+    public static final String XML = "xml";
+
+    /**
+     * 拼接 like条件
+     * @param str
+     * @return
+     */
+    public static String contactLike(String str){
+        return GlobalsConstants.LIKE_CHARACTER + str + GlobalsConstants.LIKE_CHARACTER;
+    }
+
+
 }

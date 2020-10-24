@@ -49,6 +49,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * @author: wangdingfeng
+ * @Date: 2020/4/5 21:14
+ * @Description:  重写 Flowable 官方 ui rest
+ */
 @RestController
 @RequestMapping("/app")
 @CrossOrigin
@@ -161,7 +166,6 @@ public class FlowableAppRest {
     @RequestMapping(value = "/rest/process-instances/history/{processInstanceId}/model-json", method = RequestMethod.GET, produces = "application/json")
     public JsonNode getModelHistoryJSON(@PathVariable String processInstanceId) {
         //TODO 权限设置
-
         HistoricProcessInstance processInstance = historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
         if (processInstance == null) {
             throw new BadRequestException("No process instance found with id " + processInstanceId);
@@ -284,7 +288,6 @@ public class FlowableAppRest {
      * @param processInstanceId 实例id
      * @return
      */
-
 
     protected ObjectNode processProcessElements(BpmnModel pojoModel, Set<String> completedElements, Set<String> currentElements, Collection<String> breakpoints, String processInstanceId) {
         ObjectNode displayNode = objectMapper.createObjectNode();

@@ -1,10 +1,10 @@
 package com.spark.platform.flowable.api.request;
 
-import com.google.common.collect.Maps;
 import com.spark.platform.flowable.api.enums.VariablesEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +19,7 @@ import java.util.Map;
  * @Version: 1.0
  */
 @Data
-@ApiModel(value = "ProcessInstanceCreateRequest",description = "流程发起")
+@ApiModel(value = "ProcessInstanceCreateRequest", description = "流程发起")
 public class ProcessInstanceCreateRequest {
     @ApiModelProperty(value = "流程定义ID")
     private String processDefinitionId;
@@ -33,20 +33,24 @@ public class ProcessInstanceCreateRequest {
     private String businessType;
     @ApiModelProperty(value = "业务名称")
     private String businessName;
+    @ApiModelProperty(value = "业务编码")
+    private String businessCode;
     @ApiModelProperty(value = "流程参数")
     private Map<String, Object> variables = new HashMap<>();
 
-    public ProcessInstanceCreateRequest(){
+    public ProcessInstanceCreateRequest() {
 
     }
 
-    public ProcessInstanceCreateRequest(String processDefinitionKey,String businessKey,String businessType,String businessName,Map<String, Object> var){
+    public ProcessInstanceCreateRequest(String processDefinitionKey, String businessKey, String businessType, String businessName, String businessCode, Map<String, Object> var) {
         setProcessDefinitionKey(processDefinitionKey);
         setBusinessKey(businessKey);
         setBusinessType(businessType);
         setBusinessName(businessName);
+        setBusinessCode(businessCode);
         variables.putAll(var);
-        variables.put(VariablesEnum.businessType.toString(),businessType);
-        variables.put(VariablesEnum.businessName.toString(),businessName);
+        variables.put(VariablesEnum.businessType.toString(), businessType);
+        variables.put(VariablesEnum.businessName.toString(), businessName);
+        variables.put(VariablesEnum.businessCode.toString(), StringUtils.isNotBlank(businessCode) ? businessCode : businessKey);
     }
 }

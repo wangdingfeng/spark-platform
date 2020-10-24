@@ -83,6 +83,7 @@ public interface ActTaskQueryService {
 
     /**
      * 根据参数查询数据
+     * @param taskRequestQuery  查询参数
      * @return
      */
     List<TaskVO> queryByParams(TaskRequestQuery taskRequestQuery);
@@ -265,4 +266,11 @@ public interface ActTaskQueryService {
      * @return List<Task>  历史流程任务列表.
      */
     List<Task> taskAssigneeByTaskQuery(String assignee, TaskQuery query, int page, int pageSize);
+
+    /**
+     * 构建查询参数
+     * @param taskRequestQuery
+     * @return
+     */
+    TaskQuery buildQueryParams(TaskRequestQuery taskRequestQuery);
 }

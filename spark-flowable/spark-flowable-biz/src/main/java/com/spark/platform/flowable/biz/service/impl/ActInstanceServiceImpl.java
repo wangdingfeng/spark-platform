@@ -1,9 +1,10 @@
 package com.spark.platform.flowable.biz.service.impl;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.spark.platform.common.base.constants.ProcessConstants;
 import com.spark.platform.common.security.util.UserUtils;
 import com.spark.platform.common.utils.BeanCopyUtil;
-import com.spark.platform.flowable.api.DTO.ProcessInstanceDTO;
+import com.spark.platform.flowable.api.dto.PageDTO;
+import com.spark.platform.flowable.api.dto.ProcessInstanceDTO;
 import com.spark.platform.flowable.api.enums.ActionEnum;
 import com.spark.platform.flowable.api.request.ProcessInstanceCreateRequest;
 import com.spark.platform.flowable.api.vo.IdentityLinkVo;
@@ -11,6 +12,7 @@ import com.spark.platform.flowable.api.vo.ProcessInstanceVo;
 import com.spark.platform.flowable.api.vo.TaskVO;
 import com.spark.platform.flowable.biz.service.ActInstanceService;
 import com.spark.platform.flowable.biz.service.ActTaskQueryService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.flowable.common.engine.api.FlowableIllegalArgumentException;
@@ -26,7 +28,6 @@ import org.flowable.engine.runtime.ProcessInstanceQuery;
 import org.flowable.identitylink.api.IdentityLink;
 import org.flowable.task.api.Task;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -41,22 +42,14 @@ import java.util.Map;
  */
 @Service
 @Slf4j
+@AllArgsConstructor
 public class ActInstanceServiceImpl implements ActInstanceService {
 
-    @Autowired
-    private RuntimeService runtimeService;
-
-    @Autowired
-    private TaskService taskService;
-
-    @Autowired
-    private ActTaskQueryService actTaskQueryService;
-
-    @Autowired
-    private ManagementService managementService;
-
-    @Autowired
-    private IdentityService identityService;
+    private final RuntimeService runtimeService;
+    private final TaskService taskService;
+    private final ActTaskQueryService actTaskQueryService;
+    private final ManagementService managementService;
+    private final IdentityService identityService;
 
     @Override
     public ProcessInstanceQuery createProcessInstanceQuery() {
@@ -69,18 +62,16 @@ public class ActInstanceServiceImpl implements ActInstanceService {
     }
 
     @Override
-    public Page<ProcessInstanceVo> findPage(ProcessInstanceDTO processInstanceDTO, Page page) {
-        int firstResult = (int)((page.getCurrent()-1)*page.getSize());
-        int maxResults = (int)(page.getCurrent()*page.getSize());
+    public PageDTO<ProcessInstanceVo> findPage(ProcessInstanceDTO processInstanceDTO, PageDTO page) {
         ProcessInstanceQuery query = createProcessInstanceQuery();
-        if(StringUtils.isNotBlank(processInstanceDTO.getBusinessKey())){
+        if (StringUtils.isNotBlank(processInstanceDTO.getBusinessKey())) {
             query.processInstanceBusinessKey(processInstanceDTO.getBusinessKey());
         }
-        if(StringUtils.isNotBlank(processInstanceDTO.getName())){
-            query.processInstanceNameLike(processInstanceDTO.getName());
+        if (StringUtils.isNotBlank(processInstanceDTO.getName())) {
+            query.processInstanceNameLike(ProcessConstants.contactLike(processInstanceDTO.getName()));
         }
         long count = query.count();
-        List<ProcessInstance> processInstanceList = query.orderByStartTime().desc().listPage(firstResult,maxResults);
+        List<ProcessInstance> processInstanceList = query.orderByStartTime().desc().listPage(page.getFirstResult(), page.getMaxResults());
         List<ProcessInstanceVo> processInstanceVos = BeanCopyUtil.copyListProperties(processInstanceList, ProcessInstanceVo::new);
         page.setRecords(processInstanceVos);
         page.setTotal(count);
@@ -128,22 +119,22 @@ public class ActInstanceServiceImpl implements ActInstanceService {
             throw new FlowableIllegalArgumentException("Only one of processDefinitionId, processDefinitionKey or message should be set.");
         }
         ProcessInstanceBuilder processInstanceBuilder = runtimeService.createProcessInstanceBuilder();
-        if(StringUtils.isNotBlank(request.getProcessDefinitionId())){
+        if (StringUtils.isNotBlank(request.getProcessDefinitionId())) {
             processInstanceBuilder.processDefinitionId(request.getProcessDefinitionId());
         }
-        if(StringUtils.isNotBlank(request.getProcessDefinitionKey())){
+        if (StringUtils.isNotBlank(request.getProcessDefinitionKey())) {
             processInstanceBuilder.processDefinitionKey(request.getProcessDefinitionKey());
         }
-        if(StringUtils.isNotBlank(request.getBusinessKey())){
+        if (StringUtils.isNotBlank(request.getBusinessKey())) {
             processInstanceBuilder.businessKey(request.getBusinessKey());
         }
-        if(StringUtils.isNotBlank(request.getTenantId())){
+        if (StringUtils.isNotBlank(request.getTenantId())) {
             processInstanceBuilder.tenantId(request.getTenantId());
         }
         processInstanceBuilder.variables(request.getVariables());
         setAuthenticatedUserId(UserUtils.getLoginUser().getUsername());
         ProcessInstance processInstance = processInstanceBuilder.start();
-        log.info("发起流程成功，流程ID:{}",processInstance.getId());
+        log.info("发起流程成功，流程ID:{}", processInstance.getId());
         return processInstance;
     }
 
@@ -180,13 +171,16 @@ public class ActInstanceServiceImpl implements ActInstanceService {
     @Override
     public void action(String action, String processInstanceId) {
         ActionEnum actionEnum = ActionEnum.actionOf(action);
-        switch (actionEnum){
+        switch (actionEnum) {
             case SUSPEND:
                 //挂起流程
-                this.suspendProcessInstanceById(processInstanceId); ;break;
+                this.suspendProcessInstanceById(processInstanceId);
+                ;
+                break;
             case ACTIVATE:
                 //激活流程
-                this.activateProcessInstanceById(processInstanceId);break;
+                this.activateProcessInstanceById(processInstanceId);
+                break;
             default:
                 break;
         }
@@ -248,7 +242,7 @@ public class ActInstanceServiceImpl implements ActInstanceService {
         log.info("旧任务ID{}--新任务ID:{}", id, activeTask.getId());
         //剔除返回懒加载属性，否则json解析报错
         TaskVO taskVO = new TaskVO();
-        BeanUtils.copyProperties(task,taskVO);
+        BeanUtils.copyProperties(task, taskVO);
         TaskVO activeTaskVO = new TaskVO();
         BeanUtils.copyProperties(activeTask, activeTaskVO);
 

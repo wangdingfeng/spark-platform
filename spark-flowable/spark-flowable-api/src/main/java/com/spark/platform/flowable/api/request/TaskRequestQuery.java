@@ -17,7 +17,7 @@ import java.util.List;
  * @Version: 1.0
  */
 @Data
-@ApiModel(value = "TaskRequestQuery",description = "任务查询query")
+@ApiModel(value = "TaskRequestQuery", description = "任务查询query")
 public class TaskRequestQuery {
     @ApiModelProperty(value = "任务ID")
     private String taskId;
@@ -35,6 +35,8 @@ public class TaskRequestQuery {
     private String businessType;
     @ApiModelProperty(value = "业务名称")
     private String businessName;
+    @ApiModelProperty(value = "业务编号")
+    private String businessCode;
     @ApiModelProperty(value = "流程实例ID")
     private String processInstanceId;
     /**
@@ -45,4 +47,22 @@ public class TaskRequestQuery {
      * 当前页
      */
     private long current;
+
+    /**
+     * 获取首页标码
+     *
+     * @return
+     */
+    public int getFirstResult() {
+        return (int) ((this.getCurrent() - 1) * this.getSize());
+    }
+
+    /**
+     * 获取结尾标码
+     *
+     * @return
+     */
+    public int getMaxResults() {
+        return (int) (this.getCurrent() * this.getSize());
+    }
 }

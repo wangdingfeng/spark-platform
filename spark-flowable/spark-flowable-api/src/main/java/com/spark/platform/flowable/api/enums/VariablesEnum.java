@@ -52,11 +52,14 @@ public enum  VariablesEnum {
     /** 活动主题*/
     businessName,
 
-    /** 活动类型*/
+    /** 业务类型*/
     businessType,
 
     /** 主键id*/
     businessKey,
+
+    /** 业务编码*/
+    businessCode,
 
     /** 审批状态*/
     auditStatus,

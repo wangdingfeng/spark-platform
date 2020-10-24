@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @Package: com.spark.platform.flowable.biz.config
  * @ClassName: WebMvcConfig
  * @Author: wangdingfeng
- * @Description:
+ * @Description: mvc 配置
  * @Date: 2020/5/28 16:19
  * @Version: 1.0
  */
