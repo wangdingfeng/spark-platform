@@ -46,7 +46,7 @@ import static java.util.stream.Collectors.toList;
  * @ProjectName: spark-platform
  * @Package: com.spark.platform.adminbiz.service.user.impl
  * @ClassName: UserServiceImpl
- * @Description:
+ * @Description: 用户Service
  * @Version: 1.0
  */
 @Service
@@ -64,7 +64,7 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
     public UserDTO loadUserByUserName(String username) {
         UserDTO userDto = new UserDTO();
         UserVo userVo = super.baseMapper.findByUserName(username);
-        if(null == userVo){
+        if (null == userVo) {
             return null;
         }
         userDto.setSysUser(userVo);
@@ -123,33 +123,35 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
         //修改用户角色
         int i = userRoleDao.deleteByUserId(user.getId());
         log.info("删除用户：{}角色:{}个", user.getId(), i);
-        userRoleDao.insertBatch(user.getId(),user.getRoles());
+        userRoleDao.insertBatch(user.getId(), user.getRoles());
         //删除缓存
-        redisUtils.delete(GlobalsConstants.REDIS_USER_CACHE+"::"+GlobalsConstants.USER_INFO_KEY_PREFIX);
+        redisUtils.delete(GlobalsConstants.getCacheKey(GlobalsConstants.REDIS_USER_CACHE, GlobalsConstants.USER_KEY_PREFIX + user.getUsername()));
+        redisUtils.delete(GlobalsConstants.getCacheKey(GlobalsConstants.REDIS_USER_CACHE, GlobalsConstants.USER_INFO_KEY_PREFIX + user.getUsername()));
         return super.updateById(user);
     }
 
     @Override
     public IPage findPage(User user, Page page) {
-        return super.baseMapper.selectPage(page,buildWhere(user));
+        return super.baseMapper.selectPage(page, buildWhere(user));
     }
 
     /**
      * 构建查询条件
+     *
      * @param user
      * @return
      */
-    private QueryWrapper buildWhere(User user){
+    private QueryWrapper buildWhere(User user) {
         QueryWrapper wrapper = new QueryWrapper<User>();
-        WrapperSupport.putParamsLike(wrapper,user,"username","nickname");
-        WrapperSupport.putParamsEqual(wrapper,user,"status","deptId");
+        WrapperSupport.putParamsLike(wrapper, user, "username", "nickname");
+        WrapperSupport.putParamsEqual(wrapper, user, "status", "deptId");
         return wrapper;
     }
 
     @Override
     public void restPassword(String[] ids) {
         List<User> users = Lists.newArrayList();
-        for(String id: ids){
+        for (String id : ids) {
             User user = new User();
             user.setId(Long.valueOf(id));
             user.setPassword(GlobalsConstants.DEFAULT_USER_PASSWORD);
@@ -160,9 +162,9 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
 
     @Override
     public void updateUserInfo(User user) {
+        //修改密码
+        User userInfo = super.getById(user.getId());
         if (StringUtils.isNotBlank(user.getPassword())) {
-            //修改密码
-            User userInfo = super.getById(user.getId());
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             String password = user.getPassword();
             if (passwordEncoder.matches(password, userInfo.getPassword())) {
@@ -172,7 +174,8 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
         }
         super.updateById(user);
         //清除缓存
-        redisUtils.delete(GlobalsConstants.REDIS_USER_CACHE+"::"+GlobalsConstants.USER_KEY_PREFIX+user.getUsername());
+        redisUtils.delete(GlobalsConstants.getCacheKey(GlobalsConstants.REDIS_USER_CACHE, GlobalsConstants.USER_KEY_PREFIX + userInfo.getUsername()));
+        redisUtils.delete(GlobalsConstants.getCacheKey(GlobalsConstants.REDIS_USER_CACHE, GlobalsConstants.USER_INFO_KEY_PREFIX + userInfo.getUsername()));
     }
 
     @Override
@@ -190,7 +193,7 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
         entity.setPassword(new BCryptPasswordEncoder().encode(GlobalsConstants.DEFAULT_USER_PASSWORD));
         //修改用户角色
         super.save(entity);
-        userRoleDao.insertBatch(entity.getId(),entity.getRoles());
+        userRoleDao.insertBatch(entity.getId(), entity.getRoles());
         return true;
     }
 

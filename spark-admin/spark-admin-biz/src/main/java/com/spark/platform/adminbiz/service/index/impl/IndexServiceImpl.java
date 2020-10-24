@@ -19,7 +19,7 @@ import java.util.Set;
  * @Package: com.spark.platform.adminbiz.service.index.impl
  * @ClassName: IndexServiceImpl
  * @Author: wangdingfeng
- * @Description:
+ * @Description: 首页信息
  * @Date: 2020/6/1 14:32
  * @Version: 1.0
  */
@@ -32,7 +32,7 @@ public class IndexServiceImpl implements IndexService {
 
     @Override
     public IndexDataVo getIndexData() {
-        List<Map<String,Object>> mapList = loginLogDao.countMapData();
+        List<Map<String, Object>> mapList = loginLogDao.countMapData();
         IndexDataVo indexDataVo = new IndexDataVo();
         indexDataVo.setTodayIPNum(loginLogDao.countTodayIP());
         indexDataVo.setVisits(loginLogDao.selectCount(Wrappers.emptyWrapper()));
@@ -55,12 +55,15 @@ public class IndexServiceImpl implements IndexService {
     @Override
     public void deleteCache() {
         //删除客户端
-        Set<String> clientKeys = redisUtils.keys(GlobalsConstants.REDIS_CLIENT_CACHE+"::"+GlobalsConstants.CLIENT_DETAILS_KEY+"*");
-        redisUtils.delete( clientKeys);
+        Set<String> clientKeys = redisUtils.keys(GlobalsConstants.getCacheKey(GlobalsConstants.REDIS_CLIENT_CACHE, GlobalsConstants.CLIENT_DETAILS_KEY + "*"));
+        redisUtils.delete(clientKeys);
         //删除字典缓存
-        redisUtils.delete(GlobalsConstants.REDIS_DICT_CACHE+"::"+GlobalsConstants.DICT_KEY_ALL_PREFIX);
+        redisUtils.delete(GlobalsConstants.getCacheKey(GlobalsConstants.REDIS_DICT_CACHE, GlobalsConstants.DICT_KEY_ALL_PREFIX));
         //删除用户缓存
-        Set<String> userKeys = redisUtils.keys(GlobalsConstants.REDIS_USER_CACHE+"::"+GlobalsConstants.USER_KEY_PREFIX+"*");
-        redisUtils.delete( userKeys);
+        Set<String> userKeys = redisUtils.keys(GlobalsConstants.getCacheKey(GlobalsConstants.REDIS_USER_CACHE, GlobalsConstants.USER_KEY_PREFIX + "*"));
+        redisUtils.delete(userKeys);
+        // 删除前端获取用户详细信息 包含菜单的缓存
+        Set<String> userPrincipalKeys = redisUtils.keys(GlobalsConstants.getCacheKey(GlobalsConstants.REDIS_USER_CACHE, GlobalsConstants.USER_INFO_KEY_PREFIX + "*"));
+        redisUtils.delete(userPrincipalKeys);
     }
 }
