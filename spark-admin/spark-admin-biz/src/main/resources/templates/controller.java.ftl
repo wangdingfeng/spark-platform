@@ -49,37 +49,37 @@ public class ${table.controllerName} extends ${superControllerClass} {
 public class ${table.controllerName} {
 </#if>
 
-  private final ${table.serviceName} ${table.serviceName ? uncap_first};
+      private final ${table.serviceName} ${table.serviceName ? uncap_first};
 
-  @GetMapping("/page")
-  @ApiOperation(value = "${table.comment!}列表")
-  public ApiResponse page(${entity} ${entity ? uncap_first}, Page page){
-   return success(${table.serviceName ? uncap_first}.page(page,Wrappers.query(${entity ? uncap_first})));
-  }
+      @GetMapping("/page")
+      @ApiOperation(value = "${table.comment!}列表")
+      public ApiResponse page(${entity} ${entity ? uncap_first}, Page page){
+        return success(${table.serviceName ? uncap_first}.page(page,Wrappers.query(${entity ? uncap_first})));
+      }
 
-  @PostMapping
-  @ApiOperation(value = "保存${table.comment!}信息")
-  public ApiResponse save(@RequestBody ${entity} ${entity ? uncap_first}){
-   return success(${table.serviceName ? uncap_first}.save(${entity ? uncap_first}));
-  }
+      @PostMapping
+      @ApiOperation(value = "保存${table.comment!}信息")
+      public ApiResponse save(@RequestBody ${entity} ${entity ? uncap_first}){
+        return success(${table.serviceName ? uncap_first}.save(${entity ? uncap_first}));
+      }
 
-  @PutMapping
-  @ApiOperation(value = "更新${table.comment!}信息")
-  public ApiResponse update(@RequestBody ${entity} ${entity ? uncap_first}){
-   return success(${table.serviceName ? uncap_first}.updateById(${entity ? uncap_first}));
-  }
+      @PutMapping
+      @ApiOperation(value = "更新${table.comment!}信息")
+      public ApiResponse update(@RequestBody ${entity} ${entity ? uncap_first}){
+        return success(${table.serviceName ? uncap_first}.updateById(${entity ? uncap_first}));
+      }
 
-  @DeleteMapping("/{id}")
-  @ApiOperation(value = "删除${table.comment!}")
-  public ApiResponse delete(@PathVariable Long id){
-   return success(${table.serviceName ? uncap_first}.removeById(id));
-  }
+      @DeleteMapping("/{id}")
+      @ApiOperation(value = "删除${table.comment!}")
+      public ApiResponse delete(@PathVariable Long id){
+        return success(${table.serviceName ? uncap_first}.removeById(id));
+      }
 
-  @GetMapping("/{id}")
-  @ApiOperation(value = "根据id获取${table.comment!}信息")
-  public ApiResponse getById(@PathVariable Long id) {
-   return success(${table.serviceName ? uncap_first}.getById(id));
-  }
+      @GetMapping("/{id}")
+      @ApiOperation(value = "根据id获取${table.comment!}信息")
+      public ApiResponse getById(@PathVariable Long id) {
+        return success(${table.serviceName ? uncap_first}.getById(id));
+      }
 
 }
 </#if>
