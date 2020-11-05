@@ -28,7 +28,7 @@ spring:
         url: http://127.0.0.1:9002
         instance:
           prefer-ip: true
-          service-url: http://127.0.0.1:9040
+          service-url: http://${spring.cloud.nacos.discovery.ip}:${spring.cloud.nacos.discovery.port}
         username: spark
         password: spark
   redis:
