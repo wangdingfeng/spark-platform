@@ -1,4 +1,11 @@
 spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 50MB
+      max-request-size: 100MB
+  jackson:
+    default-property-inclusion: non_null
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/spark-dev?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8
@@ -19,6 +26,7 @@ spring:
     pool-prepared-statements: true
     max-open-prepared-statements: 20
     max-pool-prepared-statement-per-connection-size: 20
+    filters: stat,wall
   boot:
     admin:
       client:
@@ -42,6 +50,19 @@ spring:
         min-idle: 20
       shutdown-timeout: 10000
 
+mybatis-plus:
+  mapper-locations: classpath*:mapper/*.xml
+  type-aliases-package: com.spark.plateform.file.api.entity
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    cache-enabled: false
+    map-underscore-to-camel-case: true
+    use-generated-keys: true
+    default-executor-type: reuse
+    defaultStatementTimeout: 1000
+    jdbc-type-for-null: null
+    call-setters-on-nulls: true
+
 management:
   metrics:
     web:
@@ -51,13 +72,14 @@ management:
     web:
       exposure:
         include: "*"
-    health:
-      show-details: ALWAYS
+  endpoint:
+    bus-refresh:
+      enabled: true
 
 swagger:
-  base-package: com.spark.platform.auth
+  base-package: com.spark.platform.file
   enabled: true
-  description: Spark认证服务
+  description: Spark 文件服务
   version: V1.0
   license: Apache License, Version 2.0
   license-url: https://www.apache.org/licenses/LICENSE-2.0.html
@@ -67,20 +89,13 @@ swagger:
     name: wangdingfeng
     email: wangdingfeng@live.com
 
-spark:
-  security:
-    web:
-      unInterceptUris: /v2/api-docs,/swagger-ui.html,/swagger-resources/**,/webjars/**,/oauth/**,/actuator/**,/druid/**
-  ignore:
-    urls:
-      - /oauth/**
-      - /actuator/**
-      - /druid/**
-      - /v2/api-docs
-      - /swagger-ui.html
-      - /swagger-resources/**
-      - /webjars/**
-
+minio:
+  endpoint: 49.232.72.173
+  port: 9000
+  accessKey: wangdingfeng
+  secretKey: Wang_123456
+  secure: false
+  bucketName: "spark"
 
 ribbon:
   ReadTimeout: 10000
@@ -105,3 +120,15 @@ feign:
     enabled: true
   httpclient:
     enabled: false
+
+spark:
+  ignore:
+    urls:
+      - /actuator/**
+      - /druid/**
+      - /**/api/**
+      - /v2/api-docs
+      - /swagger-ui.html
+      - /swagger-resources/**
+      - /webjars/**
+  file-path: E:/spark/file

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.spark.platform</groupId>
+        <artifactId>spark-file</artifactId>
+        <version>2.0.1</version>
+        <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
+    </parent>
+    <artifactId>spark-file-api</artifactId>
+    <version>2.0.1</version>
+    <name>spark-file-api</name>
+    <description>文件服务对外服务器接口</description>
+
+    <dependencies>
+        <!--公共基礎包-->
+        <dependency>
+            <groupId>com.spark.platform</groupId>
+            <artifactId>spark-common-base</artifactId>
+            <version>${spark-common.version}</version>
+        </dependency>
+        <!--feign 包含oauth-->
+        <dependency>
+            <groupId>com.spark.platform</groupId>
+            <artifactId>spark-common-feign</artifactId>
+            <version>${spark-common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-annotation</artifactId>
+            <version>${mybatis-plus.version}</version>
+        </dependency>
+    </dependencies>
+
+</project>

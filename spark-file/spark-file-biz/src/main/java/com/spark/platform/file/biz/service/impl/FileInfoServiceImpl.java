@@ -1,4 +1,4 @@
-package com.spark.platform.admin.biz.service.file.impl;
+package com.spark.platform.file.biz.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateUtil;
@@ -7,18 +7,20 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.google.common.collect.Lists;
-import com.spark.platform.admin.api.dto.FileInfoDTO;
-import com.spark.platform.admin.api.entity.file.FileInfo;
-import com.spark.platform.admin.biz.dao.file.FileInfoDao;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.spark.platform.admin.biz.service.file.FileInfoService;
+import com.google.common.collect.Lists;
+import com.spark.plateform.file.api.dto.FileInfoDTO;
+import com.spark.plateform.file.api.dto.FileQueryDTO;
+import com.spark.plateform.file.api.entity.FileInfo;
 import com.spark.platform.common.base.constants.BizConstants;
 import com.spark.platform.common.base.constants.GlobalsConstants;
 import com.spark.platform.common.base.exception.BusinessException;
 import com.spark.platform.common.base.support.WrapperSupport;
 import com.spark.platform.common.config.properties.SparkProperties;
 import com.spark.platform.common.utils.FileUtil;
+import com.spark.platform.file.biz.dao.FileInfoDao;
+import com.spark.platform.file.biz.service.FileInfoService;
+import com.spark.platform.file.biz.utils.MinioUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -29,8 +31,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.math.BigDecimal;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 
@@ -72,10 +75,7 @@ public class FileInfoServiceImpl extends ServiceImpl<FileInfoDao, FileInfo> impl
             fileInfo.setFileName(fileName);
             fileInfo.setFileCode(fileCode);
             fileInfo.setFileType(fileType);
-            Double size = Double.parseDouble(String.valueOf(file.getSize())) / 1024;
-            BigDecimal b = BigDecimal.valueOf(size);
-            size = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-            fileInfo.setFileSize(size);
+            fileInfo.setFileSize(new FileInputStream(dest).available());
             fileInfo.setFilePath(filePath + File.separator + fileUploadName);
             fileInfo.setStatus(BizConstants.FILE_STATUS_NO_BIND);
             super.save(fileInfo);
@@ -89,11 +89,10 @@ public class FileInfoServiceImpl extends ServiceImpl<FileInfoDao, FileInfo> impl
     @Override
     @Transactional(readOnly = false)
     public void bindFile(FileInfoDTO fileInfoDTO) {
-        Assert.notNull(fileInfoDTO.getBizId(), "请输入业务id");
-        Assert.notNull(fileInfoDTO.getBizType(), "请输入业务类型");
-        Assert.notEmpty(fileInfoDTO.getFileIds(), "文件id不能为空");
         log.info("文件绑定开始,绑定id:{},绑定类型:{}", fileInfoDTO.getBizId(), fileInfoDTO.getBizType());
         try {
+            //创建当前的存储桶
+            MinioUtil.makeBucket(fileInfoDTO.getServiceName());
             //删除文件
             if (CollectionUtil.isNotEmpty(fileInfoDTO.getDeleteFileIds())) {
                 super.removeByIds(fileInfoDTO.getDeleteFileIds());
@@ -109,12 +108,12 @@ public class FileInfoServiceImpl extends ServiceImpl<FileInfoDao, FileInfo> impl
                 //转移文件 将临时路径转移到绑定的路径
                 String srcPath = sparkProperties.getFilePath() + File.separator + tempFile.getFilePath();
                 //拼接正式文件路径
-                String bizPath = GlobalsConstants.FILE_PATH_BIZ + File.separator + fileInfoDTO.getBizType() +
-                        File.separator + fileInfoDTO.getBizId() + File.separator + tempFile.getFileCode() + "." + tempFile.getFileType();
-
-                String destPath = sparkProperties.getFilePath() + File.separator + bizPath;
-                FileUtil.copyFile(new File(srcPath), new File(destPath));
-                fileInfo.setFilePath(bizPath);
+                StringBuilder bizPathBuild = new StringBuilder(GlobalsConstants.FILE_PATH_BIZ);
+                bizPathBuild.append(GlobalsConstants.FILE_SEPARATOR).append(fileInfoDTO.getBizType()).append(GlobalsConstants.FILE_SEPARATOR)
+                        .append( fileInfoDTO.getBizId()).append( GlobalsConstants.FILE_SEPARATOR).append(tempFile.getFileCode()).append(".").append(tempFile.getFileType());
+                // 上传到Minio文件存储中
+                MinioUtil.putObject(fileInfoDTO.getServiceName(),bizPathBuild.toString(),new FileInputStream(srcPath));
+                fileInfo.setFilePath(bizPathBuild.toString());
                 fileInfo.setStatus(BizConstants.FILE_STATUS_BIND);
                 fileInfoList.add(fileInfo);
             }
@@ -134,10 +133,17 @@ public class FileInfoServiceImpl extends ServiceImpl<FileInfoDao, FileInfo> impl
     }
 
     @Override
-    public List<FileInfo> findByBiz(String bizId, String bizType) {
+    public List<FileInfo> findByBiz(FileQueryDTO fileQueryDTO) {
         FileInfo file = new FileInfo();
-        file.setBizType(bizType);
-        file.setBizId(bizId);
+        if(StringUtils.isNotEmpty(fileQueryDTO.getBizType())){
+            file.setBizType(fileQueryDTO.getBizType());
+        }
+        if(StringUtils.isNotEmpty(fileQueryDTO.getBizId())){
+            file.setBizId(fileQueryDTO.getBizId());
+        }
+        if(StringUtils.isNotEmpty(fileQueryDTO.getServiceName())){
+            file.setServiceName(fileQueryDTO.getServiceName());
+        }
         return super.list(Wrappers.query(file));
     }
 
@@ -145,14 +151,31 @@ public class FileInfoServiceImpl extends ServiceImpl<FileInfoDao, FileInfo> impl
     public void downloadFile(Long id, HttpServletResponse response) {
         FileInfo fileInfo = super.getById(id);
         Assert.notNull(fileInfo, "找不到此文件信息");
-        String fileRealPath = sparkProperties.getFilePath() + File.separator + fileInfo.getFilePath();
         try {
-            FileUtil.download(fileInfo.getFileName(), fileRealPath, response);
+            // 判断当前文件是临时文件还是绑定文件
+            InputStream inputStream;
+            if(BizConstants.FILE_STATUS_NO_BIND.equals(fileInfo.getStatus())){
+                String fileRealPath = sparkProperties.getFilePath() + File.separator + fileInfo.getFilePath();
+                inputStream = new FileInputStream(fileRealPath);
+            } else {
+                inputStream = MinioUtil.getObject(fileInfo.getServiceName(),fileInfo.getFilePath());
+            }
+            FileUtil.download(fileInfo.getFileName(), inputStream, response);
         } catch (IOException e) {
             log.error("下载文件失败", e);
             throw new BusinessException("下载失败");
         }
 
+    }
 
+    @Override
+    public String getDownloadURl(Long id, Integer expires) {
+        FileInfo fileInfo = super.getById(id);
+        Assert.notNull(fileInfo, "找不到此文件信息");
+        Assert.isTrue(BizConstants.FILE_STATUS_BIND.equals(fileInfo.getStatus()),"当前文件不是正式文件状态");
+        if(null == expires){
+            expires = MinioUtil.DEFAULT_EXPIRY_TIME;
+        }
+        return MinioUtil.presignedGetObject(fileInfo.getServiceName(),fileInfo.getFilePath(),expires);
     }
 }

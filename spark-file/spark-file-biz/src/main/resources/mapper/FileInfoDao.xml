@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.spark.platform.admin.biz.dao.file.FileInfoDao">
+<mapper namespace="com.spark.platform.file.biz.dao.FileInfoDao">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.spark.platform.admin.api.entity.file.FileInfo">
+    <resultMap id="BaseResultMap" type="com.spark.plateform.file.api.entity.FileInfo">
         <id column="id" property="id" />
-    <result column="create_date" property="createDate" />
-    <result column="creator" property="creator" />
-    <result column="modifier" property="modifier" />
-    <result column="remarks" property="remarks" />
-    <result column="del_flag" property="delFlag" />
+        <result column="create_date" property="createDate" />
+        <result column="creator" property="creator" />
+        <result column="modifier" property="modifier" />
+        <result column="remarks" property="remarks" />
+        <result column="del_flag" property="delFlag" />
         <result column="file_code" property="fileCode" />
         <result column="file_name" property="fileName" />
         <result column="file_type" property="fileType" />

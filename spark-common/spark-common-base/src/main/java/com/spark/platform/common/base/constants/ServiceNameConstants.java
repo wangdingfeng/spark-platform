@@ -18,5 +18,9 @@ public class ServiceNameConstants {
      * 工作流
      */
     public static final String SPARK_FLOWABLE  = "spark-flowable";
+    /**
+     * 文件服务
+     */
+    public static final String SPARK_FILE = "spark-file";
 
 }

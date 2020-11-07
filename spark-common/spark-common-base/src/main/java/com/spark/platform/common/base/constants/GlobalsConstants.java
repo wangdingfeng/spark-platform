@@ -89,6 +89,10 @@ public class GlobalsConstants {
      * spark security配置
      */
     public static final String SPARK_PREFIX = "spark";
+    /**
+     * minio 配置
+     */
+    public static final String MINIO_PREFIX = "minio";
 
     /**
      * spark security配置
@@ -157,6 +161,10 @@ public class GlobalsConstants {
      * like条件
      */
     public static final String LIKE_CHARACTER = "%";
+    /**
+     * 文件 separator
+     */
+    public static final String FILE_SEPARATOR = "/";
 
 
     public static String getCacheKey(String prefix, String key) {
