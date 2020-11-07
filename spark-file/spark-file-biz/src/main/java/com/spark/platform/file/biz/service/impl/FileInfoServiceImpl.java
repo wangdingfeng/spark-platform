@@ -105,6 +105,7 @@ public class FileInfoServiceImpl extends ServiceImpl<FileInfoDao, FileInfo> impl
                 fileInfo.setId(fileId);
                 fileInfo.setBizId(fileInfoDTO.getBizId());
                 fileInfo.setBizType(fileInfoDTO.getBizType());
+                fileInfo.setServiceName(fileInfoDTO.getServiceName());
                 //转移文件 将临时路径转移到绑定的路径
                 String srcPath = sparkProperties.getFilePath() + File.separator + tempFile.getFilePath();
                 //拼接正式文件路径
