@@ -90,10 +90,10 @@ swagger:
     email: wangdingfeng@live.com
 
 minio:
-  endpoint: 49.232.72.173
+  endpoint: 127.0.0.1
   port: 9000
-  accessKey: wangdingfeng
-  secretKey: Wang_123456
+  accessKey: minioadmin
+  secretKey: minioadmin
   secure: false
   bucketName: "spark"
 
