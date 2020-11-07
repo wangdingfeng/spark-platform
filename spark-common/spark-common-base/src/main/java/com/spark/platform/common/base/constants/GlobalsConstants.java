@@ -12,7 +12,7 @@ public class GlobalsConstants {
 
     /**
      * jwt对称加密
-     * */
+     */
     public static final String OAUTH_SIGNING_KEY = "spark_oauth_key";
 
     public static final String OAUTH_AUTH_FORM_URI = "/authentication/form";
@@ -39,13 +39,13 @@ public class GlobalsConstants {
      */
     public static final String USER_KEY_PREFIX = "SparkUser_";
     /**
-     * 缓存中user 全部信息的key
+     * 缓存中user 前端需要的数据全部信息的key
      */
     public static final String USER_INFO_KEY_PREFIX = "SparkUser_Info_";
     /**
      * 缓存中字典的key
      */
-    public static final String DICT_KEY_All_PREFIX = "SparkAllDict";
+    public static final String DICT_KEY_ALL_PREFIX = "SparkAllDict";
     /**
      * 缓存中user的key
      */
@@ -54,7 +54,7 @@ public class GlobalsConstants {
     /**
      * oauth 客户端信息
      */
-    public static final String CLIENT_DETAILS_KEY =  "SparkClient_";
+    public static final String CLIENT_DETAILS_KEY = "SparkClient_";
 
     /**
      * Redis默认过期时长，单位：秒  5分钟
@@ -86,12 +86,16 @@ public class GlobalsConstants {
      */
     public static final String DB_PREFIX = "spring.datasource";
     /**
-     *  spark security配置
+     * spark security配置
      */
     public static final String SPARK_PREFIX = "spark";
+    /**
+     * minio 配置
+     */
+    public static final String MINIO_PREFIX = "minio";
 
     /**
-     *  spark security配置
+     * spark security配置
      */
     public static final String SPARK_OAUTH_PREFIX = "spark.security";
     /**
@@ -123,7 +127,7 @@ public class GlobalsConstants {
      */
     public static final String OAUTH_TOKEN_URL = "/auth/oauth/token";
 
-    public static final String  OAUTH_PREFIX = "oauth:";
+    public static final String OAUTH_PREFIX = "oauth:";
 
     public static final String CURRENT = "current";
 
@@ -136,7 +140,7 @@ public class GlobalsConstants {
     /**
      * 默认密码
      */
-    public static final String DEFAULT_USER_PASSWORD  = "123456";
+    public static final String DEFAULT_USER_PASSWORD = "123456";
     /**
      * 文件上传保存临时路径
      */
@@ -152,6 +156,20 @@ public class GlobalsConstants {
     /**
      * 超级管理员角色
      */
-       public static final String ROLE_ADMIN = "ROLE_ADMIN";
+    public static final String ROLE_ADMIN = "ROLE_ADMIN";
+    /**
+     * like条件
+     */
+    public static final String LIKE_CHARACTER = "%";
+    /**
+     * 文件 separator
+     */
+    public static final String FILE_SEPARATOR = "/";
+
+
+    public static String getCacheKey(String prefix, String key) {
+        return prefix + "::" + key;
+    }
+
 
 }

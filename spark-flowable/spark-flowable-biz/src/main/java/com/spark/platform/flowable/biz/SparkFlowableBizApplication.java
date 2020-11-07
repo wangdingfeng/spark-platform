@@ -10,7 +10,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 
-//启用全局异常拦截器
 @Import(value={DatabaseAutoConfiguration.class})
 @SpringBootApplication
 @EnableDiscoveryClient

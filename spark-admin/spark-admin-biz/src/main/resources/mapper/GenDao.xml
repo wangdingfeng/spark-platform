@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.spark.platform.adminbiz.dao.gen.GenDao">
+<mapper namespace="com.spark.platform.admin.biz.dao.gen.GenDao">
 
 
-    <select id="tableInfoPage" resultType="com.spark.platform.adminapi.entity.gen.TableInfo">
+    <select id="tableInfoPage" resultType="com.spark.platform.admin.api.entity.gen.TableInfo">
         SELECT
             TABLE_NAME,
             ENGINE,
@@ -22,7 +22,7 @@
             </if>
     </select>
 
-    <select id="findTableColumnInfo" resultType="com.spark.platform.adminapi.entity.gen.TableColumnInfo">
+    <select id="findTableColumnInfo" resultType="com.spark.platform.admin.api.entity.gen.TableColumnInfo">
         SELECT
             TABLE_SCHEMA,
             COLUMN_NAME,

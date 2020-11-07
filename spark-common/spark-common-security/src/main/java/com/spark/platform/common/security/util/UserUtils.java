@@ -1,8 +1,8 @@
 package com.spark.platform.common.security.util;
 
-import com.spark.platform.adminapi.dto.UserDTO;
-import com.spark.platform.adminapi.entity.user.User;
-import com.spark.platform.adminapi.feign.client.UserClient;
+import com.spark.platform.admin.api.dto.UserDTO;
+import com.spark.platform.admin.api.entity.user.User;
+import com.spark.platform.admin.api.feign.client.UserClient;
 import com.spark.platform.common.security.model.LoginUser;
 import com.spark.platform.common.base.utils.SpringContextHolder;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +19,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 @Slf4j
 public class UserUtils {
 
-    private static final UserClient userClient = SpringContextHolder.getBean(UserClient.class);
+    /**
+     * 静态内部类，延迟加载，懒汉式，线程安全的单例模式
+     */
+    private static final class Static {
+        private static UserClient userClient = SpringContextHolder.getBean(UserClient.class);
+    }
 
     /**
      * 获取登录用户信息
@@ -41,7 +46,7 @@ public class UserUtils {
      */
     public static User getUser(){
         LoginUser loginUser = getLoginUser();
-        return  userClient.getUserByUserId(loginUser.getId()).getData();
+        return  Static.userClient.getUserByUserId(loginUser.getId()).getData();
     }
 
     /**
@@ -50,7 +55,7 @@ public class UserUtils {
      * @return
      */
     public static UserDTO getUser(String username){
-        return  userClient.getUserByUserName(username).getData();
+        return  Static.userClient.getUserByUserName(username).getData();
     }
 
 }

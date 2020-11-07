@@ -7,12 +7,12 @@
 
 SPARK 开发平台 作者：polaris.wang
 
- _如果您喜欢，请伸出您的小手，帮作者点个赞_  :smile: 
+ _如果您喜欢，请伸出您的小手，给作者点个赞，感谢您的支持_  :smile: 
 
 
-![https://img.shields.io/badge/Apache-2.0-brightgreen](https://img.shields.io/badge/Apache-2.0-brightgreen)
-![https://img.shields.io/badge/Spring%20Cloud-Hoxton.SR3-brightgreen](https://img.shields.io/badge/Spring%20Cloud-Hoxton.SR3-brightgreen)
-![https://img.shields.io/badge/Spring%20Boot-2.2.6.RELEASE-brightgreen](https://img.shields.io/badge/Spring%20Boot-2.2.6.RELEASE-brightgreen)
+![Apache](https://img.shields.io/badge/Apache-2.0-brightgreen)
+![cloud版本](https://img.shields.io/badge/Spring%20Cloud-Hoxton.SR8-brightgreen)
+![boot版本](https://img.shields.io/badge/Spring%20Boot-2.3.3.RELEASE-brightgreen)
 ![https://img.shields.io/badge/Nacos-1.3-brightgreen](https://img.shields.io/badge/Nacos-1.3-brightgreen)
 ![https://img.shields.io/badge/Flowable-6.4.2-brightgreen](https://img.shields.io/badge/Flowable-6.4.2-brightgreen)
 ![https://img.shields.io/badge/Mybatis%20Plus-3.3.1-brightgreen](https://img.shields.io/badge/Mybatis%20Plus-3.3.1-brightgreen)
@@ -30,6 +30,9 @@ SPARK 开发平台 作者：polaris.wang
  ### 如果大家有什么建议或者问题，请在Issues中提交，作者会一一的回复，希望大家一起让这个开源项目变的更好，我的本意是大家一起学习，所以此项目完全开源，完全免费。您的点赞和建议是作者维护这个项目的最大动力，感谢！
 ### 需要1.0的童鞋请移步到 [SPARK 1.0](https://gitee.com/dreamfeng/spark-platform/tree/1.0/)
 
+### 2020-11-07 更新日志
+1. 添加文件管理模块，采用Minio对象存储。
+
 ### 2020-09-29 更新日志
 1. 修改测试流程图。
 2. 添加保存更新必填项后台校验。
@@ -38,6 +41,7 @@ SPARK 开发平台 作者：polaris.wang
 5. 添加logstash日志系统。[文档地址](https://www.kancloud.cn/polaris_wang/spark/1908807)
 6. boot和cloud 版本更新
 7. 添加导出excel(基于easyexcel支持字典翻译)，例子请参考用户信息导出。
+
 
 ### 文档地址
  [https://www.kancloud.cn/polaris_wang/spark/1762689](https://www.kancloud.cn/polaris_wang/spark/1762689)
@@ -119,6 +123,9 @@ spark-platform
 ├── spark-cms -- 内容管理平台模块
 ├── spark-tx-manager -- 分布式事务模块
 ├── spark-quartz -- 定时任务模块
+└── spark-file -- 通用工作流模块
+     └── spark-file-api -- 文件模块公共api模块
+     └── spark-file-biz -- 文件模块业务处理模块
 ```
  **平台截图**
 ![首页](https://images.gitee.com/uploads/images/2020/0808/115033_41517db6_1890906.png "屏幕截图.png")

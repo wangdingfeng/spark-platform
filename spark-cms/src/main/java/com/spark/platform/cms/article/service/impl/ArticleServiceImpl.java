@@ -74,7 +74,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> impleme
     public void publish(Article article) {
         //放入提交人
         Map<String,Object> variables = ImmutableMap.of(VariablesEnum.submitter.toString(), UserUtils.getLoginUser().getUsername());
-        ProcessInstanceCreateRequest request = new ProcessInstanceCreateRequest(ArticleConstant.PROCESS_KEY,article.getId().toString(),ArticleConstant.PROCESS_BUSINESS_TYPE,article.getTitle(),variables);
+        ProcessInstanceCreateRequest request = new ProcessInstanceCreateRequest(ArticleConstant.PROCESS_KEY,article.getId().toString(),ArticleConstant.PROCESS_BUSINESS_TYPE,article.getTitle(),"",variables);
         ApiResponse apiResponse = instanceClient.startByKey(request);
         if(!SparkHttpStatus.SUCCESS.getCode().equals(apiResponse.getCode())){
             log.error("发起工作流失败",apiResponse.getData());

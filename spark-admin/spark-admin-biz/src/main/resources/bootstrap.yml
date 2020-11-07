@@ -13,7 +13,7 @@ spring:
         group: DEFAULT_GROUP
       discovery:
         server-addr: @nacos-url@
-#        ip: 127.0.0.1
-#        port: 9020
+        ip: 127.0.0.1
+        port: 9020
 logstash:
   service: @logstash-url@

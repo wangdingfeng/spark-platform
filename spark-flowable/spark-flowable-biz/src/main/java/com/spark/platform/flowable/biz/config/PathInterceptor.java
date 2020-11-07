@@ -22,6 +22,7 @@ public class PathInterceptor implements HandlerInterceptor {
         String scheme = httpServletRequest.getScheme();
         String serverName = httpServletRequest.getServerName();
         int port = httpServletRequest.getServerPort();
+        //放入 freemarker 绝对路径
         String basePath = scheme + "://" + serverName + ":" + port + path;
         httpServletRequest.setAttribute("basePath", basePath);
         return true;

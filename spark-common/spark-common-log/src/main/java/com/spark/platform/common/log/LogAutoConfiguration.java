@@ -1,6 +1,6 @@
 package com.spark.platform.common.log;
 
-import com.spark.platform.adminapi.feign.client.LogClient;
+import com.spark.platform.admin.api.feign.client.LogClient;
 import com.spark.platform.common.log.aspect.WebLogAspect;
 import com.spark.platform.common.log.listener.ApiLogListener;
 import lombok.AllArgsConstructor;

@@ -1,6 +1,6 @@
 package com.spark.platform.common.log.event;
 
-import com.spark.platform.adminapi.entity.log.LogApi;
+import com.spark.platform.admin.api.entity.log.LogApi;
 import org.springframework.context.ApplicationEvent;
 
 /**

@@ -13,13 +13,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
-import java.io.IOException;
 
 /**
  * @ProjectName: spark-platform
@@ -47,20 +43,18 @@ import java.io.IOException;
         @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = EditorGroupsResource.class),
         // 配置文件用自己的
         @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = StencilSetResource.class),
-    }
+}
 )
 public class FlowableConfig {
+
     @Bean
-    public void processEngine(DataSourceTransactionManager transactionManager, DataSource dataSource) throws IOException {
+    public void processEngine(DataSourceTransactionManager transactionManager, DataSource dataSource) {
         SpringProcessEngineConfiguration configuration = new SpringProcessEngineConfiguration();
-        //自动部署已有的流程文件
-        Resource[] resources = new PathMatchingResourcePatternResolver().getResources(ResourceLoader.CLASSPATH_URL_PREFIX + "processes/*.bpmn");
         configuration.setTransactionManager(transactionManager);
         // 执行工作流对应的数据源
         configuration.setDataSource(dataSource);
         // 是否自动创建流程引擎表
         configuration.setDatabaseSchemaUpdate(ProcessEngineConfiguration.DB_SCHEMA_UPDATE_TRUE);
-        configuration.setDeploymentResources(resources);
         //流程历史等级
         configuration.setHistoryLevel(HistoryLevel.FULL);
         // 流程图字体

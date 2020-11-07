@@ -186,7 +186,7 @@ CREATE TABLE `sys_file_info`  (
   `file_code` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件存储名称 uuid',
   `file_name` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `file_type` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件类型',
-  `file_size` decimal(10, 0) NULL DEFAULT NULL COMMENT '文件大小',
+  `file_size` int(15) NULL DEFAULT NULL COMMENT '文件大小',
   `file_path` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件路径',
   `biz_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件绑定id',
   `biz_type` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件绑定类型',
@@ -197,14 +197,9 @@ CREATE TABLE `sys_file_info`  (
   `modifier` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '修改人',
   `remarks` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
   `del_flag` bit(1) NULL DEFAULT NULL COMMENT '状态',
+  `service_name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '服务名称',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '文件信息表' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of sys_file_info
--- ----------------------------
-INSERT INTO `sys_file_info` VALUES (1, 'c54dc1f48449446388fd5737d065326b', '空白.docx', 'docx', 45, 'biz/PROCESS_ARTICLE/10002/c54dc1f48449446388fd5737d065326b.docx', '10002', 'PROCESS_ARTICLE', '1', '2020-04-19 11:42:25', 'admin', '2020-04-19 14:08:53', 'admin', NULL, b'0');
-INSERT INTO `sys_file_info` VALUES (2, '035f388d041f434db5943a59fbff54f4', '我的头像.jpg', 'jpg', 20, 'temp/2020-04-19/035f388d041f434db5943a59fbff54f4.jpg', NULL, NULL, '0', '2020-04-19 11:42:45', 'admin', '2020-04-19 11:42:45', 'admin', NULL, b'0');
 
 -- ----------------------------
 -- Table structure for sys_job

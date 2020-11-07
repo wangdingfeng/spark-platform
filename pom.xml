@@ -28,6 +28,7 @@
         <module>spark-cms</module>
         <module>spark-tx-manager</module>
         <module>spark-quartz</module>
+        <module>spark-file</module>
     </modules>
 
 
@@ -60,6 +61,7 @@
         <logstash-logback.verison>5.3</logstash-logback.verison>
         <jackson-module-jaxb.veison>2.11.2</jackson-module-jaxb.veison>
         <easyexcel.version>2.2.3</easyexcel.version>
+        <minio.version>7.1.4</minio.version>
         <nacos-url>127.0.0.1:8848</nacos-url>
         <logstash-url>localhost:4560</logstash-url>
     </properties>
@@ -237,6 +239,13 @@
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
+        </profile>
+        <!--线上环境-->
+        <profile>
+            <id>prod</id>
+            <properties>
+                <profiles.active>prod</profiles.active>
+            </properties>
         </profile>
     </profiles>
 

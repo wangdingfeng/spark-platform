@@ -1,14 +1,9 @@
 spring:
-  servlet:
-    multipart:
-      enabled: true
-      max-file-size: 50MB
-      max-request-size: 100MB
   jackson:
     default-property-inclusion: non_null
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url:  jdbc:mysql://127.0.0.1:3306/spark-dev?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8
+    url: jdbc:mysql://127.0.0.1:3306/spark-dev?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8
     username: root
     password: 123456
     name: spark-dev
@@ -33,7 +28,7 @@ spring:
         url: http://127.0.0.1:9002
         instance:
           prefer-ip: true
-          service-url: http://127.0.0.1:9020
+          service-url: http://${spring.cloud.nacos.discovery.ip}:${spring.cloud.nacos.discovery.port}
         username: spark
         password: spark
   redis:
@@ -52,7 +47,7 @@ spring:
 
 mybatis-plus:
   mapper-locations: classpath*:mapper/*.xml
-  type-aliases-package: com.spark.platform.adminapi.entity
+  type-aliases-package: com.spark.platform.admin.api.entity
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     cache-enabled: false
@@ -77,7 +72,7 @@ management:
       enabled: true
 
 swagger:
-  base-package: com.spark.platform.adminbiz
+  base-package: com.spark.platform.admin.biz
   enabled: true
   description: spark用户服务
   version: V1.0
@@ -132,4 +127,3 @@ spark:
       - /swagger-ui.html
       - /swagger-resources/**
       - /webjars/**
-  file-path: E:/spark/file

@@ -3,6 +3,7 @@ package com.spark.platform.common.base.entity;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -21,34 +22,27 @@ public abstract class BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 创建人
-     */
     @TableField(fill = FieldFill.INSERT)
+    @ApiModelProperty(value = "创建人")
     private String creator;
-    /**
-     * 修改人
-     */
+
     @TableField(fill = FieldFill.INSERT_UPDATE)
+    @ApiModelProperty(value = "修改人")
     private String modifier;
-    /**
-     * 创建时间
-     */
+
     @TableField(value = "create_date", fill = FieldFill.INSERT)
+    @ApiModelProperty(value = "创建时间")
     private LocalDateTime createDate;
-    /**
-     * 修改时间
-     */
+
     @TableField(value = "modify_date", fill = FieldFill.INSERT_UPDATE)
+    @ApiModelProperty(value = "修改时间")
     private LocalDateTime modifyDate;
-    /**
-     * 系统状态
-     */
+
     @TableField(fill = FieldFill.INSERT)
     @TableLogic(value = "0",delval = "1")
+    @ApiModelProperty(value = "系统状态")
     private Integer delFlag;
-    /**
-     * 备注
-     */
+
+    @ApiModelProperty(value = "备注")
     private String remarks;
 }

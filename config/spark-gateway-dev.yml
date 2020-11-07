@@ -63,13 +63,23 @@ spring:
               args:
                 name: quartz-hystrix
                 fallbackUri: forward:/common/fallback
+        - id: spark-file
+          uri: lb://spark-file
+          predicates:
+            - Path=/file/**
+          filters:
+            - StripPrefix=1
+            - name: Hystrix
+              args:
+                name: file-hystrix
+                fallbackUri: forward:/common/fallback
   boot:
     admin:
       client:
         url: http://127.0.0.1:9002
         instance:
           prefer-ip: true
-          service-url: http://127.0.0.1:9001
+          service-url: http://${spring.cloud.nacos.discovery.ip}:${spring.cloud.nacos.discovery.port}
         username: spark
         password: spark
 hystrix:

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.spark.platform.adminbiz.dao.user.UserDao">
-    <resultMap id="BaseResultMap" type="com.spark.platform.adminapi.entity.user.User">
+<mapper namespace="com.spark.platform.admin.biz.dao.user.UserDao">
+    <resultMap id="BaseResultMap" type="com.spark.platform.admin.api.entity.user.User">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="username" jdbcType="VARCHAR" property="username"/>
         <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
@@ -24,7 +24,7 @@
 
     </resultMap>
 
-    <resultMap id="BaseResultMapVO" type="com.spark.platform.adminapi.vo.UserVo">
+    <resultMap id="BaseResultMapVO" type="com.spark.platform.admin.api.vo.UserVo">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="username" jdbcType="VARCHAR" property="username"/>
         <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
@@ -42,7 +42,7 @@
         id, username, nickname, password, sex, phone, email, create_date, modify_date, last_login_ip, last_login_time, del_flag, status, avatar, dept_id,dept_name
     </sql>
 
-    <select id="findByUserName" parameterType="string" resultType="com.spark.platform.adminapi.vo.UserVo">
+    <select id="findByUserName" parameterType="string" resultType="com.spark.platform.admin.api.vo.UserVo">
         select  id, username, nickname, password, status, dept_id
         from sys_user
         WHERE 1 = 1
@@ -57,7 +57,7 @@
         WHERE id = #{userId}
     </select>
 
-    <select id="export" resultType="com.spark.platform.adminapi.vo.UserExcelVo">
+    <select id="export" resultType="com.spark.platform.admin.api.vo.UserExcelVo">
         select * from sys_user
         ${ew.customSqlSegment}
     </select>

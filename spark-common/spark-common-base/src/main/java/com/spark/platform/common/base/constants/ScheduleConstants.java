@@ -10,6 +10,7 @@ package com.spark.platform.common.base.constants;
  * @Version: 1.0
  */
 public interface ScheduleConstants {
+
     String TASK_CLASS_NAME = "TASK_CLASS_NAME";
 
     /**
