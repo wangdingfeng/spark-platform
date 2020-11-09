@@ -3,14 +3,12 @@ package com.spark.platform.common.security.service;
 import com.alibaba.fastjson.JSON;
 import com.spark.platform.admin.api.entity.authority.OauthClientDetails;
 import com.spark.platform.admin.api.feign.client.AuthorityClient;
-import com.spark.platform.common.base.constants.GlobalsConstants;
 import com.spark.platform.common.base.enums.SparkHttpStatus;
 import com.spark.platform.common.base.exception.CommonException;
 import com.spark.platform.common.base.support.ApiResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
@@ -40,10 +38,9 @@ public class SparkClientDetailsService implements ClientDetailsService {
     private final AuthorityClient authorityClient;
 
     @Override
-    @Cacheable(value = GlobalsConstants.REDIS_CLIENT_CACHE, unless = "#result == null", key = "T(com.spark.platform.common.base.constants.GlobalsConstants).CLIENT_DETAILS_KEY.concat(T(String).valueOf(#clientId))")
     public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {
         ApiResponse apiResponse = authorityClient.getOauthClientDetailsByClientId(clientId);
-        OauthClientDetails model = JSON.parseObject(JSON.toJSONString(apiResponse.getData(), true), OauthClientDetails.class);
+        OauthClientDetails model  = JSON.parseObject(JSON.toJSONString( apiResponse.getData(), true),OauthClientDetails.class);
         if (model == null) {
             throw new CommonException(SparkHttpStatus.CLIENT_ERROR);
         }
