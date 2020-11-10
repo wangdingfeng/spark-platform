@@ -19,63 +19,6 @@ public class GlobalsConstants {
 
     public static final String OAUTH_AUTH_REQUIRE_URI = "/authentication/require";
 
-
-    /**
-     * Redis Cache
-     */
-    public static final String REDIS_USER_CACHE = "RedisUserCache";
-    /**
-     * 字典子项list
-     */
-    public static final String REDIS_DICT_CACHE = "RedisDictCache";
-
-    /**
-     * Redis Cache
-     */
-    public static final String REDIS_CLIENT_CACHE = "RedisClientCache";
-
-    /**
-     * 缓存中user的key
-     */
-    public static final String USER_KEY_PREFIX = "SparkUser_";
-    /**
-     * 缓存中user 前端需要的数据全部信息的key
-     */
-    public static final String USER_INFO_KEY_PREFIX = "SparkUser_Info_";
-    /**
-     * 缓存中字典的key
-     */
-    public static final String DICT_KEY_ALL_PREFIX = "SparkAllDict";
-    /**
-     * 缓存中user的key
-     */
-    public static final String DICT_KEY_PREFIX = "SparkDict_";
-
-    /**
-     * oauth 客户端信息
-     */
-    public static final String CLIENT_DETAILS_KEY = "SparkClient_";
-
-    /**
-     * Redis默认过期时长，单位：秒  5分钟
-     */
-    public static final long DEFAULT_EXPIRE = 60 * 5;
-
-    /**
-     * Redis 不设置过期时长
-     */
-    public static final long NOT_EXPIRE = -1;
-
-    /**
-     * Redis set 前缀
-     */
-    public static final String KEY_SET_PREFIX = "_set:";
-
-    /**
-     * Redis list 前缀
-     */
-    public static final String KEY_LIST_PREFIX = "_list:";
-
     /**
      * ip
      */
@@ -102,7 +45,6 @@ public class GlobalsConstants {
      * oauth security配置
      */
     public static final String OAUTH_SECURITY_PREFIX = "security.oauth2.client";
-
 
     /**
      * security  过滤url 配置

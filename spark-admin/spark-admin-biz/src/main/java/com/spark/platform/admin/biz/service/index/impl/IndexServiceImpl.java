@@ -6,6 +6,7 @@ import com.spark.platform.admin.api.vo.IndexDataVo;
 import com.spark.platform.admin.biz.dao.log.LoginLogDao;
 import com.spark.platform.admin.biz.service.index.IndexService;
 import com.spark.platform.common.base.constants.GlobalsConstants;
+import com.spark.platform.common.base.constants.RedisConstants;
 import com.spark.platform.common.base.utils.RedisUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -55,15 +56,15 @@ public class IndexServiceImpl implements IndexService {
     @Override
     public void deleteCache() {
         //删除客户端
-        Set<String> clientKeys = redisUtils.keys(GlobalsConstants.getCacheKey(GlobalsConstants.REDIS_CLIENT_CACHE, GlobalsConstants.CLIENT_DETAILS_KEY + "*"));
+        Set<String> clientKeys = redisUtils.keys(GlobalsConstants.getCacheKey(RedisConstants.CLIENT_CACHE, RedisConstants.CLIENT_DETAILS_KEY + "*"));
         redisUtils.delete(clientKeys);
         //删除字典缓存
-        redisUtils.delete(GlobalsConstants.getCacheKey(GlobalsConstants.REDIS_DICT_CACHE, GlobalsConstants.DICT_KEY_ALL_PREFIX));
+        redisUtils.delete(GlobalsConstants.getCacheKey(RedisConstants.DICT_CACHE, RedisConstants.DICT_KEY_ALL_PREFIX));
         //删除用户缓存
-        Set<String> userKeys = redisUtils.keys(GlobalsConstants.getCacheKey(GlobalsConstants.REDIS_USER_CACHE, GlobalsConstants.USER_KEY_PREFIX + "*"));
+        Set<String> userKeys = redisUtils.keys(GlobalsConstants.getCacheKey(RedisConstants.USER_CACHE, RedisConstants.USER_KEY_PREFIX + "*"));
         redisUtils.delete(userKeys);
         // 删除前端获取用户详细信息 包含菜单的缓存
-        Set<String> userPrincipalKeys = redisUtils.keys(GlobalsConstants.getCacheKey(GlobalsConstants.REDIS_USER_CACHE, GlobalsConstants.USER_INFO_KEY_PREFIX + "*"));
+        Set<String> userPrincipalKeys = redisUtils.keys(GlobalsConstants.getCacheKey(RedisConstants.USER_CACHE, RedisConstants.USER_INFO_KEY_PREFIX + "*"));
         redisUtils.delete(userPrincipalKeys);
     }
 }

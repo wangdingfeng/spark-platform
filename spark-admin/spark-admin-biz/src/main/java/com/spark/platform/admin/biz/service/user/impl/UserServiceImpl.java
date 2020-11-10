@@ -2,8 +2,10 @@ package com.spark.platform.admin.biz.service.user.impl;
 
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.support.ExcelTypeEnum;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
@@ -19,17 +21,18 @@ import com.spark.platform.admin.biz.dao.user.UserRoleDao;
 import com.spark.platform.admin.biz.service.menu.MenuService;
 import com.spark.platform.admin.biz.service.role.RoleService;
 import com.spark.platform.common.base.constants.GlobalsConstants;
+import com.spark.platform.common.base.constants.RedisConstants;
 import com.spark.platform.common.base.exception.BusinessException;
 import com.spark.platform.admin.api.entity.user.User;
 import com.spark.platform.admin.biz.service.user.UserService;
 import com.spark.platform.common.base.support.WrapperSupport;
-import com.spark.platform.common.base.utils.RedisUtils;
 import com.spark.platform.common.security.model.LoginUser;
 import com.spark.platform.common.security.util.UserUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -57,10 +60,9 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
     private final UserRoleDao userRoleDao;
     private final RoleService roleService;
     private final MenuService menuService;
-    private final RedisUtils redisUtils;
 
     @Override
-    @Cacheable(value = GlobalsConstants.REDIS_USER_CACHE, unless = "#result == null", key = "T(com.spark.platform.common.base.constants.GlobalsConstants).USER_KEY_PREFIX.concat(T(String).valueOf(#username))")
+    @Cacheable(value = RedisConstants.USER_CACHE, unless = "#result == null", key = "T(com.spark.platform.common.base.constants.RedisConstants).USER_KEY_PREFIX.concat(T(String).valueOf(#username))")
     public UserDTO loadUserByUserName(String username) {
         UserDTO userDto = new UserDTO();
         UserVo userVo = super.baseMapper.findByUserName(username);
@@ -83,7 +85,7 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
     }
 
     @Override
-    @Cacheable(value = GlobalsConstants.REDIS_USER_CACHE, unless = "#result == null", key = "T(com.spark.platform.common.base.constants.GlobalsConstants).USER_INFO_KEY_PREFIX.concat(T(String).valueOf(#username))")
+    @Cacheable(value = RedisConstants.USER_CACHE, unless = "#result == null", key = "T(com.spark.platform.common.base.constants.RedisConstants).USER_INFO_KEY_PREFIX.concat(T(String).valueOf(#username))")
     public UserDTO getUserInfo(String username) {
         UserDTO userDto = new UserDTO();
         LoginUser loginUser = UserUtils.getLoginUser();
@@ -115,6 +117,7 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
     }
 
     @Override
+    @CacheEvict(value = RedisConstants.USER_CACHE, allEntries = true)
     public boolean updateUser(User user) {
         //只允许小写
         user.setUsername(user.getUsername().toLowerCase());
@@ -124,9 +127,6 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
         int i = userRoleDao.deleteByUserId(user.getId());
         log.info("删除用户：{}角色:{}个", user.getId(), i);
         userRoleDao.insertBatch(user.getId(), user.getRoles());
-        //删除缓存
-        redisUtils.delete(GlobalsConstants.getCacheKey(GlobalsConstants.REDIS_USER_CACHE, GlobalsConstants.USER_KEY_PREFIX + user.getUsername()));
-        redisUtils.delete(GlobalsConstants.getCacheKey(GlobalsConstants.REDIS_USER_CACHE, GlobalsConstants.USER_INFO_KEY_PREFIX + user.getUsername()));
         return super.updateById(user);
     }
 
@@ -161,6 +161,7 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
     }
 
     @Override
+    @CacheEvict(value = RedisConstants.USER_CACHE, allEntries = true)
     public void updateUserInfo(User user) {
         //修改密码
         User userInfo = super.getById(user.getId());
@@ -173,14 +174,11 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
             user.setPassword(passwordEncoder.encode(password));
         }
         super.updateById(user);
-        //清除缓存
-        redisUtils.delete(GlobalsConstants.getCacheKey(GlobalsConstants.REDIS_USER_CACHE, GlobalsConstants.USER_KEY_PREFIX + userInfo.getUsername()));
-        redisUtils.delete(GlobalsConstants.getCacheKey(GlobalsConstants.REDIS_USER_CACHE, GlobalsConstants.USER_INFO_KEY_PREFIX + userInfo.getUsername()));
     }
 
     @Override
     public List<Long> findRolIdsByUserId(Long userId) {
-        return userRoleDao.selectList(new QueryWrapper<UserRole>().eq("user_id", userId)).stream().map(UserRole::getRoleId).collect(Collectors.toList());
+        return userRoleDao.selectList(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getUserId, userId)).stream().map(UserRole::getRoleId).collect(Collectors.toList());
     }
 
     @Override
@@ -204,11 +202,11 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
      */
     @Override
     public void validateUserName(String username, Long id) {
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        LambdaQueryWrapper<User> queryWrapper = Wrappers.lambdaQuery();
         if (null != id) {
-            queryWrapper.ne("id", id);
+            queryWrapper.ne(User::getId, id);
         }
-        queryWrapper.eq("username", username);
+        queryWrapper.eq(User::getUsername, username);
         if (0 != super.count(queryWrapper)) {
             throw new BusinessException("账号重复");
         }

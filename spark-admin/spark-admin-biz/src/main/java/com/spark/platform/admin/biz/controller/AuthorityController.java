@@ -50,15 +50,16 @@ public class AuthorityController extends BaseController {
     @ApiOperation(value = "保存信息")
     @PreAuthorize("hasAnyAuthority('oauth:add')")
     public ApiResponse<OauthClientDetails> save(@RequestBody @Valid OauthClientDetails oauthClientDetails){
-        oauthClientDetailsService.save(oauthClientDetails);
+        oauthClientDetailsService.insertOrUpdate(oauthClientDetails);
         return success(oauthClientDetails);
     }
 
     @PutMapping
     @ApiOperation(value = "更新信息")
     @PreAuthorize("hasAnyAuthority('oauth:edit')")
-    public ApiResponse<Boolean> update(@RequestBody @Valid OauthClientDetails oauthClientDetails){
-        return success(oauthClientDetailsService.updateById(oauthClientDetails));
+    public ApiResponse<OauthClientDetails> update(@RequestBody @Valid OauthClientDetails oauthClientDetails){
+        oauthClientDetailsService.insertOrUpdate(oauthClientDetails);
+        return success(oauthClientDetails);
     }
 
     @DeleteMapping("/{id}")

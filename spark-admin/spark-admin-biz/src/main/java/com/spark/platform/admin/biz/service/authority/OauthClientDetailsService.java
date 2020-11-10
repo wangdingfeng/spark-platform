@@ -32,4 +32,11 @@ public interface OauthClientDetailsService extends IService<OauthClientDetails> 
      */
     IPage findPage(OauthClientDetails oauthClientDetails, Page page);
 
+    /**
+     * 保存更新
+     * @param oauthClientDetails
+     * @return
+     */
+    void insertOrUpdate(OauthClientDetails oauthClientDetails);
+
 }
