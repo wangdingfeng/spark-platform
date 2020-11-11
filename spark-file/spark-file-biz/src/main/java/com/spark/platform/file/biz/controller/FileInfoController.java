@@ -33,7 +33,7 @@ import java.util.List;
  * </p>
  *
  * @author wangdingfeng
- * @since 2020-04-18
+ * @since 2020-11-11
  */
 @RestController
 @RequestMapping("/file-info")
@@ -78,6 +78,7 @@ public class FileInfoController extends BaseController {
     @ApiOperation(value = "下载文件")
     public void download(@PathVariable Long id, HttpServletResponse response) {
         fileInfoService.downloadFile(id, response);
+
     }
 
     @DeleteMapping("/{id}")
@@ -90,6 +91,12 @@ public class FileInfoController extends BaseController {
     @ApiOperation(value = "获取文件下载路径")
     public ApiResponse<String> url(@PathVariable Long id, Integer expires) {
         return success(fileInfoService.getDownloadURl(id, expires));
+    }
+
+    @GetMapping("/api/{serviceName}/{url}")
+    @ApiOperation(value = "预览文件")
+    public void download(@PathVariable String serviceName, @PathVariable String url, HttpServletResponse response) {
+        fileInfoService.preview(serviceName, url, response);
     }
 
 }

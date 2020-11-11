@@ -65,6 +65,7 @@ public class HistTaskVO implements Serializable {
     private String businessKey;
     private String businessType;
     private String businessName;
+    private String businessCode;
     private Map<String,Object> variables;
 
     public void setVariables(Map<String, Object> variables) {
@@ -72,6 +73,7 @@ public class HistTaskVO implements Serializable {
         if(null != variables){
             this.businessType = (String) variables.get(VariablesEnum.businessType.toString());
             this.businessName = (String) variables.get(VariablesEnum.businessName.toString());
+            this.businessCode = (String) variables.get(VariablesEnum.businessCode.toString());
         }
 
     }

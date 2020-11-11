@@ -9,6 +9,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.spark.platform.common.base.annotation.DictProperty;
 import com.spark.platform.common.base.constants.GlobalsConstants;
+import com.spark.platform.common.base.constants.RedisConstants;
 import com.spark.platform.common.base.utils.RedisUtils;
 import com.spark.platform.common.base.utils.SpringContextHolder;
 import com.spark.platform.common.base.vo.DictVo;
@@ -64,7 +65,7 @@ public class DictConverter implements Converter<Object> {
         DictProperty dictProperty = field.getAnnotation(DictProperty.class);
         if(null != dictProperty){
             String type = dictProperty.type();
-            String json = redisUtils.get(GlobalsConstants.REDIS_DICT_CACHE+"::"+GlobalsConstants.DICT_KEY_ALL_PREFIX);
+            String json = redisUtils.get(GlobalsConstants.getCacheKey(RedisConstants.DICT_CACHE,RedisConstants.DICT_KEY_ALL_PREFIX));
             //获取字典
             Map<String, JSONArray> map = JSON.parseObject(json,Map.class);
             JSONArray jsonArray = map.get(type);

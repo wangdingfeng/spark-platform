@@ -96,6 +96,7 @@ public class GenServiceImpl implements GenService {
         PackageConfig pc = new PackageConfig();
         pc.setModuleName(generatorConfigVo.getModelName());
         pc.setParent(generatorConfigVo.getParentPackage());
+        pc.setMapper("dao");
         mpg.setPackageInfo(pc);
 
         gc.setBaseColumnList(true);

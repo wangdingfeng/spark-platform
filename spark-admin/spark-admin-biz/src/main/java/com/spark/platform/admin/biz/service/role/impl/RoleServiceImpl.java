@@ -1,23 +1,24 @@
 package com.spark.platform.admin.biz.service.role.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.base.Preconditions;
 import com.spark.platform.admin.api.entity.role.Role;
 import com.spark.platform.admin.api.entity.role.RoleMenu;
-import com.spark.platform.admin.api.entity.user.User;
 import com.spark.platform.admin.biz.dao.role.RoleDao;
 import com.spark.platform.admin.biz.dao.role.RoleMenuDao;
-import com.spark.platform.admin.biz.dao.user.UserDao;
 import com.spark.platform.admin.biz.service.role.RoleService;
 import com.spark.platform.common.base.constants.GlobalsConstants;
+import com.spark.platform.common.base.constants.RedisConstants;
 import com.spark.platform.common.base.exception.BusinessException;
 import com.spark.platform.common.base.support.WrapperSupport;
-import com.spark.platform.common.base.utils.RedisUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,7 +29,7 @@ import java.util.List;
  * @Package: com.spark.platform.adminbiz.service.role.impl
  * @ClassName: RoleServiceImpl
  * @Date: 2019/11/5 09:28
- * @Description:
+ * @Description: 角色service
  * @Version: 1.0
  */
 @Service
@@ -38,8 +39,6 @@ public class RoleServiceImpl extends ServiceImpl<RoleDao, Role> implements RoleS
 
     private final RoleDao roleDao;
     private final RoleMenuDao roleMenuDao;
-    private final UserDao userDao;
-    private final RedisUtils redisUtils;
 
     @Override
     public List<Role> getRoleByUserId(Long userId) {
@@ -62,6 +61,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleDao, Role> implements RoleS
     }
 
     @Override
+    @CacheEvict(value = RedisConstants.USER_CACHE, allEntries = true)
     public void saveRoleAuth(Role role) {
         Preconditions.checkArgument(null != role && null != role.getId(), "角色id不能为空");
         //删除该角色下所有的权限
@@ -73,13 +73,6 @@ public class RoleServiceImpl extends ServiceImpl<RoleDao, Role> implements RoleS
             roleMenu.setMenuId(menuId);
             roleMenuDao.insert(roleMenu);
         }
-        //查询当前角色下所有的用户  并删除缓存
-        List<User> users = userDao.findUsersByRoleId(role.getId());
-        users.forEach(user -> {
-            //删除缓存
-            redisUtils.delete(GlobalsConstants.getCacheKey(GlobalsConstants.REDIS_USER_CACHE, GlobalsConstants.USER_KEY_PREFIX + user.getUsername()));
-            redisUtils.delete(GlobalsConstants.getCacheKey(GlobalsConstants.REDIS_USER_CACHE, GlobalsConstants.USER_INFO_KEY_PREFIX + user.getUsername()));
-        });
     }
 
     @Override
@@ -94,11 +87,11 @@ public class RoleServiceImpl extends ServiceImpl<RoleDao, Role> implements RoleS
         if (!roleCode.startsWith(GlobalsConstants.ROLE_PREFIX)) {
             throw new BusinessException("角色编号应该包含ROLE_");
         }
-        QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
+        LambdaQueryWrapper<Role> queryWrapper = Wrappers.lambdaQuery();
         if (null != roleId) {
-            queryWrapper.ne("id", roleId);
+            queryWrapper.ne(Role::getId, roleId);
         }
-        queryWrapper.eq("role_code", roleCode);
+        queryWrapper.eq(Role::getRoleCode, roleCode);
         if (0 != super.count(queryWrapper)) {
             throw new BusinessException("角色编号重复");
         }
@@ -108,7 +101,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleDao, Role> implements RoleS
     public boolean delete(Long roleId) {
         String roleCode = super.baseMapper.getRoleCode(roleId);
         if (GlobalsConstants.ROLE_ADMIN.equals(roleCode)) {
-            throw new BusinessException("超级管路员角色，不允许删除");
+            throw new BusinessException("超级管理员角色，不允许删除");
         }
         return super.removeById(roleId);
     }
