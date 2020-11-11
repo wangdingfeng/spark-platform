@@ -29,7 +29,7 @@ import java.util.List;
  * @Package: com.spark.platform.adminbiz.service.role.impl
  * @ClassName: RoleServiceImpl
  * @Date: 2019/11/5 09:28
- * @Description:
+ * @Description: 角色service
  * @Version: 1.0
  */
 @Service
@@ -101,7 +101,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleDao, Role> implements RoleS
     public boolean delete(Long roleId) {
         String roleCode = super.baseMapper.getRoleCode(roleId);
         if (GlobalsConstants.ROLE_ADMIN.equals(roleCode)) {
-            throw new BusinessException("超级管路员角色，不允许删除");
+            throw new BusinessException("超级管理员角色，不允许删除");
         }
         return super.removeById(roleId);
     }

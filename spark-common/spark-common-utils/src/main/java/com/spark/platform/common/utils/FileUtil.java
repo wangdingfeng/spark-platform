@@ -7,9 +7,9 @@ import java.io.*;
 /**
  * @author: wangdingfeng
  * @Date: 2020/4/11 22:43
- * @Description:
+ * @Description: 文件工具类
  */
-public class FileUtil extends org.apache.commons.io.FileUtils {
+public class FileUtil extends cn.hutool.core.io.FileUtil {
     /**
      * 下载文件
      * @param filename

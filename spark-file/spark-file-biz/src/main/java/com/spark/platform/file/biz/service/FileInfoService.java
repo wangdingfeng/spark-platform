@@ -64,10 +64,27 @@ public interface FileInfoService extends IService<FileInfo> {
     /**
      * 获取下载地址 有失效时间
      *
-     * @param id 文件地址
-     * @param expires  失效时间 不允许大于7天
+     * @param id      文件地址
+     * @param expires 失效时间 不允许大于7天
      * @return
      */
     String getDownloadURl(Long id, Integer expires);
+
+    /**
+     * 预览
+     *
+     * @param serviceName 服务名
+     * @param filePath    文件路径
+     * @param response
+     */
+    void preview(String serviceName, String filePath, HttpServletResponse response);
+
+    /**
+     * 预览
+     *
+     * @param id       文件id
+     * @param response
+     */
+    void preview(Long id, HttpServletResponse response);
 
 }

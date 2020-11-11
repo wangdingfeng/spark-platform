@@ -17,12 +17,6 @@ public class BizConstants {
     public static final Integer USER_STATUS_NORMAL = 1;
     public static final Integer USER_STATUS_LOCKED = 2;
     public static final Integer USER_STATUS_EXPIRED = 3;
-    /**
-     * 文件绑定状态 0  未绑定 1 绑定
-     */
-    public static final String FILE_STATUS_NO_BIND = "0";
-
-    public static final String FILE_STATUS_BIND = "1";
 
 
 }
