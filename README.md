@@ -18,7 +18,6 @@ SPARK 开发平台 作者：polaris.wang
 ![https://img.shields.io/badge/Nacos-1.3-brightgreen](https://img.shields.io/badge/Nacos-1.3-brightgreen)
 ![https://img.shields.io/badge/Flowable-6.4.2-brightgreen](https://img.shields.io/badge/Flowable-6.4.2-brightgreen)
 ![https://img.shields.io/badge/Mybatis%20Plus-3.3.1-brightgreen](https://img.shields.io/badge/Mybatis%20Plus-3.3.1-brightgreen)
-[![star](https://gitee.com/dreamfeng/spark-platform/badge/star.svg?theme=white)](https://gitee.com/dreamfeng/spark-platform/stargazers)
 
 
 - 基于 Spring Cloud Hoxton 、Spring Boot 2.2、 OAuth2 的RBAC权限管理系统  
