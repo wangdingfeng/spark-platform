@@ -31,18 +31,21 @@ public class JwtTokenEnhancer implements TokenEnhancer {
     @Override
     public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
         final Map<String, Object> additionalInfo = Maps.newHashMap();
+        if(authentication.getPrincipal() instanceof String){
+            // 如果不是密码模式登陆的没有用户信息 所以不用定制token
+            return accessToken;
+        }
         // 给/oauth/token接口加属性roles,author
         LoginUser user = (LoginUser) authentication.getPrincipal();
         List<GrantedAuthority> authorities = user.getAuthorities();
         List<String> roleList = Lists.newArrayList();
         List<String> permissions = Lists.newArrayList();
         for (GrantedAuthority authority : authorities) {
-            if(authority.getAuthority().startsWith("role_")){
+            if(authority.getAuthority().startsWith("ROLE_")){
                 roleList.add(authority.getAuthority());
             }else{
                 permissions.add(authority.getAuthority());
             }
-
         }
         String roles = StringUtils.join(roleList,",");
         additionalInfo.put("roles", roles);
