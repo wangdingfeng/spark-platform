@@ -1,4 +1,6 @@
 # spark-platform V2.0
+[![star](https://gitee.com/dreamfeng/spark-platform/badge/star.svg?theme=white)](https://gitee.com/dreamfeng/spark-platform/stargazers)
+[![github](https://img.shields.io/github/stars/wangdingfeng/spark-platform)](https://github.com/wangdingfeng/spark-platform)
 
 
 ### 如果主页网站无法显示请使用[码云预览](http://dreamfeng.gitee.io/spark-admin/)
@@ -28,10 +30,9 @@ SPARK 开发平台 作者：polaris.wang
 
  
  ### 如果大家有什么建议或者问题，请在Issues中提交，作者会一一的回复，希望大家一起让这个开源项目变的更好，我的本意是大家一起学习，所以此项目完全开源，完全免费。您的点赞和建议是作者维护这个项目的最大动力，感谢！
-### 需要1.0的童鞋请移步到 [SPARK 1.0](https://gitee.com/dreamfeng/spark-platform/tree/1.0/)
 
 ### 2020-11-07 更新日志
-1. 添加文件管理模块，采用Minio对象存储。
+1. 添加文件管理模块，采用Minio对象存储。[minio安装文档](https://www.kancloud.cn/polaris_wang/spark/2021742)
 
 ### 2020-09-29 更新日志
 1. 修改测试流程图。
@@ -88,6 +89,7 @@ Gitee  | [https://gitee.com/dreamfeng/spark-platform](https://gitee.com/dreamfen
 | Admin监控 | spark | spark |
 | 数据库监控 | spark | spark |
 | Nacos |  |  |
+| Minio|  |  |
 
 依赖 | 版本
 ---|---
