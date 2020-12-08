@@ -312,25 +312,32 @@ INSERT INTO `sys_menu` VALUES (51, '删除', 48, '2', b'0', '', NULL, 'quartz:de
 -- Table structure for sys_oauth_client_details
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_oauth_client_details`;
-CREATE TABLE `sys_oauth_client_details`  (
-  `id` bigint(10) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `client_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `resource_ids` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `client_secret` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `scope` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `authorized_grant_types` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `web_server_redirect_uri` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `authorities` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `access_token_validity` int(11) NULL DEFAULT NULL,
-  `refresh_token_validity` int(11) NULL DEFAULT NULL,
-  `autoapprove` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '客户端表' ROW_FORMAT = Dynamic;
+CREATE TABLE `sys_oauth_client_details` (
+  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `client_id` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
+  `resource_ids` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `client_secret` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `scope` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `authorized_grant_types` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `web_server_redirect_uri` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `authorities` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `access_token_validity` int(11) DEFAULT NULL,
+  `refresh_token_validity` int(11) DEFAULT NULL,
+  `autoapprove` varchar(256) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `additional_information` varchar(4096) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `creator` varchar(32) CHARACTER SET utf8 NOT NULL COMMENT '创建人',
+  `modifier` varchar(32) CHARACTER SET utf8 NOT NULL COMMENT '修改人',
+  `remarks` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '备注',
+  `create_date` datetime DEFAULT NULL COMMENT '创建时间',
+  `modify_date` datetime DEFAULT NULL COMMENT '修改时间',
+  `del_flag` int(1) NOT NULL COMMENT '是否删除 (0 是  1否)',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='客户端表';
 
 -- ----------------------------
 -- Records of sys_oauth_client_details
 -- ----------------------------
-INSERT INTO `sys_oauth_client_details` VALUES (1, 'spark-admin', NULL, 'spark-admin-secret', 'all,read,write', 'password,refresh_token,authorization_code,client_credentials', NULL, NULL, 21600, 28800, 'true');
+INSERT INTO `sys_oauth_client_details`(`id`, `client_id`, `resource_ids`, `client_secret`, `scope`, `authorized_grant_types`, `web_server_redirect_uri`, `authorities`, `access_token_validity`, `refresh_token_validity`, `autoapprove`, `additional_information`, `creator`, `modifier`, `remarks`, `create_date`, `modify_date`, `del_flag`) VALUES (1, 'spark-admin', NULL, 'spark-admin-secret', 'all,read,write', 'password,refresh_token,authorization_code,client_credentials,implicit', NULL, NULL, 21600, 28800, 'true', NULL, '', '', NULL, NULL, NULL, 0);
 
 -- ----------------------------
 -- Table structure for sys_role
