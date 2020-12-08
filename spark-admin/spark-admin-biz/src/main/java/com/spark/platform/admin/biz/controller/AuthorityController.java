@@ -6,10 +6,9 @@ import com.spark.platform.admin.api.entity.authority.OauthClientDetails;
 import com.spark.platform.admin.biz.service.authority.OauthClientDetailsService;
 import com.spark.platform.common.base.support.BaseController;
 import com.spark.platform.common.base.support.ApiResponse;
-import com.spark.platform.common.log.annotation.ApiLog;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,14 +26,13 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/authority")
 @Api(tags = "Oauht2客户端")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class AuthorityController extends BaseController {
 
     private final OauthClientDetailsService oauthClientDetailsService;
 
 
     @GetMapping("/api/info")
-    @ApiLog(ignore = true)
     @ApiOperation(value = "根据clientId获取认证客户端详情信息")
     public ApiResponse<OauthClientDetails> getOauthClientDetailsByClientId(@RequestParam String clientId) {
         return success(oauthClientDetailsService.findOauthClientDetailsByClientId(clientId));

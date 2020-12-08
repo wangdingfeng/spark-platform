@@ -4,8 +4,8 @@ import com.spark.platform.common.base.support.BaseController;
 import com.spark.platform.common.base.support.ApiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2RefreshToken;
@@ -25,10 +25,10 @@ import java.security.Principal;
 @RestController
 @RequestMapping("/home")
 @Api(tags = "auth")
+@RequiredArgsConstructor
 public class HomeController extends BaseController {
 
-    @Autowired
-    private TokenStore tokenStore;
+    private final TokenStore tokenStore;
 
     @GetMapping("/principal")
     @ApiOperation(value = "获取当前用户信息Principal")

@@ -3,13 +3,13 @@ package com.spark.platform.admin.api.entity.authority;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.spark.platform.common.base.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-import java.io.Serializable;
 
 /**
  * @author: wangdingfeng
@@ -23,7 +23,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @TableName("sys_oauth_client_details")
 @ApiModel(value = "OauthClientDetails",description = "Oauht2客户端详情设置")
-public class OauthClientDetails implements Serializable {
+public class OauthClientDetails extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -61,7 +61,9 @@ public class OauthClientDetails implements Serializable {
     @ApiModelProperty(value = "刷新时效")
     private Integer refreshTokenValidity;
 
+    @ApiModelProperty(value = "附加信息")
+    private Integer additionalInformation;
+
     @ApiModelProperty(value = "设置用户是否自动Approval操作, 默认值为 'false', 可选值包括 'true','false', 'read','write'.")
     private String autoapprove;
-
 }

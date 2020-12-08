@@ -32,7 +32,7 @@ public class FeignRequestInterceptorConfig implements RequestInterceptor {
             if (request != null) {
                 // 只携带token
                 String authorization = request.getHeader(AUTHORIZATION_HEADER);
-                log.info("Authorization :{}" + authorization);
+                log.info("Authorization: {}", authorization);
                 requestTemplate.header(AUTHORIZATION_HEADER, authorization);
 
             }

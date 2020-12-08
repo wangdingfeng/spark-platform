@@ -5,13 +5,12 @@ import com.spark.platform.common.security.config.JwtTokenEnhancer;
 import com.spark.platform.common.security.service.SparkClientDetailsService;
 import com.spark.platform.common.security.service.SparkUserDetailService;
 import com.spark.platform.common.security.support.SparkWebResponseExceptionTranslator;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -22,6 +21,7 @@ import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
+import javax.sql.DataSource;
 import java.util.Arrays;
 
 /**
@@ -33,25 +33,21 @@ import java.util.Arrays;
  * @Version: 1.0
  */
 @Configuration
+@RequiredArgsConstructor
 @EnableAuthorizationServer
 public class SparkAuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
-    @Autowired
-    private SparkUserDetailService sparkUserDetailService;
-    @Autowired
-    private RedisConnectionFactory connectionFactory;
-    @Autowired
-    private AuthenticationManager authenticationManager;
-    @Autowired
-    private  PasswordEncoder passwordEncoder;
-    @Autowired
-    private SparkClientDetailsService sparkClientDetailsService;
+    private final SparkUserDetailService sparkUserDetailService;
+    private final RedisConnectionFactory connectionFactory;
+    private final AuthenticationManager authenticationManager;
+    private final DataSource dataSource;
 
     /**
-     *  配置客户端详情信息，客户端详情信息在这里进行初始化，通过数据库来存储调取详情信息
-     * */
+     * 配置客户端详情信息，客户端详情信息在这里进行初始化，通过数据库来存储调取详情信息
+     */
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+        SparkClientDetailsService sparkClientDetailsService = new SparkClientDetailsService(dataSource);
         clients.withClientDetails(sparkClientDetailsService);
     }
 
@@ -74,7 +70,7 @@ public class SparkAuthorizationServerConfig extends AuthorizationServerConfigure
                 .tokenEnhancer(tokenEnhancerChain)
                 .tokenEnhancer(tokenEnhancer())
                 .reuseRefreshTokens(false)
-                 //自定义异常处理
+                //自定义异常处理
                 .exceptionTranslator(new SparkWebResponseExceptionTranslator());
     }
 
@@ -95,7 +91,6 @@ public class SparkAuthorizationServerConfig extends AuthorizationServerConfigure
                 .tokenKeyAccess("permitAll()")
                 // 开启/oauth/check_token验证端口认证权限访问
                 .checkTokenAccess("isAuthenticated()")
-                .passwordEncoder(passwordEncoder)
                 //允许表单认证
                 .allowFormAuthenticationForClients();
     }

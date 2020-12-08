@@ -56,7 +56,7 @@ public class IndexServiceImpl implements IndexService {
     @Override
     public void deleteCache() {
         //删除客户端
-        Set<String> clientKeys = redisUtils.keys(GlobalsConstants.getCacheKey(RedisConstants.CLIENT_CACHE, RedisConstants.CLIENT_DETAILS_KEY + "*"));
+        Set<String> clientKeys = redisUtils.keys(RedisConstants.CLIENT_CACHE);
         redisUtils.delete(clientKeys);
         //删除字典缓存
         redisUtils.delete(GlobalsConstants.getCacheKey(RedisConstants.DICT_CACHE, RedisConstants.DICT_KEY_ALL_PREFIX));

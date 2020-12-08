@@ -25,7 +25,7 @@ import org.springframework.stereotype.Service;
 public class OauthClientDetailsServiceImpl extends ServiceImpl<OauthClientDetailsDao, OauthClientDetails> implements OauthClientDetailsService {
 
     @Override
-    @Cacheable(value= RedisConstants.CLIENT_CACHE,unless = "#result == null", key="T(com.spark.platform.common.base.constants.RedisConstants).CLIENT_DETAILS_KEY.concat(T(String).valueOf(#clientId))")
+    @Cacheable(value= RedisConstants.CLIENT_CACHE,unless = "#result == null", key="#clientId")
     public OauthClientDetails findOauthClientDetailsByClientId(String clientId) {
         return this.baseMapper.getOauthClientDetailsByClientId(clientId);
     }
@@ -38,7 +38,7 @@ public class OauthClientDetailsServiceImpl extends ServiceImpl<OauthClientDetail
     }
 
     @Override
-    @CacheEvict(value = RedisConstants.CLIENT_CACHE, allEntries = true)
+    @CacheEvict(value = RedisConstants.CLIENT_CACHE,key = "#oauthClientDetails.clientId")
     public void insertOrUpdate(OauthClientDetails oauthClientDetails) {
         super.saveOrUpdate(oauthClientDetails);
     }
