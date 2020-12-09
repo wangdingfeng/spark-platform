@@ -7,7 +7,7 @@ import com.spark.platform.common.base.support.ApiResponse;
 import com.spark.platform.common.base.support.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +22,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/dept")
 @Api(tags = "部门管理")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class DeptController extends BaseController {
 
     private final DeptService deptService;

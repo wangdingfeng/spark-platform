@@ -22,7 +22,7 @@ import com.spark.platform.admin.biz.service.gen.GenService;
 import com.spark.platform.common.config.datasource.DataSourceProperties;
 import com.spark.platform.common.config.properties.SparkProperties;
 import com.spark.platform.common.utils.FileUtil;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -43,7 +43,7 @@ import java.util.List;
  * @Version: 1.0
  */
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class GenServiceImpl implements GenService {
 

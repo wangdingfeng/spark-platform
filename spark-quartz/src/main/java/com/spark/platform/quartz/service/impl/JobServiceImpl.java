@@ -14,7 +14,7 @@ import com.spark.platform.quartz.entity.Job;
 import com.spark.platform.quartz.service.JobService;
 import com.spark.platform.quartz.util.CronUtils;
 import com.spark.platform.quartz.util.ScheduleUtils;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.quartz.JobDataMap;
 import org.quartz.JobKey;
 import org.quartz.Scheduler;
@@ -37,7 +37,7 @@ import java.util.List;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class JobServiceImpl extends ServiceImpl<JobDao, Job> implements JobService {
 
     private final Scheduler scheduler;

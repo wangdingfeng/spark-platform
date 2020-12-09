@@ -11,7 +11,7 @@ import com.spark.platform.common.base.support.BaseController;
 import com.spark.platform.common.log.annotation.ApiLog;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,7 +31,7 @@ import java.util.List;
  */
 @RestController
 @Api(tags = "日志")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class LogController extends BaseController {
 
     private final LogApiService apiLogService;

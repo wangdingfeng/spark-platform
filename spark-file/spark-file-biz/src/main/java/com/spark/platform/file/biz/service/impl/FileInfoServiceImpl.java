@@ -21,7 +21,7 @@ import com.spark.platform.common.utils.FileUtil;
 import com.spark.platform.file.biz.dao.FileInfoDao;
 import com.spark.platform.file.biz.service.FileInfoService;
 import com.spark.platform.file.biz.utils.MinioUtil;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -48,7 +48,7 @@ import java.util.List;
  * @since 2020-04-18
  */
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class FileInfoServiceImpl extends ServiceImpl<FileInfoDao, FileInfo> implements FileInfoService {
 

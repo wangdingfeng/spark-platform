@@ -11,7 +11,7 @@ import com.spark.platform.common.base.support.BaseController;
 import com.spark.platform.file.biz.service.FileInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -38,7 +38,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/file-info")
 @Api(tags = "文件上传")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class FileInfoController extends BaseController {
 
     private final FileInfoService fileInfoService;

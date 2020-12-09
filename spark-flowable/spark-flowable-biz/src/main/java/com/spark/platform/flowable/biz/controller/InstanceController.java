@@ -12,7 +12,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +26,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("runtime/process-instances")
 @Api(value = "Instance", tags = {"流程实例"})
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class InstanceController extends BaseController {
 
     private final ActInstanceService actInstanceService;

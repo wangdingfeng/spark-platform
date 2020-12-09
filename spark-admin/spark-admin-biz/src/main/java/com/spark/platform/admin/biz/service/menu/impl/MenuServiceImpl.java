@@ -10,7 +10,7 @@ import com.spark.platform.admin.biz.dao.menu.MenuDao;
 import com.spark.platform.admin.biz.dao.role.RoleMenuDao;
 import com.spark.platform.admin.biz.service.menu.MenuService;
 import com.spark.platform.common.utils.TreeUtils;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +26,7 @@ import java.util.List;
  * @Version: 1.0
  */
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class MenuServiceImpl extends ServiceImpl<MenuDao, Menu> implements MenuService {
 
     private final RoleMenuDao roleMenuDao;

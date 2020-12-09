@@ -9,7 +9,7 @@ import com.spark.platform.common.base.support.ApiResponse;
 import com.spark.platform.common.base.support.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,7 +30,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/gen")
 @Api(tags = "代码生成器")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class GenController extends BaseController {
 
     private final GenService genService;

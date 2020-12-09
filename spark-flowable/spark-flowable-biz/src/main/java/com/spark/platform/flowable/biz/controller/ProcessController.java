@@ -10,7 +10,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,7 +29,7 @@ import java.util.zip.ZipInputStream;
 @RestController
 @RequestMapping("/runtime/process-definitions")
 @Api(value = "Process", tags = {"流程定义"}, description = "注意：如果部署流程定义时指定了tenantId,那么在启动流程实例的时候，也需要传递tenantId，否则报错")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ProcessController extends BaseController {
 
     private final ActProcessService actProcessService;

@@ -9,7 +9,7 @@ import com.spark.platform.flowable.api.enums.VariablesEnum;
 import com.spark.platform.flowable.api.request.TaskRequestQuery;
 import com.spark.platform.flowable.api.vo.HistTaskVO;
 import com.spark.platform.flowable.biz.service.ActHistTaskService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.flowable.engine.HistoryService;
 import org.flowable.engine.history.HistoricActivityInstance;
@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
  * @Description: 历史流程service
  */
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ActHistTaskServiceImpl implements ActHistTaskService {
 
     private final HistoryService historyService;

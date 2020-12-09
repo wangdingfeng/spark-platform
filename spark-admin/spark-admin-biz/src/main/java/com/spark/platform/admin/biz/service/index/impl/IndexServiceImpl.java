@@ -8,7 +8,7 @@ import com.spark.platform.admin.biz.service.index.IndexService;
 import com.spark.platform.common.base.constants.GlobalsConstants;
 import com.spark.platform.common.base.constants.RedisConstants;
 import com.spark.platform.common.base.utils.RedisUtils;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,7 +25,7 @@ import java.util.Set;
  * @Version: 1.0
  */
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class IndexServiceImpl implements IndexService {
 
     private final LoginLogDao loginLogDao;

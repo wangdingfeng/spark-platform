@@ -24,7 +24,7 @@ import com.spark.platform.flowable.api.feign.client.InstanceClient;
 import com.spark.platform.flowable.api.feign.client.TaskClient;
 import com.spark.platform.flowable.api.request.ExecuteTaskRequest;
 import com.spark.platform.flowable.api.request.ProcessInstanceCreateRequest;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -43,7 +43,7 @@ import java.util.Map;
  */
 @Service
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ArticleServiceImpl extends ServiceImpl<ArticleDao, Article> implements ArticleService {
 
     private final InstanceClient instanceClient;

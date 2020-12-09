@@ -15,7 +15,7 @@ import com.spark.platform.common.base.constants.RedisConstants;
 import com.spark.platform.common.base.support.WrapperSupport;
 import com.spark.platform.common.base.utils.RedisUtils;
 import com.spark.platform.common.base.vo.DictVo;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,7 +30,7 @@ import java.util.Map;
  * @Description: 字典
  */
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class DictServiceImpl extends ServiceImpl<DictDao, Dict> implements DictService {
 
     private final DictItemDao dictItemDao;

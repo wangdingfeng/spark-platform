@@ -7,7 +7,7 @@ import com.spark.platform.quartz.entity.JobLog;
 import com.spark.platform.quartz.service.JobLogService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -25,7 +25,7 @@ import com.spark.platform.common.base.support.BaseController;
 @RestController
 @RequestMapping("/job-log")
 @Api(tags = "任务调度日志")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class JobLogController extends BaseController {
 
     private final JobLogService jobLogService;

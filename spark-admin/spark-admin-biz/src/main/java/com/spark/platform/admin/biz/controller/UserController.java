@@ -11,7 +11,7 @@ import com.spark.platform.common.log.annotation.ApiLog;
 import com.spark.platform.common.security.util.UserUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +31,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 @Api(tags = "用户管理")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserController extends BaseController {
 
     private final UserService userService;

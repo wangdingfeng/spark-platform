@@ -4,7 +4,7 @@ package com.spark.platform.common.log.listener;
 import com.spark.platform.admin.api.entity.log.LogApi;
 import com.spark.platform.admin.api.feign.client.LogClient;
 import com.spark.platform.common.log.event.ApiLogEvent;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
@@ -20,7 +20,7 @@ import org.springframework.scheduling.annotation.Async;
  * @Version: 1.0
  */
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ApiLogListener {
 
     private final LogClient logClient;

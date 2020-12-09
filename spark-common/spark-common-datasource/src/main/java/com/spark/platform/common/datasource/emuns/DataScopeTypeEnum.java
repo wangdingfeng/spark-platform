@@ -32,17 +32,5 @@ public enum DataScopeTypeEnum {
     private int type;
 
     private String description;
-
-
-    public static DataScopeTypeEnum valueOf(int type) {
-        for(DataScopeTypeEnum typeVar : DataScopeTypeEnum.values()) {
-            if(typeVar.getType() == type) {
-                return typeVar;
-            }
-        }
-        return  ALL;
-    }
-
-
 }
 

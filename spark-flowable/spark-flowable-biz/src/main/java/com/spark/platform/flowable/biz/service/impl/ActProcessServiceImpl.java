@@ -10,7 +10,7 @@ import com.spark.platform.flowable.api.dto.ProcessDefinitionDTO;
 import com.spark.platform.flowable.api.vo.DeploymentVO;
 import com.spark.platform.flowable.api.vo.ProcessDefinitionVO;
 import com.spark.platform.flowable.biz.service.ActProcessService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -41,7 +41,7 @@ import java.util.zip.ZipInputStream;
  */
 @Service
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ActProcessServiceImpl implements ActProcessService {
 
     private final RepositoryService repositoryService;

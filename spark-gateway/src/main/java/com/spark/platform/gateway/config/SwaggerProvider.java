@@ -1,6 +1,6 @@
 package com.spark.platform.gateway.config;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.cloud.gateway.config.GatewayProperties;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.support.NameUtils;
@@ -22,7 +22,7 @@ import java.util.List;
  */
 @Component
 @Primary
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class SwaggerProvider implements SwaggerResourcesProvider {
     public static final String API_URI = "/v2/api-docs";
     private final RouteLocator routeLocator;

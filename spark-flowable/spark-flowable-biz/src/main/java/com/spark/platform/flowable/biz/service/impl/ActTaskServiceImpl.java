@@ -5,7 +5,7 @@ import com.google.common.collect.Maps;
 import com.spark.platform.flowable.api.enums.ActionEnum;
 import com.spark.platform.flowable.biz.service.ActTaskQueryService;
 import com.spark.platform.flowable.biz.service.ActTaskService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.TaskService;
@@ -24,7 +24,7 @@ import java.util.Map;
  */
 @Service
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ActTaskServiceImpl implements ActTaskService {
 
     private final TaskService taskService;

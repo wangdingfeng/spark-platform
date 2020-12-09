@@ -7,7 +7,7 @@ import ${package.Entity}.${entity};
 import com.spark.platform.common.base.support.ApiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,7 +42,7 @@ import ${superControllerClassPackage};
 class ${table.controllerName}<#if superControllerClass??> : ${superControllerClass}()</#if>
 <#else>
 @Api(tags = "${table.comment!}")
-@AllArgsConstructor
+@RequiredArgsConstructor
 <#if superControllerClass??>
 public class ${table.controllerName} extends ${superControllerClass} {
 <#else>

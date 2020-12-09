@@ -12,7 +12,7 @@ import com.spark.platform.flowable.api.vo.ProcessInstanceVo;
 import com.spark.platform.flowable.api.vo.TaskVO;
 import com.spark.platform.flowable.biz.service.ActInstanceService;
 import com.spark.platform.flowable.biz.service.ActTaskQueryService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.flowable.common.engine.api.FlowableIllegalArgumentException;
@@ -42,7 +42,7 @@ import java.util.Map;
  */
 @Service
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ActInstanceServiceImpl implements ActInstanceService {
 
     private final RuntimeService runtimeService;

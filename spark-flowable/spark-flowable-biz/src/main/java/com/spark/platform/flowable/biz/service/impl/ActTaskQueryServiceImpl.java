@@ -11,7 +11,7 @@ import com.spark.platform.flowable.api.enums.VariablesEnum;
 import com.spark.platform.flowable.api.request.TaskRequestQuery;
 import com.spark.platform.flowable.api.vo.TaskVO;
 import com.spark.platform.flowable.biz.service.ActTaskQueryService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.flowable.engine.HistoryService;
 import org.flowable.engine.RuntimeService;
@@ -34,7 +34,7 @@ import java.util.Map;
  * @Description: 任务查询
  */
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ActTaskQueryServiceImpl implements ActTaskQueryService {
 
     private final TaskService taskService;

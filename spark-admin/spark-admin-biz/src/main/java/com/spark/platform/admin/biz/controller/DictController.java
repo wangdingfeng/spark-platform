@@ -11,7 +11,7 @@ import com.spark.platform.common.base.support.ApiResponse;
 import com.spark.platform.common.base.support.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -26,7 +26,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/dict")
 @Api(tags = "字典管理")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class DictController extends BaseController {
 
     private final DictService dictService;
