@@ -16,7 +16,7 @@ import com.spark.platform.common.base.constants.GlobalsConstants;
 import com.spark.platform.common.base.constants.RedisConstants;
 import com.spark.platform.common.base.exception.BusinessException;
 import com.spark.platform.common.base.support.WrapperSupport;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
@@ -33,16 +33,15 @@ import java.util.List;
  * @Version: 1.0
  */
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class RoleServiceImpl extends ServiceImpl<RoleDao, Role> implements RoleService {
 
-    private final RoleDao roleDao;
     private final RoleMenuDao roleMenuDao;
 
     @Override
     public List<Role> getRoleByUserId(Long userId) {
-        return roleDao.getRoleByUserId(userId);
+        return super.baseMapper.getRoleByUserId(userId);
     }
 
     @Override
@@ -50,7 +49,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleDao, Role> implements RoleS
         QueryWrapper queryWrapper = new QueryWrapper<Role>();
         WrapperSupport.putParamsLike(queryWrapper, role, "roleName", "roleCode");
         WrapperSupport.putParamsEqual(queryWrapper, role, "deptId");
-        return roleDao.selectPage(page, queryWrapper);
+        return super.baseMapper.selectPage(page, queryWrapper);
     }
 
     @Override

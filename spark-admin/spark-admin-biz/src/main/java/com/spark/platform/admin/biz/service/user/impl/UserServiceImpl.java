@@ -28,7 +28,7 @@ import com.spark.platform.admin.biz.service.user.UserService;
 import com.spark.platform.common.base.support.WrapperSupport;
 import com.spark.platform.common.security.model.LoginUser;
 import com.spark.platform.common.security.util.UserUtils;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -53,7 +53,7 @@ import static java.util.stream.Collectors.toList;
  * @Version: 1.0
  */
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserService {
 
@@ -70,12 +70,10 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
             return null;
         }
         userDto.setSysUser(userVo);
-        List<String> permissions = Lists.newArrayList();
         //查询角色信息
-        permissions.addAll(roleService.getRoleByUserId(userVo.getId()).stream().map(Role::getRoleCode).collect(toList()));
-        permissions.addAll(menuService.findAuthByUserId(userVo.getId()).stream().map(Menu::getPermission).collect(toList()));
+        userDto.setRoles(roleService.getRoleByUserId(userVo.getId()).stream().map(Role::getRoleCode).collect(toList()));
         //查询权限
-        userDto.setPermissions(permissions);
+        userDto.setPermissions(menuService.findAuthByUserId(userVo.getId()).stream().map(Menu::getPermission).collect(toList()));
         return userDto;
     }
 

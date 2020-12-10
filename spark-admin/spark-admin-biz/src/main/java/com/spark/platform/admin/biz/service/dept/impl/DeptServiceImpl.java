@@ -16,28 +16,27 @@ import java.util.List;
 /**
  * @author: wangdingfeng
  * @Date: 2020/3/20 22:34
- * @Description:
+ * @Description: 部门管理
  */
 @Service
-public class DeptServiceImpl extends ServiceImpl<DeptDao,Dept> implements DeptService {
-
+public class DeptServiceImpl extends ServiceImpl<DeptDao, Dept> implements DeptService {
 
     @Override
     public List<Dept> list(Dept dept) {
         QueryWrapper<Dept> queryWrapper = new QueryWrapper<>();
-        if(null != dept && StringUtils.isNotBlank(dept.getFullName())){
-            queryWrapper.like("full_name",dept.getFullName());
+        if (null != dept && StringUtils.isNotBlank(dept.getFullName())) {
+            queryWrapper.like("full_name", dept.getFullName());
             return super.baseMapper.selectList(queryWrapper);
         }
 
-        return (List<Dept>) TreeUtils.toTree(super.baseMapper.selectList(queryWrapper),Dept.class);
+        return (List<Dept>) TreeUtils.toTree(super.baseMapper.selectList(queryWrapper), Dept.class);
     }
 
     @Override
     public List<VueTree> getTree(boolean isRoot) {
-        List<VueTree> vueTrees = (List<VueTree>)TreeUtils.toTree(super.baseMapper.getTree(),VueTree.class);
+        List<VueTree> vueTrees = (List<VueTree>) TreeUtils.toTree(super.baseMapper.getTree(), VueTree.class);
         //是否拼接根节点
-        if(isRoot){
+        if (isRoot) {
             vueTrees = Lists.newArrayList(VueTree.builder().id(0L).label("根目录").children(vueTrees).build());
         }
         return vueTrees;
@@ -46,7 +45,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptDao,Dept> implements DeptSe
     @Override
     public boolean saveOrUpdate(Dept entity) {
         String pids = "0";
-        if(entity.getPid().compareTo(0L) != 0){
+        if (entity.getPid().compareTo(0L) != 0) {
             //是否是根节点
             pids = super.baseMapper.getPidsById(entity.getPid()) + "," + entity.getPid();
         }

@@ -7,7 +7,7 @@ import com.spark.platform.quartz.entity.Job;
 import com.spark.platform.quartz.service.JobService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,7 +34,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/job")
 @Api(tags = "任务调度")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class JobController extends BaseController {
 
     private final JobService jobService;

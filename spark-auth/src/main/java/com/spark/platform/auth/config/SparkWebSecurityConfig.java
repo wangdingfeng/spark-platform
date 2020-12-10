@@ -3,7 +3,7 @@ package com.spark.platform.auth.config;
 import com.spark.platform.common.security.config.SparkResourceServerConfig;
 import com.spark.platform.common.security.properties.SparkSecurityProperties;
 import com.spark.platform.common.security.service.SparkUserDetailService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
@@ -26,18 +27,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 @Configuration
 @AutoConfigureBefore({SparkResourceServerConfig.class, SparkAuthorizationServerConfig.class})
+@RequiredArgsConstructor
 public class SparkWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private SparkUserDetailService sparkUserDetailService;
+    private final SparkUserDetailService sparkUserDetailService;
+    private final SparkSecurityProperties securityProperties;
 
-    @Autowired
-    private SparkSecurityProperties securityProperties;
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
     @Bean
     @Override
@@ -63,5 +58,15 @@ public class SparkWebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(sparkUserDetailService).passwordEncoder(new BCryptPasswordEncoder());
+    }
+
+    /**
+     * 为了解决 Encoded password does not look like BCrypt
+     *
+     * @return
+     */
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 }

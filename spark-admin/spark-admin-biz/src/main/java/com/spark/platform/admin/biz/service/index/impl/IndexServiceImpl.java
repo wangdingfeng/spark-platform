@@ -8,7 +8,7 @@ import com.spark.platform.admin.biz.service.index.IndexService;
 import com.spark.platform.common.base.constants.GlobalsConstants;
 import com.spark.platform.common.base.constants.RedisConstants;
 import com.spark.platform.common.base.utils.RedisUtils;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,7 +25,7 @@ import java.util.Set;
  * @Version: 1.0
  */
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class IndexServiceImpl implements IndexService {
 
     private final LoginLogDao loginLogDao;
@@ -56,7 +56,7 @@ public class IndexServiceImpl implements IndexService {
     @Override
     public void deleteCache() {
         //删除客户端
-        Set<String> clientKeys = redisUtils.keys(GlobalsConstants.getCacheKey(RedisConstants.CLIENT_CACHE, RedisConstants.CLIENT_DETAILS_KEY + "*"));
+        Set<String> clientKeys = redisUtils.keys(RedisConstants.CLIENT_CACHE);
         redisUtils.delete(clientKeys);
         //删除字典缓存
         redisUtils.delete(GlobalsConstants.getCacheKey(RedisConstants.DICT_CACHE, RedisConstants.DICT_KEY_ALL_PREFIX));

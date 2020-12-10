@@ -8,7 +8,7 @@ import com.spark.platform.cms.article.service.ArticleService;
 import com.spark.platform.common.base.support.ApiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import com.spark.platform.common.base.support.BaseController;
@@ -26,7 +26,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/article")
 @Api(tags = "文章ArticleController")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ArticleController extends BaseController {
 
     private final ArticleService articleService;

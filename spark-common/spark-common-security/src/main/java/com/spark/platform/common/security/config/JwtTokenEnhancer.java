@@ -3,7 +3,6 @@ package com.spark.platform.common.security.config;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.spark.platform.common.security.model.LoginUser;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
@@ -12,9 +11,10 @@ import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * @author: wangdingfeng
@@ -31,22 +31,18 @@ public class JwtTokenEnhancer implements TokenEnhancer {
     @Override
     public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
         final Map<String, Object> additionalInfo = Maps.newHashMap();
+        if(authentication.getPrincipal() instanceof String){
+            // 如果不是密码模式登陆的没有用户信息 所以不用定制token
+            return accessToken;
+        }
         // 给/oauth/token接口加属性roles,author
         LoginUser user = (LoginUser) authentication.getPrincipal();
         List<GrantedAuthority> authorities = user.getAuthorities();
-        List<String> roleList = Lists.newArrayList();
         List<String> permissions = Lists.newArrayList();
         for (GrantedAuthority authority : authorities) {
-            if(authority.getAuthority().startsWith("role_")){
-                roleList.add(authority.getAuthority());
-            }else{
-                permissions.add(authority.getAuthority());
-            }
-
+            permissions.add(authority.getAuthority());
         }
-        String roles = StringUtils.join(roleList,",");
-        additionalInfo.put("roles", roles);
-        additionalInfo.put("permissions", permissions);
+        additionalInfo.put("permissions", authorities.stream().map(GrantedAuthority::getAuthority).collect(toList()));
         additionalInfo.put("author", "spark-auth");
         additionalInfo.put("createTime", df.format(LocalDateTime.now()));
         ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);

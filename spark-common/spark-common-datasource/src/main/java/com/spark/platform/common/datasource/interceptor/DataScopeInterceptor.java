@@ -10,7 +10,7 @@ import com.google.common.collect.Lists;
 import com.spark.platform.common.base.constants.GlobalsConstants;
 import com.spark.platform.common.datasource.annotation.DataScope;
 import com.spark.platform.common.datasource.emuns.DataScopeTypeEnum;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jsqlparser.expression.operators.conditional.AndExpression;
 import net.sf.jsqlparser.parser.CCJSqlParserManager;
@@ -51,12 +51,11 @@ import java.util.stream.Collectors;
  */
 @Order(90)
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Intercepts({@Signature(type = StatementHandler.class, method = "prepare", args = {Connection.class, Integer.class})})
 @Component
 public class DataScopeInterceptor extends AbstractSqlParserHandler implements Interceptor {
-    //后期改造成 从角色获取权限信息
-    private DataSource dataSource;
+    private final DataSource dataSource;
 
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
