@@ -1,14 +1,14 @@
 package com.spark.platform.wx.shop.api.entity.user;
 
-import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.*;
+
+import java.io.Serializable;
 import java.time.LocalDate;
-import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.time.LocalDateTime;
-import com.spark.platform.common.base.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
@@ -20,10 +20,9 @@ import lombok.experimental.Accessors;
  * @since 2020-12-10
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @ApiModel(value="ShopUser对象", description="shop会员管理")
-public class ShopUser extends BaseEntity {
+public class ShopUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -69,6 +68,15 @@ public class ShopUser extends BaseEntity {
 
     @ApiModelProperty(value = "更新时间")
     private LocalDateTime updateDate;
+
+    @TableField(value = "create_date", fill = FieldFill.INSERT)
+    @ApiModelProperty(value = "创建时间")
+    private LocalDateTime createDate;
+
+    @TableField(fill = FieldFill.INSERT)
+    @TableLogic(value = "0",delval = "1")
+    @ApiModelProperty(value = "系统状态")
+    private Integer delFlag;
 
 
 }
