@@ -49,5 +49,16 @@ public class Area extends BaseEntity {
     @ApiModelProperty(value = "区域类型")
     private Integer areaType;
 
+    /**
+     * 判断是否有子节点
+     * @return
+     */
+    public Boolean getHasChildren(){
+        if(level == 2){
+            return false;
+        }
+        return true;
+    }
+
 
 }

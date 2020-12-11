@@ -1,5 +1,6 @@
 package com.spark.platform.admin.biz.service.area.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.spark.platform.admin.api.entity.area.Area;
@@ -24,9 +25,11 @@ public class AreaServiceImpl extends ServiceImpl<AreaDao, Area> implements AreaS
 
     @Override
     public List<Area> list(Area area) {
+        LambdaQueryWrapper<Area> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(Area::getParentId,null == area.getParentId() ? 0 : area.getParentId());
         if (StringUtils.isNotBlank(area.getAreaName())) {
-            return super.list(Wrappers.<Area>lambdaQuery().like(Area::getAreaName, area.getAreaName()));
+            wrapper.like(Area::getAreaName, area.getAreaName());
         }
-        return (List<Area>) TreeUtils.toTree(super.list(), null, "parentId", null, Area.class);
+        return super.list(wrapper);
     }
 }

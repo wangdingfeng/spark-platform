@@ -12,6 +12,7 @@
     <version>2.0.1</version>
     <name>spark-wx-shop</name>
     <description>微信商城小程序</description>
+    <packaging>pom</packaging>
 
     <modules>
         <module>spark-wx-shop-api</module>

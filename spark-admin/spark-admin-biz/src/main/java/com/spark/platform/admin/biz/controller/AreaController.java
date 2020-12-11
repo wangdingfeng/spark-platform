@@ -1,8 +1,6 @@
 package com.spark.platform.admin.biz.controller;
 
 
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spark.platform.admin.api.entity.area.Area;
 import com.spark.platform.admin.biz.service.area.AreaService;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,17 +26,17 @@ import com.spark.platform.common.base.support.BaseController;
  * @since 2020-12-10
  */
 @RestController
-@RequestMapping("/sys/area")
+@RequestMapping("/area")
 @Api(tags = "行政区划")
 @AllArgsConstructor
 public class AreaController extends BaseController {
 
       private final AreaService areaService;
 
-      @GetMapping("/page")
+      @GetMapping("/list")
       @ApiOperation(value = "行政区划列表")
-      public ApiResponse page(Area area, Page page){
-        return success(areaService.page(page, Wrappers.query(area)));
+      public ApiResponse list(Area area){
+        return success(areaService.list(area));
       }
 
       @PostMapping
