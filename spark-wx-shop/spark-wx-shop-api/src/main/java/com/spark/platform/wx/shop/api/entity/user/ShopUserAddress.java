@@ -50,7 +50,7 @@ public class ShopUserAddress implements Serializable {
     private String mobile;
 
     @ApiModelProperty(value = "是否默认地址")
-    private Boolean isDefault;
+    private String isDefault;
 
     @TableField(value = "create_date", fill = FieldFill.INSERT)
     @ApiModelProperty(value = "创建时间")

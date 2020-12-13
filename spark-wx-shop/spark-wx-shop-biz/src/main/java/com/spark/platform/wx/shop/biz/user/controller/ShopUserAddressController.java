@@ -28,7 +28,7 @@ import com.spark.platform.common.base.support.BaseController;
  * @since 2020-12-10
  */
 @RestController
-@RequestMapping("/user/shop-user-address")
+@RequestMapping("/user/address")
 @Api(tags = "收货地址表")
 @AllArgsConstructor
 public class ShopUserAddressController extends BaseController {

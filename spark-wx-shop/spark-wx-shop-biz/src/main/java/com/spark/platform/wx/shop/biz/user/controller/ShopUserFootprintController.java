@@ -28,7 +28,7 @@ import com.spark.platform.common.base.support.BaseController;
  * @since 2020-12-10
  */
 @RestController
-@RequestMapping("/user/shop-user-footprint")
+@RequestMapping("/user/footprint")
 @Api(tags = "用户浏览足迹")
 @AllArgsConstructor
 public class ShopUserFootprintController extends BaseController {

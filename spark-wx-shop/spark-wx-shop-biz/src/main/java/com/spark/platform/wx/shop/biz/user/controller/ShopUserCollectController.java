@@ -28,7 +28,7 @@ import com.spark.platform.common.base.support.BaseController;
  * @since 2020-12-10
  */
 @RestController
-@RequestMapping("/user/shop-user-collect")
+@RequestMapping("/user/collect")
 @Api(tags = "用户收藏")
 @AllArgsConstructor
 public class ShopUserCollectController extends BaseController {

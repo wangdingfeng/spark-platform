@@ -1,6 +1,7 @@
 package com.spark.platform.common.utils;
 
 import com.alibaba.fastjson.JSONObject;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
@@ -11,8 +12,9 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 /**
- * @author LHL
+ * @author wangdingfeng
  */
+@Slf4j
 public class HttpCallOtherInterfaceUtils {
 
     public static String callOtherPostInterface(JSONObject jsonParam, String gatewayUrl, String postUrl) {
@@ -37,8 +39,9 @@ public class HttpCallOtherInterfaceUtils {
             e.printStackTrace();
             //throw new RuntimeException(e);
         }
-        return null == jsonObject?"":jsonObject.toString();
+        return null == jsonObject ? "" : jsonObject.toString();
     }
+
     public static String callOtherInterface(String gatewayUrl, String getUrl) {
         HttpClient client = HttpClients.createDefault();
         // 要调用的接口方法
@@ -55,8 +58,28 @@ public class HttpCallOtherInterfaceUtils {
             System.out.println("服务间接口调用出错！");
             e.printStackTrace();
         }
-        return null == jsonObject?"":jsonObject.toString();
+        return null == jsonObject ? "" : jsonObject.toString();
     }
+
+    public static JSONObject getUrl(String url) {
+        HttpClient client = HttpClients.createDefault();
+        // 要调用的接口方法
+        HttpGet get = new HttpGet(url);
+        JSONObject jsonObject = null;
+        try {
+            HttpResponse res = client.execute(get);
+            if (res.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+                // 返回json格式：
+                jsonObject = JSONObject.parseObject(EntityUtils.toString(res.getEntity()));
+            }
+        } catch (Exception e) {
+            log.error("get请求方法失败", e);
+        }
+        return jsonObject;
+
+    }
+
+
     public static String callOtherGetInterface(String gatewayUrl, String getUrl) {
         HttpClient client = HttpClients.createDefault();
         // 要调用的接口方法
@@ -73,6 +96,6 @@ public class HttpCallOtherInterfaceUtils {
             System.out.println("服务间接口调用出错！");
             e.printStackTrace();
         }
-        return null == jsonObject?"":jsonObject.toString();
+        return null == jsonObject ? "" : jsonObject.toString();
     }
 }

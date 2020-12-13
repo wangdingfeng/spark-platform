@@ -6,17 +6,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spark.platform.wx.shop.api.entity.user.ShopUser;
 import com.spark.platform.wx.shop.biz.user.service.ShopUserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import com.spark.platform.common.base.support.ApiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 import com.spark.platform.common.base.support.BaseController;
 
 /**
@@ -28,7 +21,7 @@ import com.spark.platform.common.base.support.BaseController;
  * @since 2020-12-10
  */
 @RestController
-@RequestMapping("/user/shop-user")
+@RequestMapping("/user")
 @Api(tags = "shop会员管理")
 @RequiredArgsConstructor
 public class ShopUserController extends BaseController {
@@ -47,10 +40,10 @@ public class ShopUserController extends BaseController {
         return success(shopUserService.save(shopUser));
       }
 
-      @PutMapping
-      @ApiOperation(value = "更新shop会员管理信息")
-      public ApiResponse update(@RequestBody ShopUser shopUser){
-        return success(shopUserService.updateById(shopUser));
+      @PatchMapping("/{id}/{status}")
+      @ApiOperation(value = "更新shop会员状态")
+      public ApiResponse update(@PathVariable Integer id,@PathVariable Integer status){
+        return success(shopUserService.updateStatus(id,status));
       }
 
       @DeleteMapping("/{id}")
