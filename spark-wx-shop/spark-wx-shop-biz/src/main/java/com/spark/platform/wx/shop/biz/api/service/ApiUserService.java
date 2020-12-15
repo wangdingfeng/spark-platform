@@ -1,6 +1,7 @@
 package com.spark.platform.wx.shop.biz.api.service;
 
 import com.spark.platform.wx.shop.api.dto.WxLoginDTO;
+import com.spark.platform.wx.shop.api.entity.user.ShopUser;
 
 /**
  * @author: wangdingfeng
@@ -13,6 +14,6 @@ public interface ApiUserService {
      * @param loginDTO
      * @return
      */
-    String login(WxLoginDTO loginDTO);
+    ShopUser login(WxLoginDTO loginDTO);
 
 }

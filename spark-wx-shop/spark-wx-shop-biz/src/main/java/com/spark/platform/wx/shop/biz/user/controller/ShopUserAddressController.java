@@ -5,11 +5,11 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spark.platform.wx.shop.api.entity.user.ShopUserAddress;
 import com.spark.platform.wx.shop.biz.user.service.ShopUserAddressService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.spark.platform.common.base.support.ApiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,7 +30,7 @@ import com.spark.platform.common.base.support.BaseController;
 @RestController
 @RequestMapping("/user/address")
 @Api(tags = "收货地址表")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ShopUserAddressController extends BaseController {
 
       private final ShopUserAddressService shopUserAddressService;

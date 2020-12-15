@@ -1,5 +1,6 @@
 package com.spark.platform.admin.api.feign.client;
 
+import com.spark.platform.admin.api.entity.authority.OauthClientDetails;
 import com.spark.platform.common.base.constants.ServiceNameConstants;
 import com.spark.platform.common.feign.config.FeignRequestInterceptorConfig;
 import com.spark.platform.admin.api.feign.fallback.AuthorityClientFallBackFactory;
@@ -23,6 +24,6 @@ public interface AuthorityClient {
      * @param clientId
      * @return
      */
-    @GetMapping("/authority/api/info")
-    ApiResponse getOauthClientDetailsByClientId(@RequestParam String clientId);
+    @GetMapping("/authority/info")
+    ApiResponse<OauthClientDetails> getOauthClientDetailsByClientId(@RequestParam String clientId);
 }

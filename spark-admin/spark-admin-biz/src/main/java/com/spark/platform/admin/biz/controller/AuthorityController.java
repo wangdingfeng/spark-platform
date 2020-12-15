@@ -3,6 +3,7 @@ package com.spark.platform.admin.biz.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spark.platform.admin.api.entity.authority.OauthClientDetails;
+import com.spark.platform.admin.api.vo.SelectVo;
 import com.spark.platform.admin.biz.service.authority.OauthClientDetailsService;
 import com.spark.platform.common.base.support.BaseController;
 import com.spark.platform.common.base.support.ApiResponse;
@@ -32,13 +33,13 @@ public class AuthorityController extends BaseController {
     private final OauthClientDetailsService oauthClientDetailsService;
 
 
-    @GetMapping("/api/info")
+    @GetMapping("/info")
     @ApiOperation(value = "根据clientId获取认证客户端详情信息")
     public ApiResponse<OauthClientDetails> getOauthClientDetailsByClientId(@RequestParam String clientId) {
         return success(oauthClientDetailsService.findOauthClientDetailsByClientId(clientId));
     }
 
-    @PostMapping("/page")
+    @GetMapping("/page")
     @ApiOperation(value = "分页查询")
     public ApiResponse<IPage> page(OauthClientDetails oauthClientDetails, Page page){
         return success(oauthClientDetailsService.findPage(oauthClientDetails,page));
@@ -67,6 +68,11 @@ public class AuthorityController extends BaseController {
         return success(oauthClientDetailsService.removeById(id));
     }
 
+    @GetMapping("/select")
+    @ApiOperation(value = "获取认证客户端下拉框数据")
+    public ApiResponse<SelectVo> select(){
+        return success(oauthClientDetailsService.selectElem());
+    }
 
 
 }

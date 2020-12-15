@@ -17,6 +17,8 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = GlobalsConstants.SPARK_PREFIX)
 public class SparkProperties {
+    @ApiModelProperty(value = "网关地址")
+    private String gatewayUrl;
     @ApiModelProperty(value = "文件路径")
     private String filePath;
     @ApiModelProperty(value = "redis配置")

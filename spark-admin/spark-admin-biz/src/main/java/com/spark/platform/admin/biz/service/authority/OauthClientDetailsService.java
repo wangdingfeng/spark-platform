@@ -5,6 +5,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.spark.platform.admin.api.entity.authority.OauthClientDetails;
+import com.spark.platform.admin.api.vo.SelectVo;
+
+import java.util.List;
 
 /**
  * @author: wangdingfeng
@@ -38,5 +41,11 @@ public interface OauthClientDetailsService extends IService<OauthClientDetails> 
      * @return
      */
     void insertOrUpdate(OauthClientDetails oauthClientDetails);
+
+    /**
+     * 获取所有的数据 select 插件使用
+     * @return
+     */
+    List<SelectVo> selectElem();
 
 }

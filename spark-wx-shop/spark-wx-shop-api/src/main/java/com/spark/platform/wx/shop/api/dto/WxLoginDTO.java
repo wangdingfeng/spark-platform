@@ -14,6 +14,9 @@ import javax.validation.constraints.NotNull;
 @Data
 @ApiModel(value="LoginDTO对象", description="登录获取用户的DTO")
 public class WxLoginDTO {
+    @ApiModelProperty(value = "小程序appId")
+    @NotNull(message = "appId不能为空")
+    private String appId;
     @ApiModelProperty(value = "登录时获取的code")
     @NotNull(message = "js_code不能为空")
     private String jsCode;

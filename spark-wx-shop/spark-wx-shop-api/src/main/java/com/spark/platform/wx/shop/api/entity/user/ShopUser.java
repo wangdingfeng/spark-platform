@@ -37,7 +37,7 @@ public class ShopUser implements Serializable {
     private String password;
 
     @ApiModelProperty(value = "性别：0 未知， 1男， 1 女")
-    private Integer gender;
+    private String gender;
 
     @ApiModelProperty(value = "生日")
     private LocalDate birthday;
@@ -77,6 +77,9 @@ public class ShopUser implements Serializable {
     @TableLogic(value = "0",delval = "1")
     @ApiModelProperty(value = "系统状态")
     private Integer delFlag;
+
+    @ApiModelProperty(value = "token")
+    private transient String token;
 
 
 }

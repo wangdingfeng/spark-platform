@@ -16,8 +16,14 @@ import org.apache.http.util.EntityUtils;
  */
 @Slf4j
 public class HttpCallOtherInterfaceUtils {
-
-    public static String callOtherPostInterface(JSONObject jsonParam, String gatewayUrl, String postUrl) {
+    /**
+     * 服务间调用
+     * @param jsonParam 参数
+     * @param gatewayUrl 网关地址
+     * @param postUrl 请求地址
+     * @return
+     */
+    public static JSONObject callOtherPostInterface(JSONObject jsonParam, String gatewayUrl, String postUrl) {
         HttpClient client = HttpClients.createDefault();
         // 要调用的接口方法
         String url = gatewayUrl + postUrl;
@@ -35,14 +41,17 @@ public class HttpCallOtherInterfaceUtils {
                 jsonObject = JSONObject.parseObject(EntityUtils.toString(res.getEntity()));
             }
         } catch (Exception e) {
-            System.out.println("服务间接口调用出错！");
-            e.printStackTrace();
-            //throw new RuntimeException(e);
+            log.error("服务间接口POST请求调用出错！",e);
         }
-        return null == jsonObject ? "" : jsonObject.toString();
+        return jsonObject;
     }
-
-    public static String callOtherInterface(String gatewayUrl, String getUrl) {
+    /**
+     * 服务间调用
+     * @param gatewayUrl 网关地址
+     * @param getUrl 请求地址
+     * @return
+     */
+    public static JSONObject callOtherInterface(String gatewayUrl, String getUrl) {
         HttpClient client = HttpClients.createDefault();
         // 要调用的接口方法
         String url = gatewayUrl + getUrl;
@@ -55,12 +64,16 @@ public class HttpCallOtherInterfaceUtils {
                 jsonObject = JSONObject.parseObject(EntityUtils.toString(res.getEntity()));
             }
         } catch (Exception e) {
-            System.out.println("服务间接口调用出错！");
-            e.printStackTrace();
+            log.error("服务间接口GET请求调用出错！",e);
         }
-        return null == jsonObject ? "" : jsonObject.toString();
+        return jsonObject;
     }
 
+    /**
+     * 发送 get请求
+     * @param url
+     * @return
+     */
     public static JSONObject getUrl(String url) {
         HttpClient client = HttpClients.createDefault();
         // 要调用的接口方法

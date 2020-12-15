@@ -9,7 +9,7 @@ import com.spark.platform.wx.shop.biz.user.service.ShopUserFootprintService;
 import com.spark.platform.common.base.support.ApiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,7 +30,7 @@ import com.spark.platform.common.base.support.BaseController;
 @RestController
 @RequestMapping("/user/footprint")
 @Api(tags = "用户浏览足迹")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ShopUserFootprintController extends BaseController {
 
       private final ShopUserFootprintService shopUserFootprintService;
