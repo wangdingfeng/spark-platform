@@ -4,18 +4,13 @@ package com.spark.platform.wx.shop.biz.goods.controller;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spark.platform.wx.shop.api.entity.goods.ShopGoods;
+import com.spark.platform.wx.shop.api.enums.ShopGoodsStatusEnums;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import com.spark.platform.wx.shop.biz.goods.service.ShopGoodsService;
 import com.spark.platform.common.base.support.ApiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 import com.spark.platform.common.base.support.BaseController;
 
 import javax.validation.Valid;
@@ -57,8 +52,20 @@ public class ShopGoodsController extends BaseController {
 
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id获取商品表信息")
-    public ApiResponse getById(@PathVariable Integer id) {
+    public ApiResponse<ShopGoods> getById(@PathVariable Integer id) {
         return success(shopGoodsService.getShopGoods(id));
+    }
+
+    @PatchMapping("/publish/{id}")
+    @ApiOperation(value = "根据id上架商品")
+    public ApiResponse publish(@PathVariable Integer id){
+        return success(shopGoodsService.updateStatus(id, ShopGoodsStatusEnums.PUBLISH.getStatus()));
+    }
+
+    @PatchMapping("/off/{id}")
+    @ApiOperation(value = "根据id下架商品")
+    public ApiResponse off(@PathVariable Integer id){
+        return success(shopGoodsService.updateStatus(id, ShopGoodsStatusEnums.OFF_PUBLISH.getStatus()));
     }
 
 }

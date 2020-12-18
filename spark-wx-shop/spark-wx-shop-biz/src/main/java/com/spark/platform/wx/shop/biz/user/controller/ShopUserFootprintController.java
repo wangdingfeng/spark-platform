@@ -1,7 +1,6 @@
 package com.spark.platform.wx.shop.biz.user.controller;
 
 
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spark.platform.wx.shop.api.entity.user.ShopUserFootprint;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +37,7 @@ public class ShopUserFootprintController extends BaseController {
       @GetMapping("/page")
       @ApiOperation(value = "用户浏览足迹列表")
       public ApiResponse page(ShopUserFootprint shopUserFootprint, Page page){
-        return success(shopUserFootprintService.page(page, Wrappers.query(shopUserFootprint)));
+        return success(shopUserFootprintService.listPage(page, shopUserFootprint));
       }
 
       @PostMapping

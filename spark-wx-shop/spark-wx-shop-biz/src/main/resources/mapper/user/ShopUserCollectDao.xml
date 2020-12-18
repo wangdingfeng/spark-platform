@@ -17,4 +17,14 @@
         user_id, goods_id
     </sql>
 
+    <select id="listPage" resultType="com.spark.platform.wx.shop.api.entity.user.ShopUserCollect">
+        SELECT
+            c.*,
+            g.goods_sn,
+            g.title 'goodsTitle'
+        FROM
+            shop_user_collect c
+            LEFT JOIN shop_goods g ON c.goods_id = g.id
+        ${ew.customSqlSegment}
+    </select>
 </mapper>

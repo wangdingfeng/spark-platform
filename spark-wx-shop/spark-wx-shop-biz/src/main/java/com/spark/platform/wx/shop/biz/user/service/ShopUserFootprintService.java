@@ -1,5 +1,7 @@
 package com.spark.platform.wx.shop.biz.user.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.spark.platform.wx.shop.api.entity.user.ShopUserFootprint;
 
@@ -12,4 +14,11 @@ import com.spark.platform.wx.shop.api.entity.user.ShopUserFootprint;
  * @since 2020-12-10
  */
 public interface ShopUserFootprintService extends IService<ShopUserFootprint> {
+
+    /**
+     * 分页
+     * @param page
+     * @return
+     */
+    IPage listPage(Page page, ShopUserFootprint shopUserFootprint);
 }

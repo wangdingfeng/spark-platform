@@ -1,23 +1,22 @@
-package com.spark.platform.wx.shop.biz.user.dao;
+package com.spark.platform.wx.shop.biz.goods.dao;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.spark.platform.wx.shop.api.entity.user.ShopUserFootprint;
+import com.spark.platform.wx.shop.api.entity.goods.ShopGoodsComment;
 import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
- * 用户浏览足迹 Mapper 接口
+ * 商品评价 Mapper 接口
  * </p>
  *
  * @author wangdingfeng
- * @since 2020-12-10
+ * @since 2020-12-18
  */
-public interface ShopUserFootprintDao extends BaseMapper<ShopUserFootprint> {
-
+public interface ShopGoodsCommentDao extends BaseMapper<ShopGoodsComment> {
     /**
      * 分页
      * @param page

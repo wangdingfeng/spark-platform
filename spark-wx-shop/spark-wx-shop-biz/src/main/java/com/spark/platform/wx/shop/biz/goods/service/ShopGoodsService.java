@@ -30,4 +30,12 @@ public interface ShopGoodsService extends IService<ShopGoods> {
      */
     ShopGoods getShopGoods(Integer id);
 
+    /**
+     * 修改商品上架状态
+     * @param id
+     * @param status
+     * @return
+     */
+    boolean updateStatus(Integer id, String status);
+
 }

@@ -1,7 +1,6 @@
 package com.spark.platform.wx.shop.biz.user.controller;
 
 
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spark.platform.wx.shop.api.entity.user.ShopUserCollect;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +37,7 @@ public class ShopUserCollectController extends BaseController {
       @GetMapping("/page")
       @ApiOperation(value = "用户收藏列表")
       public ApiResponse page(ShopUserCollect shopUserCollect, Page page){
-        return success(shopUserCollectService.page(page, Wrappers.query(shopUserCollect)));
+        return success(shopUserCollectService.listPage(page,shopUserCollect));
       }
 
       @PostMapping

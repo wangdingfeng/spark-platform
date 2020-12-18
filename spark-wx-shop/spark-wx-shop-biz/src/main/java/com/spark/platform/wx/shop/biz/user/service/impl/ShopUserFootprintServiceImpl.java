@@ -1,5 +1,10 @@
 package com.spark.platform.wx.shop.biz.user.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.spark.platform.common.base.support.WrapperSupport;
+import com.spark.platform.wx.shop.api.entity.user.ShopUserCollect;
 import com.spark.platform.wx.shop.api.entity.user.ShopUserFootprint;
 import com.spark.platform.wx.shop.biz.user.dao.ShopUserFootprintDao;
 import com.spark.platform.wx.shop.biz.user.service.ShopUserFootprintService;
@@ -17,4 +22,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class ShopUserFootprintServiceImpl extends ServiceImpl<ShopUserFootprintDao, ShopUserFootprint> implements ShopUserFootprintService {
 
+    @Override
+    public IPage listPage(Page page, ShopUserFootprint shopUserFootprint) {
+        QueryWrapper queryWrapper = new QueryWrapper<ShopUserCollect>();
+        WrapperSupport.putParamsLike(queryWrapper,"g",shopUserFootprint,"goodsSn");
+        WrapperSupport.putParamsEqual(queryWrapper,"f",shopUserFootprint,"userId");
+        queryWrapper.orderByDesc("create_date");
+        return super.baseMapper.listPage(page, queryWrapper);
+    }
 }

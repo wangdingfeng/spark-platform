@@ -1,6 +1,7 @@
 package com.spark.platform.wx.shop.api.entity.goods;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -95,6 +96,18 @@ public class ShopGoods extends BaseEntity {
     @ApiModelProperty(value = "状态 0 待上架 1 上架 2 下架")
     private String status;
 
+    @ApiModelProperty(value = "库存数")
+    private Integer stock;
+
+    @ApiModelProperty(value = "销售件数")
+    private Integer saleNum;
+
+    @ApiModelProperty(value = "上架人")
+    private String publisher;
+
+    @ApiModelProperty(value = "上架时间")
+    private LocalDateTime publishTime;
+
     @ApiModelProperty(value = "属性值")
     @TableField(exist = false)
     private List<ShopGoodsAttr> shopGoodsAttrs;
@@ -102,6 +115,14 @@ public class ShopGoods extends BaseEntity {
     @ApiModelProperty(value = "价格库存")
     @TableField(exist = false)
     private List<ShopGoodsSku> shopGoodsSkus;
+
+    @ApiModelProperty(value = "产品参数")
+    @TableField(exist = false)
+    private List<ShopGoodsParam> shopGoodsParams;
+
+    @ApiModelProperty(value = "删除产品参数Ids")
+    @TableField(exist = false)
+    private List<Integer> delParamIds;
 
 
     public String[] getCategoryIdsArg() {
