@@ -66,4 +66,10 @@ public interface RedisConstants {
      * Redis list 前缀
      */
     String KEY_LIST_PREFIX = "_list:";
+
+    String SHOP_ATTR_CACHE = "ShopAttrCache";
+    /**
+     * 分类
+     */
+    String SHOP_CATEGORY_CACHE = "shopCategoryCache";
 }

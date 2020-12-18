@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.platform.wx.shop.biz.specs.dao.ShopSpecsAttrValDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.spark.platform.wx.shop.api.entity.specs.ShopSpecsAttrVal">
+        <id column="attr_val_id" property="attrValId" />
+    <result column="create_date" property="createDate" />
+    <result column="creator" property="creator" />
+    <result column="modify_date" property="modifyDate" />
+    <result column="modifier" property="modifier" />
+    <result column="remarks" property="remarks" />
+    <result column="del_flag" property="delFlag" />
+        <result column="attr_id" property="attrId" />
+        <result column="attr_val" property="attrVal" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        create_date,
+        creator,
+        modify_date,
+        modifier,
+        remarks,
+        del_flag,
+        attr_val_id, attr_id, attr_val
+    </sql>
+
+</mapper>

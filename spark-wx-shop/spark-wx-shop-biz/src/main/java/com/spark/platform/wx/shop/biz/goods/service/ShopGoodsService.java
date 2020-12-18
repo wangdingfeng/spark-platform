@@ -12,4 +12,22 @@ import com.spark.platform.wx.shop.api.entity.goods.ShopGoods;
  * @since 2020-12-15
  */
 public interface ShopGoodsService extends IService<ShopGoods> {
+    /**
+     * 保存商品信息
+     * @param shopGoods
+     */
+    void saveShopGoods(ShopGoods shopGoods);
+    /**
+     * 更新商品信息
+     * @param shopGoods
+     */
+    void updateShopGoods(ShopGoods shopGoods);
+
+    /**
+     * 根据id查询数据
+     * @param id
+     * @return
+     */
+    ShopGoods getShopGoods(Integer id);
+
 }

@@ -14,10 +14,11 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.spark.platform.common.base.support.BaseController;
+
+import javax.validation.Valid;
 
 /**
  * <p>
@@ -33,36 +34,31 @@ import com.spark.platform.common.base.support.BaseController;
 @RequiredArgsConstructor
 public class ShopGoodsController extends BaseController {
 
-      private final ShopGoodsService shopGoodsService;
+    private final ShopGoodsService shopGoodsService;
 
-      @GetMapping("/page")
-      @ApiOperation(value = "商品表列表")
-      public ApiResponse<Page<ShopGoods>> page(ShopGoods shopGoods, Page page){
+    @GetMapping("/page")
+    @ApiOperation(value = "商品表列表")
+    public ApiResponse<Page<ShopGoods>> page(ShopGoods shopGoods, Page page) {
         return success(shopGoodsService.page(page, Wrappers.query(shopGoods)));
-      }
+    }
 
-      @PostMapping
-      @ApiOperation(value = "保存商品表信息")
-      public ApiResponse save(@RequestBody ShopGoods shopGoods){
-        return success(shopGoodsService.save(shopGoods));
-      }
+    @PostMapping
+    @ApiOperation(value = "保存商品表信息")
+    public ApiResponse save(@Valid @RequestBody ShopGoods shopGoods) {
+        shopGoodsService.saveShopGoods(shopGoods);
+        return success(shopGoods);
+    }
 
-      @PutMapping
-      @ApiOperation(value = "更新商品表信息")
-      public ApiResponse update(@RequestBody ShopGoods shopGoods){
-        return success(shopGoodsService.updateById(shopGoods));
-      }
-
-      @DeleteMapping("/{id}")
-      @ApiOperation(value = "删除商品表")
-      public ApiResponse delete(@PathVariable Long id){
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "删除商品表")
+    public ApiResponse delete(@PathVariable Integer id) {
         return success(shopGoodsService.removeById(id));
-      }
+    }
 
-      @GetMapping("/{id}")
-      @ApiOperation(value = "根据id获取商品表信息")
-      public ApiResponse getById(@PathVariable Long id) {
-        return success(shopGoodsService.getById(id));
-      }
+    @GetMapping("/{id}")
+    @ApiOperation(value = "根据id获取商品表信息")
+    public ApiResponse getById(@PathVariable Integer id) {
+        return success(shopGoodsService.getShopGoods(id));
+    }
 
 }
