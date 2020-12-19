@@ -25,4 +25,6 @@ public class SparkProperties {
     SparkRedisProperties redis = new SparkRedisProperties();
     @ApiModelProperty(value = "微信配置")
     SparkWxProperties wx = new SparkWxProperties();
+    @ApiModelProperty(value = "七牛云配置")
+    QiNiuProperties qiniu = new QiNiuProperties();
 }

@@ -58,6 +58,8 @@ public class ShopUserCart implements Serializable {
 
     @ApiModelProperty(value = "商品编号")
     private transient String goodsSn;
+    @ApiModelProperty(value = "商品标题")
+    private transient String goodsTitle;
 
 
 }

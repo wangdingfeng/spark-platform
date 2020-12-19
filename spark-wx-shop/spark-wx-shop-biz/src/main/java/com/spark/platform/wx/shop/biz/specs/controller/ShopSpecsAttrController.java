@@ -60,7 +60,7 @@ public class ShopSpecsAttrController extends BaseController {
 
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id获取商品规格属性信息")
-    public ApiResponse getById(@PathVariable Long id) {
+    public ApiResponse getById(@PathVariable Integer id) {
         return success(shopSpecsAttrService.getShopSpecsAttr(id));
     }
 

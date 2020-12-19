@@ -12,9 +12,9 @@ import com.spark.platform.wx.shop.biz.goods.service.ShopGoodsCategoryService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -47,15 +47,21 @@ public class ShopGoodsCategoryServiceImpl extends ServiceImpl<ShopGoodsCategoryD
     }
 
     @Override
-    @CacheEvict(value = RedisConstants.SHOP_CATEGORY_CACHE,allEntries = true)
     public boolean saveOrUpdate(ShopGoodsCategory entity) {
         //查询父节点信息
-        ShopGoodsCategory parent = super.getOne(Wrappers.<ShopGoodsCategory>lambdaQuery().eq(ShopGoodsCategory::getPid,entity.getId()));
+        ShopGoodsCategory parent = super.getOne(Wrappers.<ShopGoodsCategory>lambdaQuery().eq(ShopGoodsCategory::getId,entity.getPid()));
         if(null == parent){
             entity.setPids("0");
         }else {
             entity.setPids(parent.getPids()+ StringPool.COMMA +entity.getPid());
         }
+        redisUtils.delete(RedisConstants.SHOP_CATEGORY_CACHE);
         return super.saveOrUpdate(entity);
+    }
+
+    @Override
+    public boolean removeById(Serializable id) {
+        redisUtils.delete(RedisConstants.SHOP_CATEGORY_CACHE);
+        return super.removeById(id);
     }
 }

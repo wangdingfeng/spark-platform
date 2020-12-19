@@ -34,7 +34,7 @@ public class ShopGoodsController extends BaseController {
     @GetMapping("/page")
     @ApiOperation(value = "商品表列表")
     public ApiResponse<Page<ShopGoods>> page(ShopGoods shopGoods, Page page) {
-        return success(shopGoodsService.page(page, Wrappers.query(shopGoods)));
+        return success(shopGoodsService.page(page, Wrappers.query(shopGoods).orderByDesc("modify_date")));
     }
 
     @PostMapping

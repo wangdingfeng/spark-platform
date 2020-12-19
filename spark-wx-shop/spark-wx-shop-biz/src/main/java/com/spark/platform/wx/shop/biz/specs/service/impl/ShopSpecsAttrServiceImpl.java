@@ -43,7 +43,7 @@ public class ShopSpecsAttrServiceImpl extends ServiceImpl<ShopSpecsAttrDao, Shop
 
     @Override
     @Cacheable(value = RedisConstants.SHOP_ATTR_CACHE, unless = "#result == null", key = "#id")
-    public ShopSpecsAttr getShopSpecsAttr(Long id) {
+    public ShopSpecsAttr getShopSpecsAttr(Integer id) {
         ShopSpecsAttr shopSpecsAttr = super.getById(id);
         shopSpecsAttr.setAttrVals(shopSpecsAttrValService.list(Wrappers.<ShopSpecsAttrVal>lambdaQuery()
                 .eq(ShopSpecsAttrVal::getAttrId,id).orderByAsc(ShopSpecsAttrVal::getSort)));

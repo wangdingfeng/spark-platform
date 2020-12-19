@@ -80,8 +80,11 @@ public class ShopGoods extends BaseEntity {
     @ApiModelProperty(value = "批发价格")
     private BigDecimal wholesalePrice;
 
-    @ApiModelProperty(value = "推广佣金")
-    private BigDecimal brokeragePrice;
+    @ApiModelProperty(value = "最小单价")
+    private BigDecimal minPrice;
+
+    @ApiModelProperty(value = "最大单价")
+    private BigDecimal maxPrice;
 
     @ApiModelProperty(value = "规格")
     @NotNull(message = "商品规格不能为空")
@@ -107,6 +110,10 @@ public class ShopGoods extends BaseEntity {
 
     @ApiModelProperty(value = "上架时间")
     private LocalDateTime publishTime;
+
+    @ApiModelProperty(value = "主图")
+    @TableField(exist = false)
+    private List<ShopGoodsGallery> shopGoodsGalleries;
 
     @ApiModelProperty(value = "属性值")
     @TableField(exist = false)

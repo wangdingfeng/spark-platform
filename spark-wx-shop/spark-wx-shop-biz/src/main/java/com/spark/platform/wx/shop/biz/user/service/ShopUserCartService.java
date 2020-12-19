@@ -1,5 +1,7 @@
 package com.spark.platform.wx.shop.biz.user.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.spark.platform.wx.shop.api.entity.user.ShopUserCart;
 
@@ -12,4 +14,12 @@ import com.spark.platform.wx.shop.api.entity.user.ShopUserCart;
  * @since 2020-12-18
  */
 public interface ShopUserCartService extends IService<ShopUserCart> {
+
+    /**
+     * 分页
+     * @param page
+     * @param shopUserCart
+     * @return
+     */
+    IPage listPage(Page page, ShopUserCart shopUserCart);
 }

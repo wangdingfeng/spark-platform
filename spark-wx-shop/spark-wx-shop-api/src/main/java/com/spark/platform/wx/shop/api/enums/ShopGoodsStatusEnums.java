@@ -18,4 +18,18 @@ public enum ShopGoodsStatusEnums {
 
     private String status;
     private String desc;
+
+    /**
+     * 操作类型
+     * @param status
+     * @return
+     */
+    public static ShopGoodsStatusEnums statusOf(String status) {
+        for(ShopGoodsStatusEnums actionEnum : values()){
+            if(actionEnum.getStatus().equals(status)){
+                return actionEnum;
+            }
+        }
+        throw new RuntimeException("没有找到对应的枚举");
+    }
 }

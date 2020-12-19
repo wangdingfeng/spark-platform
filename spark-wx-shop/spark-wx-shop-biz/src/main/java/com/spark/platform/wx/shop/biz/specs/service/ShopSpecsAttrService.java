@@ -17,5 +17,5 @@ public interface ShopSpecsAttrService extends IService<ShopSpecsAttr> {
      * @param id
      * @return
      */
-    ShopSpecsAttr getShopSpecsAttr(Long id);
+    ShopSpecsAttr getShopSpecsAttr(Integer id);
 }

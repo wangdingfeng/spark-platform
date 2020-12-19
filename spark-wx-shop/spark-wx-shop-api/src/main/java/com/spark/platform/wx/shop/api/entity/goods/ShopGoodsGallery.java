@@ -1,5 +1,7 @@
 package com.spark.platform.wx.shop.api.entity.goods;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.spark.platform.common.base.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
@@ -26,13 +28,14 @@ public class ShopGoodsGallery extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "主键")
+    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     @ApiModelProperty(value = "商品主键")
     private Integer goodsId;
 
     @ApiModelProperty(value = "图片路径")
-    private String picUrl;
+    private String url;
 
     @ApiModelProperty(value = "排序")
     private Integer sort;

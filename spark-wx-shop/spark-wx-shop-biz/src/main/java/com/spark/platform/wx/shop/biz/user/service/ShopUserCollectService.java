@@ -18,6 +18,7 @@ public interface ShopUserCollectService extends IService<ShopUserCollect> {
     /**
      * 分页
      * @param page
+     * @param shopUserCollect
      * @return
      */
     IPage listPage(Page page, ShopUserCollect shopUserCollect);
