@@ -46,6 +46,7 @@ public class ShopGoods extends BaseEntity {
     private String goodsSn;
 
     @ApiModelProperty(value = "商品标题")
+    @NotNull(message = "商品标题不能为空")
     private String title;
 
     @ApiModelProperty(value = "商品分类")
@@ -54,8 +55,6 @@ public class ShopGoods extends BaseEntity {
 
     @ApiModelProperty(value = "商品分类Name")
     private String categoryNames;
-    @NotNull(message = "商品标题不能为空")
-
     @ApiModelProperty(value = "商品关键词")
     private String keywords;
 

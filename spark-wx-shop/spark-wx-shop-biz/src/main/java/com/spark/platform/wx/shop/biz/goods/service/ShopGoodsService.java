@@ -1,5 +1,8 @@
 package com.spark.platform.wx.shop.biz.goods.service;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.spark.platform.wx.shop.api.entity.goods.ShopGoods;
 
@@ -12,11 +15,19 @@ import com.spark.platform.wx.shop.api.entity.goods.ShopGoods;
  * @since 2020-12-15
  */
 public interface ShopGoodsService extends IService<ShopGoods> {
+
+    /**
+     * 查询商品卡辛
+     * @param page
+     * @param wrapper
+     * @return
+     */
+    IPage pageCard(Page page, Wrapper wrapper);
     /**
      * 保存商品信息
      * @param shopGoods
      */
-    void saveShopGoods(ShopGoods shopGoods);
+     void saveShopGoods(ShopGoods shopGoods);
     /**
      * 更新商品信息
      * @param shopGoods

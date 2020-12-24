@@ -18,6 +18,7 @@ public interface ShopUserFootprintService extends IService<ShopUserFootprint> {
     /**
      * 分页
      * @param page
+     * @param shopUserFootprint
      * @return
      */
     IPage listPage(Page page, ShopUserFootprint shopUserFootprint);

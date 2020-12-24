@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.platform.wx.shop.biz.order.dao.ShopOrderDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.spark.platform.wx.shop.api.entity.order.ShopOrder">
+        <id column="id" property="id" />
+    <result column="create_date" property="createDate" />
+    <result column="remarks" property="remarks" />
+        <result column="order_sn" property="orderSn" />
+        <result column="user_id" property="userId" />
+        <result column="order_type" property="orderType" />
+        <result column="order_status" property="orderStatus" />
+        <result column="shipping_status" property="shippingStatus" />
+        <result column="pay_status" property="payStatus" />
+        <result column="consignee" property="consignee" />
+        <result column="province" property="province" />
+        <result column="city" property="city" />
+        <result column="district" property="district" />
+        <result column="address" property="address" />
+        <result column="mobile" property="mobile" />
+        <result column="shipping_fee" property="shippingFee" />
+        <result column="pay_name" property="payName" />
+        <result column="pay_id" property="payId" />
+        <result column="actual_price" property="actualPrice" />
+        <result column="order_price" property="orderPrice" />
+        <result column="goods_price" property="goodsPrice" />
+        <result column="confirm_time" property="confirmTime" />
+        <result column="pay_time" property="payTime" />
+        <result column="freight_price" property="freightPrice" />
+        <result column="coupon_id" property="couponId" />
+        <result column="coupon_price" property="couponPrice" />
+        <result column="user_remarks" property="userRemarks" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        create_date,
+        remarks,
+        id, order_sn, user_id, order_type, order_status, shipping_status, pay_status, consignee, province, city, district, address, mobile, shipping_fee, pay_name, pay_id, actual_price, order_price, goods_price, confirm_time, pay_time, freight_price, coupon_id, coupon_price, user_remarks
+    </sql>
+
+</mapper>

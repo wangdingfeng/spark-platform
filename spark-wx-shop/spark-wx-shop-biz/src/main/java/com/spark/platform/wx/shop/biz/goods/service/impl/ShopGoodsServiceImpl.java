@@ -1,5 +1,8 @@
 package com.spark.platform.wx.shop.biz.goods.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spark.platform.admin.api.entity.user.User;
 import com.spark.platform.common.security.model.LoginUser;
 import com.spark.platform.common.security.util.UserUtils;
@@ -40,6 +43,11 @@ public class ShopGoodsServiceImpl extends ServiceImpl<ShopGoodsDao, ShopGoods> i
     private final ShopGoodsSkuService shopGoodsSkuService;
     private final ShopGoodsParamService shopGoodsParamService;
     private final ShopGoodsGalleryService shopGoodsGalleryService;
+
+    @Override
+    public IPage pageCard(Page page, Wrapper wrapper) {
+        return super.baseMapper.pageCard(page,wrapper);
+    }
 
     @Override
     @Transactional(readOnly = false)

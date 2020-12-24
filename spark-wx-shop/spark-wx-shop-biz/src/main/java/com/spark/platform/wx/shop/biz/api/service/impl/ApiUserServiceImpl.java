@@ -1,6 +1,7 @@
 package com.spark.platform.wx.shop.biz.api.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.spark.platform.admin.api.entity.authority.OauthClientDetails;
 import com.spark.platform.admin.api.feign.client.AuthorityClient;
 import com.spark.platform.common.base.constants.GlobalsConstants;
@@ -13,8 +14,12 @@ import com.spark.platform.common.utils.HttpCallOtherInterfaceUtils;
 import com.spark.platform.wx.shop.api.dto.WxLoginDTO;
 import com.spark.platform.wx.shop.api.entity.auth.ShopWxAuth;
 import com.spark.platform.wx.shop.api.entity.user.ShopUser;
+import com.spark.platform.wx.shop.api.entity.user.ShopUserAddress;
+import com.spark.platform.wx.shop.api.entity.user.ShopUserCart;
 import com.spark.platform.wx.shop.biz.api.service.ApiUserService;
 import com.spark.platform.wx.shop.biz.auth.service.ShopWxAuthService;
+import com.spark.platform.wx.shop.biz.user.service.ShopUserAddressService;
+import com.spark.platform.wx.shop.biz.user.service.ShopUserCartService;
 import com.spark.platform.wx.shop.biz.user.service.ShopUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +30,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -41,6 +47,8 @@ public class ApiUserServiceImpl implements ApiUserService {
     private final ShopUserService shopUserService;
     private final AuthorityClient authorityClient;
     private final SparkProperties sparkProperties;
+    private final ShopUserAddressService shopUserAddressService;
+    private final ShopUserCartService shopUserCartService;
 
     @Override
     public ShopUser login(WxLoginDTO loginDTO) {
@@ -72,6 +80,16 @@ public class ApiUserServiceImpl implements ApiUserService {
         }
         shopUser.setToken(this.getToken(auth.getClientId()));
         return shopUser;
+    }
+
+    @Override
+    public List<ShopUserAddress> findAddress(Integer userId) {
+        return shopUserAddressService.findAddress(userId);
+    }
+
+    @Override
+    public List<ShopUserCart> findCart(Integer userId) {
+        return shopUserCartService.findCart(userId);
     }
 
     /**

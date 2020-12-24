@@ -22,4 +22,6 @@ public interface ShopUserCollectService extends IService<ShopUserCollect> {
      * @return
      */
     IPage listPage(Page page, ShopUserCollect shopUserCollect);
+
+
 }

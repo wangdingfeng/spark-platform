@@ -39,4 +39,9 @@
         id, goods_sn, title, category_ids, keywords, brief, home_pic, unit, is_new, is_hot, retail_price, wholesale_price, brokerage_price, detail, sort_order, status
     </sql>
 
+    <select id="pageCard" resultType="com.spark.platform.wx.shop.api.vo.GoodsCardVo">
+        SELECT id 'goodsId',title,brief,home_pic,retail_price,min_price,sale_num,stock FROM shop_goods
+         ${ew.customSqlSegment}
+    </select>
+
 </mapper>
