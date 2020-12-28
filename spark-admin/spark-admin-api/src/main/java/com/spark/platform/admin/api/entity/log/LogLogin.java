@@ -35,7 +35,7 @@ public class LogLogin implements Serializable {
     private String username;
 
     @ApiModelProperty(value = "登录系统")
-    private String system;
+    private String osType;
 
     @ApiModelProperty(value = "登录浏览器")
     private String browser;
@@ -53,9 +53,9 @@ public class LogLogin implements Serializable {
 
     }
 
-    public LogLogin(String username, String system, String browser, LocalDateTime loginTime, String location, String locationIp){
+    public LogLogin(String username, String osType, String browser, LocalDateTime loginTime, String location, String locationIp){
         this.username = username;
-        this.system = system;
+        this.osType = osType;
         this.browser = browser;
         this.loginTime = loginTime;
         this.location = location;
