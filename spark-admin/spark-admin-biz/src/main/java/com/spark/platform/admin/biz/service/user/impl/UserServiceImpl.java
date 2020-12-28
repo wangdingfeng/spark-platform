@@ -152,7 +152,7 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
         for (String id : ids) {
             User user = new User();
             user.setId(Long.valueOf(id));
-            user.setPassword(GlobalsConstants.DEFAULT_USER_PASSWORD);
+            user.setPassword(new BCryptPasswordEncoder().encode(GlobalsConstants.DEFAULT_USER_PASSWORD));
             users.add(user);
         }
         super.updateBatchById(users);
@@ -201,9 +201,7 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
     @Override
     public void validateUserName(String username, Long id) {
         LambdaQueryWrapper<User> queryWrapper = Wrappers.lambdaQuery();
-        if (null != id) {
-            queryWrapper.ne(User::getId, id);
-        }
+        queryWrapper.ne(null != id,User::getId, id);
         queryWrapper.eq(User::getUsername, username);
         if (0 != super.count(queryWrapper)) {
             throw new BusinessException("账号重复");
