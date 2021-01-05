@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.platform.wx.shop.biz.marketing.dao.ShopSeckillGoodsDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.spark.platform.wx.shop.api.entity.marketing.ShopSeckillGoods">
+        <id column="id" property="id" />
+        <result column="seckill_id" property="seckillId" />
+        <result column="goods_id" property="goodsId" />
+        <result column="price" property="price" />
+        <result column="stock" property="stock" />
+        <result column="sales" property="sales" />
+        <result column="create_time" property="createTime" />
+        <result column="is_quota" property="isQuota" />
+        <result column="quota" property="quota" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, seckill_id, goods_id, price, stock, sales, create_time, is_quota, quota
+    </sql>
+
+</mapper>

@@ -110,6 +110,9 @@ public class ShopGoods extends BaseEntity {
     @ApiModelProperty(value = "上架时间")
     private LocalDateTime publishTime;
 
+    @ApiModelProperty(value = "活动状态 0 正常 1秒杀 2 团购")
+    private String activity;
+
     @ApiModelProperty(value = "主图")
     @TableField(exist = false)
     private List<ShopGoodsGallery> shopGoodsGalleries;

@@ -48,5 +48,8 @@ public class ShopGoodsSku implements Serializable {
     @ApiModelProperty(value = "商品编码")
     private String skuCode;
 
+    @ApiModelProperty(value = "活动价格")
+    private BigDecimal activityPrice;
+
 
 }
