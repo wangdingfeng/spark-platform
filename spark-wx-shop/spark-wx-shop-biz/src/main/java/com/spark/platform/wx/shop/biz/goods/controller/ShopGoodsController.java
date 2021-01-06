@@ -4,7 +4,9 @@ package com.spark.platform.wx.shop.biz.goods.controller;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spark.platform.wx.shop.api.entity.goods.ShopGoods;
-import com.spark.platform.wx.shop.api.enums.ShopGoodsStatusEnums;
+import com.spark.platform.wx.shop.api.entity.goods.ShopGoodsSku;
+import com.spark.platform.wx.shop.api.enums.ShopGoodsStatusEnum;
+import com.spark.platform.wx.shop.biz.goods.service.ShopGoodsSkuService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import com.spark.platform.wx.shop.biz.goods.service.ShopGoodsService;
@@ -14,6 +16,7 @@ import io.swagger.annotations.ApiOperation;
 import com.spark.platform.common.base.support.BaseController;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * <p>
@@ -30,6 +33,7 @@ import javax.validation.Valid;
 public class ShopGoodsController extends BaseController {
 
     private final ShopGoodsService shopGoodsService;
+    private final ShopGoodsSkuService shopGoodsSkuService;
 
     @GetMapping("/page")
     @ApiOperation(value = "商品表列表")
@@ -59,13 +63,19 @@ public class ShopGoodsController extends BaseController {
     @PatchMapping("/publish/{id}")
     @ApiOperation(value = "根据id上架商品")
     public ApiResponse publish(@PathVariable Integer id){
-        return success(shopGoodsService.updateStatus(id, ShopGoodsStatusEnums.PUBLISH.getStatus()));
+        return success(shopGoodsService.updateStatus(id, ShopGoodsStatusEnum.PUBLISH.getStatus()));
     }
 
     @PatchMapping("/off/{id}")
     @ApiOperation(value = "根据id下架商品")
     public ApiResponse off(@PathVariable Integer id){
-        return success(shopGoodsService.updateStatus(id, ShopGoodsStatusEnums.OFF_PUBLISH.getStatus()));
+        return success(shopGoodsService.updateStatus(id, ShopGoodsStatusEnum.OFF_PUBLISH.getStatus()));
+    }
+
+    @GetMapping("/sku/{id}")
+    @ApiOperation(value = "根据id获取商品表信息")
+    public ApiResponse<List<ShopGoodsSku>> findSku(@PathVariable Integer id){
+        return success(shopGoodsSkuService.findByGoodsId(id));
     }
 
 }

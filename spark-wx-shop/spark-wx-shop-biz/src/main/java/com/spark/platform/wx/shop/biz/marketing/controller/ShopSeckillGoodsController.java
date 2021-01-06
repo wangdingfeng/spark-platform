@@ -1,11 +1,10 @@
 package com.spark.platform.wx.shop.biz.marketing.controller;
 
 
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.spark.platform.wx.shop.api.entity.marketing.ShopSeckill;
+import com.spark.platform.wx.shop.api.entity.marketing.ShopSeckillGoods;
 import org.springframework.web.bind.annotation.RequestMapping;
-import com.spark.platform.wx.shop.biz.marketing.service.ShopSeckillService;
+import com.spark.platform.wx.shop.biz.marketing.service.ShopSeckillGoodsService;
 import com.spark.platform.common.base.support.ApiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -14,49 +13,48 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.spark.platform.common.base.support.BaseController;
 
 /**
  * <p>
- * 秒杀配置 api访问层
+ * 商品秒杀配置列表 api访问层
  * </p>
  *
  * @author wangdingfeng
  * @since 2021-01-05
  */
 @RestController
-@RequestMapping("/marketing/seckill")
-@Api(tags = "秒杀配置")
+@RequestMapping("/marketing/seckill/goods")
+@Api(tags = "商品秒杀配置列表")
 @RequiredArgsConstructor
-public class ShopSeckillController extends BaseController {
+public class ShopSeckillGoodsController extends BaseController {
 
-      private final ShopSeckillService shopSeckillService;
+      private final ShopSeckillGoodsService shopSeckillGoodsService;
 
       @GetMapping("/page")
-      @ApiOperation(value = "秒杀配置列表")
-      public ApiResponse page(ShopSeckill shopSeckill, Page page){
-        return success(shopSeckillService.page(page, Wrappers.query(shopSeckill)));
+      @ApiOperation(value = "商品秒杀配置列表列表")
+      public ApiResponse page(ShopSeckillGoods shopSeckillGoods, Page page){
+        return success(shopSeckillGoodsService.findPage(page,shopSeckillGoods));
       }
 
       @PostMapping
-      @ApiOperation(value = "保存秒杀配置信息")
-      public ApiResponse save(@RequestBody ShopSeckill shopSeckill){
-        return success(shopSeckillService.saveOrUpdate(shopSeckill));
+      @ApiOperation(value = "保存商品秒杀配置列表信息")
+      public ApiResponse save(@RequestBody ShopSeckillGoods shopSeckillGoods){
+        return success(shopSeckillGoodsService.saveOrUpdate(shopSeckillGoods));
       }
 
       @DeleteMapping("/{id}")
-      @ApiOperation(value = "删除秒杀配置")
+      @ApiOperation(value = "删除商品秒杀配置列表")
       public ApiResponse delete(@PathVariable Long id){
-        return success(shopSeckillService.removeById(id));
+        return success(shopSeckillGoodsService.removeById(id));
       }
 
       @GetMapping("/{id}")
-      @ApiOperation(value = "根据id获取秒杀配置信息")
+      @ApiOperation(value = "根据id获取商品秒杀配置列表信息")
       public ApiResponse getById(@PathVariable Long id) {
-        return success(shopSeckillService.getById(id));
+        return success(shopSeckillGoodsService.getById(id));
       }
 
 }

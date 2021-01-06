@@ -7,8 +7,10 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.spark.platform.wx.shop.api.entity.goods.ShopGoodsSku;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -33,11 +35,14 @@ public class ShopSeckillGoods {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @ApiModelProperty(value = "秒杀配置ID")
-    private Integer seckillId;
-
     @ApiModelProperty(value = "商品主键")
     private Integer goodsId;
+
+    @ApiModelProperty(value = "开始时间")
+    private LocalDateTime startTime;
+
+    @ApiModelProperty(value = "结束时间")
+    private LocalDateTime endTime;
 
     @ApiModelProperty(value = "秒杀价格")
     private BigDecimal price;
@@ -65,5 +70,9 @@ public class ShopSeckillGoods {
     private transient String homePic;
     @ApiModelProperty(value = "商品原价")
     private transient BigDecimal minPrice;
+
+    @ApiModelProperty(value = "商品SKUs")
+    @TableField(exist = false)
+    private List<ShopGoodsSku> goodsSkus;
 
 }

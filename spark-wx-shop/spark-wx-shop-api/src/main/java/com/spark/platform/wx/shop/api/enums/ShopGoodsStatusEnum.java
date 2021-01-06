@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum ShopGoodsStatusEnums {
+public enum ShopGoodsStatusEnum {
 
     WAITING_PUBLISH("0","待上架"),
     PUBLISH("1","已上架"),
@@ -24,8 +24,8 @@ public enum ShopGoodsStatusEnums {
      * @param status
      * @return
      */
-    public static ShopGoodsStatusEnums statusOf(String status) {
-        for(ShopGoodsStatusEnums actionEnum : values()){
+    public static ShopGoodsStatusEnum statusOf(String status) {
+        for(ShopGoodsStatusEnum actionEnum : values()){
             if(actionEnum.getStatus().equals(status)){
                 return actionEnum;
             }

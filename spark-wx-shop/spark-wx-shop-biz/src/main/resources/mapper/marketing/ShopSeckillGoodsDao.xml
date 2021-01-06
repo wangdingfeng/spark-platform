@@ -5,7 +5,6 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.spark.platform.wx.shop.api.entity.marketing.ShopSeckillGoods">
         <id column="id" property="id" />
-        <result column="seckill_id" property="seckillId" />
         <result column="goods_id" property="goodsId" />
         <result column="price" property="price" />
         <result column="stock" property="stock" />
@@ -19,5 +18,16 @@
     <sql id="Base_Column_List">
         id, seckill_id, goods_id, price, stock, sales, create_time, is_quota, quota
     </sql>
+
+    <select id="listPage" resultType="com.spark.platform.wx.shop.api.entity.marketing.ShopSeckillGoods">
+        SELECT
+            s.*,
+            g.title 'goodsTitle',
+            g.home_pic 'homePic',
+            g.min_price 'minPrice'
+        FROM
+            shop_seckill_goods s
+            JOIN shop_goods g ON s.goods_id = g.id
+    </select>
 
 </mapper>

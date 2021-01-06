@@ -3,12 +3,12 @@ package com.spark.platform.wx.shop.biz.goods.service.impl;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.spark.platform.admin.api.entity.user.User;
 import com.spark.platform.common.security.model.LoginUser;
 import com.spark.platform.common.security.util.UserUtils;
 import com.spark.platform.wx.shop.api.entity.goods.ShopGoods;
 import com.spark.platform.wx.shop.api.entity.goods.ShopGoodsSku;
-import com.spark.platform.wx.shop.api.enums.ShopGoodsStatusEnums;
+import com.spark.platform.wx.shop.api.enums.ShopGoodsActivityEnum;
+import com.spark.platform.wx.shop.api.enums.ShopGoodsStatusEnum;
 import com.spark.platform.wx.shop.biz.goods.dao.ShopGoodsDao;
 import com.spark.platform.wx.shop.biz.goods.service.ShopGoodsAttrService;
 import com.spark.platform.wx.shop.biz.goods.service.ShopGoodsGalleryService;
@@ -18,6 +18,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.spark.platform.wx.shop.biz.goods.service.ShopGoodsSkuService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -52,7 +53,7 @@ public class ShopGoodsServiceImpl extends ServiceImpl<ShopGoodsDao, ShopGoods> i
     @Override
     @Transactional(readOnly = false)
     public void saveShopGoods(ShopGoods shopGoods) {
-        if (ShopGoodsStatusEnums.PUBLISH.equals(shopGoods.getStatus())) {
+        if (ShopGoodsStatusEnum.PUBLISH.equals(shopGoods.getStatus())) {
             // 如果是上架状态保存上架信息
             LoginUser user = UserUtils.getLoginUser();
             log.info("[商品：{}]，操作上架人：{}", shopGoods.getTitle(), user);
@@ -71,6 +72,9 @@ public class ShopGoodsServiceImpl extends ServiceImpl<ShopGoodsDao, ShopGoods> i
             shopGoods.setMaxPrice(maxPrice);
         }else{
             shopGoods.setMaxPrice(BigDecimal.ZERO);
+        }
+        if(StringUtils.isBlank(shopGoods.getActivity())){
+            shopGoods.setActivity(ShopGoodsActivityEnum.NORMAL.getStatus());
         }
         super.saveOrUpdate(shopGoods);
         // 保存商品主图
@@ -104,13 +108,13 @@ public class ShopGoodsServiceImpl extends ServiceImpl<ShopGoodsDao, ShopGoods> i
         ShopGoods shopGoods = new ShopGoods();
         shopGoods.setId(id);
         shopGoods.setStatus(status);
-        if(ShopGoodsStatusEnums.PUBLISH.getStatus().equals(status)){
+        if(ShopGoodsStatusEnum.PUBLISH.getStatus().equals(status)){
             LoginUser user = UserUtils.getLoginUser();
             shopGoods.setPublisher(user.getUsername());
             shopGoods.setPublishTime(LocalDateTime.now());
         }
         boolean flag = super.updateById(shopGoods);
-        log.info("[商品ID:{}],操作商品{}", shopGoods.getModifier(), ShopGoodsStatusEnums.statusOf(status).getDesc());
+        log.info("[商品ID:{}],操作商品{}", shopGoods.getModifier(), ShopGoodsStatusEnum.statusOf(status).getDesc());
         return flag;
     }
 }

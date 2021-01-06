@@ -9,7 +9,7 @@ import com.spark.platform.common.base.exception.BusinessException;
 import com.spark.platform.wx.shop.api.dto.ShopGoodsQueryDTO;
 import com.spark.platform.wx.shop.api.entity.goods.ShopGoods;
 import com.spark.platform.wx.shop.api.entity.goods.ShopGoodsGallery;
-import com.spark.platform.wx.shop.api.enums.ShopGoodsStatusEnums;
+import com.spark.platform.wx.shop.api.enums.ShopGoodsStatusEnum;
 import com.spark.platform.wx.shop.api.vo.GoodsCardVo;
 import com.spark.platform.wx.shop.api.vo.GoodsDetailVo;
 import com.spark.platform.wx.shop.biz.api.service.ApiGoodsService;
@@ -55,7 +55,7 @@ public class ApiGoodsServiceImpl implements ApiGoodsService {
         log.info("【请求开始】商品详情页面“大家都在看”推荐商品,请求参数:goodsId:{}",goodsId);
         // 查询商品信息
         ShopGoods shopGoods = shopGoodsService.getById(goodsId);
-        if(null == shopGoods || !ShopGoodsStatusEnums.PUBLISH.getStatus().equals(shopGoods.getStatus())){
+        if(null == shopGoods || !ShopGoodsStatusEnum.PUBLISH.getStatus().equals(shopGoods.getStatus())){
             throw new BusinessException("查询不到当前商品或者当前商品已下架！");
         }
         // 推荐算法 只推荐当前类目的商品 销量前十的商品
@@ -74,7 +74,7 @@ public class ApiGoodsServiceImpl implements ApiGoodsService {
         GoodsDetailVo goodsDetail = new GoodsDetailVo();
         // 查询商品信息
         ShopGoods shopGoods = shopGoodsService.getShopGoods(goodsId);
-        if(null == shopGoods || !ShopGoodsStatusEnums.PUBLISH.getStatus().equals(shopGoods.getStatus())){
+        if(null == shopGoods || !ShopGoodsStatusEnum.PUBLISH.getStatus().equals(shopGoods.getStatus())){
             throw new BusinessException("查询不到当前商品或者当前商品已下架！");
         }
         BeanUtil.copyProperties(shopGoods,goodsDetail);
