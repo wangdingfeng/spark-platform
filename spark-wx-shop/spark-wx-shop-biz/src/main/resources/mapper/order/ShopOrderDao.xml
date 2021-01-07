@@ -32,7 +32,7 @@
         <result column="user_remarks" property="userRemarks" />
         <result column="create_date" property="createDate" />
         <result column="modify_date" property="modifyDate" />
-        <result column="nickname" property="nickname" />
+        <result column="nickname" property="user.nickname" />
         <collection property="goodsList" ofType="com.spark.platform.wx.shop.api.entity.order.ShopOrderGoods" javaType="java.util.List">
             <id column="id" property="id" />
             <result column="goods_id" property="goodsId" />

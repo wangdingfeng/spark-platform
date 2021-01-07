@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -31,7 +32,7 @@ public class ShopUserFootprint implements Serializable {
     @ApiModelProperty(value = "主键")
     private Integer userId;
 
-    @ApiModelProperty(value = "产品id")
+    @ApiModelProperty(value = "商品id")
     private Integer goodsId;
 
     @TableField(value = "create_date", fill = FieldFill.INSERT)
@@ -41,6 +42,15 @@ public class ShopUserFootprint implements Serializable {
     @TableLogic(value = "0",delval = "1")
     @ApiModelProperty(value = "系统状态")
     private Integer delFlag;
+
+    @ApiModelProperty(value = "商品编号")
+    private transient String goodsSn;
+    @ApiModelProperty(value = "商品标题")
+    private transient String goodsTitle;
+    @ApiModelProperty(value = "商品图片")
+    private transient String homePic;
+    @ApiModelProperty(value = "商品价格")
+    private transient BigDecimal price;
 
 
 }

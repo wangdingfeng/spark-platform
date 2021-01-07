@@ -1,14 +1,11 @@
 package com.spark.platform.wx.shop.api.entity.order;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.time.LocalDateTime;
-import com.spark.platform.common.base.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
@@ -20,11 +17,10 @@ import lombok.experimental.Accessors;
  * @since 2020-12-21
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("shop_order_express")
 @ApiModel(value="ShopOrderExpress对象", description="订单物流信息表，发货时生成")
-public class ShopOrderExpress extends BaseEntity {
+public class ShopOrderExpress {
 
     private static final long serialVersionUID = 1L;
 
@@ -58,6 +54,14 @@ public class ShopOrderExpress extends BaseEntity {
 
     @ApiModelProperty(value = "最近一次向第三方查询物流信息时间")
     private LocalDateTime requestTime;
+
+    @TableField(value = "create_date", fill = FieldFill.INSERT)
+    @ApiModelProperty(value = "创建时间")
+    private LocalDateTime createDate;
+
+    @TableField(value = "modify_date", fill = FieldFill.INSERT_UPDATE)
+    @ApiModelProperty(value = "修改时间")
+    private LocalDateTime modifyDate;
 
 
 }

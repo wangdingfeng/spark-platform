@@ -1,9 +1,7 @@
 package com.spark.platform.wx.shop.biz.api.service;
 
 import com.spark.platform.wx.shop.api.dto.WxLoginDTO;
-import com.spark.platform.wx.shop.api.entity.user.ShopUser;
-import com.spark.platform.wx.shop.api.entity.user.ShopUserAddress;
-import com.spark.platform.wx.shop.api.entity.user.ShopUserCart;
+import com.spark.platform.wx.shop.api.entity.user.*;
 
 import java.util.List;
 

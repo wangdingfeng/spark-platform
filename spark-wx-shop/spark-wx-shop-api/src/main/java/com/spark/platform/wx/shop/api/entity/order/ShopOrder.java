@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.spark.platform.wx.shop.api.entity.user.ShopUser;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -40,7 +41,7 @@ public class ShopOrder implements Serializable {
     private Integer userId;
 
     @ApiModelProperty(value = "订单类型 0 普通订单 1 团购订单 2 秒杀订单")
-    private Integer orderType;
+    private String orderType;
 
     @ApiModelProperty(value = "订单状态 0 待付款 1 已取消 2 已付款 3 已发货 4 用户确认收货 5 退款 6 完成 7 待评价")
     private Integer orderStatus;
@@ -123,8 +124,13 @@ public class ShopOrder implements Serializable {
     @TableField(exist = false)
     private List<ShopOrderGoods> goodsList;
 
-    @ApiModelProperty(value = "用户名称")
-    private transient String nickname;
+    @ApiModelProperty(value = "用户信息")
+    @TableField(exist = false)
+    private ShopUser user;
+
+    @ApiModelProperty(value = "物流信息")
+    @TableField(exist = false)
+    private List<ShopOrderExpress> expressList;
 
 
 }

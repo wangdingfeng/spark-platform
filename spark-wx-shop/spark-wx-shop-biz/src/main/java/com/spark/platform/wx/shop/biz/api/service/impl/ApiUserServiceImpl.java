@@ -13,14 +13,10 @@ import com.spark.platform.common.utils.AddressUtils;
 import com.spark.platform.common.utils.HttpCallOtherInterfaceUtils;
 import com.spark.platform.wx.shop.api.dto.WxLoginDTO;
 import com.spark.platform.wx.shop.api.entity.auth.ShopWxAuth;
-import com.spark.platform.wx.shop.api.entity.user.ShopUser;
-import com.spark.platform.wx.shop.api.entity.user.ShopUserAddress;
-import com.spark.platform.wx.shop.api.entity.user.ShopUserCart;
+import com.spark.platform.wx.shop.api.entity.user.*;
 import com.spark.platform.wx.shop.biz.api.service.ApiUserService;
 import com.spark.platform.wx.shop.biz.auth.service.ShopWxAuthService;
-import com.spark.platform.wx.shop.biz.user.service.ShopUserAddressService;
-import com.spark.platform.wx.shop.biz.user.service.ShopUserCartService;
-import com.spark.platform.wx.shop.biz.user.service.ShopUserService;
+import com.spark.platform.wx.shop.biz.user.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -49,6 +45,8 @@ public class ApiUserServiceImpl implements ApiUserService {
     private final SparkProperties sparkProperties;
     private final ShopUserAddressService shopUserAddressService;
     private final ShopUserCartService shopUserCartService;
+    private final ShopUserCollectService shopUserCollectService;
+    private final ShopUserFootprintService shopUserFootprintService;
 
     @Override
     public ShopUser login(WxLoginDTO loginDTO) {
