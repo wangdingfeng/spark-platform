@@ -1,10 +1,13 @@
 package com.spark.platform.wx.shop.biz.order.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.spark.platform.wx.shop.api.entity.order.ShopOrderGoods;
 import com.spark.platform.wx.shop.biz.order.dao.ShopOrderGoodsDao;
 import com.spark.platform.wx.shop.biz.order.service.ShopOrderGoodsService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -17,4 +20,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class ShopOrderGoodsServiceImpl extends ServiceImpl<ShopOrderGoodsDao, ShopOrderGoods> implements ShopOrderGoodsService {
 
+    @Override
+    public List<ShopOrderGoods> findByOrderId(Integer orderId) {
+        return super.list(Wrappers.<ShopOrderGoods>lambdaQuery().eq(ShopOrderGoods::getOrderId,orderId));
+    }
 }

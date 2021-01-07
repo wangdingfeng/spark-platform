@@ -38,7 +38,7 @@ public class ShopOrderController extends BaseController {
       @GetMapping("/page")
       @ApiOperation(value = "订单管理列表")
       public ApiResponse page(ShopOrder shopOrder, Page page){
-        return success(shopOrderService.page(page, Wrappers.query(shopOrder)));
+        return success(shopOrderService.findPage(page, shopOrder));
       }
 
       @PostMapping
@@ -61,8 +61,8 @@ public class ShopOrderController extends BaseController {
 
       @GetMapping("/{id}")
       @ApiOperation(value = "根据id获取订单管理信息")
-      public ApiResponse getById(@PathVariable Long id) {
-        return success(shopOrderService.getById(id));
+      public ApiResponse<ShopOrder> getById(@PathVariable Integer id) {
+        return success(shopOrderService.getOrder(id));
       }
 
 }

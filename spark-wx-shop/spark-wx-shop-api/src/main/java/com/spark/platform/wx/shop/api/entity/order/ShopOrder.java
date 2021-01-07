@@ -12,6 +12,7 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * <p>
@@ -39,28 +40,31 @@ public class ShopOrder implements Serializable {
     private Integer userId;
 
     @ApiModelProperty(value = "订单类型 0 普通订单 1 团购订单 2 秒杀订单")
-    private String orderType;
+    private Integer orderType;
 
-    @ApiModelProperty(value = "订单状态 0 待付款 1 已取消 2 已付款 3 已发货 4 用户确认收货 5 退款 6 完成")
-    private String orderStatus;
+    @ApiModelProperty(value = "订单状态 0 待付款 1 已取消 2 已付款 3 已发货 4 用户确认收货 5 退款 6 完成 7 待评价")
+    private Integer orderStatus;
 
     @ApiModelProperty(value = "发货状态 0 待发货 1 已发货 2 已收货 3 退货")
-    private String shippingStatus;
+    private Integer shippingStatus;
 
-    @ApiModelProperty(value = "支付状态 0 待付款 2 已付款")
-    private Integer payStatus;
+    @ApiModelProperty(value = "退款状态 0 申请中 1 退款完成 2 拒绝退款")
+    private Integer refundStatus;
+
+    @ApiModelProperty(value = "业务id 对应的是 团购列表ID 秒杀商品的ID")
+    private Long bizId;
 
     @ApiModelProperty(value = "收件人")
     private String consignee;
 
     @ApiModelProperty(value = "省")
-    private Integer province;
+    private String province;
 
     @ApiModelProperty(value = "市")
-    private Integer city;
+    private String city;
 
     @ApiModelProperty(value = "区")
-    private Integer district;
+    private String district;
 
     @ApiModelProperty(value = "详细地址")
     private String address;
@@ -104,6 +108,9 @@ public class ShopOrder implements Serializable {
     @ApiModelProperty(value = "用户备注")
     private String userRemarks;
 
+    @ApiModelProperty(value = "备注")
+    private String remarks;
+
     @TableField(value = "create_date", fill = FieldFill.INSERT)
     @ApiModelProperty(value = "创建时间")
     private LocalDateTime createDate;
@@ -111,6 +118,13 @@ public class ShopOrder implements Serializable {
     @TableField(value = "modify_date", fill = FieldFill.INSERT_UPDATE)
     @ApiModelProperty(value = "修改时间")
     private LocalDateTime modifyDate;
+
+    @ApiModelProperty(value = "订单商品")
+    @TableField(exist = false)
+    private List<ShopOrderGoods> goodsList;
+
+    @ApiModelProperty(value = "用户名称")
+    private transient String nickname;
 
 
 }

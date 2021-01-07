@@ -28,6 +28,7 @@
         FROM
             shop_seckill_goods s
             JOIN shop_goods g ON s.goods_id = g.id
+          ${ew.customSqlSegment}
     </select>
 
 </mapper>

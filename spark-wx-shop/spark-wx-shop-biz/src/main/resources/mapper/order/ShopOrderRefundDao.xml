@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.platform.wx.shop.biz.order.dao.ShopOrderRefundDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.spark.platform.wx.shop.api.entity.order.ShopOrderRefund">
+        <id column="id" property="id" />
+        <result column="create_date" property="createDate" />
+        <result column="modify_date" property="modifyDate" />
+        <result column="refund_sn" property="refundSn" />
+        <result column="order_id" property="orderId" />
+        <result column="user_id" property="userId" />
+        <result column="order_goods_id" property="orderGoodsId" />
+        <result column="refund_status" property="refundStatus" />
+        <result column="order_amount" property="orderAmount" />
+        <result column="refund_amount" property="refundAmount" />
+        <result column="refund_time" property="refundTime" />
+        <result column="img" property="img" />
+        <result column="reason" property="reason" />
+        <result column="refused_reason" property="refusedReason" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        create_date,
+        modify_date,
+        id, refund_sn, order_id, user_id, order_goods_id, refund_status, order_amount, refund_amount, refund_time, img, reason, refused_reason
+    </sql>
+
+</mapper>

@@ -20,11 +20,10 @@ import lombok.experimental.Accessors;
  * @since 2020-12-21
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("shop_order_goods")
 @ApiModel(value="ShopOrderGoods对象", description="下单商品详情")
-public class ShopOrderGoods extends BaseEntity {
+public class ShopOrderGoods {
 
     private static final long serialVersionUID = 1L;
 

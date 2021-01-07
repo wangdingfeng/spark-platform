@@ -21,4 +21,8 @@
         id, order_id, goods_id, goods_sn, goods_title, pic_url, number, price, goods_attr_val_ids, goods_attr_vals
     </sql>
 
+    <select id="findByOrderId" resultType="com.spark.platform.wx.shop.api.entity.order.ShopOrderGoods">
+        SELECT * FROM shop_order_goods WHERE order_id=#{orderId}
+    </select>
+
 </mapper>

@@ -28,7 +28,7 @@ import com.spark.platform.common.base.support.BaseController;
  * @since 2020-12-21
  */
 @RestController
-@RequestMapping("/order/shop-order-express")
+@RequestMapping("/order/express")
 @Api(tags = "订单物流信息表，发货时生成")
 @RequiredArgsConstructor
 public class ShopOrderExpressController extends BaseController {
