@@ -52,6 +52,9 @@ public class ShopOrderGoods {
     @ApiModelProperty(value = "下单单价")
     private BigDecimal price;
 
+    @ApiModelProperty(value = "下单总价")
+    private BigDecimal totalAmount;
+
     @ApiModelProperty(value = "规格")
     private String goodsAttrValIds;
 

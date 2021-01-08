@@ -91,11 +91,17 @@ public class ShopOrder implements Serializable {
     @ApiModelProperty(value = "商品总价")
     private BigDecimal goodsPrice;
 
-    @ApiModelProperty(value = "确认时间")
+    @ApiModelProperty(value = "用户确认收货时间")
     private LocalDateTime confirmTime;
 
     @ApiModelProperty(value = "支付时间")
     private LocalDateTime payTime;
+
+    @ApiModelProperty(value = "发货时间")
+    private LocalDateTime sendTime;
+
+    @ApiModelProperty(value = "完成时间")
+    private LocalDateTime completeTime;
 
     @ApiModelProperty(value = "配送费用")
     private BigDecimal freightPrice;

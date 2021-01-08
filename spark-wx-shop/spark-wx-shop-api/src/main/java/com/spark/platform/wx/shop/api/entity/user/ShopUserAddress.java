@@ -9,6 +9,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * <p>
  * 收货地址表
@@ -32,6 +34,7 @@ public class ShopUserAddress implements Serializable {
     private String name;
 
     @ApiModelProperty(value = "用户表的用户ID")
+    @NotNull(message = "当前用户不能为空")
     private Integer userId;
 
     @ApiModelProperty(value = "行政区域表的省ID")

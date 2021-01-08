@@ -40,11 +40,11 @@ public class ShopPinkGoodsServiceImpl extends ServiceImpl<ShopPinkGoodsDao, Shop
     @Override
     public IPage findPage(Page page, ShopPinkGoods shopPinkGoods) {
         QueryWrapper wrapper = new QueryWrapper<ShopPinkGoods>();
-        wrapper.eq("s.del_flag", DelFlagEnum.normal.getValue());
+        wrapper.eq("p.del_flag", DelFlagEnum.normal.getValue());
         wrapper.like(StringUtils.isNotBlank(shopPinkGoods.getGoodsTitle()),"g.title",shopPinkGoods.getGoodsTitle());
         wrapper.gt(null != shopPinkGoods.getStartTime(),"p.start_time",shopPinkGoods.getStartTime());
         wrapper.lt(null != shopPinkGoods.getEndTime(),"p.end_time",shopPinkGoods.getEndTime());
-        wrapper.orderByDesc("s.create_time");
+        wrapper.orderByDesc("p.create_date");
         return super.baseMapper.listPage(page, wrapper);
     }
 

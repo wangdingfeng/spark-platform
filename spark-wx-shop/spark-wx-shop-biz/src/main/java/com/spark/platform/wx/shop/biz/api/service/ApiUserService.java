@@ -26,6 +26,14 @@ public interface ApiUserService {
     List<ShopUserAddress> findAddress(Integer userId);
 
     /**
+     * 保存用户
+     * @param shopUserAddress
+     * @return
+     */
+    boolean saveAddress(ShopUserAddress shopUserAddress);
+
+
+    /**
      * 获取用户的购物车
      * @param userId
      * @return
