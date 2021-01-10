@@ -21,4 +21,23 @@
         id, user_id, coupon_id, end_time, use_time, status
     </sql>
 
+    <select id="pageUserCoupon" resultType="com.spark.platform.wx.shop.api.entity.marketing.ShopCouponUser">
+        SELECT
+            u.*,
+            c.id 'coupon.id',
+            c.name 'coupon.name',
+            c.coupon_type 'coupon.couponType',
+            c.denomination 'coupon.denomination',
+            c.fixed_denomination 'coupon.fixedDenomination',
+            c.start_time 'coupon.startTime',
+            c.end_time 'coupon.endTime',
+            c.is_limited 'coupon.isLimited',
+            c.total 'coupon.total',
+            c.last_total 'coupon.lastTotal'
+        FROM
+            shop_coupon_user u
+            JOIN shop_coupon c ON u.coupon_id = c.id
+        ${ew.customSqlSegment}
+    </select>
+
 </mapper>

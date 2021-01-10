@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -33,12 +34,15 @@ public class ShopUserCart implements Serializable {
     private Integer id;
 
     @ApiModelProperty(value = "会员ID")
+    @NotNull(message = "会员不能为空")
     private Integer userId;
 
     @ApiModelProperty(value = "商品ID")
+    @NotNull(message = "商品ID不能为空")
     private Integer goodsId;
 
     @ApiModelProperty(value = "规格搭配")
+    @NotNull(message = "规格搭配不能为空")
     private String attrValIds;
 
     @ApiModelProperty(value = "规格搭配翻译")
@@ -60,6 +64,8 @@ public class ShopUserCart implements Serializable {
     private transient String goodsSn;
     @ApiModelProperty(value = "商品标题")
     private transient String goodsTitle;
+    @ApiModelProperty(value = "商品图片")
+    private transient String goodsImg;
 
 
 }

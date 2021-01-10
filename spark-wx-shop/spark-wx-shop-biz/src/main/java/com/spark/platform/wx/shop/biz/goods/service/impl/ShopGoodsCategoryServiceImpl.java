@@ -7,14 +7,15 @@ import com.spark.platform.common.base.constants.RedisConstants;
 import com.spark.platform.common.base.utils.RedisUtils;
 import com.spark.platform.common.utils.TreeUtils;
 import com.spark.platform.wx.shop.api.entity.goods.ShopGoodsCategory;
+import com.spark.platform.wx.shop.api.vo.GoodsCategoryVo;
 import com.spark.platform.wx.shop.biz.goods.dao.ShopGoodsCategoryDao;
 import com.spark.platform.wx.shop.biz.goods.service.ShopGoodsCategoryService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -47,6 +48,28 @@ public class ShopGoodsCategoryServiceImpl extends ServiceImpl<ShopGoodsCategoryD
     }
 
     @Override
+    @Transactional(readOnly = false)
+    public boolean deleteCategory(Integer id) {
+        redisUtils.delete(RedisConstants.SHOP_CATEGORY_CACHE);
+        // 校验父级元素是不是只有这一个子元素 是就更新 是否末级元素
+        Integer pId = super.baseMapper.getPidById((Integer) id);
+        int count = super.count(Wrappers.<ShopGoodsCategory>lambdaQuery().eq(ShopGoodsCategory::getPid,pId));
+        if(count == 1){
+            ShopGoodsCategory parent = new ShopGoodsCategory();
+            parent.setId(pId);
+            parent.setIsLeaf(true);
+            super.updateById(parent);
+        }
+        return super.removeById(id);
+    }
+
+    @Override
+    public List<GoodsCategoryVo> treeVo(Integer level) {
+        return (List<GoodsCategoryVo>) TreeUtils.toTree(super.baseMapper.findVoLevel(level), GoodsCategoryVo.class);
+    }
+
+    @Override
+    @Transactional(readOnly = false)
     public boolean saveOrUpdate(ShopGoodsCategory entity) {
         //查询父节点信息
         ShopGoodsCategory parent = super.getOne(Wrappers.<ShopGoodsCategory>lambdaQuery().eq(ShopGoodsCategory::getId,entity.getPid()));
@@ -54,14 +77,12 @@ public class ShopGoodsCategoryServiceImpl extends ServiceImpl<ShopGoodsCategoryD
             entity.setPids("0");
         }else {
             entity.setPids(parent.getPids()+ StringPool.COMMA +entity.getPid());
+            entity.setLevel(parent.getLevel()+1);
+            // 更新父表的 是否末级元素
+            parent.setIsLeaf(false);
+            super.updateById(parent);
         }
         redisUtils.delete(RedisConstants.SHOP_CATEGORY_CACHE);
         return super.saveOrUpdate(entity);
-    }
-
-    @Override
-    public boolean removeById(Serializable id) {
-        redisUtils.delete(RedisConstants.SHOP_CATEGORY_CACHE);
-        return super.removeById(id);
     }
 }

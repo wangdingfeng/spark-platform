@@ -44,4 +44,24 @@
              ${ew.customSqlSegment}
     </select>
 
+    <select id="pageGoods" resultType="com.spark.platform.wx.shop.api.vo.PinkGoodsCardVo">
+        SELECT
+            pg.start_time,
+            pg.end_time,
+            pg.price,
+            pg.people,
+            pg.quota,
+            g.id 'goodsId',
+            g.title,
+            g.brief,
+            g.home_pic,
+            g.retail_price,
+            g.min_price,
+            g.sale_num,
+            g.stock
+        FROM
+            shop_pink_goods pg JOIN shop_goods g ON pg.goods_id=g.id
+            ${ew.customSqlSegment}
+    </select>
+
 </mapper>

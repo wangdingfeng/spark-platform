@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spark.platform.wx.shop.api.entity.marketing.ShopPinkGoods;
+import com.spark.platform.wx.shop.api.vo.PinkGoodsCardVo;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
 
@@ -34,5 +35,13 @@ public interface ShopPinkGoodsDao extends BaseMapper<ShopPinkGoods> {
      */
     @Update("UPDATE shop_goods g JOIN shop_pink_goods s ON g.id=s.goods_id set g.activity='0' WHERE s.id=#{id}")
     void updateGoodsActivity(@Param("id") Integer id);
+
+    /**
+     * 分页查询商品卡片信息
+     * @param page
+     * @param wrapper
+     * @return
+     */
+    IPage<PinkGoodsCardVo> pageGoods(Page page, @Param(Constants.WRAPPER) Wrapper wrapper);
 
 }

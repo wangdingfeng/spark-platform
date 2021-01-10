@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.spark.platform.wx.shop.api.entity.marketing.ShopSeckillGoods;
+import com.spark.platform.wx.shop.api.vo.GoodsSecKillCardVo;
 
 /**
  * <p>

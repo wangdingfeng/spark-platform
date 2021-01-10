@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spark.platform.wx.shop.api.entity.marketing.ShopSeckillGoods;
+import com.spark.platform.wx.shop.api.vo.GoodsSecKillCardVo;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
 
@@ -20,7 +21,7 @@ import org.apache.ibatis.annotations.Update;
 public interface ShopSeckillGoodsDao extends BaseMapper<ShopSeckillGoods> {
 
     /**
-     * 分页查询商品卡片信息
+     * 分页查询
      * @param page
      * @param wrapper
      * @return
@@ -33,5 +34,13 @@ public interface ShopSeckillGoodsDao extends BaseMapper<ShopSeckillGoods> {
      */
     @Update("UPDATE shop_goods g JOIN shop_seckill_goods s ON g.id=s.goods_id set g.activity='0' WHERE s.id=#{id}")
     void updateGoodsActivity(@Param("id") Integer id);
+
+    /**
+     * 分页查询商品卡片信息
+     * @param page
+     * @param wrapper
+     * @return
+     */
+    IPage<GoodsSecKillCardVo> pageGoods(Page page, @Param(Constants.WRAPPER) Wrapper wrapper);
 
 }

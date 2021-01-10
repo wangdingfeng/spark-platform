@@ -1,7 +1,6 @@
 package com.spark.platform.wx.shop.biz.api.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.spark.platform.admin.api.entity.authority.OauthClientDetails;
 import com.spark.platform.admin.api.feign.client.AuthorityClient;
 import com.spark.platform.common.base.constants.GlobalsConstants;
@@ -13,10 +12,10 @@ import com.spark.platform.common.utils.AddressUtils;
 import com.spark.platform.common.utils.HttpCallOtherInterfaceUtils;
 import com.spark.platform.wx.shop.api.dto.WxLoginDTO;
 import com.spark.platform.wx.shop.api.entity.auth.ShopWxAuth;
-import com.spark.platform.wx.shop.api.entity.user.*;
+import com.spark.platform.wx.shop.api.entity.user.ShopUser;
 import com.spark.platform.wx.shop.biz.api.service.ApiUserService;
 import com.spark.platform.wx.shop.biz.auth.service.ShopWxAuthService;
-import com.spark.platform.wx.shop.biz.user.service.*;
+import com.spark.platform.wx.shop.biz.user.service.ShopUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,7 +25,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -43,23 +41,20 @@ public class ApiUserServiceImpl implements ApiUserService {
     private final ShopUserService shopUserService;
     private final AuthorityClient authorityClient;
     private final SparkProperties sparkProperties;
-    private final ShopUserAddressService shopUserAddressService;
-    private final ShopUserCartService shopUserCartService;
-    private final ShopUserCollectService shopUserCollectService;
-    private final ShopUserFootprintService shopUserFootprintService;
 
     @Override
     public ShopUser login(WxLoginDTO loginDTO) {
+        log.info("当前登录用户js_code:{}", loginDTO.getJsCode());
         // 拼接 微信auth.code2Session 登录凭证校验
         ShopWxAuth auth = wxAuthService.getByAppId(loginDTO.getAppId());
         Assert.notNull(auth, "当前appId查询无此数据!");
-        String openId = getOpenId(auth,loginDTO.getJsCode());
+        String openId = getOpenId(auth, loginDTO.getJsCode());
         ShopUser shopUser = shopUserService.getByOpenId(openId);
         if (null == shopUser) {
             // 新增用户
             shopUser = new ShopUser();
             shopUser.setWxOpenid(openId);
-            shopUser.setUsername("微信用户"+openId.substring(0,6));
+            shopUser.setUsername("微信用户" + openId.substring(0, 6));
         }
         // 获取登录IP
         HttpServletRequest request = ((ServletRequestAttributes) Objects
@@ -73,7 +68,7 @@ public class ApiUserServiceImpl implements ApiUserService {
         // 通过auth2 客户端模式 获取token
         ApiResponse<OauthClientDetails> apiResponse = authorityClient.getOauthClientDetailsByClientId(auth.getClientId());
         OauthClientDetails oauthClientDetails = apiResponse.getData();
-        if(null == oauthClientDetails){
+        if (null == oauthClientDetails) {
             throw new BusinessException("请配置小程序对应的客户端!");
         }
         shopUser.setToken(this.getToken(auth.getClientId()));
@@ -81,13 +76,15 @@ public class ApiUserServiceImpl implements ApiUserService {
     }
 
     @Override
-    public List<ShopUserAddress> findAddress(Integer userId) {
-        return shopUserAddressService.findAddress(userId);
-    }
-
-    @Override
-    public List<ShopUserCart> findCart(Integer userId) {
-        return shopUserCartService.findCart(userId);
+    public boolean saveMobile(Integer userId, String mobile) {
+        ShopUser user = new ShopUser();
+        user.setId(userId);
+        user.setMobile(mobile);
+        boolean flag = shopUserService.updateById(user);
+        if(!flag){
+            throw new BusinessException("当前用户不合法，请重新登录!");
+        }
+        return flag;
     }
 
     /**

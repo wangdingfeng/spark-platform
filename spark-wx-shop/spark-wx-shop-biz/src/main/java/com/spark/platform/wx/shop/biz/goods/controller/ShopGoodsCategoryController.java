@@ -47,13 +47,13 @@ public class ShopGoodsCategoryController extends BaseController {
 
       @DeleteMapping("/{id}")
       @ApiOperation(value = "删除商品分类")
-      public ApiResponse delete(@PathVariable Long id){
-        return success(shopGoodsCategoryService.removeById(id));
+      public ApiResponse delete(@PathVariable Integer id){
+        return success(shopGoodsCategoryService.deleteCategory(id));
       }
 
       @GetMapping("/{id}")
       @ApiOperation(value = "根据id获取商品分类信息")
-      public ApiResponse getById(@PathVariable Long id) {
+      public ApiResponse getById(@PathVariable Integer id) {
         return success(shopGoodsCategoryService.getById(id));
       }
 

@@ -27,6 +27,7 @@ public class ShopGoodCommentsServiceImpl extends ServiceImpl<ShopGoodsCommentDao
     @Override
     public IPage listPage(Page page, ShopGoodsComment shopGoodsComment) {
         QueryWrapper queryWrapper = new QueryWrapper<ShopGoodsComment>();
+        queryWrapper.eq(null != shopGoodsComment.getGoodsId(),"g.id",shopGoodsComment.getGoodsId());
         queryWrapper.like(StringUtils.isNotBlank(shopGoodsComment.getGoodsSn()),"g.goods_sn",shopGoodsComment.getGoodsSn());
         queryWrapper.like(StringUtils.isNotBlank(shopGoodsComment.getGoodsSn()),"u.user_name",shopGoodsComment.getUserName());
         queryWrapper.orderByDesc("create_date");

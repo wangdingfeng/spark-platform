@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
+
+import com.spark.platform.wx.shop.api.vo.CouponCardVo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -53,6 +55,9 @@ public class ShopCouponUser {
     @TableField(value = "modify_date", fill = FieldFill.INSERT_UPDATE)
     @ApiModelProperty(value = "修改时间")
     private LocalDateTime modifyDate;
+    @TableField(exist = false)
+    @ApiModelProperty(value = "优惠券详情")
+    private CouponCardVo coupon;
 
 
 }

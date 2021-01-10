@@ -31,4 +31,19 @@ public interface ShopUserCartService extends IService<ShopUserCart> {
      * @return
      */
     List<ShopUserCart> findCart(Integer userId);
+
+    /**
+     * 保存更新购物车
+     * @param shopUserCart
+     * @return
+     */
+    boolean saveCart(ShopUserCart shopUserCart);
+
+    /**
+     * 删除用户购物车
+     * @param userId
+     * @param id
+     * @return
+     */
+    boolean deleteCart(Integer userId, Integer id);
 }

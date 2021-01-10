@@ -20,4 +20,12 @@ public interface ShopUserAddressService extends IService<ShopUserAddress> {
      * @return
      */
     List<ShopUserAddress> findAddress(Integer userId);
+
+    /**
+     * 删除用户地址
+     * @param userId
+     * @param id
+     * @return
+     */
+    boolean deleteAddress(Integer userId, Integer id);
 }

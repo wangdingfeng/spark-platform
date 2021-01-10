@@ -1,7 +1,6 @@
 package com.spark.platform.wx.shop.api.vo;
 
 import com.spark.platform.wx.shop.api.entity.goods.ShopGoodsAttr;
-import com.spark.platform.wx.shop.api.entity.goods.ShopGoodsComment;
 import com.spark.platform.wx.shop.api.entity.goods.ShopGoodsSku;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -54,8 +53,6 @@ public class GoodsDetailVo {
     private List<GoodsParams> goodsParams;
     @ApiModelProperty(value = "商品价格库存")
     private List<ShopGoodsSku> goodsSkus;
-    @ApiModelProperty(value = "商品评论")
-    private List<ShopGoodsComment> goodsComments;
 
     @ApiModel(value = "GoodsParams对象", description = "商品参数")
     public static class GoodsParams {

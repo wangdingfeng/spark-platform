@@ -2,8 +2,9 @@ package com.spark.platform.wx.shop.biz.api.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.spark.platform.wx.shop.api.dto.ShopGoodsQueryDTO;
-import com.spark.platform.wx.shop.api.entity.goods.ShopGoods;
+import com.spark.platform.wx.shop.api.entity.goods.ShopGoodsComment;
 import com.spark.platform.wx.shop.api.vo.GoodsCardVo;
+import com.spark.platform.wx.shop.api.vo.GoodsCategoryVo;
 import com.spark.platform.wx.shop.api.vo.GoodsDetailVo;
 
 import java.util.List;
@@ -40,4 +41,21 @@ public interface ApiGoodsService {
      * @return
      */
     GoodsDetailVo detail(Integer userId, Integer goodsId);
+
+    /**
+     * 查询分类树
+     * @param level 最大层级
+     * @return
+     */
+    List<GoodsCategoryVo> categoryTree(Integer level);
+
+    /**
+     * 查询商品的评论信息
+     * @param size
+     * @param current
+     * @param goodsId
+     * @return
+     */
+    IPage<ShopGoodsComment> pageGoodsComment(Long size, Long current, Integer goodsId);
+
 }

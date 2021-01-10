@@ -51,7 +51,13 @@ public class ShopGoodsCategory extends BaseEntity {
     @ApiModelProperty(value = "分类图")
     private String pic;
 
-    @ApiModelProperty(value = "分类")
+    @ApiModelProperty(value = "是否最末级")
+    private Boolean isLeaf;
+
+    @ApiModelProperty(value = "层次级别")
+    private Integer level;
+
+    @ApiModelProperty(value = "排序")
     private Integer sort;
 
     @ApiModelProperty(value = "子数据")
