@@ -40,11 +40,20 @@ public class ShopUserAddress implements Serializable {
     @ApiModelProperty(value = "行政区域表的省ID")
     private Integer provinceId;
 
+    @ApiModelProperty(value = "省")
+    private String province;
+
     @ApiModelProperty(value = "行政区域表的市ID")
     private Integer cityId;
 
+    @ApiModelProperty(value = "市I")
+    private String city;
+
     @ApiModelProperty(value = "行政区域表的区县ID")
     private Integer areaId;
+
+    @ApiModelProperty(value = "区县")
+    private String area;
 
     @ApiModelProperty(value = "具体收货地址")
     private String address;

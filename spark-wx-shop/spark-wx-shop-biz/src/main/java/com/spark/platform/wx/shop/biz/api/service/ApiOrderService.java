@@ -1,5 +1,7 @@
 package com.spark.platform.wx.shop.biz.api.service;
 
+import com.spark.platform.wx.shop.api.dto.SubmitOrderDTO;
+
 /**
  * @ProjectName: spark-platform
  * @Package: com.spark.platform.wx.shop.biz.api.service
@@ -10,5 +12,10 @@ package com.spark.platform.wx.shop.biz.api.service;
  * @Version: 1.0
  */
 public interface ApiOrderService {
-
+    /**&
+     * 提交订单
+     * @param submitOrderDTO
+     * @return
+     */
+    boolean submit(SubmitOrderDTO submitOrderDTO);
 }

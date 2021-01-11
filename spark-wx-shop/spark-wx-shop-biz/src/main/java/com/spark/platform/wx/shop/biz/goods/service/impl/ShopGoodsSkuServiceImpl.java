@@ -34,4 +34,18 @@ public class ShopGoodsSkuServiceImpl extends ServiceImpl<ShopGoodsSkuDao, ShopGo
     public List<ShopGoodsSku> findByGoodsId(Integer goodsId) {
         return super.list(Wrappers.<ShopGoodsSku>lambdaQuery().eq(ShopGoodsSku::getGoodsId,goodsId));
     }
+
+    @Override
+    public ShopGoodsSku findByGoodsIdAndVals(Integer goodsId, String attrValIds) {
+        return super.getOne(Wrappers.<ShopGoodsSku>lambdaQuery().eq(ShopGoodsSku::getGoodsId,goodsId).eq(ShopGoodsSku::getAttrValIds,attrValIds));
+    }
+
+    @Override
+    public boolean subStock(Integer id, Integer num) {
+        int count = super.baseMapper.subStock(id,num);
+        if(count > 0){
+            return true;
+        }
+        return false;
+    }
 }

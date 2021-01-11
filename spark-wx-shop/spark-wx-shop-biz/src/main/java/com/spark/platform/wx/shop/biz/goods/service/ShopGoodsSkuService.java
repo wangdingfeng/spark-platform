@@ -27,4 +27,20 @@ public interface ShopGoodsSkuService extends IService<ShopGoodsSku> {
      * @return
      */
     List<ShopGoodsSku> findByGoodsId(Integer goodsId);
+
+    /**
+     * 通过商品ID查询数据
+     * @param goodsId
+     * @param attrValIds
+     * @return
+     */
+    ShopGoodsSku findByGoodsIdAndVals(Integer goodsId, String attrValIds);
+
+    /**
+     * 扣减库存
+     * @param id
+     * @param num
+     * @return
+     */
+    boolean subStock(Integer id, Integer num);
 }

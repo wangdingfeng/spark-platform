@@ -49,4 +49,11 @@ public interface ShopGoodsService extends IService<ShopGoods> {
      */
     boolean updateStatus(Integer id, String status);
 
+    /**
+     * 计算总库存
+     * @param id
+     * @return
+     */
+    void calTotalStock(Integer id);
+
 }

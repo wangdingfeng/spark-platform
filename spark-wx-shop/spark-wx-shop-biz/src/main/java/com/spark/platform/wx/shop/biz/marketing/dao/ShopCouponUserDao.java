@@ -21,8 +21,16 @@ public interface ShopCouponUserDao extends BaseMapper<ShopCouponUser> {
     /**
      * 查询用户优惠券
      * @param wrapper
+     * @param page
      * @return
      */
     IPage pageUserCoupon(Page page, @Param(Constants.WRAPPER) Wrapper wrapper);
+
+    /**
+     *  获取用户优惠券信息
+     * @param id
+     * @return
+     */
+    ShopCouponUser findById(@Param("id") Integer id);
 
 }

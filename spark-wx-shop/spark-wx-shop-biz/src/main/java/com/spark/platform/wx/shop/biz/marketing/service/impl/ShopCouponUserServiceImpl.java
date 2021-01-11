@@ -80,6 +80,11 @@ public class ShopCouponUserServiceImpl extends ServiceImpl<ShopCouponUserDao, Sh
     }
 
     @Override
+    public ShopCouponUser findById(Integer id) {
+        return super.baseMapper.findById(id);
+    }
+
+    @Override
     public void taskOverdue() {
         // 查询未使用的 超过最后时间的优惠券 自动作废
         List<ShopCouponUser> couponUsers = super.list(Wrappers.<ShopCouponUser>lambdaQuery()

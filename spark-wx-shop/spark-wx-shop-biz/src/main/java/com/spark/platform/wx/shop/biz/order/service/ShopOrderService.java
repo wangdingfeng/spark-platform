@@ -29,4 +29,20 @@ public interface ShopOrderService extends IService<ShopOrder> {
      * @return
      */
     ShopOrder getOrder(Integer id);
+
+    /**
+     * 保存订单数据
+     * @param shopOrder
+     * @return
+     */
+    boolean saveOrder(ShopOrder shopOrder);
+
+    /**
+     * 发货
+     * @param id
+     * @param shipperName 快递公司
+     * @param shipperCode
+     * @return
+     */
+    boolean send(Integer id,String shipperName, String shipperCode);
 }

@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spark.platform.wx.shop.api.entity.goods.ShopGoods;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.ResultType;
+import org.apache.ibatis.annotations.Update;
 
 /**
  * <p>
@@ -24,5 +26,14 @@ public interface ShopGoodsDao extends BaseMapper<ShopGoods> {
      * @return
      */
     IPage pageCard(Page page, @Param(Constants.WRAPPER) Wrapper wrapper);
+
+    /**
+     * 计算总库存
+     * @param id
+     * @return
+     */
+    @Update("UPDATE shop_goods set stock = (SELECT sum(stock) FROM shop_goods_sku WHERE goods_id = #{id}) WHERE id=#{id}")
+    @ResultType(Integer.class)
+    int calTotalStock(@Param("id") Integer id);
 
 }

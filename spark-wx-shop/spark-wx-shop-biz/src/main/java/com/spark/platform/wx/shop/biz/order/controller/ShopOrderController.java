@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.spark.platform.common.base.support.BaseController;
 
@@ -63,5 +64,13 @@ public class ShopOrderController extends BaseController {
       public ApiResponse<ShopOrder> getById(@PathVariable Integer id) {
         return success(shopOrderService.getOrder(id));
       }
+
+
+      @PutMapping("/send")
+      @ApiOperation(value = "订单发货")
+      public ApiResponse send(@PathVariable Integer id, @RequestParam String shipperName,@RequestParam String shipperCode){
+            return success(shopOrderService.send(id, shipperName, shipperCode));
+      }
+
 
 }

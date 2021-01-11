@@ -5,7 +5,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spark.platform.wx.shop.api.entity.order.ShopOrder;
+import com.spark.platform.wx.shop.api.entity.order.ShopOrderExpress;
+import com.spark.platform.wx.shop.api.entity.order.ShopOrderGoods;
 import com.spark.platform.wx.shop.api.entity.user.ShopUser;
+import com.spark.platform.wx.shop.api.enums.ShopOrderStatusEnum;
 import com.spark.platform.wx.shop.biz.order.dao.ShopOrderDao;
 import com.spark.platform.wx.shop.biz.order.service.ShopOrderExpressService;
 import com.spark.platform.wx.shop.biz.order.service.ShopOrderGoodsService;
@@ -15,7 +18,10 @@ import com.spark.platform.wx.shop.biz.user.service.ShopUserService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+
+import java.util.List;
 
 /**
  * <p>
@@ -48,8 +54,35 @@ public class ShopOrderServiceImpl extends ServiceImpl<ShopOrderDao, ShopOrder> i
         ShopOrder shopOrder = super.getById(id);
         Assert.notNull(shopOrder,"查询不到当前订单详情!");
         shopOrder.setGoodsList(shopOrderGoodsService.findByOrderId(id));
-        shopOrder.setUser(shopUserService.getById(shopOrder.getId()));
+        shopOrder.setUser(shopUserService.getById(shopOrder.getUserId()));
         shopOrder.setExpressList(orderExpressService.findOrderId(id));
         return shopOrder;
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public boolean saveOrder(ShopOrder shopOrder) {
+        boolean flag = super.save(shopOrder);
+        List<ShopOrderGoods> shopOrderGoodsList = shopOrder.getGoodsList();
+        shopOrderGoodsList.forEach(shopOrderGoods -> {
+            shopOrderGoods.setOrderId(shopOrder.getId());
+        });
+        shopOrderGoodsService.saveBatch(shopOrderGoodsList);
+        return flag;
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public boolean send(Integer id, String shipperName, String shipperCode) {
+        ShopOrder shopOrder = new ShopOrder();
+        shopOrder.setId(id);
+        shopOrder.setOrderStatus(ShopOrderStatusEnum.SEND.getStatus());
+        shopOrder.setShippingStatus(1);
+        ShopOrderExpress orderExpress = new ShopOrderExpress();
+        orderExpress.setOrderId(id);
+        orderExpress.setShipperName(shipperName);
+        orderExpress.setShipperCode(shipperCode);
+        orderExpressService.save(orderExpress);
+        return super.save(shopOrder);
     }
 }

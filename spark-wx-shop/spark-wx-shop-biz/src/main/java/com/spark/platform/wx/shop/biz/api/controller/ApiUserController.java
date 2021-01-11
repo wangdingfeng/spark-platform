@@ -9,7 +9,6 @@ import com.spark.platform.wx.shop.api.entity.user.ShopUserCart;
 import com.spark.platform.wx.shop.api.entity.user.ShopUserCollect;
 import com.spark.platform.wx.shop.api.entity.user.ShopUserFootprint;
 import com.spark.platform.wx.shop.biz.api.service.ApiUserService;
-import com.spark.platform.wx.shop.biz.marketing.service.ShopCouponUserService;
 import com.spark.platform.wx.shop.biz.user.service.ShopUserAddressService;
 import com.spark.platform.wx.shop.biz.user.service.ShopUserCartService;
 import com.spark.platform.wx.shop.biz.user.service.ShopUserCollectService;

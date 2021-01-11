@@ -117,4 +117,9 @@ public class ShopGoodsServiceImpl extends ServiceImpl<ShopGoodsDao, ShopGoods> i
         log.info("[商品ID:{}],操作商品{}", shopGoods.getModifier(), ShopGoodsStatusEnum.statusOf(status).getDesc());
         return flag;
     }
+
+    @Override
+    public void calTotalStock(Integer id) {
+        super.baseMapper.calTotalStock(id);
+    }
 }

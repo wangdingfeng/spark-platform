@@ -42,6 +42,13 @@ public interface ShopCouponUserService extends IService<ShopCouponUser> {
     IPage pageUser(Page page, Integer userId, boolean isUse);
 
     /**
+     * 通过ID 查询优惠券
+     * @param id
+     * @return
+     */
+    ShopCouponUser findById(Integer id);
+
+    /**
      * 刷新过期优惠券信息
      */
     void taskOverdue();

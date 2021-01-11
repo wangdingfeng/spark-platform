@@ -21,9 +21,8 @@
         id, user_id, coupon_id, end_time, use_time, status
     </sql>
 
-    <select id="pageUserCoupon" resultType="com.spark.platform.wx.shop.api.entity.marketing.ShopCouponUser">
-        SELECT
-            u.*,
+    <!-- 通用查询结果列 -->
+    <sql id="Coupon_Column_List">
             c.id 'coupon.id',
             c.name 'coupon.name',
             c.coupon_type 'coupon.couponType',
@@ -34,10 +33,27 @@
             c.is_limited 'coupon.isLimited',
             c.total 'coupon.total',
             c.last_total 'coupon.lastTotal'
+    </sql>
+
+    <select id="pageUserCoupon" resultType="com.spark.platform.wx.shop.api.entity.marketing.ShopCouponUser">
+        SELECT
+            u.*,
+            <include refid="Coupon_Column_List"></include>
         FROM
             shop_coupon_user u
             JOIN shop_coupon c ON u.coupon_id = c.id
         ${ew.customSqlSegment}
+    </select>
+
+    <select id="findById" resultType="com.spark.platform.wx.shop.api.entity.marketing.ShopCouponUser">
+        SELECT
+        u.*,
+        <include refid="Coupon_Column_List"></include>
+        FROM
+        shop_coupon_user u
+        JOIN shop_coupon c ON u.coupon_id = c.id
+        WHERE
+        u.id =#{id}
     </select>
 
 </mapper>
