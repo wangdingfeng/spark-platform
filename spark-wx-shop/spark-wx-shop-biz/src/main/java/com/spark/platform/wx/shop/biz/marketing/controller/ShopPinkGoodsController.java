@@ -32,36 +32,36 @@ import com.spark.platform.common.base.support.BaseController;
 @RequiredArgsConstructor
 public class ShopPinkGoodsController extends BaseController {
 
-      private final ShopPinkGoodsService shopPinkGoodsService;
+    private final ShopPinkGoodsService shopPinkGoodsService;
 
-      @GetMapping("/page")
-      @ApiOperation(value = "拼团产品列表")
-      public ApiResponse page(ShopPinkGoods shopPinkGoods, Page page){
-        return success(shopPinkGoodsService.findPage(page,shopPinkGoods));
-      }
+    @GetMapping("/page")
+    @ApiOperation(value = "拼团产品列表")
+    public ApiResponse page(ShopPinkGoods shopPinkGoods, Page page) {
+        return success(shopPinkGoodsService.findPage(page, shopPinkGoods));
+    }
 
-      @PostMapping
-      @ApiOperation(value = "保存拼团产品信息")
-      public ApiResponse save(@RequestBody ShopPinkGoods shopPinkGoods){
+    @PostMapping
+    @ApiOperation(value = "保存拼团产品信息")
+    public ApiResponse save(@RequestBody ShopPinkGoods shopPinkGoods) {
         return success(shopPinkGoodsService.saveOrUpdate(shopPinkGoods));
-      }
+    }
 
-      @PutMapping
-      @ApiOperation(value = "更新拼团用户列表信息")
-      public ApiResponse update(@RequestBody ShopPinkGoods shopPinkUser){
-            return success(shopPinkGoodsService.updateById(shopPinkUser));
-      }
+    @PutMapping
+    @ApiOperation(value = "更新拼团用户列表信息")
+    public ApiResponse update(@RequestBody ShopPinkGoods shopPinkUser) {
+        return success(shopPinkGoodsService.updateById(shopPinkUser));
+    }
 
-      @DeleteMapping("/{id}")
-      @ApiOperation(value = "删除拼团产品")
-      public ApiResponse delete(@PathVariable Long id){
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "删除拼团产品")
+    public ApiResponse delete(@PathVariable Long id) {
         return success(shopPinkGoodsService.removeById(id));
-      }
+    }
 
-      @GetMapping("/{id}")
-      @ApiOperation(value = "根据id获取拼团产品信息")
-      public ApiResponse getById(@PathVariable Long id) {
+    @GetMapping("/{id}")
+    @ApiOperation(value = "根据id获取拼团产品信息")
+    public ApiResponse getById(@PathVariable Long id) {
         return success(shopPinkGoodsService.getById(id));
-      }
+    }
 
 }

@@ -33,36 +33,36 @@ import com.spark.platform.common.base.support.BaseController;
 @RequiredArgsConstructor
 public class ShopOrderExpressController extends BaseController {
 
-      private final ShopOrderExpressService shopOrderExpressService;
+    private final ShopOrderExpressService shopOrderExpressService;
 
-      @GetMapping("/page")
-      @ApiOperation(value = "订单物流信息表，发货时生成列表")
-      public ApiResponse page(ShopOrderExpress shopOrderExpress, Page page){
+    @GetMapping("/page")
+    @ApiOperation(value = "订单物流信息表，发货时生成列表")
+    public ApiResponse page(ShopOrderExpress shopOrderExpress, Page page) {
         return success(shopOrderExpressService.page(page, Wrappers.query(shopOrderExpress)));
-      }
+    }
 
-      @PostMapping
-      @ApiOperation(value = "保存订单物流信息表，发货时生成信息")
-      public ApiResponse save(@RequestBody ShopOrderExpress shopOrderExpress){
+    @PostMapping
+    @ApiOperation(value = "保存订单物流信息表，发货时生成信息")
+    public ApiResponse save(@RequestBody ShopOrderExpress shopOrderExpress) {
         return success(shopOrderExpressService.save(shopOrderExpress));
-      }
+    }
 
-      @PutMapping
-      @ApiOperation(value = "更新订单物流信息表，发货时生成信息")
-      public ApiResponse update(@RequestBody ShopOrderExpress shopOrderExpress){
+    @PutMapping
+    @ApiOperation(value = "更新订单物流信息表，发货时生成信息")
+    public ApiResponse update(@RequestBody ShopOrderExpress shopOrderExpress) {
         return success(shopOrderExpressService.updateById(shopOrderExpress));
-      }
+    }
 
-      @DeleteMapping("/{id}")
-      @ApiOperation(value = "删除订单物流信息表，发货时生成")
-      public ApiResponse delete(@PathVariable Long id){
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "删除订单物流信息表，发货时生成")
+    public ApiResponse delete(@PathVariable Long id) {
         return success(shopOrderExpressService.removeById(id));
-      }
+    }
 
-      @GetMapping("/{id}")
-      @ApiOperation(value = "根据id获取订单物流信息表，发货时生成信息")
-      public ApiResponse getById(@PathVariable Long id) {
+    @GetMapping("/{id}")
+    @ApiOperation(value = "根据id获取订单物流信息表，发货时生成信息")
+    public ApiResponse getById(@PathVariable Long id) {
         return success(shopOrderExpressService.getById(id));
-      }
+    }
 
 }

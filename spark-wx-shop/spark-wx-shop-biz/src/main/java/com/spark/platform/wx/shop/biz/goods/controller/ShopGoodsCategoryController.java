@@ -31,30 +31,30 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class ShopGoodsCategoryController extends BaseController {
 
-      private final ShopGoodsCategoryService shopGoodsCategoryService;
+    private final ShopGoodsCategoryService shopGoodsCategoryService;
 
-      @GetMapping("/list")
-      @ApiOperation(value = "商品分类列表")
-      public ApiResponse page(String name){
+    @GetMapping("/list")
+    @ApiOperation(value = "商品分类列表")
+    public ApiResponse page(String name) {
         return success(shopGoodsCategoryService.tree(name));
-      }
+    }
 
-      @PostMapping
-      @ApiOperation(value = "保存商品分类信息")
-      public ApiResponse save(@Valid @RequestBody ShopGoodsCategory shopGoodsCategory){
+    @PostMapping
+    @ApiOperation(value = "保存商品分类信息")
+    public ApiResponse save(@Valid @RequestBody ShopGoodsCategory shopGoodsCategory) {
         return success(shopGoodsCategoryService.saveOrUpdate(shopGoodsCategory));
-      }
+    }
 
-      @DeleteMapping("/{id}")
-      @ApiOperation(value = "删除商品分类")
-      public ApiResponse delete(@PathVariable Integer id){
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "删除商品分类")
+    public ApiResponse delete(@PathVariable Integer id) {
         return success(shopGoodsCategoryService.deleteCategory(id));
-      }
+    }
 
-      @GetMapping("/{id}")
-      @ApiOperation(value = "根据id获取商品分类信息")
-      public ApiResponse getById(@PathVariable Integer id) {
+    @GetMapping("/{id}")
+    @ApiOperation(value = "根据id获取商品分类信息")
+    public ApiResponse getById(@PathVariable Integer id) {
         return success(shopGoodsCategoryService.getById(id));
-      }
+    }
 
 }

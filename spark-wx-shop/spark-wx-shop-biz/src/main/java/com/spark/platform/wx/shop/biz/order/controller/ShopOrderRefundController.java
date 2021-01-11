@@ -33,36 +33,36 @@ import com.spark.platform.common.base.support.BaseController;
 @RequiredArgsConstructor
 public class ShopOrderRefundController extends BaseController {
 
-      private final ShopOrderRefundService shopOrderRefundService;
+    private final ShopOrderRefundService shopOrderRefundService;
 
-      @GetMapping("/page")
-      @ApiOperation(value = "退款管理列表")
-      public ApiResponse page(ShopOrderRefund shopOrderRefund, Page page){
+    @GetMapping("/page")
+    @ApiOperation(value = "退款管理列表")
+    public ApiResponse page(ShopOrderRefund shopOrderRefund, Page page) {
         return success(shopOrderRefundService.page(page, Wrappers.query(shopOrderRefund)));
-      }
+    }
 
-      @PostMapping
-      @ApiOperation(value = "保存退款管理信息")
-      public ApiResponse save(@RequestBody ShopOrderRefund shopOrderRefund){
+    @PostMapping
+    @ApiOperation(value = "保存退款管理信息")
+    public ApiResponse save(@RequestBody ShopOrderRefund shopOrderRefund) {
         return success(shopOrderRefundService.save(shopOrderRefund));
-      }
+    }
 
-      @PutMapping
-      @ApiOperation(value = "更新退款管理信息")
-      public ApiResponse update(@RequestBody ShopOrderRefund shopOrderRefund){
+    @PutMapping
+    @ApiOperation(value = "更新退款管理信息")
+    public ApiResponse update(@RequestBody ShopOrderRefund shopOrderRefund) {
         return success(shopOrderRefundService.updateById(shopOrderRefund));
-      }
+    }
 
-      @DeleteMapping("/{id}")
-      @ApiOperation(value = "删除退款管理")
-      public ApiResponse delete(@PathVariable Long id){
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "删除退款管理")
+    public ApiResponse delete(@PathVariable Long id) {
         return success(shopOrderRefundService.removeById(id));
-      }
+    }
 
-      @GetMapping("/{id}")
-      @ApiOperation(value = "根据id获取退款管理信息")
-      public ApiResponse getById(@PathVariable Long id) {
+    @GetMapping("/{id}")
+    @ApiOperation(value = "根据id获取退款管理信息")
+    public ApiResponse getById(@PathVariable Long id) {
         return success(shopOrderRefundService.getById(id));
-      }
+    }
 
 }

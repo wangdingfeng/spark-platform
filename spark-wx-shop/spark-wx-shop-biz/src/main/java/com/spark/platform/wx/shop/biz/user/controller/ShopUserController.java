@@ -26,36 +26,36 @@ import com.spark.platform.common.base.support.BaseController;
 @RequiredArgsConstructor
 public class ShopUserController extends BaseController {
 
-      private final ShopUserService shopUserService;
+    private final ShopUserService shopUserService;
 
-      @GetMapping("/page")
-      @ApiOperation(value = "shop会员管理列表")
-      public ApiResponse page(ShopUser shopUser, Page page){
+    @GetMapping("/page")
+    @ApiOperation(value = "shop会员管理列表")
+    public ApiResponse page(ShopUser shopUser, Page page) {
         return success(shopUserService.page(page, Wrappers.query(shopUser)));
-      }
+    }
 
-      @PostMapping
-      @ApiOperation(value = "保存shop会员管理信息")
-      public ApiResponse save(@RequestBody ShopUser shopUser){
+    @PostMapping
+    @ApiOperation(value = "保存shop会员管理信息")
+    public ApiResponse save(@RequestBody ShopUser shopUser) {
         return success(shopUserService.save(shopUser));
-      }
+    }
 
-      @PatchMapping("/{id}/{status}")
-      @ApiOperation(value = "更新shop会员状态")
-      public ApiResponse update(@PathVariable Integer id,@PathVariable Integer status){
-        return success(shopUserService.updateStatus(id,status));
-      }
+    @PatchMapping("/{id}/{status}")
+    @ApiOperation(value = "更新shop会员状态")
+    public ApiResponse update(@PathVariable Integer id, @PathVariable Integer status) {
+        return success(shopUserService.updateStatus(id, status));
+    }
 
-      @DeleteMapping("/{id}")
-      @ApiOperation(value = "删除shop会员管理")
-      public ApiResponse delete(@PathVariable Long id){
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "删除shop会员管理")
+    public ApiResponse delete(@PathVariable Long id) {
         return success(shopUserService.removeById(id));
-      }
+    }
 
-      @GetMapping("/{id}")
-      @ApiOperation(value = "根据id获取shop会员管理信息")
-      public ApiResponse getById(@PathVariable Long id) {
+    @GetMapping("/{id}")
+    @ApiOperation(value = "根据id获取shop会员管理信息")
+    public ApiResponse getById(@PathVariable Long id) {
         return success(shopUserService.getById(id));
-      }
+    }
 
 }

@@ -1,6 +1,9 @@
 package com.spark.platform.wx.shop.biz.api.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.spark.platform.wx.shop.api.dto.ShopOrderQueryDTO;
 import com.spark.platform.wx.shop.api.dto.SubmitOrderDTO;
+import com.spark.platform.wx.shop.api.vo.OrderCardVo;
 
 /**
  * @ProjectName: spark-platform
@@ -18,4 +21,25 @@ public interface ApiOrderService {
      * @return
      */
     boolean submit(SubmitOrderDTO submitOrderDTO);
+
+    /**
+     * 取消订单
+     * @param id
+     * @return
+     */
+    boolean cancel(Integer id);
+
+    /**
+     * 确认收货
+     * @param id
+     * @return
+     */
+    boolean confirmSend(Integer id);
+
+    /**
+     * 分页查询订单卡片信息
+     * @param queryDTO
+     * @return
+     */
+    IPage<OrderCardVo> page(ShopOrderQueryDTO queryDTO);
 }

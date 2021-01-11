@@ -27,4 +27,18 @@ public enum ShopOrderStatusEnum {
 
     private Integer status;
     private String desc;
+
+    /**
+     * 操作类型
+     * @param status
+     * @return
+     */
+    public static ShopOrderStatusEnum statusOf(Integer status) {
+        for(ShopOrderStatusEnum statusEnum : values()){
+            if(statusEnum.getStatus() == status){
+                return statusEnum;
+            }
+        }
+        throw new RuntimeException("没有找到对应的枚举");
+    }
 }

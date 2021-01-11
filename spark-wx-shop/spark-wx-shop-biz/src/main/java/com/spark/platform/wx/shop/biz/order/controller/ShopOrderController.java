@@ -33,44 +33,51 @@ import com.spark.platform.common.base.support.BaseController;
 @RequiredArgsConstructor
 public class ShopOrderController extends BaseController {
 
-      private final ShopOrderService shopOrderService;
+    private final ShopOrderService shopOrderService;
 
-      @GetMapping("/page")
-      @ApiOperation(value = "订单管理列表")
-      public ApiResponse page(ShopOrder shopOrder, Page page){
+    @GetMapping("/page")
+    @ApiOperation(value = "订单管理列表")
+    public ApiResponse page(ShopOrder shopOrder, Page page) {
         return success(shopOrderService.findPage(page, shopOrder));
-      }
+    }
 
-      @PostMapping
-      @ApiOperation(value = "保存订单管理信息")
-      public ApiResponse save(@RequestBody ShopOrder shopOrder){
+    @PostMapping
+    @ApiOperation(value = "保存订单管理信息")
+    public ApiResponse save(@RequestBody ShopOrder shopOrder) {
         return success(shopOrderService.save(shopOrder));
-      }
+    }
 
-      @PutMapping
-      @ApiOperation(value = "更新订单管理信息")
-      public ApiResponse update(@RequestBody ShopOrder shopOrder){
+    @PutMapping
+    @ApiOperation(value = "更新订单管理信息")
+    public ApiResponse update(@RequestBody ShopOrder shopOrder) {
         return success(shopOrderService.updateById(shopOrder));
-      }
+    }
 
-      @DeleteMapping("/{id}")
-      @ApiOperation(value = "删除订单管理")
-      public ApiResponse delete(@PathVariable Long id){
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "删除订单管理")
+    public ApiResponse delete(@PathVariable Long id) {
         return success(shopOrderService.removeById(id));
-      }
+    }
 
-      @GetMapping("/{id}")
-      @ApiOperation(value = "根据id获取订单管理信息")
-      public ApiResponse<ShopOrder> getById(@PathVariable Integer id) {
+    @GetMapping("/{id}")
+    @ApiOperation(value = "根据id获取订单管理信息")
+    public ApiResponse<ShopOrder> getById(@PathVariable Integer id) {
         return success(shopOrderService.getOrder(id));
-      }
+    }
 
 
-      @PutMapping("/send")
-      @ApiOperation(value = "订单发货")
-      public ApiResponse send(@PathVariable Integer id, @RequestParam String shipperName,@RequestParam String shipperCode){
-            return success(shopOrderService.send(id, shipperName, shipperCode));
-      }
+    @PutMapping("/{id}/send")
+    @ApiOperation(value = "订单发货")
+    public ApiResponse send(@PathVariable Integer id, @RequestParam String shipperName,
+                            @RequestParam String shipperCode, @RequestParam String logisticCode) {
+        return success(shopOrderService.send(id, shipperName, shipperCode, logisticCode));
+    }
+
+    @PutMapping("/{id}/cancel")
+    @ApiOperation(value = "取消订单")
+    public ApiResponse cancel(@PathVariable Integer id) {
+        return success(shopOrderService.cancel(id));
+    }
 
 
 }

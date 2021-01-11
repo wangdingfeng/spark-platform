@@ -32,36 +32,36 @@ import com.spark.platform.common.base.support.BaseController;
 @RequiredArgsConstructor
 public class ShopUserFootprintController extends BaseController {
 
-      private final ShopUserFootprintService shopUserFootprintService;
+    private final ShopUserFootprintService shopUserFootprintService;
 
-      @GetMapping("/page")
-      @ApiOperation(value = "用户浏览足迹列表")
-      public ApiResponse page(ShopUserFootprint shopUserFootprint, Page page){
+    @GetMapping("/page")
+    @ApiOperation(value = "用户浏览足迹列表")
+    public ApiResponse page(ShopUserFootprint shopUserFootprint, Page page) {
         return success(shopUserFootprintService.listPage(page, shopUserFootprint));
-      }
+    }
 
-      @PostMapping
-      @ApiOperation(value = "保存用户浏览足迹信息")
-      public ApiResponse save(@RequestBody ShopUserFootprint shopUserFootprint){
+    @PostMapping
+    @ApiOperation(value = "保存用户浏览足迹信息")
+    public ApiResponse save(@RequestBody ShopUserFootprint shopUserFootprint) {
         return success(shopUserFootprintService.save(shopUserFootprint));
-      }
+    }
 
-      @PutMapping
-      @ApiOperation(value = "更新用户浏览足迹信息")
-      public ApiResponse update(@RequestBody ShopUserFootprint shopUserFootprint){
+    @PutMapping
+    @ApiOperation(value = "更新用户浏览足迹信息")
+    public ApiResponse update(@RequestBody ShopUserFootprint shopUserFootprint) {
         return success(shopUserFootprintService.updateById(shopUserFootprint));
-      }
+    }
 
-      @DeleteMapping("/{id}")
-      @ApiOperation(value = "删除用户浏览足迹")
-      public ApiResponse delete(@PathVariable Long id){
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "删除用户浏览足迹")
+    public ApiResponse delete(@PathVariable Long id) {
         return success(shopUserFootprintService.removeById(id));
-      }
+    }
 
-      @GetMapping("/{id}")
-      @ApiOperation(value = "根据id获取用户浏览足迹信息")
-      public ApiResponse getById(@PathVariable Long id) {
+    @GetMapping("/{id}")
+    @ApiOperation(value = "根据id获取用户浏览足迹信息")
+    public ApiResponse getById(@PathVariable Long id) {
         return success(shopUserFootprintService.getById(id));
-      }
+    }
 
 }

@@ -32,30 +32,30 @@ import com.spark.platform.common.base.support.BaseController;
 @RequiredArgsConstructor
 public class ShopCouponController extends BaseController {
 
-      private final ShopCouponService shopSettingCouponService;
+    private final ShopCouponService shopSettingCouponService;
 
-      @GetMapping("/page")
-      @ApiOperation(value = "优惠券列表")
-      public ApiResponse page(ShopCoupon shopSettingCoupon, Page page){
+    @GetMapping("/page")
+    @ApiOperation(value = "优惠券列表")
+    public ApiResponse page(ShopCoupon shopSettingCoupon, Page page) {
         return success(shopSettingCouponService.page(page, Wrappers.query(shopSettingCoupon)));
-      }
+    }
 
-      @PostMapping
-      @ApiOperation(value = "保存优惠券信息")
-      public ApiResponse save(@RequestBody ShopCoupon shopSettingCoupon){
+    @PostMapping
+    @ApiOperation(value = "保存优惠券信息")
+    public ApiResponse save(@RequestBody ShopCoupon shopSettingCoupon) {
         return success(shopSettingCouponService.saveOrUpdate(shopSettingCoupon));
-      }
+    }
 
-      @DeleteMapping("/{id}")
-      @ApiOperation(value = "删除优惠券")
-      public ApiResponse delete(@PathVariable Long id){
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "删除优惠券")
+    public ApiResponse delete(@PathVariable Long id) {
         return success(shopSettingCouponService.removeById(id));
-      }
+    }
 
-      @GetMapping("/{id}")
-      @ApiOperation(value = "根据id获取优惠券信息")
-      public ApiResponse getById(@PathVariable Long id) {
+    @GetMapping("/{id}")
+    @ApiOperation(value = "根据id获取优惠券信息")
+    public ApiResponse getById(@PathVariable Long id) {
         return success(shopSettingCouponService.getById(id));
-      }
+    }
 
 }

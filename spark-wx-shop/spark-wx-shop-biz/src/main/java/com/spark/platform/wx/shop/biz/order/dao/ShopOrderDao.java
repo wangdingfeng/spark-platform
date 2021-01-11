@@ -19,11 +19,19 @@ import org.apache.ibatis.annotations.Param;
 public interface ShopOrderDao extends BaseMapper<ShopOrder> {
 
     /**
-     * 分页查询商品卡片信息
+     * 分页查询订单信息
      * @param page
      * @param wrapper
      * @return
      */
     IPage listPage(Page page, @Param(Constants.WRAPPER) Wrapper wrapper);
+
+    /**
+     * 分页查询订单卡片信息
+     * @param page
+     * @param wrapper
+     * @return
+     */
+    IPage cardPage(Page page, @Param(Constants.WRAPPER) Wrapper wrapper);
 
 }

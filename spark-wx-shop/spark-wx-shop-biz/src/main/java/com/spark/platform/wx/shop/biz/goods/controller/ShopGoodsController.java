@@ -62,19 +62,19 @@ public class ShopGoodsController extends BaseController {
 
     @PatchMapping("/publish/{id}")
     @ApiOperation(value = "根据id上架商品")
-    public ApiResponse publish(@PathVariable Integer id){
+    public ApiResponse publish(@PathVariable Integer id) {
         return success(shopGoodsService.updateStatus(id, ShopGoodsStatusEnum.PUBLISH.getStatus()));
     }
 
     @PatchMapping("/off/{id}")
     @ApiOperation(value = "根据id下架商品")
-    public ApiResponse off(@PathVariable Integer id){
+    public ApiResponse off(@PathVariable Integer id) {
         return success(shopGoodsService.updateStatus(id, ShopGoodsStatusEnum.OFF_PUBLISH.getStatus()));
     }
 
     @GetMapping("/sku/{id}")
     @ApiOperation(value = "根据id获取商品表信息")
-    public ApiResponse<List<ShopGoodsSku>> findSku(@PathVariable Integer id){
+    public ApiResponse<List<ShopGoodsSku>> findSku(@PathVariable Integer id) {
         return success(shopGoodsSkuService.findByGoodsId(id));
     }
 

@@ -33,36 +33,36 @@ import com.spark.platform.common.base.support.BaseController;
 @RequiredArgsConstructor
 public class ShopUserAddressController extends BaseController {
 
-      private final ShopUserAddressService shopUserAddressService;
+    private final ShopUserAddressService shopUserAddressService;
 
-      @GetMapping("/page")
-      @ApiOperation(value = "收货地址表列表")
-      public ApiResponse page(ShopUserAddress shopUserAddress, Page page){
+    @GetMapping("/page")
+    @ApiOperation(value = "收货地址表列表")
+    public ApiResponse page(ShopUserAddress shopUserAddress, Page page) {
         return success(shopUserAddressService.page(page, Wrappers.query(shopUserAddress)));
-      }
+    }
 
-      @PostMapping
-      @ApiOperation(value = "保存收货地址表信息")
-      public ApiResponse save(@RequestBody ShopUserAddress shopUserAddress){
+    @PostMapping
+    @ApiOperation(value = "保存收货地址表信息")
+    public ApiResponse save(@RequestBody ShopUserAddress shopUserAddress) {
         return success(shopUserAddressService.save(shopUserAddress));
-      }
+    }
 
-      @PutMapping
-      @ApiOperation(value = "更新收货地址表信息")
-      public ApiResponse update(@RequestBody ShopUserAddress shopUserAddress){
+    @PutMapping
+    @ApiOperation(value = "更新收货地址表信息")
+    public ApiResponse update(@RequestBody ShopUserAddress shopUserAddress) {
         return success(shopUserAddressService.updateById(shopUserAddress));
-      }
+    }
 
-      @DeleteMapping("/{id}")
-      @ApiOperation(value = "删除收货地址表")
-      public ApiResponse delete(@PathVariable Long id){
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "删除收货地址表")
+    public ApiResponse delete(@PathVariable Long id) {
         return success(shopUserAddressService.removeById(id));
-      }
+    }
 
-      @GetMapping("/{id}")
-      @ApiOperation(value = "根据id获取收货地址表信息")
-      public ApiResponse getById(@PathVariable Long id) {
+    @GetMapping("/{id}")
+    @ApiOperation(value = "根据id获取收货地址表信息")
+    public ApiResponse getById(@PathVariable Long id) {
         return success(shopUserAddressService.getById(id));
-      }
+    }
 
 }

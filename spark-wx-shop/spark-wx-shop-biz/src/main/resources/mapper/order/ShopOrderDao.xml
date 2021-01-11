@@ -46,6 +46,24 @@
         </collection>
     </resultMap>
 
+    <resultMap id="CardResultMap" type="com.spark.platform.wx.shop.api.vo.OrderCardVo">
+        <id column="id" property="id" />
+        <result column="order_sn" property="orderSn" />
+        <result column="order_type" property="orderType" />
+        <result column="order_status" property="orderStatus" />
+        <result column="order_price" property="orderPrice" />
+        <result column="coupon_price" property="couponPrice" />
+        <result column="actual_price" property="actualPrice" />
+        <collection property="goodsList" ofType="com.spark.platform.wx.shop.api.vo.OrderCardVo$OrderGoods" javaType="java.util.List">
+            <result column="goods_title" property="goodsTitle" />
+            <result column="pic_url" property="picUrl" />
+            <result column="number" property="number" />
+            <result column="price" property="price" />
+            <result column="goods_attr_vals" property="goodsAttrVals" />
+        </collection>
+    </resultMap>
+
+
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         create_date,
@@ -55,6 +73,14 @@
 
     <select id="listPage" resultMap="BaseResultMap">
         SELECT o.*,g.*,u.nickname 'nickname' FROM shop_order o LEFT JOIN shop_order_goods g ON o.id=g.order_id LEFT JOIN shop_user u ON o.user_id=u.id
+        ${ew.customSqlSegment}
+    </select>
+
+    <select id="cardPage" resultMap="CardResultMap">
+        SELECT
+               o.id,o.order_sn,o.order_type,o.order_status,o.order_price,o.coupon_price,o.actual_price,
+               g.goods_title,g.pic_url,g.number,g.price,g.goods_attr_vals
+        FROM shop_order o LEFT JOIN shop_order_goods g ON o.id=g.order_id
         ${ew.customSqlSegment}
     </select>
 

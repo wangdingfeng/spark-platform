@@ -31,30 +31,30 @@ import com.spark.platform.common.base.support.BaseController;
 @RequiredArgsConstructor
 public class ShopSeckillGoodsController extends BaseController {
 
-      private final ShopSeckillGoodsService shopSeckillGoodsService;
+    private final ShopSeckillGoodsService shopSeckillGoodsService;
 
-      @GetMapping("/page")
-      @ApiOperation(value = "商品秒杀配置列表列表")
-      public ApiResponse page(ShopSeckillGoods shopSeckillGoods, Page page){
-        return success(shopSeckillGoodsService.findPage(page,shopSeckillGoods));
-      }
+    @GetMapping("/page")
+    @ApiOperation(value = "商品秒杀配置列表列表")
+    public ApiResponse page(ShopSeckillGoods shopSeckillGoods, Page page) {
+        return success(shopSeckillGoodsService.findPage(page, shopSeckillGoods));
+    }
 
-      @PostMapping
-      @ApiOperation(value = "保存商品秒杀配置列表信息")
-      public ApiResponse save(@RequestBody ShopSeckillGoods shopSeckillGoods){
+    @PostMapping
+    @ApiOperation(value = "保存商品秒杀配置列表信息")
+    public ApiResponse save(@RequestBody ShopSeckillGoods shopSeckillGoods) {
         return success(shopSeckillGoodsService.saveOrUpdate(shopSeckillGoods));
-      }
+    }
 
-      @DeleteMapping("/{id}")
-      @ApiOperation(value = "删除商品秒杀配置列表")
-      public ApiResponse delete(@PathVariable Long id){
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "删除商品秒杀配置列表")
+    public ApiResponse delete(@PathVariable Long id) {
         return success(shopSeckillGoodsService.removeById(id));
-      }
+    }
 
-      @GetMapping("/{id}")
-      @ApiOperation(value = "根据id获取商品秒杀配置列表信息")
-      public ApiResponse getById(@PathVariable Long id) {
+    @GetMapping("/{id}")
+    @ApiOperation(value = "根据id获取商品秒杀配置列表信息")
+    public ApiResponse getById(@PathVariable Long id) {
         return success(shopSeckillGoodsService.getById(id));
-      }
+    }
 
 }

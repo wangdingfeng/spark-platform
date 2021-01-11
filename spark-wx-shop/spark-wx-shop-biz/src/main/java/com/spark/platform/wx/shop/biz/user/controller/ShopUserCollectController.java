@@ -32,36 +32,36 @@ import com.spark.platform.common.base.support.BaseController;
 @RequiredArgsConstructor
 public class ShopUserCollectController extends BaseController {
 
-      private final ShopUserCollectService shopUserCollectService;
+    private final ShopUserCollectService shopUserCollectService;
 
-      @GetMapping("/page")
-      @ApiOperation(value = "用户收藏列表")
-      public ApiResponse page(ShopUserCollect shopUserCollect, Page page){
-        return success(shopUserCollectService.listPage(page,shopUserCollect));
-      }
+    @GetMapping("/page")
+    @ApiOperation(value = "用户收藏列表")
+    public ApiResponse page(ShopUserCollect shopUserCollect, Page page) {
+        return success(shopUserCollectService.listPage(page, shopUserCollect));
+    }
 
-      @PostMapping
-      @ApiOperation(value = "保存用户收藏信息")
-      public ApiResponse save(@RequestBody ShopUserCollect shopUserCollect){
+    @PostMapping
+    @ApiOperation(value = "保存用户收藏信息")
+    public ApiResponse save(@RequestBody ShopUserCollect shopUserCollect) {
         return success(shopUserCollectService.save(shopUserCollect));
-      }
+    }
 
-      @PutMapping
-      @ApiOperation(value = "更新用户收藏信息")
-      public ApiResponse update(@RequestBody ShopUserCollect shopUserCollect){
+    @PutMapping
+    @ApiOperation(value = "更新用户收藏信息")
+    public ApiResponse update(@RequestBody ShopUserCollect shopUserCollect) {
         return success(shopUserCollectService.updateById(shopUserCollect));
-      }
+    }
 
-      @DeleteMapping("/{id}")
-      @ApiOperation(value = "删除用户收藏")
-      public ApiResponse delete(@PathVariable Long id){
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "删除用户收藏")
+    public ApiResponse delete(@PathVariable Long id) {
         return success(shopUserCollectService.removeById(id));
-      }
+    }
 
-      @GetMapping("/{id}")
-      @ApiOperation(value = "根据id获取用户收藏信息")
-      public ApiResponse getById(@PathVariable Long id) {
+    @GetMapping("/{id}")
+    @ApiOperation(value = "根据id获取用户收藏信息")
+    public ApiResponse getById(@PathVariable Long id) {
         return success(shopUserCollectService.getById(id));
-      }
+    }
 
 }

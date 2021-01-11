@@ -33,36 +33,36 @@ import com.spark.platform.common.base.support.BaseController;
 @RequiredArgsConstructor
 public class ShopPinkUserController extends BaseController {
 
-      private final ShopPinkUserService shopPinkUserService;
+    private final ShopPinkUserService shopPinkUserService;
 
-      @GetMapping("/page")
-      @ApiOperation(value = "拼团用户列表列表")
-      public ApiResponse page(ShopPinkUser shopPinkUser, Page page){
+    @GetMapping("/page")
+    @ApiOperation(value = "拼团用户列表列表")
+    public ApiResponse page(ShopPinkUser shopPinkUser, Page page) {
         return success(shopPinkUserService.page(page, Wrappers.query(shopPinkUser)));
-      }
+    }
 
-      @PostMapping
-      @ApiOperation(value = "保存拼团用户列表信息")
-      public ApiResponse save(@RequestBody ShopPinkUser shopPinkUser){
+    @PostMapping
+    @ApiOperation(value = "保存拼团用户列表信息")
+    public ApiResponse save(@RequestBody ShopPinkUser shopPinkUser) {
         return success(shopPinkUserService.save(shopPinkUser));
-      }
+    }
 
-      @PutMapping
-      @ApiOperation(value = "更新拼团用户列表信息")
-      public ApiResponse update(@RequestBody ShopPinkUser shopPinkUser){
+    @PutMapping
+    @ApiOperation(value = "更新拼团用户列表信息")
+    public ApiResponse update(@RequestBody ShopPinkUser shopPinkUser) {
         return success(shopPinkUserService.updateById(shopPinkUser));
-      }
+    }
 
-      @DeleteMapping("/{id}")
-      @ApiOperation(value = "删除拼团用户列表")
-      public ApiResponse delete(@PathVariable Long id){
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "删除拼团用户列表")
+    public ApiResponse delete(@PathVariable Long id) {
         return success(shopPinkUserService.removeById(id));
-      }
+    }
 
-      @GetMapping("/{id}")
-      @ApiOperation(value = "根据id获取拼团用户列表信息")
-      public ApiResponse getById(@PathVariable Long id) {
+    @GetMapping("/{id}")
+    @ApiOperation(value = "根据id获取拼团用户列表信息")
+    public ApiResponse getById(@PathVariable Long id) {
         return success(shopPinkUserService.getById(id));
-      }
+    }
 
 }

@@ -29,18 +29,18 @@ import com.spark.platform.common.base.support.BaseController;
 @AllArgsConstructor
 public class ShopGoodsCommentController extends BaseController {
 
-      private final ShopGoodsCommentService shopGoodCommentService;
+    private final ShopGoodsCommentService shopGoodCommentService;
 
-      @GetMapping("/page")
-      @ApiOperation(value = "商品评价列表")
-      public ApiResponse page(ShopGoodsComment shopGoodComment, Page page){
+    @GetMapping("/page")
+    @ApiOperation(value = "商品评价列表")
+    public ApiResponse page(ShopGoodsComment shopGoodComment, Page page) {
         return success(shopGoodCommentService.listPage(page, shopGoodComment));
-      }
+    }
 
-      @DeleteMapping("/{id}")
-      @ApiOperation(value = "删除商品评价")
-      public ApiResponse delete(@PathVariable Long id){
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "删除商品评价")
+    public ApiResponse delete(@PathVariable Long id) {
         return success(shopGoodCommentService.removeById(id));
-      }
+    }
 
 }

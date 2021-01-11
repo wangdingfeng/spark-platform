@@ -33,30 +33,30 @@ import com.spark.platform.common.base.support.BaseController;
 @RequiredArgsConstructor
 public class ShopSeckillController extends BaseController {
 
-      private final ShopSeckillService shopSeckillService;
+    private final ShopSeckillService shopSeckillService;
 
-      @GetMapping("/page")
-      @ApiOperation(value = "秒杀配置列表")
-      public ApiResponse page(ShopSeckill shopSeckill, Page page){
+    @GetMapping("/page")
+    @ApiOperation(value = "秒杀配置列表")
+    public ApiResponse page(ShopSeckill shopSeckill, Page page) {
         return success(shopSeckillService.page(page, Wrappers.query(shopSeckill)));
-      }
+    }
 
-      @PostMapping
-      @ApiOperation(value = "保存秒杀配置信息")
-      public ApiResponse save(@RequestBody ShopSeckill shopSeckill){
+    @PostMapping
+    @ApiOperation(value = "保存秒杀配置信息")
+    public ApiResponse save(@RequestBody ShopSeckill shopSeckill) {
         return success(shopSeckillService.saveOrUpdate(shopSeckill));
-      }
+    }
 
-      @DeleteMapping("/{id}")
-      @ApiOperation(value = "删除秒杀配置")
-      public ApiResponse delete(@PathVariable Long id){
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "删除秒杀配置")
+    public ApiResponse delete(@PathVariable Long id) {
         return success(shopSeckillService.removeById(id));
-      }
+    }
 
-      @GetMapping("/{id}")
-      @ApiOperation(value = "根据id获取秒杀配置信息")
-      public ApiResponse getById(@PathVariable Long id) {
+    @GetMapping("/{id}")
+    @ApiOperation(value = "根据id获取秒杀配置信息")
+    public ApiResponse getById(@PathVariable Long id) {
         return success(shopSeckillService.getById(id));
-      }
+    }
 
 }

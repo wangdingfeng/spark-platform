@@ -43,4 +43,11 @@ public interface ShopGoodsSkuService extends IService<ShopGoodsSku> {
      * @return
      */
     boolean subStock(Integer id, Integer num);
+
+    /**
+     * 增加库存
+     * @param id
+     * @param num
+     */
+    void addStock(Integer id, Integer num);
 }

@@ -29,24 +29,24 @@ import com.spark.platform.common.base.support.BaseController;
 @RequiredArgsConstructor
 public class ShopUserCartController extends BaseController {
 
-      private final ShopUserCartService shopUserCartService;
+    private final ShopUserCartService shopUserCartService;
 
-      @GetMapping("/page")
-      @ApiOperation(value = "会员购物车列表")
-      public ApiResponse page(ShopUserCart shopUserCart, Page page){
-        return success(shopUserCartService.listPage(page,shopUserCart));
-      }
+    @GetMapping("/page")
+    @ApiOperation(value = "会员购物车列表")
+    public ApiResponse page(ShopUserCart shopUserCart, Page page) {
+        return success(shopUserCartService.listPage(page, shopUserCart));
+    }
 
-      @DeleteMapping("/{id}")
-      @ApiOperation(value = "删除会员购物车")
-      public ApiResponse delete(@PathVariable Long id){
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "删除会员购物车")
+    public ApiResponse delete(@PathVariable Long id) {
         return success(shopUserCartService.removeById(id));
-      }
+    }
 
-      @GetMapping("/{id}")
-      @ApiOperation(value = "根据id获取会员购物车信息")
-      public ApiResponse getById(@PathVariable Long id) {
+    @GetMapping("/{id}")
+    @ApiOperation(value = "根据id获取会员购物车信息")
+    public ApiResponse getById(@PathVariable Long id) {
         return success(shopUserCartService.getById(id));
-      }
+    }
 
 }

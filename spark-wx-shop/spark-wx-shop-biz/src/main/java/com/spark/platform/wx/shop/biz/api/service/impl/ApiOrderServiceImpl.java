@@ -2,7 +2,9 @@ package com.spark.platform.wx.shop.biz.api.service.impl;
 
 import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.util.IdUtil;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.spark.platform.common.base.exception.BusinessException;
+import com.spark.platform.wx.shop.api.dto.ShopOrderQueryDTO;
 import com.spark.platform.wx.shop.api.dto.SubmitOrderDTO;
 import com.spark.platform.wx.shop.api.entity.goods.ShopGoods;
 import com.spark.platform.wx.shop.api.entity.goods.ShopGoodsSku;
@@ -16,6 +18,7 @@ import com.spark.platform.wx.shop.api.enums.CouponTypeEnum;
 import com.spark.platform.wx.shop.api.enums.CouponUserStatusEnum;
 import com.spark.platform.wx.shop.api.enums.ShopGoodsStatusEnum;
 import com.spark.platform.wx.shop.api.enums.ShopOrderStatusEnum;
+import com.spark.platform.wx.shop.api.vo.OrderCardVo;
 import com.spark.platform.wx.shop.biz.api.service.ApiOrderService;
 import com.spark.platform.wx.shop.biz.goods.service.ShopGoodsService;
 import com.spark.platform.wx.shop.biz.goods.service.ShopGoodsSkuService;
@@ -36,13 +39,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @ProjectName: spark-platform
- * @Package: com.spark.platform.wx.shop.biz.api.service.impl
- * @ClassName: ApiOrderServiceImpl
  * @Author: wangdingfeng
  * @Description: 订单
  * @Date: 2020/12/23 15:31
- * @Version: 1.0
  */
 @Service
 @RequiredArgsConstructor
@@ -60,6 +59,7 @@ public class ApiOrderServiceImpl implements ApiOrderService {
     @Override
     @Transactional(readOnly = false)
     public boolean submit(SubmitOrderDTO submitOrderDTO) {
+        // 采用的是下单立减库存
         BigDecimal goodsPrice = BigDecimal.ZERO;
         BigDecimal couponAmout;
         // 校验活动状态
@@ -120,6 +120,23 @@ public class ApiOrderServiceImpl implements ApiOrderService {
         shopOrder.setUserRemarks(submitOrderDTO.getUserRemarks());
         shopOrder.setGoodsList(shopOrderGoodsList);
         return orderService.saveOrder(shopOrder);
+    }
+
+    @Override
+    public boolean cancel(Integer id) {
+        return orderService.cancel(id);
+    }
+
+    @Override
+    public boolean confirmSend(Integer id) {
+        ShopOrder shopOrder = new ShopOrder();
+        shopOrder.setOrderStatus(ShopOrderStatusEnum.CONFIRM_SEND.getStatus());
+        return orderService.updateById(shopOrder);
+    }
+
+    @Override
+    public IPage<OrderCardVo> page(ShopOrderQueryDTO queryDTO) {
+        return orderService.cardPage(queryDTO);
     }
 
     /**

@@ -27,4 +27,15 @@ public interface ShopGoodsSkuDao extends BaseMapper<ShopGoodsSku> {
     @ResultType(Integer.class)
     int subStock(@Param("id") Integer id,@Param("num") Integer num);
 
+
+    /**
+     * 增加库存
+     * @param id
+     * @param num
+     * @return
+     */
+    @Update("update shop_goods_sku set stock = stock + #{num} where id=#{id}")
+    @ResultType(Integer.class)
+    int addStock(@Param("id") Integer id,@Param("num") Integer num);
+
 }

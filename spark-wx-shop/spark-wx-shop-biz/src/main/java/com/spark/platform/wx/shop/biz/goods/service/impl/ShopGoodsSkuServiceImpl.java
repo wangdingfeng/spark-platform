@@ -48,4 +48,9 @@ public class ShopGoodsSkuServiceImpl extends ServiceImpl<ShopGoodsSkuDao, ShopGo
         }
         return false;
     }
+
+    @Override
+    public void addStock(Integer id, Integer num) {
+        super.baseMapper.addStock(id, num);
+    }
 }

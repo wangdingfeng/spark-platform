@@ -4,11 +4,14 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.spark.platform.wx.shop.api.dto.ShopOrderQueryDTO;
+import com.spark.platform.wx.shop.api.entity.goods.ShopGoodsSku;
 import com.spark.platform.wx.shop.api.entity.order.ShopOrder;
 import com.spark.platform.wx.shop.api.entity.order.ShopOrderExpress;
 import com.spark.platform.wx.shop.api.entity.order.ShopOrderGoods;
 import com.spark.platform.wx.shop.api.entity.user.ShopUser;
 import com.spark.platform.wx.shop.api.enums.ShopOrderStatusEnum;
+import com.spark.platform.wx.shop.biz.goods.service.ShopGoodsSkuService;
 import com.spark.platform.wx.shop.biz.order.dao.ShopOrderDao;
 import com.spark.platform.wx.shop.biz.order.service.ShopOrderExpressService;
 import com.spark.platform.wx.shop.biz.order.service.ShopOrderGoodsService;
@@ -38,6 +41,7 @@ public class ShopOrderServiceImpl extends ServiceImpl<ShopOrderDao, ShopOrder> i
     private final ShopOrderGoodsService shopOrderGoodsService;
     private final ShopUserService shopUserService;
     private final ShopOrderExpressService orderExpressService;
+    private final ShopGoodsSkuService shopGoodsSkuService;
 
     @Override
     public IPage findPage(Page page, ShopOrder shopOrder) {
@@ -47,6 +51,16 @@ public class ShopOrderServiceImpl extends ServiceImpl<ShopOrderDao, ShopOrder> i
         wrapper.eq(null != shopOrder.getOrderStatus(),"o.order_status",shopOrder.getOrderStatus());
         wrapper.eq(StringUtils.isNotBlank(shopOrder.getOrderType()),"o.order_type",shopOrder.getOrderType());
         return super.baseMapper.listPage(page, wrapper);
+    }
+
+    @Override
+    public IPage cardPage(ShopOrderQueryDTO queryDTO) {
+        QueryWrapper wrapper = new QueryWrapper<ShopOrder>();
+        wrapper.eq(null != queryDTO.getUserId(),"o.user_id",queryDTO.getUserId());
+        wrapper.eq(null != queryDTO.getOrderStatus(),"o.order_status",queryDTO.getOrderStatus());
+        wrapper.like(null != queryDTO.getGoodsTitle(),"g.goods_title",queryDTO.getGoodsTitle());
+        wrapper.orderByDesc("o.modify_date");
+        return super.baseMapper.cardPage(new Page(queryDTO.getCurrent(),queryDTO.getSize()),wrapper);
     }
 
     @Override
@@ -73,7 +87,7 @@ public class ShopOrderServiceImpl extends ServiceImpl<ShopOrderDao, ShopOrder> i
 
     @Override
     @Transactional(readOnly = false)
-    public boolean send(Integer id, String shipperName, String shipperCode) {
+    public boolean send(Integer id, String shipperName, String shipperCode, String logisticCode) {
         ShopOrder shopOrder = new ShopOrder();
         shopOrder.setId(id);
         shopOrder.setOrderStatus(ShopOrderStatusEnum.SEND.getStatus());
@@ -82,7 +96,26 @@ public class ShopOrderServiceImpl extends ServiceImpl<ShopOrderDao, ShopOrder> i
         orderExpress.setOrderId(id);
         orderExpress.setShipperName(shipperName);
         orderExpress.setShipperCode(shipperCode);
+        orderExpress.setLogisticCode(logisticCode);
         orderExpressService.save(orderExpress);
         return super.save(shopOrder);
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public boolean cancel(Integer id) {
+        ShopOrder shopOrder = new ShopOrder();
+        shopOrder.setId(id);
+        shopOrder.setOrderStatus(ShopOrderStatusEnum.CANCEL.getStatus());
+        super.updateById(shopOrder);
+        // 释放库存
+        List<ShopOrderGoods> orderGoods = shopOrderGoodsService.findByOrderId(id);
+        orderGoods.forEach(shopOrderGoods -> {
+            ShopGoodsSku shopGoodsSku = shopGoodsSkuService.findByGoodsIdAndVals(shopOrderGoods.getGoodsId(),shopOrderGoods.getGoodsAttrValIds());
+            if(null != shopGoodsSku){
+                shopGoodsSkuService.addStock(shopGoodsSku.getId(),shopOrderGoods.getNumber());
+            }
+        });
+        return false;
     }
 }

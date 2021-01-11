@@ -3,6 +3,7 @@ package com.spark.platform.wx.shop.biz.order.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.spark.platform.wx.shop.api.dto.ShopOrderQueryDTO;
 import com.spark.platform.wx.shop.api.entity.order.ShopOrder;
 
 /**
@@ -16,12 +17,20 @@ import com.spark.platform.wx.shop.api.entity.order.ShopOrder;
 public interface ShopOrderService extends IService<ShopOrder> {
 
     /**
-     * 查询商品卡辛
+     * 查询订单
      * @param page
      * @param shopOrder
      * @return
      */
     IPage findPage(Page page, ShopOrder shopOrder);
+
+    /**
+     * 查询订单卡片
+     * @param queryDTO
+     * @return
+     */
+    IPage cardPage(ShopOrderQueryDTO queryDTO);
+
 
     /**
      * 获取订单详情
@@ -42,7 +51,15 @@ public interface ShopOrderService extends IService<ShopOrder> {
      * @param id
      * @param shipperName 快递公司
      * @param shipperCode
+     * @param logisticCode 快递单号
      * @return
      */
-    boolean send(Integer id,String shipperName, String shipperCode);
+    boolean send(Integer id,String shipperName, String shipperCode, String logisticCode);
+
+    /**
+     * 取消订单
+     * @param id
+     * @return
+     */
+    boolean cancel(Integer id);
 }
