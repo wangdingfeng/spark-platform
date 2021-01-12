@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import com.spark.platform.common.base.entity.BaseEntity;
+import com.spark.platform.wx.shop.api.entity.user.ShopUser;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -37,10 +38,13 @@ public class ShopOrderRefund {
     private Integer id;
 
     @ApiModelProperty(value = "退款单号")
-    private Long refundSn;
+    private String refundSn;
+
+    @ApiModelProperty(value = "订单ID")
+    private Integer orderId;
 
     @ApiModelProperty(value = "订单编号")
-    private Integer orderId;
+    private String orderSn;
 
     @ApiModelProperty(value = "退款用户")
     private Integer userId;
@@ -48,8 +52,11 @@ public class ShopOrderRefund {
     @ApiModelProperty(value = "退款商品ID")
     private Integer orderGoodsId;
 
+    @ApiModelProperty(value = "申请数量")
+    private Integer num;
+
     @ApiModelProperty(value = "退款状态 0 申请中 1 退款完成 2 拒绝退款")
-    private Boolean refundStatus;
+    private Integer refundStatus;
 
     @ApiModelProperty(value = "订单金额")
     private BigDecimal orderAmount;
@@ -76,6 +83,14 @@ public class ShopOrderRefund {
     @TableField(value = "modify_date", fill = FieldFill.INSERT_UPDATE)
     @ApiModelProperty(value = "修改时间")
     private LocalDateTime modifyDate;
+
+    @ApiModelProperty(value = "订单商品")
+    @TableField(exist = false)
+    private ShopOrderGoods orderGoods;
+
+    @ApiModelProperty(value = "用户信息")
+    @TableField(exist = false)
+    private ShopUser user;
 
 
 }

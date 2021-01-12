@@ -43,7 +43,7 @@ public class ShopOrder implements Serializable {
     @ApiModelProperty(value = "订单类型 0 普通订单 1 团购订单 2 秒杀订单")
     private String orderType;
 
-    @ApiModelProperty(value = "订单状态 0 待付款 1 已取消 2 已付款 3 已发货 4 用户确认收货 5 退款 6 完成 7 待评价")
+    @ApiModelProperty(value = "订单状态 0 待付款 1 已取消 2 已付款 3 已发货  4 退款 5 完成 6 待评价")
     private Integer orderStatus;
 
     @ApiModelProperty(value = "发货状态 0 待发货 1 已发货 2 已收货 3 退货")

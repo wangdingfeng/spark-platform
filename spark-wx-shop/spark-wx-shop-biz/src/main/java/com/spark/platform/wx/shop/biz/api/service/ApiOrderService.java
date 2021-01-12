@@ -1,6 +1,7 @@
 package com.spark.platform.wx.shop.biz.api.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.spark.platform.wx.shop.api.dto.OrderRefundDTO;
 import com.spark.platform.wx.shop.api.dto.ShopOrderQueryDTO;
 import com.spark.platform.wx.shop.api.dto.SubmitOrderDTO;
 import com.spark.platform.wx.shop.api.vo.OrderCardVo;
@@ -24,17 +25,17 @@ public interface ApiOrderService {
 
     /**
      * 取消订单
-     * @param id
+     * @param orderId
      * @return
      */
-    boolean cancel(Integer id);
+    boolean cancel(Integer orderId);
 
     /**
      * 确认收货
-     * @param id
+     * @param orderId
      * @return
      */
-    boolean confirmSend(Integer id);
+    boolean confirmSend(Integer orderId);
 
     /**
      * 分页查询订单卡片信息
@@ -42,4 +43,11 @@ public interface ApiOrderService {
      * @return
      */
     IPage<OrderCardVo> page(ShopOrderQueryDTO queryDTO);
+
+    /**
+     * 退款
+     * @param refundDTO
+     * @return
+     */
+    boolean refund(OrderRefundDTO refundDTO);
 }

@@ -36,6 +36,8 @@ public class SubmitOrderDTO {
     private Integer seckillGoodsId;
     @ApiModelProperty(value = "拼团商品ID")
     private Integer pinkGoodsId;
+    @ApiModelProperty(value = "拼团用户ID")
+    private Integer pinkUserId;
     @ApiModelProperty(value = "用户优惠券ID")
     private Integer couponUserId;
     @ApiModelProperty(value = "用户购物车ID")

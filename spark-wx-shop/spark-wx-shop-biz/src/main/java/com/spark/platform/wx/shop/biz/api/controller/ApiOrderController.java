@@ -3,6 +3,7 @@ package com.spark.platform.wx.shop.biz.api.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.spark.platform.common.base.support.ApiResponse;
 import com.spark.platform.common.base.support.BaseController;
+import com.spark.platform.wx.shop.api.dto.OrderRefundDTO;
 import com.spark.platform.wx.shop.api.dto.ShopOrderQueryDTO;
 import com.spark.platform.wx.shop.api.dto.SubmitOrderDTO;
 import com.spark.platform.wx.shop.api.entity.user.ShopUser;
@@ -51,5 +52,11 @@ public class ApiOrderController extends BaseController {
     @ApiOperation(value = "确认收货")
     public ApiResponse confirmSend(@PathVariable Integer orderId) {
         return success(apiOrderService.confirmSend(orderId));
+    }
+
+    @PostMapping("/refund")
+    @ApiOperation(value = "退款")
+    public ApiResponse confirmSend(@Valid @RequestBody OrderRefundDTO refundDTO) {
+        return success(apiOrderService.refund(refundDTO));
     }
 }

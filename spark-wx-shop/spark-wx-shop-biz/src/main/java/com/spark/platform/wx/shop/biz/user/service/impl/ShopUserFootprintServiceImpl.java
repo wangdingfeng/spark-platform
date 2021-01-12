@@ -25,8 +25,8 @@ public class ShopUserFootprintServiceImpl extends ServiceImpl<ShopUserFootprintD
     @Override
     public IPage listPage(Page page, ShopUserFootprint shopUserFootprint) {
         QueryWrapper queryWrapper = new QueryWrapper<ShopUserCollect>();
-        WrapperSupport.putParamsLike(queryWrapper,"g",shopUserFootprint,"goodsSn");
-        WrapperSupport.putParamsEqual(queryWrapper,"f",shopUserFootprint,"userId");
+        WrapperSupport.putParamsLike(queryWrapper,"g",shopUserFootprint,"goodsTitle");
+        WrapperSupport.putParamsEqual(queryWrapper,"f",shopUserFootprint,"userId","goodsId");
         queryWrapper.orderByDesc("create_date");
         return super.baseMapper.listPage(page, queryWrapper);
     }

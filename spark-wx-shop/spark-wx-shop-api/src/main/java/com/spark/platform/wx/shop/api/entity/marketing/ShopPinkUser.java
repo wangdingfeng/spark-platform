@@ -52,7 +52,7 @@ public class ShopPinkUser{
     @ApiModelProperty(value = "结束时间")
     private LocalDateTime endTime;
 
-    @ApiModelProperty(value = "状态 0 待成团 1 拼团中 2 拼团成功 3 拼团失败")
+    @ApiModelProperty(value = "状态 1 拼团中 2 拼团成功 3 拼团失败")
     private Integer status;
 
 

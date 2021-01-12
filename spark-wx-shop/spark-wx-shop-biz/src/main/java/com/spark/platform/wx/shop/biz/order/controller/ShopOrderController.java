@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.spark.platform.common.base.support.BaseController;
 
+import java.util.Map;
+
 /**
  * <p>
  * 订单管理 api访问层
@@ -66,9 +68,9 @@ public class ShopOrderController extends BaseController {
     }
 
 
-    @PutMapping("/{id}/send")
+    @PutMapping("/send")
     @ApiOperation(value = "订单发货")
-    public ApiResponse send(@PathVariable Integer id, @RequestParam String shipperName,
+    public ApiResponse send(@RequestParam Integer id, @RequestParam String shipperName,
                             @RequestParam String shipperCode, @RequestParam String logisticCode) {
         return success(shopOrderService.send(id, shipperName, shipperCode, logisticCode));
     }
@@ -77,6 +79,12 @@ public class ShopOrderController extends BaseController {
     @ApiOperation(value = "取消订单")
     public ApiResponse cancel(@PathVariable Integer id) {
         return success(shopOrderService.cancel(id));
+    }
+
+    @GetMapping("/count")
+    @ApiOperation(value = "计算每个状态下总数量")
+    public ApiResponse<Map> count(@RequestParam String orderType){
+        return success(shopOrderService.statusCount(orderType));
     }
 
 

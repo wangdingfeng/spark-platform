@@ -20,10 +20,9 @@ public enum ShopOrderStatusEnum {
     CANCEL(1,"已取消"),
     PAY(2,"已付款"),
     SEND(3,"已发货"),
-    CONFIRM_SEND(4,"用户确认收货"),
-    REFUND(5,"退款"),
-    COMPLETE(6,"完成"),
-    EVALUATION(7,"待评价");
+    REFUND(4,"退款"),
+    COMPLETE(5,"完成"),
+    EVALUATION(6,"待评价");
 
     private Integer status;
     private String desc;
@@ -35,7 +34,7 @@ public enum ShopOrderStatusEnum {
      */
     public static ShopOrderStatusEnum statusOf(Integer status) {
         for(ShopOrderStatusEnum statusEnum : values()){
-            if(statusEnum.getStatus() == status){
+            if(statusEnum.getStatus().equals(status)){
                 return statusEnum;
             }
         }

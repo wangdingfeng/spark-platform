@@ -2,14 +2,13 @@ package com.spark.platform.wx.shop.biz.order.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spark.platform.wx.shop.api.dto.ShopOrderQueryDTO;
 import com.spark.platform.wx.shop.api.entity.goods.ShopGoodsSku;
 import com.spark.platform.wx.shop.api.entity.order.ShopOrder;
 import com.spark.platform.wx.shop.api.entity.order.ShopOrderExpress;
 import com.spark.platform.wx.shop.api.entity.order.ShopOrderGoods;
-import com.spark.platform.wx.shop.api.entity.user.ShopUser;
+import com.spark.platform.wx.shop.api.enums.ShippingStatusEnum;
 import com.spark.platform.wx.shop.api.enums.ShopOrderStatusEnum;
 import com.spark.platform.wx.shop.biz.goods.service.ShopGoodsSkuService;
 import com.spark.platform.wx.shop.biz.order.dao.ShopOrderDao;
@@ -24,7 +23,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -91,14 +93,16 @@ public class ShopOrderServiceImpl extends ServiceImpl<ShopOrderDao, ShopOrder> i
         ShopOrder shopOrder = new ShopOrder();
         shopOrder.setId(id);
         shopOrder.setOrderStatus(ShopOrderStatusEnum.SEND.getStatus());
+        shopOrder.setShippingStatus(ShippingStatusEnum.SEND.getStatus());
         shopOrder.setShippingStatus(1);
+        shopOrder.setSendTime(LocalDateTime.now());
         ShopOrderExpress orderExpress = new ShopOrderExpress();
         orderExpress.setOrderId(id);
         orderExpress.setShipperName(shipperName);
         orderExpress.setShipperCode(shipperCode);
         orderExpress.setLogisticCode(logisticCode);
         orderExpressService.save(orderExpress);
-        return super.save(shopOrder);
+        return super.updateById(shopOrder);
     }
 
     @Override
@@ -117,5 +121,15 @@ public class ShopOrderServiceImpl extends ServiceImpl<ShopOrderDao, ShopOrder> i
             }
         });
         return false;
+    }
+
+    @Override
+    public Map<Integer, Integer> statusCount(String orderType) {
+        List<Map<Integer,Integer>> maps = super.baseMapper.statusCount(orderType);
+        Map<Integer,Integer> resultMap = new HashMap<>(maps.size());
+        maps.forEach(map -> {
+            resultMap.put(map.get("order_status"),map.get("count(id)"));
+        });
+        return resultMap;
     }
 }

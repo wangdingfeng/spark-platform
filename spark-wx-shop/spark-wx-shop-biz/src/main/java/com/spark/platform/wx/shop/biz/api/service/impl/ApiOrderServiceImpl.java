@@ -3,19 +3,25 @@ package com.spark.platform.wx.shop.biz.api.service.impl;
 import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.spark.platform.common.base.exception.BusinessException;
+import com.spark.platform.wx.shop.api.dto.OrderRefundDTO;
 import com.spark.platform.wx.shop.api.dto.ShopOrderQueryDTO;
 import com.spark.platform.wx.shop.api.dto.SubmitOrderDTO;
 import com.spark.platform.wx.shop.api.entity.goods.ShopGoods;
 import com.spark.platform.wx.shop.api.entity.goods.ShopGoodsSku;
 import com.spark.platform.wx.shop.api.entity.marketing.ShopCouponUser;
 import com.spark.platform.wx.shop.api.entity.marketing.ShopPinkGoods;
+import com.spark.platform.wx.shop.api.entity.marketing.ShopPinkUser;
 import com.spark.platform.wx.shop.api.entity.marketing.ShopSeckillGoods;
 import com.spark.platform.wx.shop.api.entity.order.ShopOrder;
 import com.spark.platform.wx.shop.api.entity.order.ShopOrderGoods;
+import com.spark.platform.wx.shop.api.entity.order.ShopOrderRefund;
 import com.spark.platform.wx.shop.api.entity.user.ShopUserAddress;
 import com.spark.platform.wx.shop.api.enums.CouponTypeEnum;
 import com.spark.platform.wx.shop.api.enums.CouponUserStatusEnum;
+import com.spark.platform.wx.shop.api.enums.PinkUseStatusEnum;
+import com.spark.platform.wx.shop.api.enums.RefundStatusEnum;
 import com.spark.platform.wx.shop.api.enums.ShopGoodsStatusEnum;
 import com.spark.platform.wx.shop.api.enums.ShopOrderStatusEnum;
 import com.spark.platform.wx.shop.api.vo.OrderCardVo;
@@ -24,11 +30,15 @@ import com.spark.platform.wx.shop.biz.goods.service.ShopGoodsService;
 import com.spark.platform.wx.shop.biz.goods.service.ShopGoodsSkuService;
 import com.spark.platform.wx.shop.biz.marketing.service.ShopCouponUserService;
 import com.spark.platform.wx.shop.biz.marketing.service.ShopPinkGoodsService;
+import com.spark.platform.wx.shop.biz.marketing.service.ShopPinkUserService;
 import com.spark.platform.wx.shop.biz.marketing.service.ShopSeckillGoodsService;
+import com.spark.platform.wx.shop.biz.order.service.ShopOrderGoodsService;
+import com.spark.platform.wx.shop.biz.order.service.ShopOrderRefundService;
 import com.spark.platform.wx.shop.biz.order.service.ShopOrderService;
 import com.spark.platform.wx.shop.biz.user.service.ShopUserAddressService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -55,6 +65,10 @@ public class ApiOrderServiceImpl implements ApiOrderService {
     private final ShopGoodsSkuService shopGoodsSkuService;
     private final ShopCouponUserService shopCouponUserService;
     private final ShopOrderService orderService;
+    private final ShopOrderGoodsService orderGoodsService;
+    private final ShopPinkUserService shopPinkUserService;
+    private final ShopOrderRefundService orderRefundService;
+
 
     @Override
     @Transactional(readOnly = false)
@@ -62,9 +76,10 @@ public class ApiOrderServiceImpl implements ApiOrderService {
         // 采用的是下单立减库存
         BigDecimal goodsPrice = BigDecimal.ZERO;
         BigDecimal couponAmout;
+        ShopPinkUser pinkUser = null;
         // 校验活动状态
         this.validSeckillGoods(submitOrderDTO);
-        this.validPinkGoods(submitOrderDTO);
+        this.validPinkGoods(submitOrderDTO,pinkUser);
 
         // 收货地址
         ShopUserAddress userAddress = shopUserAddressService.getById(submitOrderDTO.getAddressId());
@@ -96,6 +111,9 @@ public class ApiOrderServiceImpl implements ApiOrderService {
             shopOrderGoods.setPrice(orderGoods.getPrice());
             shopOrderGoods.setTotalAmount(orderGoods.getPrice().multiply(new BigDecimal(orderGoods.getNumber())));
             shopOrderGoodsList.add(shopOrderGoods);
+            // 放入拼团商品信息
+            pinkUser.setGoodsId(goods.getId());
+            pinkUser.setGoodsTitle(goods.getTitle());
         }
         // 获取优惠券金额
         couponAmout = getCouponAmount(submitOrderDTO,goodsPrice);
@@ -119,24 +137,63 @@ public class ApiOrderServiceImpl implements ApiOrderService {
         shopOrder.setMobile(userAddress.getMobile());
         shopOrder.setUserRemarks(submitOrderDTO.getUserRemarks());
         shopOrder.setGoodsList(shopOrderGoodsList);
-        return orderService.saveOrder(shopOrder);
+        boolean flag = orderService.saveOrder(shopOrder);
+        if(null != submitOrderDTO.getPinkGoodsId()){
+            // 保存拼团信息
+            if(StringUtils.isNotBlank(pinkUser.getOrderIds())){
+                pinkUser.setOrderIds(pinkUser.getOrderIds()+ Constants.COMMA+ shopOrder.getOrderSn());
+            }else{
+                pinkUser.setOrderIds(shopOrder.getOrderSn());
+            }
+            shopPinkUserService.saveOrUpdate(pinkUser);
+        }
+        return flag;
     }
 
     @Override
-    public boolean cancel(Integer id) {
-        return orderService.cancel(id);
+    public boolean cancel(Integer orderId) {
+        return orderService.cancel(orderId);
     }
 
     @Override
-    public boolean confirmSend(Integer id) {
+    public boolean confirmSend(Integer orderId) {
         ShopOrder shopOrder = new ShopOrder();
-        shopOrder.setOrderStatus(ShopOrderStatusEnum.CONFIRM_SEND.getStatus());
+        shopOrder.setId(orderId);
+        shopOrder.setOrderStatus(ShopOrderStatusEnum.EVALUATION.getStatus());
+        shopOrder.setConfirmTime(LocalDateTime.now());
         return orderService.updateById(shopOrder);
     }
 
     @Override
     public IPage<OrderCardVo> page(ShopOrderQueryDTO queryDTO) {
         return orderService.cardPage(queryDTO);
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public boolean refund(OrderRefundDTO refundDTO) {
+        ShopOrder order = orderService.getById(refundDTO.getOrderId());
+        Assert.notNull(order,"查询不到当前订单信息!");
+        ShopOrderGoods goods = orderGoodsService.getById(refundDTO.getOrderGoodsId());
+        Assert.notNull(order,"查询不到当前订单下商品信息!");
+        ShopOrderRefund orderRefund = new ShopOrderRefund();
+        BigDecimal refundAmount = goods.getPrice().multiply(new BigDecimal(refundDTO.getNum()));
+        orderRefund.setOrderId(order.getId());
+        orderRefund.setOrderSn(order.getOrderSn());
+        orderRefund.setUserId(refundDTO.getUserId());
+        orderRefund.setOrderGoodsId(goods.getId());
+        orderRefund.setNum(refundDTO.getNum());
+        orderRefund.setOrderAmount(goods.getTotalAmount());
+        orderRefund.setRefundAmount(refundAmount);
+        orderRefund.setImg(refundDTO.getImg());
+        orderRefund.setReason(refundDTO.getReason());
+        // 更新订单的状态
+        ShopOrder shopOrder = new ShopOrder();
+        shopOrder.setId(order.getId());
+        shopOrder.setOrderStatus(ShopOrderStatusEnum.REFUND.getStatus());
+        shopOrder.setRefundStatus(RefundStatusEnum.REQUEST.getStatus());
+        orderService.updateById(shopOrder);
+        return orderRefundService.launchRefund(orderRefund);
     }
 
     /**
@@ -158,8 +215,9 @@ public class ApiOrderServiceImpl implements ApiOrderService {
     /**
      * 校验团购产品
      * @param submitOrderDTO
+     * @param pinkUser
      */
-    private void validPinkGoods(SubmitOrderDTO submitOrderDTO){
+    private void validPinkGoods(SubmitOrderDTO submitOrderDTO, ShopPinkUser pinkUser){
         // 判断商品的活动状态
         if(null != submitOrderDTO.getPinkGoodsId()){
             // 是否是团购商品
@@ -167,6 +225,24 @@ public class ApiOrderServiceImpl implements ApiOrderService {
             Assert.notNull(shopPinkGoods,"提交订单失败:查询不到当前活动产品信息！");
             if(shopPinkGoods.getEndTime().isAfter(LocalDateTime.now())){
                 throw new BusinessException("当前商品已过活动时间！");
+            }
+            if(null != submitOrderDTO.getPinkUserId()){
+                // 如果团长ID 则是跟随拼团
+                pinkUser = shopPinkUserService.getById(submitOrderDTO.getPinkUserId());
+                pinkUser.setCountPeople(pinkUser.getPeople()+1);
+                if(pinkUser.getCountPeople().equals(pinkUser.getPeople())){
+                    pinkUser.setStatus(PinkUseStatusEnum.SUCCESS.getStatus());
+                    pinkUser.setEndTime(LocalDateTime.now());
+                }
+            }else{
+                // 团长开团
+                pinkUser = new ShopPinkUser();
+                pinkUser.setUserId(submitOrderDTO.getUserId());
+                pinkUser.setStatus(PinkUseStatusEnum.SUCCESS.getStatus());
+                pinkUser.setPeople(shopPinkGoods.getPeople());
+                pinkUser.setCountPeople(1);
+                pinkUser.setStartTime(LocalDateTime.now());
+                pinkUser.setEndTime(shopPinkGoods.getEndTime());
             }
         }
     }

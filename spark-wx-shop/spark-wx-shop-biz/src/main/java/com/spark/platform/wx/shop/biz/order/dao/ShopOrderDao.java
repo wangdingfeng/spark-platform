@@ -7,6 +7,11 @@ import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spark.platform.wx.shop.api.entity.order.ShopOrder;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.ResultType;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -33,5 +38,14 @@ public interface ShopOrderDao extends BaseMapper<ShopOrder> {
      * @return
      */
     IPage cardPage(Page page, @Param(Constants.WRAPPER) Wrapper wrapper);
+
+    /**
+     * 统计状态数量
+     * @param orderType
+     * @return
+     */
+    @Select("SELECT order_status,count(id) FROM shop_order WHERE order_type=#{orderType} GROUP BY order_status")
+    @ResultType(Map.class)
+    List<Map<Integer,Integer>> statusCount(@Param("orderType") String orderType);
 
 }

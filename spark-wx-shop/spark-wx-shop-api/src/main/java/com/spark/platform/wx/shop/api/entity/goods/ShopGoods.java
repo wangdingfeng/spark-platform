@@ -42,7 +42,6 @@ public class ShopGoods extends BaseEntity {
     private Integer id;
 
     @ApiModelProperty(value = "商品编号")
-    @NotNull(message = "商品编号不能为空")
     private String goodsSn;
 
     @ApiModelProperty(value = "商品标题")

@@ -12,6 +12,7 @@ import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -65,7 +66,9 @@ public class ShopUserCart implements Serializable {
     @ApiModelProperty(value = "商品标题")
     private transient String goodsTitle;
     @ApiModelProperty(value = "商品图片")
-    private transient String goodsImg;
+    private transient String homePic;
+    @ApiModelProperty(value = "商品价格")
+    private transient BigDecimal price;
 
 
 }

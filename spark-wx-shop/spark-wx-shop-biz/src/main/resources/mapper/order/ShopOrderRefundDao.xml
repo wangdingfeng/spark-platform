@@ -27,4 +27,19 @@
         id, refund_sn, order_id, user_id, order_goods_id, refund_status, order_amount, refund_amount, refund_time, img, reason, refused_reason
     </sql>
 
+    <select id="listPage" resultType="com.spark.platform.wx.shop.api.entity.order.ShopOrderRefund">
+        SELECT
+            r.*,
+            g.goods_title 'orderGoods.goodsTitle',
+            g.pic_url 'orderGoods.picUrl',
+            g.goods_attr_vals 'orderGoods.goodsAttrVals',
+            g.number 'orderGoods.number',
+            u.nickname 'user.nickname'
+        FROM
+            shop_order_refund r
+            JOIN shop_order_goods g ON r.order_goods_id = g.id
+            JOIN shop_user u ON r.user_id = u.id
+        ${ew.customSqlSegment}
+    </select>
+
 </mapper>

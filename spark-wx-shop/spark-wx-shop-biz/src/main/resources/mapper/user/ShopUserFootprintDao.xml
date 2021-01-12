@@ -21,7 +21,9 @@
    SELECT
         f.*,
         g.goods_sn,
-        g.title 'goodsTitle'
+        g.title 'goodsTitle',
+        g.home_pic,
+        g.min_price 'price'
     FROM
         shop_user_footprint f
         LEFT JOIN shop_goods g ON f.goods_id = g.id

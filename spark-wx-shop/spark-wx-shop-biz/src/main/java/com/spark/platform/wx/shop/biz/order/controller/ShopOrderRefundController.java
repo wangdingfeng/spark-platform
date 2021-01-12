@@ -1,7 +1,5 @@
 package com.spark.platform.wx.shop.biz.order.controller;
 
-
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spark.platform.wx.shop.api.entity.order.ShopOrderRefund;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.spark.platform.common.base.support.BaseController;
 
@@ -38,19 +37,19 @@ public class ShopOrderRefundController extends BaseController {
     @GetMapping("/page")
     @ApiOperation(value = "退款管理列表")
     public ApiResponse page(ShopOrderRefund shopOrderRefund, Page page) {
-        return success(shopOrderRefundService.page(page, Wrappers.query(shopOrderRefund)));
+        return success(shopOrderRefundService.findPage(page, shopOrderRefund));
     }
 
     @PostMapping
-    @ApiOperation(value = "保存退款管理信息")
-    public ApiResponse save(@RequestBody ShopOrderRefund shopOrderRefund) {
+    @ApiOperation(value = "保存退款")
+    public ApiResponse refund(@RequestBody ShopOrderRefund shopOrderRefund) {
         return success(shopOrderRefundService.save(shopOrderRefund));
     }
 
-    @PutMapping
-    @ApiOperation(value = "更新退款管理信息")
-    public ApiResponse update(@RequestBody ShopOrderRefund shopOrderRefund) {
-        return success(shopOrderRefundService.updateById(shopOrderRefund));
+    @PutMapping("/confirm")
+    @ApiOperation(value = "确认退款信息")
+    public ApiResponse confirm(@RequestParam Integer id,@RequestParam boolean isAgree,@RequestParam String refusedReason) {
+        return success(shopOrderRefundService.refund(id,isAgree,refusedReason));
     }
 
     @DeleteMapping("/{id}")

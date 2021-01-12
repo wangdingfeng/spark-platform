@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.spark.platform.wx.shop.api.dto.ShopOrderQueryDTO;
 import com.spark.platform.wx.shop.api.entity.order.ShopOrder;
 
+import java.util.Map;
+
 /**
  * <p>
  * 订单管理 服务类
@@ -62,4 +64,11 @@ public interface ShopOrderService extends IService<ShopOrder> {
      * @return
      */
     boolean cancel(Integer id);
+
+    /**
+     * 通过 订单类型 统计订单状态
+     * @param orderType 订单类型
+     * @return
+     */
+    Map<Integer,Integer> statusCount(String orderType);
 }

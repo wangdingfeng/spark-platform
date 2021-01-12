@@ -35,6 +35,9 @@ public class ShopGoodsComment implements Serializable {
     @ApiModelProperty(value = "会员ID")
     private Integer userId;
 
+    @ApiModelProperty(value = "订单ID")
+    private Integer orderId;
+
     @ApiModelProperty(value = "内容")
     private String content;
 
