@@ -2,6 +2,7 @@ package com.spark.platform.common.utils;
 
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
@@ -10,6 +11,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+
+import java.util.Map;
 
 /**
  * @author wangdingfeng
@@ -89,7 +92,35 @@ public class HttpCallOtherInterfaceUtils {
             log.error("get请求方法失败", e);
         }
         return jsonObject;
+    }
 
+    /**
+     * 发送post请求
+     * @param url
+     * @param headers
+     * @param param
+     * @return
+     */
+    public static String postUrl(String url, Map<String,String> headers, Map param){
+        HttpClient client = HttpClients.createDefault();
+        HttpPost post = new HttpPost(url);
+        try {
+            StringEntity s = new StringEntity(JSONObject.toJSONString(param), "UTF-8");
+            post.setEntity(s);
+            if(null != headers){
+                headers.forEach((v,k)->{
+                    post.setHeader(v,k);
+                });
+            }
+            HttpResponse res = client.execute(post);
+            if (res.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+                // 返回json格式：
+                return EntityUtils.toString(res.getEntity());
+            }
+        } catch (Exception e) {
+            log.error("POST请求调用出错！",e);
+        }
+        return null;
     }
 
 

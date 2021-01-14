@@ -49,12 +49,6 @@ public class ShopOrderExpress {
     @ApiModelProperty(value = "是否完成")
     private Boolean isFinish;
 
-    @ApiModelProperty(value = "总查询次数")
-    private Integer requestCount;
-
-    @ApiModelProperty(value = "最近一次向第三方查询物流信息时间")
-    private LocalDateTime requestTime;
-
     @TableField(value = "create_date", fill = FieldFill.INSERT)
     @ApiModelProperty(value = "创建时间")
     private LocalDateTime createDate;

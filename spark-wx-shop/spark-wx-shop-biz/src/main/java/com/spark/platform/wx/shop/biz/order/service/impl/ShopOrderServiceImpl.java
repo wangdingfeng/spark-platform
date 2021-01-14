@@ -101,7 +101,7 @@ public class ShopOrderServiceImpl extends ServiceImpl<ShopOrderDao, ShopOrder> i
         orderExpress.setShipperName(shipperName);
         orderExpress.setShipperCode(shipperCode);
         orderExpress.setLogisticCode(logisticCode);
-        orderExpressService.save(orderExpress);
+        orderExpressService.saveSendData(orderExpress);
         return super.updateById(shopOrder);
     }
 

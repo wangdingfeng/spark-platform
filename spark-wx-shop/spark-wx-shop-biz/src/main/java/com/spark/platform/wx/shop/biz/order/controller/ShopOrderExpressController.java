@@ -10,12 +10,12 @@ import com.spark.platform.wx.shop.biz.order.service.ShopOrderExpressService;
 import com.spark.platform.common.base.support.ApiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.spark.platform.common.base.support.BaseController;
 
@@ -48,21 +48,21 @@ public class ShopOrderExpressController extends BaseController {
     }
 
     @PutMapping
-    @ApiOperation(value = "更新订单物流信息表，发货时生成信息")
-    public ApiResponse update(@RequestBody ShopOrderExpress shopOrderExpress) {
-        return success(shopOrderExpressService.updateById(shopOrderExpress));
-    }
-
-    @DeleteMapping("/{id}")
-    @ApiOperation(value = "删除订单物流信息表，发货时生成")
-    public ApiResponse delete(@PathVariable Long id) {
-        return success(shopOrderExpressService.removeById(id));
+    @ApiOperation(value = "刷新订单物流信息")
+    public ApiResponse<ShopOrderExpress> refresh(@RequestParam Integer id) {
+        return success(shopOrderExpressService.refresh(id));
     }
 
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id获取订单物流信息表，发货时生成信息")
     public ApiResponse getById(@PathVariable Long id) {
         return success(shopOrderExpressService.getById(id));
+    }
+
+    @GetMapping("/trace/{id}")
+    @ApiOperation(value = "根据id获取订单物流轨迹信息")
+    public ApiResponse trace(@PathVariable Integer id) {
+        return success(shopOrderExpressService.findTraces(id));
     }
 
 }
