@@ -3,7 +3,7 @@
 [![github](https://img.shields.io/github/stars/wangdingfeng/spark-platform)](https://github.com/wangdingfeng/spark-platform)
 
 
-### 如果主页网站无法显示请使用[码云预览](http://dreamfeng.gitee.io/spark-admin/)
+### 由于近期测试微信商城功能，没有多余的服务器，所以需要停用预览连接，预计2月份恢复，微信商城也将在2月份上线
 #### 交流群上线，QQ群号:1137679743
 
 
