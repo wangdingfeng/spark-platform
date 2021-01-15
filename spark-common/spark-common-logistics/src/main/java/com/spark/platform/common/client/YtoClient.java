@@ -1,6 +1,6 @@
 package com.spark.platform.common.client;
 
-import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSON;
 import com.spark.platform.common.config.YtoConfig;
 import com.spark.platform.common.constants.YtoConstants;
 import lombok.SneakyThrows;
@@ -37,7 +37,7 @@ public class YtoClient {
      * @return
      */
     @SneakyThrows
-    public String execute(String apiType, JSONArray params){
+    public String execute(String apiType, Object params){
         String apiUrl = ytoConfig.getApiUrl() + apiType +"/v1/"+ ytoConfig.getUserId();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         String timestamp = dateFormat.format(new Date());
@@ -54,7 +54,7 @@ public class YtoClient {
         StringBuilder query = new StringBuilder();
         query.append("sign=").append(sign).append("&app_key=").append(ytoConfig.getAppKey()).append("&format=").append(format)
                 .append("&method=").append(YtoConstants.REQUEST_METHOD_WAYBILLTRACE).append("&timestamp=").append(timestamp).append("&user_id=").append(ytoConfig.getUserId())
-                .append("&v=").append(ytoConfig.getV()).append("&param=").append(params.toJSONString());
+                .append("&v=").append(ytoConfig.getV()).append("&param=").append(JSON.toJSONString(params));
         log.info("【圆通】请求的参数信息：{}",query.toString());
         out.write(query.toString());
         out.flush();

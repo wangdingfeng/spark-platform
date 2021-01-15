@@ -2,7 +2,7 @@ package com.spark.platform.common.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.spark.platform.common.client.YtoClient;
 import com.spark.platform.common.config.LogisticsConfig;
@@ -34,12 +34,8 @@ public class YtoServiceImpl implements YtoService {
 
     @Override
     public LogisticsResponse<List<WaybillNoModel>> findWaybillNo(String billNo) {
-        JSONArray params = new JSONArray();
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("Number", billNo);
-        params.add(jsonObject);
         YtoClient ytoClient = new YtoClient(logisticsConfig.getYto());
-        String result = ytoClient.execute("waybill_query/v1/", params);
+        String result = ytoClient.execute("waybill_query", Lists.newArrayList(ImmutableMap.of("Number", billNo)));
         Object json = JSON.parse(result);
         LogisticsResponse response = new LogisticsResponse<List<WaybillNoModel>>();
         response.setSuccess(true);
@@ -48,11 +44,8 @@ public class YtoServiceImpl implements YtoService {
             List<Map> array = JSONArray.parseArray(result, Map.class);
             List<WaybillNoModel> list = Lists.newArrayList();
             array.stream().forEach(map -> {
-                WaybillNoModel waybillNoModel = new WaybillNoModel();
-                waybillNoModel.setWaybillNo(map.get("waybill_No").toString());
-                waybillNoModel.setUploadTime(map.get("upload_Time").toString());
-                waybillNoModel.setStatus(YtoWaybillNoStatus.statusOf(map.get("infoContent").toString()));
-                waybillNoModel.setContent(map.get("processInfo").toString());
+                WaybillNoModel waybillNoModel = WaybillNoModel.builder().waybillNo((String)map.get("waybill_No")).uploadTime((String)map.get("upload_Time"))
+                        .status(YtoWaybillNoStatus.statusOf((String)map.get("infoContent"))).content((String)map.get("processInfo")).build();
                 list.add(waybillNoModel);
             });
             response.setObject(list);

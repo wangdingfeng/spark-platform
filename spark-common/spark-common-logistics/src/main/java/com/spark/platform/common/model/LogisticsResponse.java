@@ -1,9 +1,6 @@
 package com.spark.platform.common.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * @ProjectName: spark-platform
@@ -15,9 +12,6 @@ import lombok.NoArgsConstructor;
  * @Version: 1.0
  */
 @Data
-@Builder(toBuilder = true)
-@NoArgsConstructor
-@AllArgsConstructor
 public class LogisticsResponse<T> {
     /**&
      * 请求值
