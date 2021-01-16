@@ -124,7 +124,7 @@ public class HttpCallOtherInterfaceUtils {
     }
 
 
-    public static String callOtherGetInterface(String gatewayUrl, String getUrl) {
+    public static JSONObject callOtherGetInterface(String gatewayUrl, String getUrl) {
         HttpClient client = HttpClients.createDefault();
         // 要调用的接口方法
         String url = gatewayUrl + getUrl;
@@ -140,6 +140,6 @@ public class HttpCallOtherInterfaceUtils {
             System.out.println("服务间接口调用出错！");
             e.printStackTrace();
         }
-        return null == jsonObject ? "" : jsonObject.toString();
+        return jsonObject;
     }
 }

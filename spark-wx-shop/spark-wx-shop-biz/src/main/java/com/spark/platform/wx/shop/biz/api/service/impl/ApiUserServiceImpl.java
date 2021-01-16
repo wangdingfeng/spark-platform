@@ -19,6 +19,7 @@ import com.spark.platform.wx.shop.biz.user.service.ShopUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -43,6 +44,7 @@ public class ApiUserServiceImpl implements ApiUserService {
     private final SparkProperties sparkProperties;
 
     @Override
+    @Transactional(readOnly = false)
     public ShopUser login(WxLoginDTO loginDTO) {
         log.info("当前登录用户js_code:{}", loginDTO.getJsCode());
         // 拼接 微信auth.code2Session 登录凭证校验
@@ -66,11 +68,6 @@ public class ApiUserServiceImpl implements ApiUserService {
         shopUser.setMobile(loginDTO.getMobile());
         shopUserService.saveOrUpdate(shopUser);
         // 通过auth2 客户端模式 获取token
-        ApiResponse<OauthClientDetails> apiResponse = authorityClient.getOauthClientDetailsByClientId(auth.getClientId());
-        OauthClientDetails oauthClientDetails = apiResponse.getData();
-        if (null == oauthClientDetails) {
-            throw new BusinessException("请配置小程序对应的客户端!");
-        }
         shopUser.setToken(this.getToken(auth.getClientId()));
         return shopUser;
     }
@@ -96,12 +93,12 @@ public class ApiUserServiceImpl implements ApiUserService {
     private String getOpenId(ShopWxAuth auth,String jsCode){
         StringBuffer url = new StringBuffer(sparkProperties.getWx().getAuthUrl());
         url.append("?appid=").append(auth.getAppId()).append("&secret=").append(auth.getSecret())
-                .append("&js_code").append(jsCode).append("&grant_type=").append(GrantTypesEnum.AUTHORIZATION_CODE);
+                .append("&js_code=").append(jsCode).append("&grant_type=").append(GrantTypesEnum.AUTHORIZATION_CODE);
         JSONObject jsonObject = HttpCallOtherInterfaceUtils.getUrl(url.toString());
-        if (null == jsonObject || "0".equals(jsonObject.get("errcode").toString())) {
+        if (null == jsonObject || null != jsonObject.get("errcode")) {
             throw new BusinessException("获取微信登录失败！");
         }
-        return jsonObject.get("openid").toString();
+        return (String)jsonObject.get("openid");
     }
 
     /**
@@ -117,9 +114,9 @@ public class ApiUserServiceImpl implements ApiUserService {
         }
         StringBuffer url = new StringBuffer(GlobalsConstants.OAUTH_TOKEN_URL);
         url.append("?client_id=").append(clientDetails.getClientId()).append("&client_secret=").append(clientDetails.getClientSecret())
-                .append("&grant_typ=").append(GrantTypesEnum.CLIENT_CREDENTIALS);
-        JSONObject jsonObject = HttpCallOtherInterfaceUtils.callOtherInterface(sparkProperties.getGatewayUrl(),url.toString());
-        if (null == jsonObject) {
+                .append("&grant_type=").append(GrantTypesEnum.CLIENT_CREDENTIALS.getType());
+        JSONObject jsonObject = HttpCallOtherInterfaceUtils.callOtherGetInterface(sparkProperties.getGatewayUrl(),url.toString());
+        if (null == jsonObject || null == jsonObject.get("access_token")) {
             throw new BusinessException("调用oauth2获取token失败！");
         }
         return (String)jsonObject.get("access_token");

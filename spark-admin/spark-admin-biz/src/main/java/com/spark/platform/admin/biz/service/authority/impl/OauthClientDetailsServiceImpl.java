@@ -32,7 +32,6 @@ import java.util.List;
 public class OauthClientDetailsServiceImpl extends ServiceImpl<OauthClientDetailsDao, OauthClientDetails> implements OauthClientDetailsService {
 
     @Override
-    @Cacheable(value= RedisConstants.CLIENT_CACHE,unless = "#result == null", key="#clientId")
     public OauthClientDetails findOauthClientDetailsByClientId(String clientId) {
         return this.baseMapper.getOauthClientDetailsByClientId(clientId);
     }

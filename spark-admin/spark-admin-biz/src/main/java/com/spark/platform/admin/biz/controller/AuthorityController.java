@@ -33,7 +33,7 @@ public class AuthorityController extends BaseController {
     private final OauthClientDetailsService oauthClientDetailsService;
 
 
-    @GetMapping("/info")
+    @GetMapping("/api/info")
     @ApiOperation(value = "根据clientId获取认证客户端详情信息")
     public ApiResponse<OauthClientDetails> getOauthClientDetailsByClientId(@RequestParam String clientId) {
         return success(oauthClientDetailsService.findOauthClientDetailsByClientId(clientId));
