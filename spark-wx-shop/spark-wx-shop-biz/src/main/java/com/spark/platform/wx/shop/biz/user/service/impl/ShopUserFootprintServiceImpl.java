@@ -30,4 +30,16 @@ public class ShopUserFootprintServiceImpl extends ServiceImpl<ShopUserFootprintD
         queryWrapper.orderByDesc("create_date");
         return super.baseMapper.listPage(page, queryWrapper);
     }
+
+    @Override
+    public boolean saveFootprint(Integer userId, Integer goodsId) {
+        int count = super.baseMapper.findToday(userId,goodsId);
+        if(count > 0){
+            return true;
+        }
+        ShopUserFootprint shopUserFootprint = new ShopUserFootprint();
+        shopUserFootprint.setUserId(userId);
+        shopUserFootprint.setGoodsId(goodsId);
+        return super.save(shopUserFootprint);
+    }
 }

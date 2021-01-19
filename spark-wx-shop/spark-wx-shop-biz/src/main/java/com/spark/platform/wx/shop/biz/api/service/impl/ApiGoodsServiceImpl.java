@@ -10,7 +10,6 @@ import com.spark.platform.wx.shop.api.dto.ShopGoodsQueryDTO;
 import com.spark.platform.wx.shop.api.entity.goods.ShopGoods;
 import com.spark.platform.wx.shop.api.entity.goods.ShopGoodsComment;
 import com.spark.platform.wx.shop.api.entity.goods.ShopGoodsGallery;
-import com.spark.platform.wx.shop.api.entity.user.ShopUserFootprint;
 import com.spark.platform.wx.shop.api.enums.ShopGoodsStatusEnum;
 import com.spark.platform.wx.shop.api.vo.GoodsCardVo;
 import com.spark.platform.wx.shop.api.vo.GoodsCategoryVo;
@@ -77,10 +76,7 @@ public class ApiGoodsServiceImpl implements ApiGoodsService {
         log.info("【请求开始】商品详情页面,请求参数:goodsId:{},userId:{}", goodsId, userId);
         if (null != userId) {
             // 如果有当前登录用户则记录用户的浏览记录
-            ShopUserFootprint shopUserFootprint = new ShopUserFootprint();
-            shopUserFootprint.setUserId(userId);
-            shopUserFootprint.setGoodsId(goodsId);
-            shopUserFootprintService.save(shopUserFootprint);
+            shopUserFootprintService.saveFootprint(userId,goodsId);
         }
         GoodsDetailVo goodsDetail = new GoodsDetailVo();
         // 查询商品信息

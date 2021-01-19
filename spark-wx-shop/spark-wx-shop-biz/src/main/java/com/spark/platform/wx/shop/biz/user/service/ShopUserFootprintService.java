@@ -22,4 +22,12 @@ public interface ShopUserFootprintService extends IService<ShopUserFootprint> {
      * @return
      */
     IPage listPage(Page page, ShopUserFootprint shopUserFootprint);
+
+    /**
+     * 保存用户足迹
+     * @param userId
+     * @param goodsId
+     * @return
+     */
+    boolean saveFootprint(Integer userId, Integer goodsId);
 }

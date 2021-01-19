@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spark.platform.wx.shop.api.entity.user.ShopUserFootprint;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.ResultType;
+import org.apache.ibatis.annotations.Select;
 
 /**
  * <p>
@@ -25,5 +27,15 @@ public interface ShopUserFootprintDao extends BaseMapper<ShopUserFootprint> {
      * @return
      */
     IPage listPage(Page page, @Param(Constants.WRAPPER) Wrapper wrapper);
+
+    /**
+     * 获取当前是否有足迹信息
+     * @param userId
+     * @param goodsId
+     * @return
+     */
+    @Select("SELECT count(id) FROM shop_user_footprint WHERE user_id=#{userId} AND goods_id=#{goodsId} AND TO_DAYS(create_date) = TO_DAYS(NOW())")
+    @ResultType(Integer.class)
+    Integer findToday(@Param("userId") Integer userId,@Param("goodsId") Integer goodsId);
 
 }
