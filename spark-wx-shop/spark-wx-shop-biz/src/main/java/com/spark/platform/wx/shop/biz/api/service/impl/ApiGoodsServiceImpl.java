@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.spark.platform.common.base.constants.GlobalsConstants;
+import com.spark.platform.common.base.enums.DelFlagEnum;
 import com.spark.platform.common.base.exception.BusinessException;
 import com.spark.platform.wx.shop.api.dto.ShopGoodsQueryDTO;
 import com.spark.platform.wx.shop.api.entity.goods.ShopGoods;
@@ -52,6 +54,7 @@ public class ApiGoodsServiceImpl implements ApiGoodsService {
         queryWrapper.like(StringUtils.isNotBlank(shopGoodsQueryDTO.getTitle()), "title", shopGoodsQueryDTO.getTitle())
                 .likeRight(StringUtils.isNotBlank(shopGoodsQueryDTO.getCategoryIds()), "category_ids", shopGoodsQueryDTO.getCategoryIds())
                 .eq(StringUtils.isNotBlank(shopGoodsQueryDTO.getIsNew()), "isNew", shopGoodsQueryDTO.getIsNew())
+                .eq(true,"del_flag", DelFlagEnum.normal.getValue())
                 .orderBy(StringUtils.isNotBlank(shopGoodsQueryDTO.getOrderBy()), shopGoodsQueryDTO.isAsc(), shopGoodsQueryDTO.getOrderBy());
         return shopGoodsService.pageCard(new Page(shopGoodsQueryDTO.getCurrent(), shopGoodsQueryDTO.getSize()), queryWrapper);
     }
