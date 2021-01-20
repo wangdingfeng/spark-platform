@@ -38,7 +38,6 @@ import java.util.List;
  * @since 2020-11-11
  */
 @RestController
-@RequestMapping("/file-info")
 @Api(tags = "文件上传")
 @RequiredArgsConstructor
 public class FileInfoController extends BaseController {

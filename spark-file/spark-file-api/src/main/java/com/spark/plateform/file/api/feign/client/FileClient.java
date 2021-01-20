@@ -33,7 +33,7 @@ public interface FileClient {
      * @param fileInfoDTO
      * @return
      */
-    @PatchMapping("/file-info")
+    @PatchMapping
     ApiResponse bind(@RequestBody FileInfoDTO fileInfoDTO);
 
     /**
@@ -42,7 +42,7 @@ public interface FileClient {
      * @param fileQueryDTO
      * @return
      */
-    @GetMapping("/file-info/biz")
+    @GetMapping("/biz")
     ApiResponse<List<FileInfo>> findByBiz(FileQueryDTO fileQueryDTO);
 
     /**
@@ -51,7 +51,7 @@ public interface FileClient {
      * @param id 文件ID
      * @return
      */
-    @GetMapping("/file-info/{id}")
+    @GetMapping("/{id}")
     ApiResponse<FileInfo> getById(@PathVariable Long id);
 
     /**
@@ -61,7 +61,7 @@ public interface FileClient {
      * @param expires 时效时间 不允许大于 7天
      * @return
      */
-    @GetMapping("/file-info/url/{id}")
+    @GetMapping("/url/{id}")
     ApiResponse<String> url(@PathVariable Long id, Integer expires);
 
 
