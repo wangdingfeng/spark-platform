@@ -10,6 +10,8 @@ import com.spark.platform.common.base.support.ApiResponse;
 import com.spark.platform.common.base.support.BaseController;
 import com.spark.platform.file.biz.service.FileInfoService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -97,6 +99,18 @@ public class FileInfoController extends BaseController {
     @ApiOperation(value = "预览文件")
     public void download(@PathVariable String serviceName, @PathVariable String url, HttpServletResponse response) {
         fileInfoService.preview(serviceName, url, response);
+    }
+
+    @PostMapping(value = "/api/upload", headers = "content-type=multipart/form-data")
+    @ApiOperation(value = "上传文件返回路径")
+    @ApiImplicitParams({
+            @ApiImplicitParam(value = "file",name = "文件流"),
+            @ApiImplicitParam(value = "bucketName",name = "服务名"),
+            @ApiImplicitParam(value = "filePath",name = "文件路径")
+    })
+    public ApiResponse<String> upload(@RequestParam MultipartFile file,
+                                      @RequestParam String bucketName,@RequestParam(required = false) String filePath) {
+        return success("上传成功！",fileInfoService.uploadToUrl(file,bucketName,filePath));
     }
 
 }
