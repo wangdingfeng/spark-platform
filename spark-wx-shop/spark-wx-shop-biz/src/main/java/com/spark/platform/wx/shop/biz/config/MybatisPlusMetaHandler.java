@@ -2,6 +2,7 @@ package com.spark.platform.wx.shop.biz.config;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.spark.platform.common.base.constants.GlobalsConstants;
+import com.spark.platform.common.base.enums.DelFlagEnum;
 import com.spark.platform.common.security.model.LoginUser;
 import com.spark.platform.common.security.util.UserUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +37,7 @@ public class MybatisPlusMetaHandler implements MetaObjectHandler {
         this.setFieldValByName("modifier",account,metaObject);
         this.setFieldValByName("createDate", LocalDateTime.now(),metaObject);
         this.setFieldValByName("modifyDate",LocalDateTime.now(),metaObject);
-        this.setFieldValByName("delFlag",0,metaObject);
+        this.setFieldValByName("delFlag", DelFlagEnum.NORMAL.getValue(),metaObject);
     }
 
     /**

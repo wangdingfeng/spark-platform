@@ -1,19 +1,22 @@
 package com.spark.platform.wx.shop.biz.user.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.spark.platform.common.base.enums.DelFlagEnum;
 import com.spark.platform.common.base.exception.BusinessException;
 import com.spark.platform.common.base.support.WrapperSupport;
+import com.spark.platform.wx.shop.api.dto.UserCartDTO;
 import com.spark.platform.wx.shop.api.entity.user.ShopUserCart;
 import com.spark.platform.wx.shop.biz.user.dao.ShopUserCartDao;
 import com.spark.platform.wx.shop.biz.user.service.ShopUserCartService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 /**
  * <p>
@@ -30,19 +33,19 @@ public class ShopUserCartServiceImpl extends ServiceImpl<ShopUserCartDao, ShopUs
     @Override
     public IPage listPage(Page page, ShopUserCart shopUserCart) {
         QueryWrapper queryWrapper = new QueryWrapper<ShopUserCart>();
-        WrapperSupport.putParamsLike(queryWrapper,"g",shopUserCart,"goodsSn");
-        WrapperSupport.putParamsEqual(queryWrapper,"c",shopUserCart,"userId");
-        queryWrapper.orderByDesc("create_date");
+        queryWrapper.like(StringUtils.isNotBlank(shopUserCart.getGoodsTitle()),"g.title",shopUserCart.getGoodsTitle())
+                .eq(true,"c.del_flag", DelFlagEnum.NORMAL.getValue())
+                .eq(null != shopUserCart.getGoodsId(),"c.goods_id",shopUserCart.getGoodsId())
+                .eq(StringUtils.isNotBlank(shopUserCart.getAttrVals()),"c.attr_vals",shopUserCart.getAttrVals())
+                .eq(null != shopUserCart.getUserId(),"c.user_id",shopUserCart.getUserId())
+                .orderByDesc("c.create_date");
         return super.baseMapper.listPage(page,queryWrapper);
     }
 
     @Override
-    public List<ShopUserCart> findCart(Integer userId) {
-        return super.list(Wrappers.<ShopUserCart>lambdaQuery().eq(ShopUserCart::getUserId,userId).orderByDesc(ShopUserCart::getCreateDate));
-    }
-
-    @Override
-    public boolean saveCart(ShopUserCart shopUserCart) {
+    public boolean submitCart(UserCartDTO userCart) {
+        ShopUserCart shopUserCart = new ShopUserCart();
+        BeanUtil.copyProperties(userCart,shopUserCart);
         log.info("【保存当前的购物车】，用户:{},商品:{},规格:{}",shopUserCart.getUserId(),shopUserCart.getGoodsId(),shopUserCart.getAttrVals());
         // 查询的当前用户购物车中是否存在 相同的产品 规格
         Integer id = super.baseMapper.findSameId(shopUserCart.getUserId(),shopUserCart.getGoodsId(),shopUserCart.getAttrValIds());

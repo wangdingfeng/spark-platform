@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spark.platform.wx.shop.api.entity.marketing.ShopSeckillGoods;
 import com.spark.platform.wx.shop.api.vo.GoodsSecKillCardVo;
+import com.spark.platform.wx.shop.api.vo.SeckillGoodsVo;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
 
@@ -42,5 +43,12 @@ public interface ShopSeckillGoodsDao extends BaseMapper<ShopSeckillGoods> {
      * @return
      */
     IPage<GoodsSecKillCardVo> pageGoods(Page page, @Param(Constants.WRAPPER) Wrapper wrapper);
+
+    /**
+     * 通过商品Id 查询
+     * @param goodsId
+     * @return
+     */
+    SeckillGoodsVo findByGoodsId(@Param("goodsId") Integer goodsId);
 
 }

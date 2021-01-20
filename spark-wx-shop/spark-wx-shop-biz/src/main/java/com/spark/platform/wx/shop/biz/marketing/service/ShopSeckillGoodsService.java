@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.spark.platform.wx.shop.api.entity.marketing.ShopSeckillGoods;
 import com.spark.platform.wx.shop.api.vo.GoodsSecKillCardVo;
+import com.spark.platform.wx.shop.api.vo.SeckillGoodsVo;
 
 /**
  * <p>
@@ -30,5 +31,13 @@ public interface ShopSeckillGoodsService extends IService<ShopSeckillGoods> {
      * @return
      */
     boolean deleteGoods(Integer id);
+
+
+    /**
+     * 通过商品ID 查询数据
+     * @param goodsId
+     * @return
+     */
+    SeckillGoodsVo getByGoodIds(Integer goodsId);
 
 }

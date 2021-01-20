@@ -28,4 +28,11 @@ public interface ShopUserAddressService extends IService<ShopUserAddress> {
      * @return
      */
     boolean deleteAddress(Integer userId, Integer id);
+
+    /**
+     * 提交用户地址信息
+     * @param userAddress
+     * @return
+     */
+    boolean submitAddress(ShopUserAddress userAddress);
 }

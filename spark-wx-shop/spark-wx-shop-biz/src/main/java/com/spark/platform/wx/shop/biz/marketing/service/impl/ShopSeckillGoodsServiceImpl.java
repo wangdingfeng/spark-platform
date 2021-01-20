@@ -1,14 +1,18 @@
 package com.spark.platform.wx.shop.biz.marketing.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spark.platform.common.base.enums.DelFlagEnum;
+import com.spark.platform.common.base.exception.BusinessException;
 import com.spark.platform.wx.shop.api.entity.goods.ShopGoods;
 import com.spark.platform.wx.shop.api.entity.goods.ShopGoodsSku;
 import com.spark.platform.wx.shop.api.entity.marketing.ShopSeckillGoods;
 import com.spark.platform.wx.shop.api.enums.ShopGoodsActivityEnum;
+import com.spark.platform.wx.shop.api.vo.SeckillGoodsVo;
 import com.spark.platform.wx.shop.biz.goods.service.ShopGoodsService;
 import com.spark.platform.wx.shop.biz.goods.service.ShopGoodsSkuService;
 import com.spark.platform.wx.shop.biz.marketing.dao.ShopSeckillGoodsDao;
@@ -40,7 +44,7 @@ public class ShopSeckillGoodsServiceImpl extends ServiceImpl<ShopSeckillGoodsDao
     @Override
     public IPage findPage(Page page, ShopSeckillGoods shopSeckillGoods) {
         QueryWrapper wrapper = new QueryWrapper<ShopSeckillGoods>();
-        wrapper.eq("s.del_flag", DelFlagEnum.normal.getValue());
+        wrapper.eq("s.del_flag", DelFlagEnum.NORMAL.getValue());
         wrapper.like(StringUtils.isNotBlank(shopSeckillGoods.getGoodsTitle()),"g.title",shopSeckillGoods.getGoodsTitle());
         wrapper.gt(null != shopSeckillGoods.getStartTime(),"s.start_time",shopSeckillGoods.getStartTime());
         wrapper.lt(null != shopSeckillGoods.getEndTime(),"s.end_time",shopSeckillGoods.getEndTime());
@@ -60,8 +64,17 @@ public class ShopSeckillGoodsServiceImpl extends ServiceImpl<ShopSeckillGoodsDao
     }
 
     @Override
+    public SeckillGoodsVo getByGoodIds(Integer goodsId) {
+        return super.baseMapper.findByGoodsId(goodsId);
+    }
+
+    @Override
     @Transactional(readOnly = false)
     public boolean saveOrUpdate(ShopSeckillGoods entity) {
+        int count = shopGoodsService.count(Wrappers.<ShopGoods>lambdaQuery().eq(ShopGoods::getId,entity.getGoodsId()).eq(ShopGoods::getStatus,ShopGoodsActivityEnum.NORMAL.getStatus()));
+        if(count > 0){
+            throw new BusinessException("当前商品已在活动状态，不允许添加！");
+        }
         // 获取最小价格
         BigDecimal minPrice = entity.getGoodsSkus().stream().map(ShopGoodsSku::getActivityPrice).min(Comparator.naturalOrder()).get();
         entity.setPrice(minPrice);

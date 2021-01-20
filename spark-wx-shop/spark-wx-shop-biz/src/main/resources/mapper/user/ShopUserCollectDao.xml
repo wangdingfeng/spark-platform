@@ -20,7 +20,6 @@
     <select id="listPage" resultType="com.spark.platform.wx.shop.api.entity.user.ShopUserCollect">
         SELECT
             c.*,
-            g.goods_sn,
             g.title 'goodsTitle',
             g.home_pic,
             g.min_price 'price'

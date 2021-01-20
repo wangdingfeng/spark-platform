@@ -26,7 +26,6 @@ public class ShopUserFootprint implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-
     @ApiModelProperty(value = "主键")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
@@ -41,12 +40,11 @@ public class ShopUserFootprint implements Serializable {
     @ApiModelProperty(value = "创建时间")
     private LocalDateTime createDate;
 
+    @TableField(fill = FieldFill.INSERT)
     @TableLogic(value = "0",delval = "1")
     @ApiModelProperty(value = "系统状态")
     private Integer delFlag;
 
-    @ApiModelProperty(value = "商品编号")
-    private transient String goodsSn;
     @ApiModelProperty(value = "商品标题")
     private transient String goodsTitle;
     @ApiModelProperty(value = "商品图片")

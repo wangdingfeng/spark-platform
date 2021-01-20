@@ -16,8 +16,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum DelFlagEnum {
 
-    normal(0,"正常"),
-    delete(1,"删除");
+    NORMAL(0,"正常"),
+    DELETE(1,"删除");
 
     private Integer value;
 

@@ -27,6 +27,7 @@ public class ShopUserAddress implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @ApiModelProperty(value = "主键")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
@@ -62,15 +63,17 @@ public class ShopUserAddress implements Serializable {
     private String mobile;
 
     @ApiModelProperty(value = "是否默认地址")
-    private String isDefault;
+    private Boolean isDefault;
 
     @TableField(value = "create_date", fill = FieldFill.INSERT)
     @ApiModelProperty(value = "创建时间")
     private LocalDateTime createDate;
 
-    @ApiModelProperty(value = "更新时间")
-    private LocalDateTime updateDate;
+    @TableField(value = "modify_date", fill = FieldFill.INSERT_UPDATE)
+    @ApiModelProperty(value = "修改时间")
+    private LocalDateTime modifyDate;
 
+    @TableField(fill = FieldFill.INSERT)
     @TableLogic(value = "0",delval = "1")
     @ApiModelProperty(value = "系统状态")
     private Integer delFlag;

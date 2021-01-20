@@ -12,6 +12,8 @@ import com.spark.platform.wx.shop.api.dto.ShopGoodsQueryDTO;
 import com.spark.platform.wx.shop.api.entity.goods.ShopGoods;
 import com.spark.platform.wx.shop.api.entity.goods.ShopGoodsComment;
 import com.spark.platform.wx.shop.api.entity.goods.ShopGoodsGallery;
+import com.spark.platform.wx.shop.api.entity.marketing.ShopPinkGoods;
+import com.spark.platform.wx.shop.api.enums.ShopGoodsActivityEnum;
 import com.spark.platform.wx.shop.api.enums.ShopGoodsStatusEnum;
 import com.spark.platform.wx.shop.api.vo.GoodsCardVo;
 import com.spark.platform.wx.shop.api.vo.GoodsCategoryVo;
@@ -20,6 +22,8 @@ import com.spark.platform.wx.shop.biz.api.service.ApiGoodsService;
 import com.spark.platform.wx.shop.biz.goods.service.ShopGoodsCategoryService;
 import com.spark.platform.wx.shop.biz.goods.service.ShopGoodsCommentService;
 import com.spark.platform.wx.shop.biz.goods.service.ShopGoodsService;
+import com.spark.platform.wx.shop.biz.marketing.service.ShopPinkGoodsService;
+import com.spark.platform.wx.shop.biz.marketing.service.ShopSeckillGoodsService;
 import com.spark.platform.wx.shop.biz.user.service.ShopUserFootprintService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -47,6 +51,8 @@ public class ApiGoodsServiceImpl implements ApiGoodsService {
     private final ShopGoodsCommentService shopGoodsCommentService;
     private final ShopUserFootprintService shopUserFootprintService;
     private final ShopGoodsCategoryService shopGoodsCategoryService;
+    private final ShopPinkGoodsService shopPinkGoodsService;
+    private final ShopSeckillGoodsService shopSeckillGoodsService;
 
     @Override
     public IPage<List<GoodsCardVo>> list(ShopGoodsQueryDTO shopGoodsQueryDTO) {
@@ -54,7 +60,8 @@ public class ApiGoodsServiceImpl implements ApiGoodsService {
         queryWrapper.like(StringUtils.isNotBlank(shopGoodsQueryDTO.getTitle()), "title", shopGoodsQueryDTO.getTitle())
                 .likeRight(StringUtils.isNotBlank(shopGoodsQueryDTO.getCategoryIds()), "category_ids", shopGoodsQueryDTO.getCategoryIds())
                 .eq(StringUtils.isNotBlank(shopGoodsQueryDTO.getIsNew()), "isNew", shopGoodsQueryDTO.getIsNew())
-                .eq(true,"del_flag", DelFlagEnum.normal.getValue())
+                .eq(true,"status",ShopGoodsStatusEnum.PUBLISH.getStatus())
+                .eq(true,"del_flag", DelFlagEnum.NORMAL.getValue())
                 .orderBy(StringUtils.isNotBlank(shopGoodsQueryDTO.getOrderBy()), shopGoodsQueryDTO.isAsc(), shopGoodsQueryDTO.getOrderBy());
         return shopGoodsService.pageCard(new Page(shopGoodsQueryDTO.getCurrent(), shopGoodsQueryDTO.getSize()), queryWrapper);
     }
@@ -89,6 +96,13 @@ public class ApiGoodsServiceImpl implements ApiGoodsService {
         }
         BeanUtil.copyProperties(shopGoods, goodsDetail);
         goodsDetail.setGoodsId(shopGoods.getId());
+        if(ShopGoodsActivityEnum.PINK.getStatus().equals(shopGoods.getActivity())){
+            // 当前商品参团中
+            goodsDetail.setPinkGoods(shopPinkGoodsService.getByGoodIds(shopGoods.getId()));
+        }else if(ShopGoodsActivityEnum.SECKILL.getStatus().equals(shopGoods.getActivity())){
+            // 当前商品秒杀中
+            goodsDetail.setSeckillGoods(shopSeckillGoodsService.getByGoodIds(shopGoods.getId()));
+        }
         // 获取规格
         goodsDetail.setGoodsAttrs(shopGoods.getShopGoodsAttrs());
         // 获取价格库存

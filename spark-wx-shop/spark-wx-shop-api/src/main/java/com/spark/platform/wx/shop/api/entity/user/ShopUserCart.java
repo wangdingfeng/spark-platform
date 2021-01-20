@@ -1,7 +1,9 @@
 package com.spark.platform.wx.shop.api.entity.user;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
@@ -32,6 +34,7 @@ public class ShopUserCart implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "主键")
+    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     @ApiModelProperty(value = "会员ID")
@@ -61,8 +64,6 @@ public class ShopUserCart implements Serializable {
     @ApiModelProperty(value = "系统状态")
     private Integer delFlag;
 
-    @ApiModelProperty(value = "商品编号")
-    private transient String goodsSn;
     @ApiModelProperty(value = "商品标题")
     private transient String goodsTitle;
     @ApiModelProperty(value = "商品图片")

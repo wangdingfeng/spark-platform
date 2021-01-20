@@ -32,7 +32,7 @@ public class ShopSettingSwiperServiceImpl extends ServiceImpl<ShopSettingSwiperD
     public IPage finPage(Page page, ShopSettingSwiper shopSettingSwiper) {
         QueryWrapper wrapper = new QueryWrapper();
         wrapper.eq(StringUtils.isNotBlank(shopSettingSwiper.getStatus()),"s.status",shopSettingSwiper.getStatus());
-        wrapper.eq("s.del_flag", DelFlagEnum.normal.getValue());
+        wrapper.eq("s.del_flag", DelFlagEnum.NORMAL.getValue());
         return super.baseMapper.listPage(page, wrapper);
     }
 

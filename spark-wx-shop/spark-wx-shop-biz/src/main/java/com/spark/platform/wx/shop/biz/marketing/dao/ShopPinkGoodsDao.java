@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spark.platform.wx.shop.api.entity.marketing.ShopPinkGoods;
 import com.spark.platform.wx.shop.api.vo.PinkGoodsCardVo;
+import com.spark.platform.wx.shop.api.vo.PinkGoodsVo;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
 
@@ -43,5 +44,12 @@ public interface ShopPinkGoodsDao extends BaseMapper<ShopPinkGoods> {
      * @return
      */
     IPage<PinkGoodsCardVo> pageGoods(Page page, @Param(Constants.WRAPPER) Wrapper wrapper);
+
+    /**
+     * 通过商品查询数据
+     * @param goodsId
+     * @return
+     */
+    PinkGoodsVo findByGoodsId(@Param("goodsId") Integer goodsId);
 
 }

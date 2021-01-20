@@ -23,14 +23,14 @@
 
     <select id="listPage" resultType="com.spark.platform.wx.shop.api.entity.user.ShopUserCart">
         SELECT
-            c.*,
-            g.goods_sn,
-            g.title 'goodsTitle',
-            g.home_pic,
-            g.min_price 'price'
+                c.*,
+                g.title 'goodsTitle',
+                g.home_pic,
+                s.price
         FROM
-            shop_user_cart c
-            LEFT JOIN shop_goods g ON c.goods_id = g.id
+                shop_user_cart c
+                LEFT JOIN shop_goods g ON c.goods_id = g.id
+                LEFT JOIN shop_goods_sku s ON s.goods_id = g.id AND s.attr_val_ids=c.attr_val_ids
         ${ew.customSqlSegment}
     </select>
 

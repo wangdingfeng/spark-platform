@@ -3,6 +3,7 @@ package com.spark.platform.wx.shop.biz.user.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.spark.platform.wx.shop.api.dto.UserCartDTO;
 import com.spark.platform.wx.shop.api.entity.user.ShopUserCart;
 
 import java.util.List;
@@ -26,18 +27,11 @@ public interface ShopUserCartService extends IService<ShopUserCart> {
     IPage listPage(Page page, ShopUserCart shopUserCart);
 
     /**
-     * 获取用户的购物车
-     * @param userId
-     * @return
-     */
-    List<ShopUserCart> findCart(Integer userId);
-
-    /**
      * 保存更新购物车
-     * @param shopUserCart
+     * @param userCart
      * @return
      */
-    boolean saveCart(ShopUserCart shopUserCart);
+    boolean submitCart(UserCartDTO userCart);
 
     /**
      * 删除用户购物车

@@ -26,7 +26,7 @@ public class ShopUserAddressServiceImpl extends ServiceImpl<ShopUserAddressDao, 
     @Override
     public List<ShopUserAddress> findAddress(Integer userId) {
         return super.list(Wrappers.<ShopUserAddress>lambdaQuery()
-                .eq(ShopUserAddress::getUserId,userId).orderByDesc(ShopUserAddress::getUpdateDate));
+                .eq(ShopUserAddress::getUserId,userId).orderByDesc(ShopUserAddress::getIsDefault));
     }
 
     @Override
@@ -38,5 +38,16 @@ public class ShopUserAddressServiceImpl extends ServiceImpl<ShopUserAddressDao, 
             throw new BusinessException("只允许删除自己的地址信息！");
         }
         return super.removeById(id);
+    }
+
+    @Override
+    public boolean submitAddress(ShopUserAddress userAddress) {
+        if(userAddress.getIsDefault()){
+            // 如果是默认地址 修改其他的地址为费默认
+            ShopUserAddress updateDate = new ShopUserAddress();
+            updateDate.setIsDefault(false);
+            super.update(updateDate,Wrappers.<ShopUserAddress>lambdaQuery().eq(ShopUserAddress::getUserId,userAddress.getUserId()));
+        }
+        return super.saveOrUpdate(userAddress);
     }
 }

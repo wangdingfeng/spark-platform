@@ -47,12 +47,18 @@ public class GoodsDetailVo {
     private Integer stock;
     @ApiModelProperty(value = "描述")
     private String detail;
+    @ApiModelProperty(value = "活动状态 0 正常 1秒杀 2 团购")
+    private String activity;
     @ApiModelProperty(value = "商品规格")
     private List<ShopGoodsAttr> goodsAttrs;
     @ApiModelProperty(value = "商品参数")
     private List<GoodsParams> goodsParams;
     @ApiModelProperty(value = "商品价格库存")
     private List<ShopGoodsSku> goodsSkus;
+    @ApiModelProperty(value = "拼团商品数据")
+    private PinkGoodsVo pinkGoods;
+    @ApiModelProperty(value = "秒杀商品数据")
+    private SeckillGoodsVo seckillGoods;
 
     @ApiModel(value = "GoodsParams对象", description = "商品参数")
     public static class GoodsParams {

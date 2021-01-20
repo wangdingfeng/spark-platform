@@ -64,4 +64,12 @@
             ${ew.customSqlSegment}
     </select>
 
+    <select id="findByGoodsId" resultType="com.spark.platform.wx.shop.api.vo.PinkGoodsVo">
+        SELECT
+            id 'pinkGoodsId',start_time,end_time,effective_time,price,people,quota
+        FROM
+            shop_pink_goods
+         WHERE
+            goods_id=#{goodsId}
+    </select>
 </mapper>

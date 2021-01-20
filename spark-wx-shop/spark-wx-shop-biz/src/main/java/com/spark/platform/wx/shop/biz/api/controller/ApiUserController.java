@@ -2,17 +2,12 @@ package com.spark.platform.wx.shop.biz.api.controller;
 
 import com.spark.platform.common.base.support.ApiResponse;
 import com.spark.platform.common.base.support.BaseController;
+import com.spark.platform.wx.shop.api.dto.UserCartDTO;
 import com.spark.platform.wx.shop.api.dto.WxLoginDTO;
 import com.spark.platform.wx.shop.api.entity.user.ShopUser;
 import com.spark.platform.wx.shop.api.entity.user.ShopUserAddress;
-import com.spark.platform.wx.shop.api.entity.user.ShopUserCart;
-import com.spark.platform.wx.shop.api.entity.user.ShopUserCollect;
-import com.spark.platform.wx.shop.api.entity.user.ShopUserFootprint;
 import com.spark.platform.wx.shop.biz.api.service.ApiUserService;
 import com.spark.platform.wx.shop.biz.user.service.ShopUserAddressService;
-import com.spark.platform.wx.shop.biz.user.service.ShopUserCartService;
-import com.spark.platform.wx.shop.biz.user.service.ShopUserCollectService;
-import com.spark.platform.wx.shop.biz.user.service.ShopUserFootprintService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -42,9 +37,6 @@ public class ApiUserController extends BaseController {
 
     private final ApiUserService apiUserService;
     private final ShopUserAddressService shopUserAddressService;
-    private final ShopUserCartService shopUserCartService;
-    private final ShopUserCollectService shopUserCollectService;
-    private final ShopUserFootprintService shopUserFootprintService;
 
     @PostMapping("/login")
     @ApiOperation(value = "用户登录")
@@ -63,10 +55,18 @@ public class ApiUserController extends BaseController {
         return success(apiUserService.saveMobile(userId, mobile));
     }
 
+
+    @GetMapping("/address")
+    @ApiOperation(value = "查询用户地址信息")
+    public ApiResponse<List<ShopUserAddress>> listAddress(@RequestParam Integer userId) {
+        return success(shopUserAddressService.findAddress(userId));
+    }
+
     @PostMapping("/address")
     @ApiOperation(value = "保存更新用户地址信息")
-    public ApiResponse saveAddress(@Valid @RequestBody ShopUserAddress shopUserAddress) {
-        return success(shopUserAddressService.saveOrUpdate(shopUserAddress));
+    public ApiResponse<ShopUserAddress> saveAddress(@Valid @RequestBody ShopUserAddress shopUserAddress) {
+        shopUserAddressService.submitAddress(shopUserAddress);
+        return success(shopUserAddress);
     }
 
     @DeleteMapping("/{userId}/address")
@@ -79,46 +79,54 @@ public class ApiUserController extends BaseController {
         return success(shopUserAddressService.deleteAddress(userId, id));
     }
 
-    @PostMapping("/cart")
-    @ApiOperation(value = "保存更新用户购物车信息")
-    public ApiResponse saveCart(@Valid @RequestBody ShopUserCart shopUserCart) {
-        return success(shopUserCartService.saveCart(shopUserCart));
+    @GetMapping("/cart")
+    @ApiOperation(value = "分页查询用户购物车信息")
+    public ApiResponse pageCart(@RequestParam long current,@RequestParam long size,@RequestParam Integer userId) {
+        return success(apiUserService.pageCart(current,size,userId));
     }
 
-    @DeleteMapping("/{userId}/cart")
+    @PostMapping("/cart")
+    @ApiOperation(value = "保存更新用户购物车信息")
+    public ApiResponse saveCart(@Valid @RequestBody UserCartDTO userCartDTO) {
+        return success(apiUserService.submitCart(userCartDTO));
+    }
+
+    @DeleteMapping("/cart")
     @ApiOperation(value = "删除用户购物车信息")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "userId", value = "用户Id", required = true),
-            @ApiImplicitParam(name = "id", value = "购物车Id", required = true)
-    })
-    public ApiResponse delCart(@PathVariable Integer userId, @RequestParam Integer id) {
-        return success(shopUserCartService.deleteCart(userId, id));
+    public ApiResponse delCart(@RequestParam("ids[]") List<Integer> ids) {
+        return success(apiUserService.delCart(ids));
     }
 
     @PostMapping("/collect")
     @ApiOperation(value = "用户收藏信息")
-    public ApiResponse saveCollect(@Valid @RequestBody ShopUserCollect userCollect) {
-        return success(shopUserCollectService.save(userCollect));
+    public ApiResponse saveCollect(@RequestParam Integer userId,@RequestParam  Integer goodsId) {
+        return success(apiUserService.saveCollect(userId,goodsId));
+    }
+
+    @GetMapping("/collect")
+    @ApiOperation(value = "分页查询用户收藏")
+    public ApiResponse pageCollect(@RequestParam long current,@RequestParam long size,@RequestParam Integer userId) {
+        return success(apiUserService.pageCollect(current,size,userId));
     }
 
     @DeleteMapping("/collect")
     @ApiOperation(value = "删除用户收藏信息")
     @ApiImplicitParam(name = "ids", value = "收藏Id集合", required = true)
-    public ApiResponse delCollect(@RequestParam("ids[]") List<String> ids) {
-        return success(shopUserCollectService.removeByIds(ids));
+    public ApiResponse delCollect(@RequestParam("ids[]") List<Integer> ids) {
+        return success(apiUserService.delCollects(ids));
     }
 
-    @PostMapping("/footprint")
-    @ApiOperation(value = "用户足迹信息")
-    public ApiResponse saveFootprint(@Valid @RequestBody ShopUserFootprint userFootprint) {
-        return success(shopUserFootprintService.save(userFootprint));
+    @GetMapping("/footprint")
+    @ApiOperation(value = "分页查询用户足迹信息")
+    public ApiResponse pageFootprint(@RequestParam long current,@RequestParam long size,@RequestParam Integer userId) {
+        return success(apiUserService.pageFootprint(current,size,userId));
     }
 
     @DeleteMapping("/footprint")
     @ApiOperation(value = "删除用户足迹信息")
     @ApiImplicitParam(name = "ids", value = "收藏Id集合", required = true)
-    public ApiResponse delFootprint(@RequestParam("ids[]") List<String> ids) {
-        return success(shopUserFootprintService.removeByIds(ids));
+    public ApiResponse delFootprint(@RequestParam("ids[]") List<Integer> ids) {
+        return success(apiUserService.delFootprints(ids));
     }
 
 }
