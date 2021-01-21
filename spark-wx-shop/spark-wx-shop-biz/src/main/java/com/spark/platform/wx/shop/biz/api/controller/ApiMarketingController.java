@@ -5,7 +5,9 @@ import com.spark.platform.common.base.support.ApiResponse;
 import com.spark.platform.common.base.support.BaseController;
 import com.spark.platform.wx.shop.api.vo.CouponCardVo;
 import com.spark.platform.wx.shop.api.vo.SeckillVo;
+import com.spark.platform.wx.shop.api.vo.SwiperVo;
 import com.spark.platform.wx.shop.biz.api.service.ApiMarketingService;
+import com.spark.platform.wx.shop.biz.api.service.ApiSettingService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -28,6 +30,7 @@ import java.util.List;
 public class ApiMarketingController extends BaseController {
 
     private final ApiMarketingService apiMarketingService;
+    private final ApiSettingService apiSettingService;
 
     @GetMapping("/coupon")
     @ApiOperation(value = "全部优惠券")
@@ -72,6 +75,12 @@ public class ApiMarketingController extends BaseController {
     })
     public ApiResponse<CouponCardVo> pinkGoods(@RequestParam Long size,@RequestParam Long current) {
         return success(apiMarketingService.pinkGoods(size, current));
+    }
+
+    @GetMapping("/api/swiper")
+    @ApiOperation(value = "轮播图信息")
+    public ApiResponse<List<SwiperVo>> swiper() {
+        return success(apiSettingService.swiper());
     }
 
 }
