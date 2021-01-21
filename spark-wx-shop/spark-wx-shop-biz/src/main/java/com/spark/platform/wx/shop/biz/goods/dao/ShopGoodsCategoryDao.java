@@ -30,7 +30,7 @@ public interface ShopGoodsCategoryDao extends BaseMapper<ShopGoodsCategory> {
      * @param level 最大层级
      * @return
      */
-    @Select("select id,pid,name 'text',pic,is_leaf from shop_goods_category where del_flag=0 AND level <= #{level}")
+    @Select("select id,pid,pids,name 'text',pic,is_leaf from shop_goods_category where del_flag=0 AND level <= #{level}")
     List<GoodsCategoryVo> findVoLevel(@Param("level") Integer level);
 
 }

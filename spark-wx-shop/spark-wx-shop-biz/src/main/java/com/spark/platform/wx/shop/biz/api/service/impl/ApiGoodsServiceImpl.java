@@ -12,6 +12,7 @@ import com.spark.platform.wx.shop.api.dto.ShopGoodsQueryDTO;
 import com.spark.platform.wx.shop.api.entity.goods.ShopGoods;
 import com.spark.platform.wx.shop.api.entity.goods.ShopGoodsComment;
 import com.spark.platform.wx.shop.api.entity.goods.ShopGoodsGallery;
+import com.spark.platform.wx.shop.api.entity.goods.ShopGoodsParam;
 import com.spark.platform.wx.shop.api.entity.marketing.ShopPinkGoods;
 import com.spark.platform.wx.shop.api.enums.ShopGoodsActivityEnum;
 import com.spark.platform.wx.shop.api.enums.ShopGoodsStatusEnum;
@@ -110,7 +111,7 @@ public class ApiGoodsServiceImpl implements ApiGoodsService {
         // 获取主图
         goodsDetail.setPicList(shopGoods.getShopGoodsGalleries().stream().map(ShopGoodsGallery::getUrl).collect(Collectors.toList()));
         // 获取 产品属性
-        goodsDetail.setGoodsParams(shopGoods.getShopGoodsParams().stream().map(p -> new GoodsDetailVo.GoodsParams(p.getParamName(), p.getParamValue())).collect(Collectors.toList()));
+        goodsDetail.setGoodsParams(shopGoods.getShopGoodsParams().stream().collect(Collectors.toMap(ShopGoodsParam::getParamName,ShopGoodsParam::getParamValue)));
         log.info("【请求结束】,获取商品结果，当前商品标题：{}", shopGoods.getTitle());
         return goodsDetail;
     }

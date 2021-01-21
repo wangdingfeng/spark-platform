@@ -19,6 +19,8 @@ public class GoodsCategoryVo {
     private Integer id;
     @ApiModelProperty(value = "父id")
     private Integer pid;
+    @ApiModelProperty(value = "父ids")
+    private String pids;
     @ApiModelProperty(value = "分类名称")
     private String text;
     @ApiModelProperty(value = "分类图")

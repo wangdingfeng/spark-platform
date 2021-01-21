@@ -8,6 +8,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ProjectName: spark-platform
@@ -52,23 +53,11 @@ public class GoodsDetailVo {
     @ApiModelProperty(value = "商品规格")
     private List<ShopGoodsAttr> goodsAttrs;
     @ApiModelProperty(value = "商品参数")
-    private List<GoodsParams> goodsParams;
+    private Map<String,String> goodsParams;
     @ApiModelProperty(value = "商品价格库存")
     private List<ShopGoodsSku> goodsSkus;
     @ApiModelProperty(value = "拼团商品数据")
     private PinkGoodsVo pinkGoods;
     @ApiModelProperty(value = "秒杀商品数据")
     private SeckillGoodsVo seckillGoods;
-
-    @ApiModel(value = "GoodsParams对象", description = "商品参数")
-    public static class GoodsParams {
-        @ApiModelProperty(value = "参数名")
-        private String paramName;
-        @ApiModelProperty(value = "参数值")
-        private String paramValue;
-        public GoodsParams(String paramName, String paramValue) {
-            this.paramName = paramName;
-            this.paramValue = paramValue;
-        }
-    }
 }
