@@ -51,21 +51,41 @@ public class AddressUtils {
      * @return
      */
     public static String getIpAddress(HttpServletRequest request) {
-        String ip = request.getHeader("x-forwarded-for");
-        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
+        String ip = request.getHeader("X-Forwarded-For");
+        log.trace("当前IP来源[X-Forwarded-For], 值[{}]", ip);
+        if(!StringUtils.isEmpty(ip) && !UNKNOWN.equalsIgnoreCase(ip)){
+            //多次反向代理后会有多个ip值，第一个ip才是真实ip
+            int index = ip.indexOf(',');
+            if(index != -1){
+                return ip.substring(0, index);
+            }else{
+                return ip;
+            }
+        }
+        ip = request.getHeader("X-Real-IP");
+        log.trace("当前IP来源[X-Real-IP], 值[{}]", ip);
+        if(!StringUtils.isEmpty(ip) && !UNKNOWN.equalsIgnoreCase(ip)){
+            return ip;
+        }
+        if (StringUtils.isEmpty(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
             ip = request.getHeader("Proxy-Client-IP");
+            log.trace("当前IP来源[Proxy-Client-IP], 值[{}]", ip);
         }
-        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
+        if (StringUtils.isEmpty(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
             ip = request.getHeader("WL-Proxy-Client-IP");
+            log.trace("当前IP来源[WL-Proxy-Client-IP], 值[{}]", ip);
         }
-        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
+        if (StringUtils.isEmpty(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
             ip = request.getHeader("HTTP_CLIENT_IP");
+            log.trace("当前IP来源[HTTP_CLIENT_IP], 值[{}]", ip);
         }
-        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
+        if (StringUtils.isEmpty(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
             ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+            log.trace("当前IP来源[HTTP_X_FORWARDED_FOR], 值[{}]", ip);
         }
-        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
+        if (StringUtils.isEmpty(ip)|| UNKNOWN.equalsIgnoreCase(ip)) {
             ip = request.getRemoteAddr();
+            log.trace("当前IP来源[getRemoteAddr], 值[{}]", ip);
             if (LOCAL_IP_127.equals(ip) || LOCAL_IP.equals(ip)) {
                 //根据网卡取本机配置的IP
                 InetAddress inet = null;
@@ -107,9 +127,6 @@ public class AddressUtils {
                     break;
                 case DbSearcher.BINARY_ALGORITHM:
                     method = searcher.getClass().getMethod("binarySearch", String.class);
-                    break;
-                case DbSearcher.MEMORY_ALGORITYM:
-                    method = searcher.getClass().getMethod("memorySearch", String.class);
                     break;
                 default:
                     method = searcher.getClass().getMethod("memorySearch", String.class);
