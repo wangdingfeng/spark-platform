@@ -17,7 +17,7 @@
         <dependency>
             <groupId>com.spark.platform</groupId>
             <artifactId>spark-wx-shop-api</artifactId>
-            <version>2.0.1</version>
+            <version>${spark-common.version}</version>
         </dependency>
         <!-- nacos -->
         <dependency>
@@ -48,6 +48,11 @@
         </dependency>
         <dependency>
             <groupId>com.spark.platform</groupId>
+            <artifactId>spark-common-log</artifactId>
+            <version>${spark-common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.spark.platform</groupId>
             <artifactId>spark-common-logistics</artifactId>
             <version>${spark-common.version}</version>
         </dependency>
@@ -65,11 +70,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-undertow</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.qiniu</groupId>
-            <artifactId>qiniu-java-sdk</artifactId>
-            <version>7.4.0</version>
         </dependency>
     </dependencies>
 

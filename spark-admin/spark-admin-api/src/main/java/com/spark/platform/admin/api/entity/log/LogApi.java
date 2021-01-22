@@ -49,7 +49,7 @@ public class LogApi implements Serializable {
     private String ip;
 
     @ApiModelProperty(value = "地址")
-    private String address;
+    private String location;
 
     @ApiModelProperty(value = "描述")
     private String description;
