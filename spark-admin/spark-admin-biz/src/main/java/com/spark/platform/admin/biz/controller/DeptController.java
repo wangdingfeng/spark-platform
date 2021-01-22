@@ -61,7 +61,7 @@ public class DeptController extends BaseController {
 
     @DeleteMapping("/{id}")
     @ApiOperation(value = "删除部门信息")
-    @PreAuthorize("hasAnyAuthority('dept:delete1')")
+    @PreAuthorize("hasAnyAuthority('dept:delete')")
     public ApiResponse delete(@PathVariable Long id){
         return success(deptService.removeById(id));
     }

@@ -92,6 +92,7 @@ public class UserController extends BaseController {
 
     @PatchMapping
     @ApiOperation(value = "修改用户信息")
+    @PreAuthorize("hasAnyAuthority('user:edit')")
     public ApiResponse updateUserInfo(@RequestBody User user) {
         user.setId(UserUtils.getLoginUser().getId());
         userService.updateUserInfo(user);
@@ -106,7 +107,7 @@ public class UserController extends BaseController {
 
     @GetMapping("/export")
     @ApiOperation(value = "导出用户信息")
-    public void export(User user, HttpServletResponse response) throws Exception{
-        userService.exportExcel(user,response);
+    public void export(User user, HttpServletResponse response) throws Exception {
+        userService.exportExcel(user, response);
     }
 }

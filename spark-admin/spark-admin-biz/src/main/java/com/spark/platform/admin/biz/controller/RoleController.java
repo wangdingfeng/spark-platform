@@ -44,54 +44,54 @@ public class RoleController extends BaseController {
 
     @PostMapping("/page")
     @ApiOperation(value = "获取角色列表分页")
-    public ApiResponse<IPage> page(Role role, Page page){
-        return success(roleService.findPage(role,page));
+    public ApiResponse<IPage> page(Role role, Page page) {
+        return success(roleService.findPage(role, page));
     }
 
     @GetMapping("/all")
     @ApiOperation(value = "获取所有角色")
-    public ApiResponse<List<Role>> getRoleAll(){
+    public ApiResponse<List<Role>> getRoleAll() {
         return success(roleService.findAllRole());
     }
 
     @PostMapping
     @ApiOperation(value = "保存角色信息")
     @PreAuthorize("hasAnyAuthority('role:add')")
-    public ApiResponse<Role> save(@RequestBody @Valid Role role){
+    public ApiResponse<Role> save(@RequestBody @Valid Role role) {
         return success(roleService.saveOrUpdateRole(role));
     }
 
     @PutMapping
     @ApiOperation(value = "更新角色信息")
     @PreAuthorize("hasAnyAuthority('role:edit')")
-    public ApiResponse<Role> update(@RequestBody @Valid Role role){
+    public ApiResponse<Role> update(@RequestBody @Valid Role role) {
         return success(roleService.saveOrUpdateRole(role));
     }
 
     @DeleteMapping("/{id}")
     @ApiOperation(value = "更新角色信息")
     @PreAuthorize("hasAnyAuthority('role:delete')")
-    public ApiResponse<Boolean> delete(@PathVariable Long id){
+    public ApiResponse<Boolean> delete(@PathVariable Long id) {
         return success(roleService.delete(id));
     }
 
     @GetMapping("/auth")
     @ApiOperation(value = "根据角色id获取权限")
-    public ApiResponse<List<Long>> getRoleAuth(@RequestParam Long id){
+    public ApiResponse<List<Long>> getRoleAuth(@RequestParam Long id) {
         return success(menuService.getMenuIdsByRole(id));
     }
 
     @PostMapping("/auth")
     @ApiOperation(value = "更新角色权限信息")
-    @PreAuthorize("hasAnyAuthority('role:edit')")
-    public ApiResponse saveRoleAuth(@RequestBody Role role){
+    @PreAuthorize("hasAnyAuthority('role:auth')")
+    public ApiResponse saveRoleAuth(@RequestBody Role role) {
         roleService.saveRoleAuth(role);
         return success("更新成功");
     }
 
     @GetMapping("/users/{id}")
     @ApiOperation(value = "根据角色id获取角色下对应的用户")
-    public ApiResponse<List<User>> findUsersByRoleId(@PathVariable Long id){
+    public ApiResponse<List<User>> findUsersByRoleId(@PathVariable Long id) {
         return success(userService.findUsersByRoleId(id));
     }
 
