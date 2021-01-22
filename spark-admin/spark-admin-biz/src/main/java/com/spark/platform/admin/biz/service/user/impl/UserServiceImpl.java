@@ -152,7 +152,7 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
         for (String id : ids) {
             User user = new User();
             user.setId(Long.valueOf(id));
-            user.setPassword(GlobalsConstants.DEFAULT_USER_PASSWORD);
+            user.setPassword(new BCryptPasswordEncoder().encode(GlobalsConstants.DEFAULT_USER_PASSWORD));
             users.add(user);
         }
         super.updateBatchById(users);
