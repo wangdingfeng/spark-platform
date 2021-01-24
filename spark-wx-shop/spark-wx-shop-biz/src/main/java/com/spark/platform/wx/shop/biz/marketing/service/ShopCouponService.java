@@ -17,7 +17,8 @@ import java.util.List;
 public interface ShopCouponService extends IService<ShopCoupon> {
     /**
      * 查询可用的优惠券
+     * @param limit 数量限制
      * @return
      */
-    List<CouponCardVo> findUseVo();
+    List<CouponCardVo> findUseVo(Integer limit);
 }

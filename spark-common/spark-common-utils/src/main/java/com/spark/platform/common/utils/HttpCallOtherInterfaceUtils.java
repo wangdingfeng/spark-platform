@@ -101,7 +101,7 @@ public class HttpCallOtherInterfaceUtils {
      * @param param
      * @return
      */
-    public static String postUrl(String url, Map<String,String> headers, Map param){
+    public static String postUrl(String url, Map<String,String> headers, Object param){
         HttpClient client = HttpClients.createDefault();
         HttpPost post = new HttpPost(url);
         try {
@@ -122,6 +122,7 @@ public class HttpCallOtherInterfaceUtils {
         }
         return null;
     }
+
 
 
     public static JSONObject callOtherGetInterface(String gatewayUrl, String getUrl) {

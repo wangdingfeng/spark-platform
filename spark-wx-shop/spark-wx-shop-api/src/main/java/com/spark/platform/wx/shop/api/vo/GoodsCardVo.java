@@ -28,8 +28,8 @@ public class GoodsCardVo {
     private String homePic;
     @ApiModelProperty(value = "零售价")
     private BigDecimal retailPrice;
-    @ApiModelProperty(value = "最小单价")
-    private BigDecimal minPrice;
+    @ApiModelProperty(value = "单价")
+    private BigDecimal price;
     @ApiModelProperty(value = "销售件数")
     private Integer saleNum;
     @ApiModelProperty(value = "库存数")

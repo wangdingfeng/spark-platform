@@ -147,6 +147,7 @@ public class ApiOrderServiceImpl implements ApiOrderService {
             }
             shopPinkUserService.saveOrUpdate(pinkUser);
         }
+        // 调用微信支付接口
         return flag;
     }
 

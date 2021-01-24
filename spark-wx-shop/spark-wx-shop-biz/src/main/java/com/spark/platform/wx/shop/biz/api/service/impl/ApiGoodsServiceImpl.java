@@ -60,9 +60,11 @@ public class ApiGoodsServiceImpl implements ApiGoodsService {
         QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.like(StringUtils.isNotBlank(shopGoodsQueryDTO.getTitle()), "title", shopGoodsQueryDTO.getTitle())
                 .likeRight(StringUtils.isNotBlank(shopGoodsQueryDTO.getCategoryIds()), "category_ids", shopGoodsQueryDTO.getCategoryIds())
-                .eq(StringUtils.isNotBlank(shopGoodsQueryDTO.getIsNew()), "isNew", shopGoodsQueryDTO.getIsNew())
+                .eq(StringUtils.isNotBlank(shopGoodsQueryDTO.getIsNew()), "is_new", shopGoodsQueryDTO.getIsNew())
+                .eq(StringUtils.isNotBlank(shopGoodsQueryDTO.getIsHot()), "is_hot", shopGoodsQueryDTO.getIsHot())
                 .eq(true,"status",ShopGoodsStatusEnum.PUBLISH.getStatus())
                 .eq(true,"del_flag", DelFlagEnum.NORMAL.getValue())
+                .like(StringUtils.isNotBlank(shopGoodsQueryDTO.getKeywords()),"keywords",shopGoodsQueryDTO.getKeywords())
                 .orderBy(StringUtils.isNotBlank(shopGoodsQueryDTO.getOrderBy()), shopGoodsQueryDTO.isAsc(), shopGoodsQueryDTO.getOrderBy());
         return shopGoodsService.pageCard(new Page(shopGoodsQueryDTO.getCurrent(), shopGoodsQueryDTO.getSize()), queryWrapper);
     }

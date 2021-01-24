@@ -3,6 +3,7 @@ package com.spark.platform.wx.shop.biz.api.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.spark.platform.common.base.enums.DelFlagEnum;
 import com.spark.platform.wx.shop.api.entity.marketing.ShopSeckill;
 import com.spark.platform.wx.shop.api.enums.ShopGoodsStatusEnum;
 import com.spark.platform.wx.shop.api.vo.CouponCardVo;
@@ -39,8 +40,8 @@ public class ApiMarketingServiceImpl implements ApiMarketingService {
     private final ShopPinkGoodsDao shopPinkGoodsDao;
 
     @Override
-    public List<CouponCardVo> findCoupon() {
-        return couponService.findUseVo();
+    public List<CouponCardVo> findCoupon(Integer limit) {
+        return couponService.findUseVo(limit);
     }
 
     @Override
@@ -61,9 +62,11 @@ public class ApiMarketingServiceImpl implements ApiMarketingService {
         Assert.notNull(shopSeckill, "当前秒杀列表不存在");
         QueryWrapper wrapper = new QueryWrapper<>();
         wrapper.eq("g.status", ShopGoodsStatusEnum.PUBLISH.getStatus());
-        wrapper.lt("sg.start_time", start);
-        wrapper.gt("sg.end_time", end);
-        return shopSeckillGoodsDao.pageGoods(new Page(size, current), wrapper);
+        wrapper.eq("sg.del_flag", DelFlagEnum.NORMAL.getValue());
+        wrapper.ge("sg.start_time", start);
+        wrapper.le("sg.end_time", end);
+        wrapper.orderByDesc("sg.sales");
+        return shopSeckillGoodsDao.pageGoods(new Page(current, size), wrapper);
     }
 
     @Override

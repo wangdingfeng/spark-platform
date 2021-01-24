@@ -22,6 +22,10 @@ public class ShopGoodsQueryDTO {
     private String categoryIds;
     @ApiModelProperty(value = "是否新品")
     private String isNew;
+    @ApiModelProperty(value = "关键词")
+    private String keywords;
+    @ApiModelProperty(value = "是否人气推荐")
+    private String isHot;
     @ApiModelProperty(value = "页码")
     private long current = 1;
     @ApiModelProperty(value = "分页")

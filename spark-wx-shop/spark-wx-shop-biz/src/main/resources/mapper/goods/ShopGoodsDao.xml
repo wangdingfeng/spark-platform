@@ -40,7 +40,7 @@
     </sql>
 
     <select id="pageCard" resultType="com.spark.platform.wx.shop.api.vo.GoodsCardVo">
-        SELECT id 'goodsId',title,brief,home_pic,retail_price,min_price,sale_num,stock FROM shop_goods
+        SELECT id 'goodsId',title,brief,home_pic,retail_price,min_price 'price',sale_num,stock FROM shop_goods
          ${ew.customSqlSegment}
     </select>
 

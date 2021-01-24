@@ -21,7 +21,7 @@ import java.util.List;
 public class ShopCouponServiceImpl extends ServiceImpl<ShopCouponDao, ShopCoupon> implements ShopCouponService {
 
     @Override
-    public List<CouponCardVo> findUseVo() {
-        return super.baseMapper.findUseVo();
+    public List<CouponCardVo> findUseVo(Integer limit) {
+        return super.baseMapper.findUseVo(limit);
     }
 }

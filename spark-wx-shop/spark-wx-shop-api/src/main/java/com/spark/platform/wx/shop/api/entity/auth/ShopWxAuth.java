@@ -42,4 +42,7 @@ public class ShopWxAuth extends BaseEntity {
     @ApiModelProperty(value = "oauth2 clientId")
     private String clientId;
 
+    @ApiModelProperty(value = "直连商户号 用于微信支付")
+    private String mchid;
+
 }

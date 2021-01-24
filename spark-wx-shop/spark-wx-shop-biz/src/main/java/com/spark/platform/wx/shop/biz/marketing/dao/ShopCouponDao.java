@@ -3,6 +3,7 @@ package com.spark.platform.wx.shop.biz.marketing.dao;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.spark.platform.wx.shop.api.entity.marketing.ShopCoupon;
 import com.spark.platform.wx.shop.api.vo.CouponCardVo;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.ResultType;
 import org.apache.ibatis.annotations.Select;
 
@@ -22,9 +23,9 @@ public interface ShopCouponDao extends BaseMapper<ShopCoupon> {
      * 查询当前可用的优惠券
      * @return
      */
-    @Select("select * from shop_coupon where del_flag='0' and end_time < NOW()")
+    @Select("SELECT * FROM shop_coupon WHERE status= 1 AND del_flag=0 AND end_time > NOW() AND LIMIT #{limit}")
     @ResultType(CouponCardVo.class)
-    List<CouponCardVo> findUseVo();
+    List<CouponCardVo> findUseVo(@Param("limit") Integer limit);
 
 
 }

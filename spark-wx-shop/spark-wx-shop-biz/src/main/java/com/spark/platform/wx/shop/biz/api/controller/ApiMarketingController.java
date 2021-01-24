@@ -32,10 +32,10 @@ public class ApiMarketingController extends BaseController {
     private final ApiMarketingService apiMarketingService;
     private final ApiSettingService apiSettingService;
 
-    @GetMapping("/coupon")
+    @GetMapping("/api/coupon")
     @ApiOperation(value = "全部优惠券")
-    public ApiResponse<CouponCardVo> coupon() {
-        return success(apiMarketingService.findCoupon());
+    public ApiResponse<CouponCardVo> coupon(@RequestParam Integer limit) {
+        return success(apiMarketingService.findCoupon(limit));
     }
 
     @GetMapping("/coupon/user")

@@ -14,10 +14,10 @@ import java.util.List;
 public interface ApiMarketingService {
     /**
      * 查询优惠券
-     *
+     * @param limit 限制数量
      * @return
      */
-    List<CouponCardVo> findCoupon();
+    List<CouponCardVo> findCoupon(Integer limit);
 
     /**
      * 查询用户优惠券
