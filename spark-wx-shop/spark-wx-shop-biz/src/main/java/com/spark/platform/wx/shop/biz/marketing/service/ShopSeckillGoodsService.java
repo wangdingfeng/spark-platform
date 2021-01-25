@@ -40,4 +40,9 @@ public interface ShopSeckillGoodsService extends IService<ShopSeckillGoods> {
      */
     SeckillGoodsVo getByGoodIds(Integer goodsId);
 
+    /**
+     * 一键续期
+     */
+    void addDay();
+
 }

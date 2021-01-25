@@ -69,6 +69,11 @@ public class ShopSeckillGoodsServiceImpl extends ServiceImpl<ShopSeckillGoodsDao
     }
 
     @Override
+    public void addDay() {
+        super.baseMapper.addDay();
+    }
+
+    @Override
     @Transactional(readOnly = false)
     public boolean saveOrUpdate(ShopSeckillGoods entity) {
         int count = shopGoodsService.count(Wrappers.<ShopGoods>lambdaQuery().eq(ShopGoods::getId,entity.getGoodsId()).eq(ShopGoods::getStatus,ShopGoodsActivityEnum.NORMAL.getStatus()));

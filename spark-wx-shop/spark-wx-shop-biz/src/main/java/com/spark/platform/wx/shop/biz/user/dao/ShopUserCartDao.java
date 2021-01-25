@@ -11,6 +11,8 @@ import org.apache.ibatis.annotations.ResultType;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import java.util.List;
+
 /**
  * <p>
  * 会员购物车 Mapper 接口
@@ -28,6 +30,13 @@ public interface ShopUserCartDao extends BaseMapper<ShopUserCart> {
      * @return
      */
     IPage listPage(Page page, @Param(Constants.WRAPPER) Wrapper wrapper);
+
+    /**
+     * 查询购物车数据 包含商品数据
+     * @param wrapper
+     * @return
+     */
+    List<ShopUserCart> listBySqlSegment(@Param(Constants.WRAPPER) Wrapper wrapper);
 
     /**
      * 查询相同的购物车商品

@@ -4,7 +4,9 @@ package com.spark.platform.wx.shop.biz.marketing.controller;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spark.platform.wx.shop.api.entity.marketing.ShopCoupon;
+import com.spark.platform.wx.shop.api.entity.marketing.ShopCouponUser;
 import com.spark.platform.wx.shop.biz.marketing.service.ShopCouponService;
+import com.spark.platform.wx.shop.biz.marketing.service.ShopCouponUserService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.spark.platform.common.base.support.ApiResponse;
 import io.swagger.annotations.Api;
@@ -33,6 +35,7 @@ import com.spark.platform.common.base.support.BaseController;
 public class ShopCouponController extends BaseController {
 
     private final ShopCouponService shopSettingCouponService;
+    private final ShopCouponUserService shopCouponUserService;
 
     @GetMapping("/page")
     @ApiOperation(value = "优惠券列表")
@@ -48,14 +51,20 @@ public class ShopCouponController extends BaseController {
 
     @DeleteMapping("/{id}")
     @ApiOperation(value = "删除优惠券")
-    public ApiResponse delete(@PathVariable Long id) {
+    public ApiResponse delete(@PathVariable Integer id) {
         return success(shopSettingCouponService.removeById(id));
     }
 
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id获取优惠券信息")
-    public ApiResponse getById(@PathVariable Long id) {
+    public ApiResponse<ShopCoupon> getById(@PathVariable Integer id) {
         return success(shopSettingCouponService.getById(id));
+    }
+
+    @GetMapping("/user/page")
+    @ApiOperation(value = "用户优惠券列表")
+    public ApiResponse pageUser(Page page, ShopCouponUser shopCouponUser) {
+        return success(shopCouponUserService.findPage(page,shopCouponUser));
     }
 
 }

@@ -7,7 +7,6 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spark.platform.common.base.enums.DelFlagEnum;
 import com.spark.platform.common.base.exception.BusinessException;
-import com.spark.platform.common.base.support.WrapperSupport;
 import com.spark.platform.wx.shop.api.dto.UserCartDTO;
 import com.spark.platform.wx.shop.api.entity.user.ShopUserCart;
 import com.spark.platform.wx.shop.biz.user.dao.ShopUserCartDao;
@@ -16,6 +15,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 /**
@@ -40,6 +41,12 @@ public class ShopUserCartServiceImpl extends ServiceImpl<ShopUserCartDao, ShopUs
                 .eq(null != shopUserCart.getUserId(),"c.user_id",shopUserCart.getUserId())
                 .orderByDesc("c.create_date");
         return super.baseMapper.listPage(page,queryWrapper);
+    }
+
+    @Override
+    public List<ShopUserCart> findByIds(List<Integer> ids) {
+        return super.baseMapper.listBySqlSegment(new QueryWrapper<ShopUserCart>()
+                .eq("c.del_flag",DelFlagEnum.NORMAL.getValue()).in("c.id",ids));
     }
 
     @Override

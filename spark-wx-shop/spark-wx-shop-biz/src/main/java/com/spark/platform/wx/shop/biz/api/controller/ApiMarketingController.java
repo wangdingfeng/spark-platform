@@ -14,6 +14,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,7 +23,7 @@ import java.util.List;
 /**
  * @author: wangdingfeng
  * @Date: 2021/1/10 16:47
- * @Description:
+ * @Description: 小程序营销中心接口
  */
 @RestController
 @Api(tags = "小程序营销中心接口")
@@ -48,6 +49,16 @@ public class ApiMarketingController extends BaseController {
     })
     public ApiResponse<IPage<CouponCardVo>> couponUser(@RequestParam Long size,@RequestParam Long current,@RequestParam Integer userId, boolean isUse) {
         return success(apiMarketingService.pageCouponUser(size, current, userId, isUse));
+    }
+
+    @PostMapping("/coupon")
+    @ApiOperation(value = "领取优惠券")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "用户Id",dataType = "int"),
+            @ApiImplicitParam(name = "couponId", value = "优惠券ID",dataType = "int")
+    })
+    public ApiResponse<CouponCardVo> coupon(@RequestParam Integer userId,@RequestParam Integer couponId) {
+        return success(apiMarketingService.receiveCoupon(userId,couponId));
     }
 
     @GetMapping("/api/seckill")

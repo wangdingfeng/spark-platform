@@ -52,8 +52,9 @@ public interface ShopGoodsService extends IService<ShopGoods> {
     /**
      * 计算总库存
      * @param id
+     * @param num
      * @return
      */
-    void calTotalStock(Integer id);
+    void calTotalStock(Integer id, Integer num);
 
 }

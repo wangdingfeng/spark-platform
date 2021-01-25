@@ -1,5 +1,6 @@
 package com.spark.platform.wx.shop.biz.api.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -36,6 +37,7 @@ import com.spark.platform.wx.shop.biz.order.service.ShopOrderGoodsService;
 import com.spark.platform.wx.shop.biz.order.service.ShopOrderRefundService;
 import com.spark.platform.wx.shop.biz.order.service.ShopOrderService;
 import com.spark.platform.wx.shop.biz.user.service.ShopUserAddressService;
+import com.spark.platform.wx.shop.biz.user.service.ShopUserCartService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -68,6 +70,7 @@ public class ApiOrderServiceImpl implements ApiOrderService {
     private final ShopOrderGoodsService orderGoodsService;
     private final ShopPinkUserService shopPinkUserService;
     private final ShopOrderRefundService orderRefundService;
+    private final ShopUserCartService shopUserCartService;
 
 
     @Override
@@ -75,8 +78,8 @@ public class ApiOrderServiceImpl implements ApiOrderService {
     public boolean submit(SubmitOrderDTO submitOrderDTO) {
         // 采用的是下单立减库存
         BigDecimal goodsPrice = BigDecimal.ZERO;
-        BigDecimal couponAmout;
-        ShopPinkUser pinkUser = null;
+        BigDecimal couponAmount;
+        ShopPinkUser pinkUser = new ShopPinkUser();
         // 校验活动状态
         this.validSeckillGoods(submitOrderDTO);
         this.validPinkGoods(submitOrderDTO,pinkUser);
@@ -84,7 +87,19 @@ public class ApiOrderServiceImpl implements ApiOrderService {
         // 收货地址
         ShopUserAddress userAddress = shopUserAddressService.getById(submitOrderDTO.getAddressId());
         Assert.notNull(userAddress,"提交订单失败:请添加收货地址信息！");
-
+        if(CollUtil.isNotEmpty(submitOrderDTO.getUserCartIds())){
+            // 如果用户是购物车下单
+            List<SubmitOrderDTO.OrderGoods> orderGoods = new ArrayList<>(submitOrderDTO.getUserCartIds().size());
+            shopUserCartService.findByIds(submitOrderDTO.getUserCartIds()).forEach(shopUserCart -> {
+                SubmitOrderDTO.OrderGoods goods = new SubmitOrderDTO.OrderGoods();
+                goods.setGoodsId(shopUserCart.getGoodsId());
+                goods.setGoodsAttrValIds(shopUserCart.getAttrValIds());
+                goods.setNumber(shopUserCart.getNum());
+                goods.setPrice(shopUserCart.getPrice());
+                orderGoods.add(goods);
+            });
+            submitOrderDTO.setOrderGoods(orderGoods);
+        }
         List<ShopOrderGoods> shopOrderGoodsList = new ArrayList<>(submitOrderDTO.getOrderGoods().size());
         for(SubmitOrderDTO.OrderGoods orderGoods : submitOrderDTO.getOrderGoods()){
             // 查询商品信息
@@ -98,7 +113,7 @@ public class ApiOrderServiceImpl implements ApiOrderService {
             // 修改库存 计算总库存
             Boolean flag = shopGoodsSkuService.subStock(goodsSku.getId(),orderGoods.getNumber());
             Assert.isTrue(flag,String.format("当前商品:%s库存不足,可用库存:%s,下单库存:%s",goods.getTitle(),goodsSku.getStock(),orderGoods.getNumber()));
-            goodsService.calTotalStock(goods.getId());
+            goodsService.calTotalStock(goods.getId(),orderGoods.getNumber());
             // 保存订单商品信息
             ShopOrderGoods shopOrderGoods = new ShopOrderGoods();
             shopOrderGoods.setGoodsId(goods.getId());
@@ -116,7 +131,7 @@ public class ApiOrderServiceImpl implements ApiOrderService {
             pinkUser.setGoodsTitle(goods.getTitle());
         }
         // 获取优惠券金额
-        couponAmout = getCouponAmount(submitOrderDTO,goodsPrice);
+        couponAmount = getCouponAmount(submitOrderDTO,goodsPrice);
         // 保存订单详情
         ShopOrder shopOrder = new ShopOrder();
         Snowflake snowflake = IdUtil.getSnowflake(1, 1);
@@ -126,7 +141,7 @@ public class ApiOrderServiceImpl implements ApiOrderService {
         // 订单总价= 商品总价 + 运费 +配送费 (运费、配送费先不考虑)
         shopOrder.setOrderPrice(goodsPrice);
         // 实际支付的费用 订单总价 - 优惠金额
-        shopOrder.setActualPrice(goodsPrice.subtract(couponAmout));
+        shopOrder.setActualPrice(goodsPrice.subtract(couponAmount));
         shopOrder.setOrderType(submitOrderDTO.getOrderType());
         shopOrder.setOrderStatus(ShopOrderStatusEnum.WAIT_PAY.getStatus());
         shopOrder.setConsignee(userAddress.getName());
@@ -237,7 +252,6 @@ public class ApiOrderServiceImpl implements ApiOrderService {
                 }
             }else{
                 // 团长开团
-                pinkUser = new ShopPinkUser();
                 pinkUser.setUserId(submitOrderDTO.getUserId());
                 pinkUser.setStatus(PinkUseStatusEnum.SUCCESS.getStatus());
                 pinkUser.setPeople(shopPinkGoods.getPeople());

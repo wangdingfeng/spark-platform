@@ -47,14 +47,21 @@ public class ShopSeckillGoodsController extends BaseController {
 
     @DeleteMapping("/{id}")
     @ApiOperation(value = "删除商品秒杀配置列表")
-    public ApiResponse delete(@PathVariable Long id) {
-        return success(shopSeckillGoodsService.removeById(id));
+    public ApiResponse delete(@PathVariable Integer id) {
+        return success(shopSeckillGoodsService.deleteGoods(id));
     }
 
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id获取商品秒杀配置列表信息")
-    public ApiResponse getById(@PathVariable Long id) {
+    public ApiResponse<ShopSeckillGoods> getById(@PathVariable Integer id) {
         return success(shopSeckillGoodsService.getById(id));
+    }
+
+    @GetMapping("/day")
+    @ApiOperation(value = "商品秒杀一键续期")
+    public ApiResponse addToday(){
+        shopSeckillGoodsService.addDay();
+        return success("增加成功");
     }
 
 }

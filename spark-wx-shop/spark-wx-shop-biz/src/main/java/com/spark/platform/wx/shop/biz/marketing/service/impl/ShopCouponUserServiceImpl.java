@@ -1,5 +1,6 @@
 package com.spark.platform.wx.shop.biz.marketing.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -38,9 +39,21 @@ public class ShopCouponUserServiceImpl extends ServiceImpl<ShopCouponUserDao, Sh
     @Override
     public IPage findPage(Page page, ShopCouponUser shopCouponUser) {
         QueryWrapper wrapper = new QueryWrapper<ShopCouponUser>();
-        wrapper.eq(null != shopCouponUser.getUserId(), "user_id", shopCouponUser.getUserId());
-        wrapper.orderByDesc("modify_date");
-        return super.page(page, wrapper);
+        wrapper.eq(null != shopCouponUser.getUserId(), "u.user_id", shopCouponUser.getUserId());
+        wrapper.eq(null != shopCouponUser.getCouponId(), "u.coupon_id", shopCouponUser.getCouponId());
+        wrapper.orderByDesc("u.modify_date");
+        return this.listPage(page, wrapper);
+    }
+
+    /**
+     * 分页基础方法
+     *
+     * @param page
+     * @param wrapper
+     * @return
+     */
+    private IPage listPage(Page page, Wrapper wrapper) {
+        return super.baseMapper.pageUserCoupon(page, wrapper);
     }
 
     @Override
@@ -67,16 +80,16 @@ public class ShopCouponUserServiceImpl extends ServiceImpl<ShopCouponUserDao, Sh
         Assert.notNull(userId, "请输入要查询的用户！");
         QueryWrapper wrapper = new QueryWrapper<>();
         wrapper.eq("u.user_id", userId);
-        if (isUse) {
+        if (!isUse) {
             // 查询未使用的优惠券
             wrapper.eq("u.status", CouponUserStatusEnum.NO_USE.getStatus());
-            wrapper.lt("u.endTime", LocalDateTime.now());
+            wrapper.lt("u.end_time", LocalDateTime.now());
         } else {
             // 查询未使用的优惠券
             wrapper.ne("u.status", CouponUserStatusEnum.NO_USE.getStatus());
-            wrapper.gt("u.endTime", LocalDateTime.now());
+            wrapper.gt("u.end_time", LocalDateTime.now());
         }
-        return super.baseMapper.pageUserCoupon(page, wrapper);
+        return this.listPage(page, wrapper);
     }
 
     @Override

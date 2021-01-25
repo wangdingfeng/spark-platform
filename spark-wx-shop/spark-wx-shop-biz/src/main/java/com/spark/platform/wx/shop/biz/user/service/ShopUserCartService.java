@@ -27,6 +27,13 @@ public interface ShopUserCartService extends IService<ShopUserCart> {
     IPage listPage(Page page, ShopUserCart shopUserCart);
 
     /**
+     * 根据ids查询
+     * @param ids
+     * @return
+     */
+    List<ShopUserCart> findByIds(List<Integer> ids);
+
+    /**
      * 保存更新购物车
      * @param userCart
      * @return

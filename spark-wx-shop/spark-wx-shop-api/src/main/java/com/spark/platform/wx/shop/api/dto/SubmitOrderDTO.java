@@ -40,8 +40,8 @@ public class SubmitOrderDTO {
     private Integer pinkUserId;
     @ApiModelProperty(value = "用户优惠券ID")
     private Integer couponUserId;
-    @ApiModelProperty(value = "用户购物车ID")
-    private Integer userCartId;
+    @ApiModelProperty(value = "用户购物车IDs")
+    private List<Integer> userCartIds;
     @ApiModelProperty(value = "用户备注")
     private String userRemarks;
     @ApiModelProperty(value = "商品表")

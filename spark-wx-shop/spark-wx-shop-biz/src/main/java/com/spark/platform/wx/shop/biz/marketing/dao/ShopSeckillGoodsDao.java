@@ -37,6 +37,12 @@ public interface ShopSeckillGoodsDao extends BaseMapper<ShopSeckillGoods> {
     void updateGoodsActivity(@Param("id") Integer id);
 
     /**
+     * 一键续期
+     */
+    @Update("UPDATE shop_seckill_goods set start_time=DATE_ADD(start_time,INTERVAL 1 DAY),end_time=DATE_ADD(end_time,INTERVAL 1 DAY) WHERE del_flag=0")
+    void addDay();
+
+    /**
      * 分页查询商品卡片信息
      * @param page
      * @param wrapper

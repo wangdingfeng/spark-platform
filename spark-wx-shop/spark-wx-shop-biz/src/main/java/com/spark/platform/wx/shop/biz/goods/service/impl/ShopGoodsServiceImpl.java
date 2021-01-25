@@ -119,7 +119,7 @@ public class ShopGoodsServiceImpl extends ServiceImpl<ShopGoodsDao, ShopGoods> i
     }
 
     @Override
-    public void calTotalStock(Integer id) {
-        super.baseMapper.calTotalStock(id);
+    public void calTotalStock(Integer id,Integer num) {
+        super.baseMapper.calTotalStock(id,num);
     }
 }

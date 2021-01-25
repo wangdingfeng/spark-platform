@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * @author: wangdingfeng
  * @Date: 2021/1/9 13:52
- * @Description:
+ * @Description: 营销中心 实现类
  */
 @Service
 @RequiredArgsConstructor
@@ -76,5 +76,10 @@ public class ApiMarketingServiceImpl implements ApiMarketingService {
         wrapper.lt("sg.start_time", LocalDateTime.now());
         wrapper.gt("sg.end_time", LocalDateTime.now());
         return shopPinkGoodsDao.pageGoods(new Page(size, current), wrapper);
+    }
+
+    @Override
+    public boolean receiveCoupon(Integer userId, Integer couponId) {
+        return shopCouponUserService.receiveCoupon(userId,couponId);
     }
 }

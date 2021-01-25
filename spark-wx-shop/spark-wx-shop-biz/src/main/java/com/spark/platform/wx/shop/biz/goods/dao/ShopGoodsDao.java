@@ -30,10 +30,11 @@ public interface ShopGoodsDao extends BaseMapper<ShopGoods> {
     /**
      * 计算总库存
      * @param id
+     * @param num 当前销量
      * @return
      */
-    @Update("UPDATE shop_goods set stock = (SELECT sum(stock) FROM shop_goods_sku WHERE goods_id = #{id}) WHERE id=#{id}")
+    @Update("UPDATE shop_goods set sale_num=sale_num+#{num},stock = (SELECT sum(stock) FROM shop_goods_sku WHERE goods_id = #{id}) WHERE id=#{id}")
     @ResultType(Integer.class)
-    int calTotalStock(@Param("id") Integer id);
+    int calTotalStock(@Param("id") Integer id,@Param("num") Integer num);
 
 }

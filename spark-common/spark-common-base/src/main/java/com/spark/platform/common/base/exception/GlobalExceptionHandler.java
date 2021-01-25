@@ -33,7 +33,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = BusinessException.class)
     public ApiResponse defaultErrorHandler(BusinessException e) {
         log.error("业务异常信息:{}",e.getMessage(),e);
-        return new ApiResponse(SparkHttpStatus.COMMON_FAIL.getCode(),e.getMessage(),e);
+        return new ApiResponse(SparkHttpStatus.COMMON_FAIL.getCode(),e.getMessage());
     }
 
     /**
@@ -44,7 +44,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = IllegalArgumentException.class)
     public ApiResponse defaultErrorHandler(IllegalArgumentException e) {
         log.error("校验异常信息:{}",e.getMessage(),e);
-        return new ApiResponse(SparkHttpStatus.COMMON_FAIL.getCode(),e.getMessage(),e);
+        return new ApiResponse(SparkHttpStatus.COMMON_FAIL.getCode(),e.getMessage());
     }
 
     /**
@@ -59,7 +59,7 @@ public class GlobalExceptionHandler {
         for (FieldError fieldError : bindingResult.getFieldErrors()) {
             return new ApiResponse(SparkHttpStatus.COMMON_FAIL.getCode(),fieldError.getDefaultMessage());
         }
-        return new ApiResponse(SparkHttpStatus.COMMON_FAIL.getCode(),e.getMessage(),e);
+        return new ApiResponse(SparkHttpStatus.COMMON_FAIL.getCode(),e.getMessage());
     }
 
     /**
@@ -70,7 +70,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = CommonException.class)
     public ApiResponse defaultErrorHandler(CommonException e) {
         log.error("公共异常信息:{}",e.getMessage(),e);
-        return new ApiResponse(SparkHttpStatus.COMMON_FAIL.getCode(),e.getMessage(),e);
+        return new ApiResponse(SparkHttpStatus.COMMON_FAIL.getCode(),e.getMessage());
     }
 
     /**
@@ -81,7 +81,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = RuntimeException.class)
     public ApiResponse defaultErrorHandler(RuntimeException e) {
         log.error("全局运行异常信息:{}",e.getMessage(),e);
-        return new ApiResponse(SparkHttpStatus.SERVER_FUGUE.getCode(),"不允许访问".equals(e.getMessage()) ? e.getMessage():SparkHttpStatus.SERVER_FUGUE.getMessage(),e);
+        return new ApiResponse(SparkHttpStatus.SERVER_FUGUE.getCode(),"不允许访问".equals(e.getMessage()) ? e.getMessage():SparkHttpStatus.SERVER_FUGUE.getMessage());
     }
 
     /**
@@ -92,7 +92,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler( Exception.class)
     public ApiResponse defaultErrorException(Exception e){
         log.error("全局异常信息:{}",e.getMessage(),e);
-        return new ApiResponse(SparkHttpStatus.SERVER_FUGUE.getCode(), SparkHttpStatus.SERVER_FUGUE.getMessage(),e);
+        return new ApiResponse(SparkHttpStatus.SERVER_FUGUE.getCode(), SparkHttpStatus.SERVER_FUGUE.getMessage());
     }
     /**
      * 空指针异常

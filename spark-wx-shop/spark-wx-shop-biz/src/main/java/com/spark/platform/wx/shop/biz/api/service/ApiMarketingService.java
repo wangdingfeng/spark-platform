@@ -54,4 +54,12 @@ public interface ApiMarketingService {
      */
     IPage<PinkGoodsCardVo> pinkGoods(Long size, Long current);
 
+    /**
+     * 领取优惠券
+     * @param userId 用户信息
+     * @param couponId 优惠券信息
+     * @return
+     */
+    boolean receiveCoupon(Integer userId, Integer couponId);
+
 }
