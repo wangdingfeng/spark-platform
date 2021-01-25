@@ -23,7 +23,7 @@ public interface ShopCouponDao extends BaseMapper<ShopCoupon> {
      * 查询当前可用的优惠券
      * @return
      */
-    @Select("SELECT * FROM shop_coupon WHERE status= 1 AND del_flag=0 AND end_time > NOW() AND LIMIT #{limit}")
+    @Select("SELECT * FROM shop_coupon WHERE status= 1 AND del_flag=0 AND end_time > NOW() LIMIT #{limit}")
     @ResultType(CouponCardVo.class)
     List<CouponCardVo> findUseVo(@Param("limit") Integer limit);
 
