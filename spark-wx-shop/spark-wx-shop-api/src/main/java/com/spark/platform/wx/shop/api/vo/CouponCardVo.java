@@ -1,5 +1,6 @@
 package com.spark.platform.wx.shop.api.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -26,8 +27,10 @@ public class CouponCardVo {
     @ApiModelProperty(value = "固定面额 即 大于多少开始优惠")
     private BigDecimal fixedDenomination;
     @ApiModelProperty(value = "开始时间")
+    @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDateTime startTime;
     @ApiModelProperty(value = "结束时间")
+    @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDateTime endTime;
     @ApiModelProperty(value = "是否限量")
     private Boolean isLimited;

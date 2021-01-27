@@ -14,6 +14,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -51,13 +52,13 @@ public class ApiMarketingController extends BaseController {
         return success(apiMarketingService.pageCouponUser(size, current, userId, isUse));
     }
 
-    @PostMapping("/coupon")
+    @PostMapping("/{userId}/coupon/{couponId}")
     @ApiOperation(value = "领取优惠券")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", value = "用户Id",dataType = "int"),
             @ApiImplicitParam(name = "couponId", value = "优惠券ID",dataType = "int")
     })
-    public ApiResponse<CouponCardVo> coupon(@RequestParam Integer userId,@RequestParam Integer couponId) {
+    public ApiResponse<CouponCardVo> coupon(@PathVariable Integer userId, @PathVariable Integer couponId) {
         return success(apiMarketingService.receiveCoupon(userId,couponId));
     }
 

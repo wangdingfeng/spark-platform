@@ -1,11 +1,12 @@
 package com.spark.platform.wx.shop.biz.api.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.spark.platform.common.base.support.ApiResponse;
 import com.spark.platform.common.base.support.BaseController;
 import com.spark.platform.wx.shop.api.dto.UserCartDTO;
 import com.spark.platform.wx.shop.api.dto.WxLoginDTO;
-import com.spark.platform.wx.shop.api.entity.user.ShopUser;
 import com.spark.platform.wx.shop.api.entity.user.ShopUserAddress;
+import com.spark.platform.wx.shop.api.vo.ShopUserDTO;
 import com.spark.platform.wx.shop.biz.api.service.ApiUserService;
 import com.spark.platform.wx.shop.biz.user.service.ShopUserAddressService;
 import io.swagger.annotations.Api;
@@ -17,7 +18,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @ProjectName: spark-platform
@@ -40,19 +43,15 @@ public class ApiUserController extends BaseController {
 
     @PostMapping("/login")
     @ApiOperation(value = "用户登录")
-    public ApiResponse<ShopUser> login(@Valid @RequestBody WxLoginDTO loginDTO) {
+    public ApiResponse<ShopUserDTO> login(@Valid @RequestBody WxLoginDTO loginDTO) {
         return success(apiUserService.login(loginDTO));
     }
 
-    @PutMapping("{userId}/mobile")
-    @ApiOperation(value = "保存用户手机号")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "userId", value = "用户Id", required = true),
-            @ApiImplicitParam(name = "mobile", value = "手机号", required = true)
-    })
-    public ApiResponse saveMobile(@PathVariable Integer userId, @RequestParam String mobile) {
-        log.info("【用户信息=>保存手机号】,用户:{},手机号:{}", userId, mobile);
-        return success(apiUserService.saveMobile(userId, mobile));
+    @PostMapping
+    @ApiOperation(value = "更新用户信息")
+    public ApiResponse<ShopUserDTO> updateUser(@Valid @RequestBody ShopUserDTO userDTO) {
+        log.info("【用户信息=>更新用户信息】,用户:{}", JSONObject.toJSONString(userDTO));
+        return success(apiUserService.updateUser(userDTO));
     }
 
 
@@ -62,6 +61,12 @@ public class ApiUserController extends BaseController {
         return success(shopUserAddressService.findAddress(userId));
     }
 
+    @GetMapping("/address/{id}")
+    @ApiOperation(value = "查询地址信息")
+    public ApiResponse<ShopUserAddress> getAddress(@PathVariable Integer id) {
+        return success(shopUserAddressService.getById(id));
+    }
+
     @PostMapping("/address")
     @ApiOperation(value = "保存更新用户地址信息")
     public ApiResponse<ShopUserAddress> saveAddress(@Valid @RequestBody ShopUserAddress shopUserAddress) {
@@ -69,13 +74,13 @@ public class ApiUserController extends BaseController {
         return success(shopUserAddress);
     }
 
-    @DeleteMapping("/{userId}/address")
+    @DeleteMapping("/{userId}/address/{id}")
     @ApiOperation(value = "删除用户地址信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", value = "用户Id", required = true),
             @ApiImplicitParam(name = "id", value = "地址Id", required = true)
     })
-    public ApiResponse delAddress(@PathVariable Integer userId, @RequestParam Integer id) {
+    public ApiResponse delAddress(@PathVariable Integer userId, @PathVariable Integer id) {
         return success(shopUserAddressService.deleteAddress(userId, id));
     }
 
@@ -86,20 +91,26 @@ public class ApiUserController extends BaseController {
     }
 
     @PostMapping("/cart")
-    @ApiOperation(value = "保存更新用户购物车信息")
-    public ApiResponse saveCart(@Valid @RequestBody UserCartDTO userCartDTO) {
+    @ApiOperation(value = "提交用户购物车信息")
+    public ApiResponse submitCart(@Valid @RequestBody UserCartDTO userCartDTO) {
         return success(apiUserService.submitCart(userCartDTO));
     }
 
-    @DeleteMapping("/cart")
-    @ApiOperation(value = "删除用户购物车信息")
-    public ApiResponse delCart(@RequestParam("ids[]") List<Integer> ids) {
-        return success(apiUserService.delCart(ids));
+    @PutMapping("/cart")
+    @ApiOperation(value = "更新用户购物车信息")
+    public ApiResponse updateCart(@RequestBody UserCartDTO userCartDTO) {
+        return success(apiUserService.updateCart(userCartDTO));
     }
 
-    @PostMapping("/collect")
+    @DeleteMapping("/{userId}/cart/{id}")
+    @ApiOperation(value = "删除用户购物车信息")
+    public ApiResponse delCart(@PathVariable Integer userId, @PathVariable Integer id) {
+        return success(apiUserService.delCart(userId,id));
+    }
+
+    @PostMapping("/{userId}/collect/{goodsId}")
     @ApiOperation(value = "用户收藏信息")
-    public ApiResponse saveCollect(@RequestParam Integer userId,@RequestParam  Integer goodsId) {
+    public ApiResponse saveCollect(@PathVariable Integer userId,@PathVariable Integer goodsId) {
         return success(apiUserService.saveCollect(userId,goodsId));
     }
 
@@ -112,8 +123,9 @@ public class ApiUserController extends BaseController {
     @DeleteMapping("/collect")
     @ApiOperation(value = "删除用户收藏信息")
     @ApiImplicitParam(name = "ids", value = "收藏Id集合", required = true)
-    public ApiResponse delCollect(@RequestParam("ids[]") List<Integer> ids) {
-        return success(apiUserService.delCollects(ids));
+    public ApiResponse delCollect(@RequestParam String ids) {
+        List<Integer> idList = Arrays.asList(ids).stream().map(s -> Integer.parseInt(s)).collect(Collectors.toList());
+        return success(apiUserService.delCollects(idList));
     }
 
     @GetMapping("/footprint")
@@ -125,8 +137,9 @@ public class ApiUserController extends BaseController {
     @DeleteMapping("/footprint")
     @ApiOperation(value = "删除用户足迹信息")
     @ApiImplicitParam(name = "ids", value = "收藏Id集合", required = true)
-    public ApiResponse delFootprint(@RequestParam("ids[]") List<Integer> ids) {
-        return success(apiUserService.delFootprints(ids));
+    public ApiResponse delFootprint(@RequestParam String ids) {
+        List<Integer> idList = Arrays.asList(ids).stream().map(s -> Integer.parseInt(s)).collect(Collectors.toList());
+        return success(apiUserService.delFootprints(idList));
     }
 
 }

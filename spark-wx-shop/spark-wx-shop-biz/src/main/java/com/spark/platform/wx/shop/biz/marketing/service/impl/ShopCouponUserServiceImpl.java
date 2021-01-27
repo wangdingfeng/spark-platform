@@ -16,6 +16,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.time.LocalDateTime;
@@ -57,14 +58,20 @@ public class ShopCouponUserServiceImpl extends ServiceImpl<ShopCouponUserDao, Sh
     }
 
     @Override
+    @Transactional(readOnly = false)
     public boolean receiveCoupon(Integer userId, Integer couponId) {
         ShopCoupon coupon = shopCouponDao.selectById(couponId);
         Assert.notNull(coupon, "查询不到当前优惠券信息，请重新刷新数据!");
         if (coupon.getEndTime().compareTo(LocalDateTime.now()) == -1) {
             throw new BusinessException("已超过当前优惠券领取时间！");
         }
+        coupon.setLastTotal(coupon.getLastTotal()+1);
         if (coupon.getIsLimited() && coupon.getTotal() >= coupon.getLastTotal()) {
             throw new BusinessException("当前优惠券领取超过最大值！");
+        }
+        int count = super.count(Wrappers.<ShopCouponUser>lambdaQuery().eq(ShopCouponUser::getUserId,userId).eq(ShopCouponUser::getCouponId,couponId));
+        if(count > 0){
+            throw new BusinessException("已领过优惠券，不要重新领取！");
         }
         log.info("【领取优惠券】,用户:{},优惠券：{}", userId, couponId);
         ShopCouponUser couponUser = new ShopCouponUser();
@@ -72,6 +79,9 @@ public class ShopCouponUserServiceImpl extends ServiceImpl<ShopCouponUserDao, Sh
         couponUser.setCouponId(couponId);
         couponUser.setEndTime(coupon.getEndTime());
         couponUser.setStatus(CouponUserStatusEnum.NO_USE.getStatus());
+        if(coupon.getIsLimited()){
+            shopCouponDao.updateLastTotal(coupon.getId());
+        }
         return super.save(couponUser);
     }
 

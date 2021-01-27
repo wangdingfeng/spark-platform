@@ -24,4 +24,13 @@ public class ShopCouponServiceImpl extends ServiceImpl<ShopCouponDao, ShopCoupon
     public List<CouponCardVo> findUseVo(Integer limit) {
         return super.baseMapper.findUseVo(limit);
     }
+
+    @Override
+    public boolean saveOrUpdate(ShopCoupon entity) {
+        if(null == entity.getId() && entity.getIsLimited()){
+            // 如果是限量 则同步更新 最后数量
+            entity.setLastTotal(entity.getTotal());
+        }
+        return super.saveOrUpdate(entity);
+    }
 }

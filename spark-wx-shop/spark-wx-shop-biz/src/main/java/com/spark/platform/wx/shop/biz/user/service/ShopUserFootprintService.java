@@ -29,5 +29,5 @@ public interface ShopUserFootprintService extends IService<ShopUserFootprint> {
      * @param goodsId
      * @return
      */
-    boolean saveFootprint(Integer userId, Integer goodsId);
+    void saveFootprint(Integer userId, Integer goodsId);
 }

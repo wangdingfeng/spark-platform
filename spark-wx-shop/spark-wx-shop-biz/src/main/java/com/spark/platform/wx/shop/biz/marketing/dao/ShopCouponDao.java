@@ -6,6 +6,7 @@ import com.spark.platform.wx.shop.api.vo.CouponCardVo;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.ResultType;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -26,6 +27,14 @@ public interface ShopCouponDao extends BaseMapper<ShopCoupon> {
     @Select("SELECT * FROM shop_coupon WHERE status= 1 AND del_flag=0 AND end_time > NOW() LIMIT #{limit}")
     @ResultType(CouponCardVo.class)
     List<CouponCardVo> findUseVo(@Param("limit") Integer limit);
+
+    /**
+     * 更新数量
+     * @param id
+     * @return
+     */
+    @Update("UPDATE shop_coupon set last_total=last_total-1 WHERE id=#{id} last_total-1 > 0")
+    boolean updateLastTotal(@Param("id")Integer id);
 
 
 }

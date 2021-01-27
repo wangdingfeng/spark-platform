@@ -36,6 +36,6 @@ public interface ShopUserFootprintDao extends BaseMapper<ShopUserFootprint> {
      */
     @Select("SELECT count(id) FROM shop_user_footprint WHERE user_id=#{userId} AND goods_id=#{goodsId} AND TO_DAYS(create_date) = TO_DAYS(NOW())")
     @ResultType(Integer.class)
-    Integer findToday(@Param("userId") Integer userId,@Param("goodsId") Integer goodsId);
+    int findToday(@Param("userId") Integer userId,@Param("goodsId") Integer goodsId);
 
 }

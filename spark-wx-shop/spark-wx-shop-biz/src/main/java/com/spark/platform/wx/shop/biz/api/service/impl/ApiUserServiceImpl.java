@@ -1,5 +1,6 @@
 package com.spark.platform.wx.shop.biz.api.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -19,6 +20,7 @@ import com.spark.platform.wx.shop.api.entity.user.ShopUser;
 import com.spark.platform.wx.shop.api.entity.user.ShopUserCart;
 import com.spark.platform.wx.shop.api.entity.user.ShopUserCollect;
 import com.spark.platform.wx.shop.api.entity.user.ShopUserFootprint;
+import com.spark.platform.wx.shop.api.vo.ShopUserDTO;
 import com.spark.platform.wx.shop.biz.api.service.ApiUserService;
 import com.spark.platform.wx.shop.biz.auth.service.ShopWxAuthService;
 import com.spark.platform.wx.shop.biz.user.service.ShopUserCartService;
@@ -59,7 +61,7 @@ public class ApiUserServiceImpl implements ApiUserService {
 
     @Override
     @Transactional(readOnly = false)
-    public ShopUser login(WxLoginDTO loginDTO) {
+    public ShopUserDTO login(WxLoginDTO loginDTO) {
         log.info("当前登录用户js_code:{}", loginDTO.getJsCode());
         // 拼接 微信auth.code2Session 登录凭证校验
         ShopWxAuth auth = wxAuthService.getByAppId(loginDTO.getAppId());
@@ -70,6 +72,7 @@ public class ApiUserServiceImpl implements ApiUserService {
             // 新增用户
             shopUser = new ShopUser();
             shopUser.setWxOpenid(openId);
+            shopUser.setUserType(0);
             shopUser.setUsername("微信用户" + openId.substring(0, 6));
         }
         // 获取登录IP
@@ -81,21 +84,30 @@ public class ApiUserServiceImpl implements ApiUserService {
         shopUser.setNickname(loginDTO.getNickname());
         shopUser.setMobile(loginDTO.getMobile());
         shopUserService.saveOrUpdate(shopUser);
+        ShopUserDTO userDTO = new ShopUserDTO();
+        BeanUtil.copyProperties(shopUser,userDTO);
+        userDTO.setUserTypeName(shopUser.getUserType() == 0 ? "普通用户" : "会员用户");
         // 通过auth2 客户端模式 获取token
-        shopUser.setToken(this.getToken(auth.getClientId()));
-        return shopUser;
+        userDTO.setToken(this.getToken(auth.getClientId()));
+        return userDTO;
     }
 
     @Override
-    public boolean saveMobile(Integer userId, String mobile) {
+    public ShopUserDTO updateUser(ShopUserDTO shopUserDTO) {
         ShopUser user = new ShopUser();
-        user.setId(userId);
-        user.setMobile(mobile);
+        user.setId(shopUserDTO.getId());
+        user.setMobile(shopUserDTO.getMobile());
+        user.setBirthday(shopUserDTO.getBirthday());
+        user.setAvatar(shopUserDTO.getAvatar());
         boolean flag = shopUserService.updateById(user);
         if(!flag){
             throw new BusinessException("当前用户不合法，请重新登录!");
         }
-        return flag;
+        ShopUser user1 = shopUserService.getById(shopUserDTO.getId());
+        ShopUserDTO userDTO = new ShopUserDTO();
+        BeanUtil.copyProperties(user1,userDTO);
+        userDTO.setUserTypeName(user1.getUserType() == 0 ? "普通用户" : "会员用户");
+        return userDTO;
     }
 
     @Override
@@ -144,8 +156,15 @@ public class ApiUserServiceImpl implements ApiUserService {
     }
 
     @Override
-    public boolean delCart(List<Integer> ids) {
-        return shopUserCartService.removeByIds(ids);
+    public boolean delCart(Integer userId, Integer cartId) {
+        return shopUserCartService.deleteCart(userId,cartId);
+    }
+
+    @Override
+    public boolean updateCart(UserCartDTO userCart) {
+        ShopUserCart cart = new ShopUserCart();
+        BeanUtil.copyProperties(userCart,cart);
+        return shopUserCartService.updateById(cart);
     }
 
     /**

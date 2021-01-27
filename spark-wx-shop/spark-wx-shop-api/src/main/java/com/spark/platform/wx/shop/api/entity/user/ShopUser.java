@@ -78,8 +78,5 @@ public class ShopUser implements Serializable {
     @ApiModelProperty(value = "系统状态")
     private Integer delFlag;
 
-    @ApiModelProperty(value = "token")
-    private transient String token;
-
 
 }

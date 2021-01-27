@@ -37,14 +37,14 @@ public class ShopUserFootprintServiceImpl extends ServiceImpl<ShopUserFootprintD
 
     @Override
     @Async
-    public boolean saveFootprint(Integer userId, Integer goodsId) {
+    public void saveFootprint(Integer userId, Integer goodsId) {
         int count = super.baseMapper.findToday(userId,goodsId);
         if(count > 0){
-            return true;
+            return;
         }
         ShopUserFootprint shopUserFootprint = new ShopUserFootprint();
         shopUserFootprint.setUserId(userId);
         shopUserFootprint.setGoodsId(goodsId);
-        return super.save(shopUserFootprint);
+        super.save(shopUserFootprint);
     }
 }

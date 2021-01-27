@@ -56,7 +56,7 @@ public class ShopUserCartServiceImpl extends ServiceImpl<ShopUserCartDao, ShopUs
         log.info("【保存当前的购物车】，用户:{},商品:{},规格:{}",shopUserCart.getUserId(),shopUserCart.getGoodsId(),shopUserCart.getAttrVals());
         // 查询的当前用户购物车中是否存在 相同的产品 规格
         Integer id = super.baseMapper.findSameId(shopUserCart.getUserId(),shopUserCart.getGoodsId(),shopUserCart.getAttrValIds());
-       if(null != id){
+       if( null != id){
            // 如果当前存在相同产品相同规格的 则在原有数量的基础上+1
           super.baseMapper.updateNum(id);
           log.info("【更新当前购物车】！");
@@ -73,6 +73,6 @@ public class ShopUserCartServiceImpl extends ServiceImpl<ShopUserCartDao, ShopUs
         if(count == 0){
             throw new BusinessException("只允许删除自己的购物车信息！");
         }
-        return false;
+        return super.removeById(id);
     }
 }
