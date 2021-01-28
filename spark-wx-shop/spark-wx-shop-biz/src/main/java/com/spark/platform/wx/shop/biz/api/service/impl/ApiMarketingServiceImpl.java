@@ -22,6 +22,7 @@ import org.springframework.util.Assert;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 /**
@@ -72,10 +73,11 @@ public class ApiMarketingServiceImpl implements ApiMarketingService {
     @Override
     public IPage<PinkGoodsCardVo> pinkGoods(Long size, Long current) {
         QueryWrapper wrapper = new QueryWrapper<>();
+        wrapper.eq("pg.del_flag", DelFlagEnum.NORMAL.getValue());
         wrapper.eq("g.status", ShopGoodsStatusEnum.PUBLISH.getStatus());
-        wrapper.lt("sg.start_time", LocalDateTime.now());
-        wrapper.gt("sg.end_time", LocalDateTime.now());
-        return shopPinkGoodsDao.pageGoods(new Page(size, current), wrapper);
+        wrapper.gt("pg.start_time",LocalDateTime.of(LocalDate.now(), LocalTime.MIN));
+        wrapper.lt("pg.end_time", LocalDateTime.of(LocalDate.now(), LocalTime.MAX));
+        return shopPinkGoodsDao.pageGoods(new Page(current, size), wrapper);
     }
 
     @Override

@@ -80,7 +80,7 @@ public class ApiMarketingController extends BaseController {
     }
 
     @GetMapping("/api/pink/goods")
-    @ApiOperation(value = "秒杀商品列表")
+    @ApiOperation(value = "拼团商品列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "size", value = "页数",defaultValue = "20"),
             @ApiImplicitParam(name = "current", value = "页码",defaultValue = "1")
