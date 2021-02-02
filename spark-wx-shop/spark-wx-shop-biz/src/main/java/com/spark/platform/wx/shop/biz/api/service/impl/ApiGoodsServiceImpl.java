@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.spark.platform.common.base.constants.GlobalsConstants;
 import com.spark.platform.common.base.enums.DelFlagEnum;
 import com.spark.platform.common.base.exception.BusinessException;
 import com.spark.platform.wx.shop.api.dto.ShopGoodsQueryDTO;
@@ -13,7 +12,6 @@ import com.spark.platform.wx.shop.api.entity.goods.ShopGoods;
 import com.spark.platform.wx.shop.api.entity.goods.ShopGoodsComment;
 import com.spark.platform.wx.shop.api.entity.goods.ShopGoodsGallery;
 import com.spark.platform.wx.shop.api.entity.goods.ShopGoodsParam;
-import com.spark.platform.wx.shop.api.entity.marketing.ShopPinkGoods;
 import com.spark.platform.wx.shop.api.enums.ShopGoodsActivityEnum;
 import com.spark.platform.wx.shop.api.enums.ShopGoodsStatusEnum;
 import com.spark.platform.wx.shop.api.vo.GoodsCardVo;
@@ -25,6 +23,7 @@ import com.spark.platform.wx.shop.biz.goods.service.ShopGoodsCommentService;
 import com.spark.platform.wx.shop.biz.goods.service.ShopGoodsService;
 import com.spark.platform.wx.shop.biz.marketing.service.ShopPinkGoodsService;
 import com.spark.platform.wx.shop.biz.marketing.service.ShopSeckillGoodsService;
+import com.spark.platform.wx.shop.biz.user.service.ShopUserCollectService;
 import com.spark.platform.wx.shop.biz.user.service.ShopUserFootprintService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -54,6 +53,7 @@ public class ApiGoodsServiceImpl implements ApiGoodsService {
     private final ShopGoodsCategoryService shopGoodsCategoryService;
     private final ShopPinkGoodsService shopPinkGoodsService;
     private final ShopSeckillGoodsService shopSeckillGoodsService;
+    private final ShopUserCollectService shopUserCollectService;
 
     @Override
     public IPage<List<GoodsCardVo>> list(ShopGoodsQueryDTO shopGoodsQueryDTO) {
@@ -87,11 +87,13 @@ public class ApiGoodsServiceImpl implements ApiGoodsService {
     @Override
     public GoodsDetailVo detail(Integer userId, Integer goodsId) {
         log.info("【请求开始】商品详情页面,请求参数:goodsId:{},userId:{}", goodsId, userId);
+        GoodsDetailVo goodsDetail = new GoodsDetailVo();
         if (null != userId) {
             // 如果有当前登录用户则记录用户的浏览记录
             shopUserFootprintService.saveFootprint(userId,goodsId);
+            // 查询是否收藏了此商品
+            goodsDetail.setIsCollect(shopUserCollectService.getCollect(userId,goodsId));
         }
-        GoodsDetailVo goodsDetail = new GoodsDetailVo();
         // 查询商品信息
         ShopGoods shopGoods = shopGoodsService.getShopGoods(goodsId);
         if (null == shopGoods || !ShopGoodsStatusEnum.PUBLISH.getStatus().equals(shopGoods.getStatus())) {

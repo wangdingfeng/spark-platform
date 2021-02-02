@@ -2,6 +2,7 @@ package com.spark.platform.wx.shop.biz.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spark.platform.common.base.enums.DelFlagEnum;
 import com.spark.platform.wx.shop.api.entity.user.ShopUserCollect;
@@ -31,5 +32,28 @@ public class ShopUserCollectServiceImpl extends ServiceImpl<ShopUserCollectDao, 
                 .eq(null != shopUserCollect.getUserId(),"c.user_id",shopUserCollect.getUserId())
                 .orderByDesc("c.create_date");
         return super.baseMapper.listPage(page, queryWrapper);
+    }
+
+    @Override
+    public int count(Integer userId) {
+        return super.count(Wrappers.<ShopUserCollect>lambdaQuery().eq(ShopUserCollect::getUserId,userId));
+    }
+
+    @Override
+    public boolean collect(Integer userId, Integer goodsId) {
+        boolean flag = this.getCollect(userId,goodsId);
+        if(flag){
+            return false;
+        }
+        ShopUserCollect userCollect = new ShopUserCollect();
+        userCollect.setUserId(userId);
+        userCollect.setGoodsId(goodsId);
+        return super.save(userCollect);
+    }
+
+    @Override
+    public boolean getCollect(Integer userId, Integer goodsId) {
+        int count = super.count(Wrappers.<ShopUserCollect>lambdaQuery().eq(ShopUserCollect::getGoodsId,goodsId).eq(ShopUserCollect::getUserId,userId));
+        return count > 0;
     }
 }

@@ -23,5 +23,28 @@ public interface ShopUserCollectService extends IService<ShopUserCollect> {
      */
     IPage listPage(Page page, ShopUserCollect shopUserCollect);
 
+    /**
+     * 计算总数
+     * @param userId
+     * @return
+     */
+    int count(Integer userId);
+
+    /**
+     * 收藏
+     * @param userId
+     * @param goodsId
+     * @return
+     */
+    boolean collect(Integer userId, Integer goodsId);
+
+    /**
+     * 查询是否有收藏
+     * @param userId
+     * @param goodsId
+     * @return
+     */
+    boolean getCollect(Integer userId, Integer goodsId);
+
 
 }

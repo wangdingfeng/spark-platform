@@ -2,6 +2,7 @@ package com.spark.platform.wx.shop.biz.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spark.platform.common.base.enums.DelFlagEnum;
 import com.spark.platform.wx.shop.api.entity.user.ShopUserCollect;
@@ -33,6 +34,11 @@ public class ShopUserFootprintServiceImpl extends ServiceImpl<ShopUserFootprintD
                 .eq(null != shopUserFootprint.getUserId(),"f.user_id",shopUserFootprint.getUserId())
                 .orderByDesc("f.create_date");
         return super.baseMapper.listPage(page, queryWrapper);
+    }
+
+    @Override
+    public int count(Integer userId) {
+        return super.count(Wrappers.<ShopUserFootprint>lambdaQuery().eq(ShopUserFootprint::getUserId,userId));
     }
 
     @Override

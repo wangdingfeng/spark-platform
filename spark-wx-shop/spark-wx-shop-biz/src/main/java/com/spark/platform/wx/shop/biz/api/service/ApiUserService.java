@@ -28,11 +28,18 @@ public interface ApiUserService {
      * @param shopUserDTO
      * @return
      */
-    ShopUserDTO updateUser(ShopUserDTO shopUserDTO);
+    boolean updateUser(ShopUserDTO shopUserDTO);
+
+    /**
+     * 查询用户信息
+     * @param userId
+     * @return
+     */
+    ShopUserDTO findUser(Integer userId);
 
     /**
      * 分页展示用户收藏
-     * @param userId
+     * @param current
      * @param size
      * @param userId
      * @return

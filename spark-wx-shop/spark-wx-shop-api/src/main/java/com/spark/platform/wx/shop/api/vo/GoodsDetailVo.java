@@ -60,4 +60,6 @@ public class GoodsDetailVo {
     private PinkGoodsVo pinkGoods;
     @ApiModelProperty(value = "秒杀商品数据")
     private SeckillGoodsVo seckillGoods;
+    @ApiModelProperty(value = "是否收藏")
+    private Boolean isCollect;
 }

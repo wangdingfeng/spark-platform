@@ -24,6 +24,13 @@ public interface ShopUserFootprintService extends IService<ShopUserFootprint> {
     IPage listPage(Page page, ShopUserFootprint shopUserFootprint);
 
     /**
+     * 计算总数
+     * @param userId
+     * @return
+     */
+    int count(Integer userId);
+
+    /**
      * 保存用户足迹
      * @param userId
      * @param goodsId

@@ -93,7 +93,7 @@ public class ApiUserServiceImpl implements ApiUserService {
     }
 
     @Override
-    public ShopUserDTO updateUser(ShopUserDTO shopUserDTO) {
+    public boolean updateUser(ShopUserDTO shopUserDTO) {
         ShopUser user = new ShopUser();
         user.setId(shopUserDTO.getId());
         user.setMobile(shopUserDTO.getMobile());
@@ -103,10 +103,19 @@ public class ApiUserServiceImpl implements ApiUserService {
         if(!flag){
             throw new BusinessException("当前用户不合法，请重新登录!");
         }
-        ShopUser user1 = shopUserService.getById(shopUserDTO.getId());
+        return true;
+    }
+
+    @Override
+    public ShopUserDTO findUser(Integer userId) {
+        ShopUser user = shopUserService.getById(userId);
+        Assert.notNull(user,"查询不到当前用户!");
         ShopUserDTO userDTO = new ShopUserDTO();
-        BeanUtil.copyProperties(user1,userDTO);
-        userDTO.setUserTypeName(user1.getUserType() == 0 ? "普通用户" : "会员用户");
+        BeanUtil.copyProperties(user,userDTO);
+        userDTO.setUserTypeName(user.getUserType() == 0 ? "普通用户" : "会员用户");
+        // 查询购物车和足迹数量
+        userDTO.setCollectNum(shopUserCollectService.count(userId));
+        userDTO.setFoorPrintNum(shopUserFootprintService.count(userId));
         return userDTO;
     }
 
@@ -120,10 +129,7 @@ public class ApiUserServiceImpl implements ApiUserService {
     @Override
     @Async
     public boolean saveCollect(Integer userId, Integer goodsId) {
-        ShopUserCollect collect = new ShopUserCollect();
-        collect.setUserId(userId);
-        collect.setGoodsId(goodsId);
-        return shopUserCollectService.save(collect);
+        return shopUserCollectService.collect(userId,goodsId);
     }
 
     @Override

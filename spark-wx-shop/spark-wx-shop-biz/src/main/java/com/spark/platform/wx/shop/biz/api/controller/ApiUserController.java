@@ -49,11 +49,16 @@ public class ApiUserController extends BaseController {
 
     @PostMapping
     @ApiOperation(value = "更新用户信息")
-    public ApiResponse<ShopUserDTO> updateUser(@Valid @RequestBody ShopUserDTO userDTO) {
+    public ApiResponse updateUser(@Valid @RequestBody ShopUserDTO userDTO) {
         log.info("【用户信息=>更新用户信息】,用户:{}", JSONObject.toJSONString(userDTO));
         return success(apiUserService.updateUser(userDTO));
     }
 
+    @GetMapping("/{userId}")
+    @ApiOperation(value = "查询用户信息")
+    public ApiResponse<ShopUserDTO> getUser(@PathVariable Integer userId) {
+        return success(apiUserService.findUser(userId));
+    }
 
     @GetMapping("/address")
     @ApiOperation(value = "查询用户地址信息")
