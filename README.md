@@ -1,4 +1,4 @@
-# spark-platform V2.0
+# spark-platform V2.0 (项目采用nacos作为注册中心和配置中心)
 [![star](https://gitee.com/dreamfeng/spark-platform/badge/star.svg?theme=white)](https://gitee.com/dreamfeng/spark-platform/stargazers)
 [![github](https://img.shields.io/github/stars/wangdingfeng/spark-platform)](https://github.com/wangdingfeng/spark-platform)
 
