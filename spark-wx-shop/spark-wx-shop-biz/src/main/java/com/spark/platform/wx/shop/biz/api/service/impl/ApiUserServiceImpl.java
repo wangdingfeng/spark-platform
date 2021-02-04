@@ -128,8 +128,8 @@ public class ApiUserServiceImpl implements ApiUserService {
 
     @Override
     @Async
-    public boolean saveCollect(Integer userId, Integer goodsId) {
-        return shopUserCollectService.collect(userId,goodsId);
+    public void saveCollect(Integer userId, Integer goodsId) {
+        shopUserCollectService.collect(userId,goodsId);
     }
 
     @Override

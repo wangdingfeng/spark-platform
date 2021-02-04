@@ -52,7 +52,7 @@ public interface ApiUserService {
      * @param goodsId
      * @return
      */
-    boolean saveCollect(Integer userId, Integer goodsId);
+    void saveCollect(Integer userId, Integer goodsId);
 
     /**
      * 批量删除 收藏信息

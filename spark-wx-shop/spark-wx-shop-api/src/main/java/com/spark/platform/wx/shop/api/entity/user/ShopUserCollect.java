@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -43,6 +44,7 @@ public class ShopUserCollect implements Serializable {
 
     @TableField(value = "create_date", fill = FieldFill.INSERT)
     @ApiModelProperty(value = "创建时间")
+    @JsonFormat(pattern="yyyy.MM.dd")
     private LocalDateTime createDate;
 
     @TableField(fill = FieldFill.INSERT)

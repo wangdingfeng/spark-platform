@@ -1,7 +1,6 @@
 package com.spark.platform.wx.shop.biz.marketing.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -82,7 +81,7 @@ public class ShopSeckillGoodsServiceImpl extends ServiceImpl<ShopSeckillGoodsDao
         }
         // 获取最小价格
         BigDecimal minPrice = entity.getGoodsSkus().stream().map(ShopGoodsSku::getActivityPrice).min(Comparator.naturalOrder()).get();
-        entity.setPrice(minPrice);
+        entity.setKillPrice(minPrice);
         Boolean flag = super.saveOrUpdate(entity);
         // 商品的活动状态
         ShopGoods goods = new ShopGoods();

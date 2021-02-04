@@ -33,7 +33,7 @@ public interface ShopCouponDao extends BaseMapper<ShopCoupon> {
      * @param id
      * @return
      */
-    @Update("UPDATE shop_coupon set last_total=last_total-1 WHERE id=#{id} last_total-1 > 0")
+    @Update("UPDATE shop_coupon set last_total=last_total-1 WHERE id=#{id} AND last_total-1 > 0")
     boolean updateLastTotal(@Param("id")Integer id);
 
 

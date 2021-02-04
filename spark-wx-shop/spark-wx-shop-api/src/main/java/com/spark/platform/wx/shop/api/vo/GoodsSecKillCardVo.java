@@ -19,7 +19,7 @@ public class GoodsSecKillCardVo extends GoodsCardVo {
     @ApiModelProperty(value = "结束时间")
     private LocalDateTime endTime;
     @ApiModelProperty(value = "秒杀价格")
-    private BigDecimal price;
+    private BigDecimal killPrice;
     @ApiModelProperty(value = "秒杀销量")
     private Integer sales;
     @ApiModelProperty(value = "是否限购")

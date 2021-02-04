@@ -24,7 +24,7 @@
             s.*,
             g.title 'goodsTitle',
             g.home_pic 'homePic',
-            g.min_price 'minPrice'
+            g.min_price
         FROM
             shop_seckill_goods s
             JOIN shop_goods g ON s.goods_id = g.id
@@ -35,7 +35,7 @@
         SELECT
             sg.start_time,
             sg.end_time,
-            sg.price,
+            sg.kill_price,
             sg.sales,
             sg.is_quota,
             sg.quota,
@@ -44,7 +44,7 @@
             g.brief,
             g.home_pic,
             g.retail_price,
-            g.min_price,
+            g.min_price 'price',
             g.sale_num,
             g.stock
         FROM
@@ -54,7 +54,7 @@
 
     <select id="findByGoodsId" resultType="com.spark.platform.wx.shop.api.vo.SeckillGoodsVo">
         SELECT
-            id 'seckillGoodsId',start_time,end_time,price,sales,is_quota,quota
+            id 'seckillGoodsId',start_time,end_time,kill_price,sales,is_quota,quota
         FROM
             shop_seckill_goods
          WHERE

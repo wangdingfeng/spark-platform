@@ -65,7 +65,7 @@ public class UserUtils {
      * 获取客户端
      * @return clientId
      */
-    private String getClientId() {
+    public static String getClientId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication instanceof OAuth2Authentication) {
             OAuth2Authentication auth2Authentication = (OAuth2Authentication) authentication;

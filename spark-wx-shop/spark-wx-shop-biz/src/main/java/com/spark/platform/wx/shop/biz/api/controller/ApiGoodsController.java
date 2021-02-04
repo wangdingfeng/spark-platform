@@ -3,6 +3,7 @@ package com.spark.platform.wx.shop.biz.api.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.spark.platform.common.base.support.ApiResponse;
 import com.spark.platform.common.base.support.BaseController;
+import com.spark.platform.common.log.annotation.ApiLog;
 import com.spark.platform.wx.shop.api.dto.ShopGoodsQueryDTO;
 import com.spark.platform.wx.shop.api.vo.GoodsCardVo;
 import com.spark.platform.wx.shop.api.vo.GoodsCategoryVo;
@@ -32,6 +33,7 @@ public class ApiGoodsController extends BaseController {
 
     @GetMapping("/goods/page")
     @ApiOperation(value = "商品分页")
+    @ApiLog(ignore = true)
     public ApiResponse<IPage<GoodsCardVo>> page(ShopGoodsQueryDTO shopGoodsQueryDTO) {
         return success(apiGoodsService.list(shopGoodsQueryDTO));
     }
@@ -42,12 +44,14 @@ public class ApiGoodsController extends BaseController {
             @ApiImplicitParam(name = "userId", value = "用户Id"),
             @ApiImplicitParam(name = "goodId", value = "商品Id", required = true)
     })
+    @ApiLog(ignore = true)
     public ApiResponse<GoodsDetailVo> detail(@PathVariable Integer goodId, @RequestParam(required = false) Integer userId) {
         return success(apiGoodsService.detail(userId, goodId));
     }
 
     @GetMapping("/goods/related")
     @ApiOperation(value = "个性推荐")
+    @ApiLog(ignore = true)
     public ApiResponse<List<GoodsCardVo>> related(@RequestParam Integer goodId) {
         return success(apiGoodsService.related(goodId));
     }
@@ -55,6 +59,7 @@ public class ApiGoodsController extends BaseController {
     @GetMapping("/goods/category")
     @ApiOperation(value = "查询分类")
     @ApiImplicitParam(name = "level", value = "最大层级")
+    @ApiLog(ignore = true)
     public ApiResponse<List<GoodsCategoryVo>> category(@RequestParam Integer level) {
         return success(apiGoodsService.categoryTree(level));
     }
@@ -66,6 +71,7 @@ public class ApiGoodsController extends BaseController {
             @ApiImplicitParam(name = "current", value = "页码",defaultValue = "1"),
             @ApiImplicitParam(name = "goodId", value = "商品Id", required = true)
     })
+    @ApiLog(ignore = true)
     public ApiResponse<List<GoodsCategoryVo>> comment(@PathVariable Integer goodsId,@RequestParam Long size,@RequestParam Long current) {
         return success(apiGoodsService.pageGoodsComment(size,current,goodsId));
     }

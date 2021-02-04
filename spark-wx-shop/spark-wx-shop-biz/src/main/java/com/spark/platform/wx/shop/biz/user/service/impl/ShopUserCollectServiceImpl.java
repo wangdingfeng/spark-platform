@@ -43,6 +43,8 @@ public class ShopUserCollectServiceImpl extends ServiceImpl<ShopUserCollectDao, 
     public boolean collect(Integer userId, Integer goodsId) {
         boolean flag = this.getCollect(userId,goodsId);
         if(flag){
+            // 如果当前购车已经存在 则执行删除操作
+            super.baseMapper.delete(Wrappers.<ShopUserCollect>lambdaQuery().eq(ShopUserCollect::getGoodsId,goodsId).eq(ShopUserCollect::getUserId,userId));
             return false;
         }
         ShopUserCollect userCollect = new ShopUserCollect();

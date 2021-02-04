@@ -37,7 +37,7 @@
             p.*,
             g.title 'goodsTitle',
             g.home_pic 'homePic',
-            g.min_price 'minPrice'
+            g.min_price 'price'
         FROM
             shop_pink_goods p
             JOIN shop_goods g ON p.goods_id = g.id
@@ -48,7 +48,7 @@
         SELECT
             pg.start_time,
             pg.end_time,
-            pg.price,
+            pg.kill_price,
             pg.people,
             pg.quota,
             g.id 'goodsId',

@@ -98,6 +98,8 @@ public class ApiOrderServiceImpl implements ApiOrderService {
                 goods.setPrice(shopUserCart.getPrice());
                 orderGoods.add(goods);
             });
+            // 清空购物车
+            shopUserCartService.removeByIds(submitOrderDTO.getUserCartIds());
             submitOrderDTO.setOrderGoods(orderGoods);
         }
         List<ShopOrderGoods> shopOrderGoodsList = new ArrayList<>(submitOrderDTO.getOrderGoods().size());

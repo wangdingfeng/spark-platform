@@ -3,7 +3,9 @@ package com.spark.platform.wx.shop.biz.api.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.spark.platform.common.base.support.ApiResponse;
 import com.spark.platform.common.base.support.BaseController;
+import com.spark.platform.common.log.annotation.ApiLog;
 import com.spark.platform.wx.shop.api.vo.CouponCardVo;
+import com.spark.platform.wx.shop.api.vo.GoodsSecKillCardVo;
 import com.spark.platform.wx.shop.api.vo.SeckillVo;
 import com.spark.platform.wx.shop.api.vo.SwiperVo;
 import com.spark.platform.wx.shop.biz.api.service.ApiMarketingService;
@@ -36,6 +38,7 @@ public class ApiMarketingController extends BaseController {
 
     @GetMapping("/api/coupon")
     @ApiOperation(value = "全部优惠券")
+    @ApiLog(ignore = true)
     public ApiResponse<CouponCardVo> coupon(@RequestParam Integer limit) {
         return success(apiMarketingService.findCoupon(limit));
     }
@@ -48,6 +51,7 @@ public class ApiMarketingController extends BaseController {
             @ApiImplicitParam(name = "userId", value = "用户ID", required = true),
             @ApiImplicitParam(name = "isUse", value = "是否使用", required = true)
     })
+    @ApiLog(ignore = true)
     public ApiResponse<IPage<CouponCardVo>> couponUser(@RequestParam Long size,@RequestParam Long current,@RequestParam Integer userId, boolean isUse) {
         return success(apiMarketingService.pageCouponUser(size, current, userId, isUse));
     }
@@ -58,12 +62,14 @@ public class ApiMarketingController extends BaseController {
             @ApiImplicitParam(name = "userId", value = "用户Id",dataType = "int"),
             @ApiImplicitParam(name = "couponId", value = "优惠券ID",dataType = "int")
     })
+    @ApiLog(ignore = true)
     public ApiResponse<CouponCardVo> coupon(@PathVariable Integer userId, @PathVariable Integer couponId) {
         return success(apiMarketingService.receiveCoupon(userId,couponId));
     }
 
     @GetMapping("/api/seckill")
     @ApiOperation(value = "秒杀信息")
+    @ApiLog(ignore = true)
     public ApiResponse<List<SeckillVo>> seckill() {
         return success(apiMarketingService.findSeckill());
     }
@@ -75,7 +81,8 @@ public class ApiMarketingController extends BaseController {
             @ApiImplicitParam(name = "current", value = "页码",defaultValue = "1"),
             @ApiImplicitParam(name = "secKillId", value = "秒杀配置ID", required = true)
     })
-    public ApiResponse<CouponCardVo> secKillGoods(@RequestParam Long size,@RequestParam Long current,@RequestParam Integer secKillId) {
+    @ApiLog(ignore = true)
+    public ApiResponse<GoodsSecKillCardVo> secKillGoods(@RequestParam Long size, @RequestParam Long current, @RequestParam Integer secKillId) {
         return success(apiMarketingService.secKillGoods(size, current, secKillId));
     }
 
@@ -85,12 +92,14 @@ public class ApiMarketingController extends BaseController {
             @ApiImplicitParam(name = "size", value = "页数",defaultValue = "20"),
             @ApiImplicitParam(name = "current", value = "页码",defaultValue = "1")
     })
+    @ApiLog(ignore = true)
     public ApiResponse<CouponCardVo> pinkGoods(@RequestParam Long size,@RequestParam Long current) {
         return success(apiMarketingService.pinkGoods(size, current));
     }
 
     @GetMapping("/api/swiper")
     @ApiOperation(value = "轮播图信息")
+    @ApiLog(ignore = true)
     public ApiResponse<List<SwiperVo>> swiper() {
         return success(apiSettingService.swiper());
     }

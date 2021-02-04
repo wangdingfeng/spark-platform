@@ -23,4 +23,13 @@ public enum CouponTypeEnum {
 
     private String type;
     private String desc;
+
+    public static String typeOf(String type) {
+        for(CouponTypeEnum typeEnum : values()){
+            if(typeEnum.getType().equals(type)){
+                return typeEnum.desc;
+            }
+        }
+        return "";
+    }
 }

@@ -45,7 +45,7 @@ public class ShopSeckillGoods {
     private LocalDateTime endTime;
 
     @ApiModelProperty(value = "秒杀价格")
-    private BigDecimal price;
+    private BigDecimal killPrice;
 
     @ApiModelProperty(value = "秒杀销量")
     private Integer sales;

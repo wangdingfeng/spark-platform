@@ -3,6 +3,7 @@ package com.spark.platform.wx.shop.biz.api.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.spark.platform.common.base.support.ApiResponse;
 import com.spark.platform.common.base.support.BaseController;
+import com.spark.platform.common.log.annotation.ApiLog;
 import com.spark.platform.wx.shop.api.dto.UserCartDTO;
 import com.spark.platform.wx.shop.api.dto.WxLoginDTO;
 import com.spark.platform.wx.shop.api.entity.user.ShopUserAddress;
@@ -43,12 +44,14 @@ public class ApiUserController extends BaseController {
 
     @PostMapping("/login")
     @ApiOperation(value = "用户登录")
+    @ApiLog(ignore = true)
     public ApiResponse<ShopUserDTO> login(@Valid @RequestBody WxLoginDTO loginDTO) {
         return success(apiUserService.login(loginDTO));
     }
 
     @PostMapping
     @ApiOperation(value = "更新用户信息")
+    @ApiLog(ignore = true)
     public ApiResponse updateUser(@Valid @RequestBody ShopUserDTO userDTO) {
         log.info("【用户信息=>更新用户信息】,用户:{}", JSONObject.toJSONString(userDTO));
         return success(apiUserService.updateUser(userDTO));
@@ -56,24 +59,28 @@ public class ApiUserController extends BaseController {
 
     @GetMapping("/{userId}")
     @ApiOperation(value = "查询用户信息")
+    @ApiLog(ignore = true)
     public ApiResponse<ShopUserDTO> getUser(@PathVariable Integer userId) {
         return success(apiUserService.findUser(userId));
     }
 
     @GetMapping("/address")
     @ApiOperation(value = "查询用户地址信息")
+    @ApiLog(ignore = true)
     public ApiResponse<List<ShopUserAddress>> listAddress(@RequestParam Integer userId) {
         return success(shopUserAddressService.findAddress(userId));
     }
 
     @GetMapping("/address/{id}")
     @ApiOperation(value = "查询地址信息")
+    @ApiLog(ignore = true)
     public ApiResponse<ShopUserAddress> getAddress(@PathVariable Integer id) {
         return success(shopUserAddressService.getById(id));
     }
 
     @PostMapping("/address")
     @ApiOperation(value = "保存更新用户地址信息")
+    @ApiLog(ignore = true)
     public ApiResponse<ShopUserAddress> saveAddress(@Valid @RequestBody ShopUserAddress shopUserAddress) {
         shopUserAddressService.submitAddress(shopUserAddress);
         return success(shopUserAddress);
@@ -85,42 +92,50 @@ public class ApiUserController extends BaseController {
             @ApiImplicitParam(name = "userId", value = "用户Id", required = true),
             @ApiImplicitParam(name = "id", value = "地址Id", required = true)
     })
+    @ApiLog(ignore = true)
     public ApiResponse delAddress(@PathVariable Integer userId, @PathVariable Integer id) {
         return success(shopUserAddressService.deleteAddress(userId, id));
     }
 
     @GetMapping("/cart")
     @ApiOperation(value = "分页查询用户购物车信息")
+    @ApiLog(ignore = true)
     public ApiResponse pageCart(@RequestParam long current,@RequestParam long size,@RequestParam Integer userId) {
         return success(apiUserService.pageCart(current,size,userId));
     }
 
     @PostMapping("/cart")
     @ApiOperation(value = "提交用户购物车信息")
+    @ApiLog(ignore = true)
     public ApiResponse submitCart(@Valid @RequestBody UserCartDTO userCartDTO) {
         return success(apiUserService.submitCart(userCartDTO));
     }
 
     @PutMapping("/cart")
     @ApiOperation(value = "更新用户购物车信息")
+    @ApiLog(ignore = true)
     public ApiResponse updateCart(@RequestBody UserCartDTO userCartDTO) {
         return success(apiUserService.updateCart(userCartDTO));
     }
 
     @DeleteMapping("/{userId}/cart/{id}")
     @ApiOperation(value = "删除用户购物车信息")
+    @ApiLog(ignore = true)
     public ApiResponse delCart(@PathVariable Integer userId, @PathVariable Integer id) {
         return success(apiUserService.delCart(userId,id));
     }
 
     @PostMapping("/{userId}/collect/{goodsId}")
     @ApiOperation(value = "用户收藏信息")
+    @ApiLog(ignore = true)
     public ApiResponse saveCollect(@PathVariable Integer userId,@PathVariable Integer goodsId) {
-        return success(apiUserService.saveCollect(userId,goodsId));
+        apiUserService.saveCollect(userId,goodsId);
+        return success("操作成功");
     }
 
     @GetMapping("/collect")
     @ApiOperation(value = "分页查询用户收藏")
+    @ApiLog(ignore = true)
     public ApiResponse pageCollect(@RequestParam long current,@RequestParam long size,@RequestParam Integer userId) {
         return success(apiUserService.pageCollect(current,size,userId));
     }
@@ -128,6 +143,7 @@ public class ApiUserController extends BaseController {
     @DeleteMapping("/collect")
     @ApiOperation(value = "删除用户收藏信息")
     @ApiImplicitParam(name = "ids", value = "收藏Id集合", required = true)
+    @ApiLog(ignore = true)
     public ApiResponse delCollect(@RequestParam String ids) {
         List<Integer> idList = Arrays.asList(ids).stream().map(s -> Integer.parseInt(s)).collect(Collectors.toList());
         return success(apiUserService.delCollects(idList));
@@ -135,12 +151,14 @@ public class ApiUserController extends BaseController {
 
     @GetMapping("/footprint")
     @ApiOperation(value = "分页查询用户足迹信息")
+    @ApiLog(ignore = true)
     public ApiResponse pageFootprint(@RequestParam long current,@RequestParam long size,@RequestParam Integer userId) {
         return success(apiUserService.pageFootprint(current,size,userId));
     }
 
     @DeleteMapping("/footprint")
     @ApiOperation(value = "删除用户足迹信息")
+    @ApiLog(ignore = true)
     @ApiImplicitParam(name = "ids", value = "收藏Id集合", required = true)
     public ApiResponse delFootprint(@RequestParam String ids) {
         List<Integer> idList = Arrays.asList(ids).stream().map(s -> Integer.parseInt(s)).collect(Collectors.toList());

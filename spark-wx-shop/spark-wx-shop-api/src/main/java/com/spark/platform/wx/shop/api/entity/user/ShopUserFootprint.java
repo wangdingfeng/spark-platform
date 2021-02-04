@@ -1,6 +1,7 @@
 package com.spark.platform.wx.shop.api.entity.user;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -38,6 +39,7 @@ public class ShopUserFootprint implements Serializable {
 
     @TableField(value = "create_date", fill = FieldFill.INSERT)
     @ApiModelProperty(value = "创建时间")
+    @JsonFormat(pattern="yyyy.MM.dd")
     private LocalDateTime createDate;
 
     @TableField(fill = FieldFill.INSERT)
