@@ -24,9 +24,9 @@ import java.util.List;
 public class ShopUserAddressServiceImpl extends ServiceImpl<ShopUserAddressDao, ShopUserAddress> implements ShopUserAddressService {
 
     @Override
-    public List<ShopUserAddress> findAddress(Integer userId) {
+    public List<ShopUserAddress> findAddress(Integer userId, Boolean isDefault) {
         return super.list(Wrappers.<ShopUserAddress>lambdaQuery()
-                .eq(ShopUserAddress::getUserId,userId).orderByDesc(ShopUserAddress::getIsDefault));
+                .eq(ShopUserAddress::getUserId,userId).eq(null != isDefault,ShopUserAddress::getIsDefault,isDefault).orderByDesc(ShopUserAddress::getIsDefault));
     }
 
     @Override

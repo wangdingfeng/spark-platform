@@ -67,8 +67,8 @@ public class ApiUserController extends BaseController {
     @GetMapping("/address")
     @ApiOperation(value = "查询用户地址信息")
     @ApiLog(ignore = true)
-    public ApiResponse<List<ShopUserAddress>> listAddress(@RequestParam Integer userId) {
-        return success(shopUserAddressService.findAddress(userId));
+    public ApiResponse<List<ShopUserAddress>> listAddress(@RequestParam Integer userId,@RequestParam(required = false) Boolean isDefault) {
+        return success(shopUserAddressService.findAddress(userId,isDefault));
     }
 
     @GetMapping("/address/{id}")

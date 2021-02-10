@@ -17,9 +17,10 @@ public interface ShopUserAddressService extends IService<ShopUserAddress> {
     /**
      * 查询用户的地址信息
      * @param userId
+     * @param isDefault
      * @return
      */
-    List<ShopUserAddress> findAddress(Integer userId);
+    List<ShopUserAddress> findAddress(Integer userId, Boolean isDefault);
 
     /**
      * 删除用户地址
