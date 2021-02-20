@@ -2,7 +2,11 @@ package com.spark.platform.admin.biz.dao.authority;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.spark.platform.admin.api.entity.authority.OauthClientDetails;
+import com.spark.platform.admin.api.vo.SelectVo;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @author: wangdingfeng
@@ -30,5 +34,12 @@ public interface OauthClientDetailsDao extends BaseMapper<OauthClientDetails> {
      * @return String
      */
     String getResourceIdsByClientId(String clientId);
+
+    /**
+     * 获取下拉列表数据
+     * @return
+     */
+    @Select("SELECT id AS 'value',client_id AS 'label' FROM sys_oauth_client_details WHERE del_flag='0'")
+    List<SelectVo> selectElem();
 
 }

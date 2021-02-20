@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.platform.wx.shop.biz.order.dao.ShopOrderGoodsDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.spark.platform.wx.shop.api.entity.order.ShopOrderGoods">
+        <id column="id" property="id" />
+        <result column="order_id" property="orderId" />
+        <result column="goods_id" property="goodsId" />
+        <result column="goods_sn" property="goodsSn" />
+        <result column="goods_title" property="goodsTitle" />
+        <result column="pic_url" property="picUrl" />
+        <result column="number" property="number" />
+        <result column="price" property="price" />
+        <result column="goods_attr_val_ids" property="goodsAttrValIds" />
+        <result column="goods_attr_vals" property="goodsAttrVals" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, order_id, goods_id, goods_sn, goods_title, pic_url, number, price, goods_attr_val_ids, goods_attr_vals
+    </sql>
+
+    <select id="findByOrderId" resultType="com.spark.platform.wx.shop.api.entity.order.ShopOrderGoods">
+        SELECT * FROM shop_order_goods WHERE order_id=#{orderId}
+    </select>
+
+</mapper>

@@ -1,4 +1,9 @@
 spring:
+  cloud:
+    nacos:
+      discovery:
+        ip: 127.0.0.1
+        port: ${server.port}
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url:  jdbc:mysql://127.0.0.1:3306/spark-dev?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai

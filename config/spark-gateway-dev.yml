@@ -4,6 +4,10 @@ spring:
     password:
     port: 6379
   cloud:
+    nacos:
+      discovery:
+        ip: 127.0.0.1
+        port: ${server.port}
     gateway:
       locator:
         enabled: true

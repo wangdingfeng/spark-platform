@@ -87,4 +87,13 @@ public interface FileInfoService extends IService<FileInfo> {
      */
     void preview(Long id, HttpServletResponse response);
 
+    /**
+     * 上传文件返回路径
+     * @param file 文件
+     * @param bucketName 桶
+     * @param filePath 文件路径
+     * @return
+     */
+    String uploadToUrl(MultipartFile file, String bucketName, String filePath);
+
 }

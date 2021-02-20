@@ -1,6 +1,7 @@
 package com.spark.platform.common.config.properties;
 
 import com.spark.platform.common.base.constants.GlobalsConstants;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -16,12 +17,14 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = GlobalsConstants.SPARK_PREFIX)
 public class SparkProperties {
-    /**
-     * 文件路径
-     */
+    @ApiModelProperty(value = "网关地址")
+    private String gatewayUrl;
+    @ApiModelProperty(value = "文件路径")
     private String filePath;
-    /**
-     * redis缓存
-     */
+    @ApiModelProperty(value = "redis配置")
     SparkRedisProperties redis = new SparkRedisProperties();
+    @ApiModelProperty(value = "微信配置")
+    SparkWxProperties wx = new SparkWxProperties();
+    @ApiModelProperty(value = "七牛云配置")
+    QiNiuProperties qiniu = new QiNiuProperties();
 }

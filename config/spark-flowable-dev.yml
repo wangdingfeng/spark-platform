@@ -1,4 +1,9 @@
 spring:
+  cloud:
+    nacos:
+      discovery:
+        ip: 127.0.0.1
+        port: ${server.port}
   freemarker:
     suffix: .html
     template-loader-path: classpath:/templates

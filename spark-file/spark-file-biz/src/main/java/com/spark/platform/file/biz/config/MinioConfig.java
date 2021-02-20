@@ -27,7 +27,7 @@ public class MinioConfig {
     @ApiModelProperty("endPoint是一个URL，域名，IPv4或者IPv6地址")
     private String endpoint;
     @ApiModelProperty("TCP/IP端口号")
-    private int port;
+    private Integer port;
     @ApiModelProperty("accessKey类似于用户ID，用于唯一标识你的账户")
     private String accessKey;
     @ApiModelProperty("secretKey是你账户的密码")
@@ -40,7 +40,13 @@ public class MinioConfig {
     @Bean
     @SneakyThrows
     public MinioClient getMinioClient() {
-        MinioClient minioClient = new MinioClient(endpoint, port, accessKey, secretKey,secure);
+        MinioClient minioClient;
+        if(null == port){
+            // 如果不启动端口
+            minioClient = new MinioClient(endpoint, accessKey, secretKey,secure);
+        }else {
+            minioClient = new MinioClient(endpoint, port, accessKey, secretKey,secure);
+        }
         return minioClient;
     }
 }

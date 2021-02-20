@@ -1,4 +1,9 @@
 spring:
+  cloud:
+    nacos:
+      discovery:
+        ip: 127.0.0.1
+        port: ${server.port}
   servlet:
     multipart:
       enabled: true

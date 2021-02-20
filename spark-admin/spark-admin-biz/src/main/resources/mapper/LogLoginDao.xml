@@ -8,14 +8,14 @@
         <result column="username" property="username" />
         <result column="system" property="system" />
         <result column="browser" property="browser" />
-        <result column="logn_time" property="lognTime" />
+        <result column="login_time" property="loginTime" />
         <result column="location" property="location" />
-        <result column="location_ip" property="locationIp" />
+        <result column="ip" property="ip" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, username, system, browser, logn_time, location, location_ip
+        id, username, system, browser, logn_time, location, ip
     </sql>
 
 </mapper>

@@ -40,7 +40,6 @@ public class User extends BaseEntity {
     @NotBlank(message = "真实姓名")
     private String nickname;
 
-    @JsonIgnore
     @ApiModelProperty(value = "密码")
     private String password;
 

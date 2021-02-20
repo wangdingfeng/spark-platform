@@ -12,6 +12,7 @@ import com.spark.platform.common.base.support.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -70,6 +71,7 @@ public class DictController extends BaseController {
 
     @PostMapping
     @ApiOperation(value = "保存字典信息")
+    @PreAuthorize("hasAnyAuthority('dict:add')")
     public ApiResponse<Dict> save(@RequestBody @Valid Dict dict){
         dictService.save(dict);
         return success(dict);
@@ -77,6 +79,7 @@ public class DictController extends BaseController {
 
     @PostMapping("/item")
     @ApiOperation(value = "保存字典子表信息")
+    @PreAuthorize("hasAnyAuthority('dict:add')")
     public ApiResponse<DictItem> saveItem(@RequestBody @Valid DictItem dictItem){
         dictItemService.save(dictItem);
         return success(dictItem);
@@ -84,24 +87,28 @@ public class DictController extends BaseController {
 
     @PutMapping
     @ApiOperation(value = "更新字典信息")
+    @PreAuthorize("hasAnyAuthority('dict:edit')")
     public ApiResponse<Boolean> update(@RequestBody @Valid Dict dict){
         return success(dictService.updateDict(dict));
     }
 
     @PutMapping("/item")
     @ApiOperation(value = "更新字典子表信息")
+    @PreAuthorize("hasAnyAuthority('dict:edit')")
     public ApiResponse<Boolean> updateItem(@RequestBody @Valid DictItem dictItem){
         return success(dictItemService.updateById(dictItem));
     }
 
     @DeleteMapping("/{id}")
     @ApiOperation(value = "删除字典信息")
+    @PreAuthorize("hasAnyAuthority('dict:delete')")
     public ApiResponse<Boolean> delete(@PathVariable Long id){
         return success(dictService.removeById(id));
     }
 
     @DeleteMapping("/item/{id}")
     @ApiOperation(value = "删除字典子表信息")
+    @PreAuthorize("hasAnyAuthority('dict:delete')")
     public ApiResponse<Boolean> deleteItem(@PathVariable Long id){
         return success(dictItemService.removeById(id));
     }

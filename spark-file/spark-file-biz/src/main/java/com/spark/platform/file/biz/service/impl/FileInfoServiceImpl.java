@@ -196,6 +196,21 @@ public class FileInfoServiceImpl extends ServiceImpl<FileInfoDao, FileInfo> impl
         this.preview(fileInfo, response);
     }
 
+    @Override
+    public String uploadToUrl(MultipartFile file, String bucketName, String filePath) {
+        String fileName = file.getOriginalFilename();
+        String fileType = StringUtils.substringAfterLast(fileName, ".");
+        String fileCode = UUID.randomUUID().toString().replace("-", "");
+        String fileUploadName = fileCode + "." + fileType;
+        if(StringUtils.isNotBlank(filePath)){
+            filePath = filePath + GlobalsConstants.FILE_SEPARATOR + fileUploadName;
+        }else{
+            filePath = fileUploadName;
+        }
+        MinioUtil.putObject(bucketName,file,filePath);
+        return MinioUtil.getObjectUrl(bucketName,filePath);
+    }
+
     /**
      * 预览文件
      *

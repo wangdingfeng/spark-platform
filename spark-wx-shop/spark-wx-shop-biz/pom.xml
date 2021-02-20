@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.spark.platform</groupId>
+        <artifactId>spark-wx-shop</artifactId>
+        <version>2.0.1</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <artifactId>spark-wx-shop-biz</artifactId>
+    <version>2.0.1</version>
+    <name>spark-wx-shop-biz</name>
+    <description>商城数据管理</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.spark.platform</groupId>
+            <artifactId>spark-wx-shop-api</artifactId>
+            <version>${spark-common.version}</version>
+        </dependency>
+        <!-- nacos -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+        <!-- for swagger -->
+        <dependency>
+            <groupId>com.spring4all</groupId>
+            <artifactId>swagger-spring-boot-starter</artifactId>
+            <version>${swagger-spring-boot-starter.version}</version>
+        </dependency>
+        <!--公共配置包 包含base包-->
+        <dependency>
+            <groupId>com.spark.platform</groupId>
+            <artifactId>spark-common-config</artifactId>
+            <version>${spark-common.version}</version>
+        </dependency>
+        <!--公共security包 包含admin api 及 包含base-->
+        <dependency>
+            <groupId>com.spark.platform</groupId>
+            <artifactId>spark-common-security</artifactId>
+            <version>${spark-common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.spark.platform</groupId>
+            <artifactId>spark-common-log</artifactId>
+            <version>${spark-common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.spark.platform</groupId>
+            <artifactId>spark-common-logistics</artifactId>
+            <version>${spark-common.version}</version>
+        </dependency>
+        <!--actuator监管-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <!--undertow容器-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-undertow</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
