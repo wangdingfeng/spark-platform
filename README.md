@@ -68,6 +68,8 @@ SPARK 开发平台 作者：polaris.wang
 GitHub | [https://github.com/wangdingfeng/spark-platform](https://github.com/wangdingfeng/spark-platform)|[https://github.com/wangdingfeng/spark-admin](https://github.com/wangdingfeng/spark-admin)
 Gitee  | [https://gitee.com/dreamfeng/spark-platform](https://gitee.com/dreamfeng/spark-platform)|[https://gitee.com/dreamfeng/spark-admin](https://gitee.com/dreamfeng/spark-admin)
 
+小程序地址：https://gitee.com/dreamfeng/wx-spark-shop
+
 ### 演示地址
 
 演示地址：[http://www.sparkplatform.cn/](http://www.sparkplatform.cn/)
