@@ -73,7 +73,8 @@ Gitee  | [https://gitee.com/dreamfeng/spark-platform](https://gitee.com/dreamfen
 ### 演示地址
 
 演示地址：[http://www.sparkplatform.cn/](http://www.sparkplatform.cn/)
-暂时演示地址: [http://admin.xiapeiyi.com/](http://admin.xiapeiyi.com/) 不允许对里边的数据进行操作，感谢
+
+备用演示地址: [http://admin.xiapeiyi.com/](http://admin.xiapeiyi.com/) 不允许对里边的数据进行操作，感谢
 
 演示环境工作流账号密码：
 | 账号  | 密码   | 权限               |
