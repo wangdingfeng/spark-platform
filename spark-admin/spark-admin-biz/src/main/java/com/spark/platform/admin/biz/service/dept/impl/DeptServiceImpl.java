@@ -1,6 +1,7 @@
 package com.spark.platform.admin.biz.service.dept.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.spark.platform.admin.api.entity.dept.Dept;
@@ -23,13 +24,11 @@ public class DeptServiceImpl extends ServiceImpl<DeptDao, Dept> implements DeptS
 
     @Override
     public List<Dept> list(Dept dept) {
-        QueryWrapper<Dept> queryWrapper = new QueryWrapper<>();
         if (null != dept && StringUtils.isNotBlank(dept.getFullName())) {
-            queryWrapper.like("full_name", dept.getFullName());
-            return super.baseMapper.selectList(queryWrapper);
+            return super.list(Wrappers.<Dept>lambdaQuery().like(Dept::getFullName,dept.getFullName()));
         }
 
-        return (List<Dept>) TreeUtils.toTree(super.baseMapper.selectList(queryWrapper), Dept.class);
+        return (List<Dept>) TreeUtils.toTree(super.list(), Dept.class);
     }
 
     @Override

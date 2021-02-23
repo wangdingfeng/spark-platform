@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.platform.wx.shop.biz.marketing.dao.ShopSeckillGoodsDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.spark.platform.wx.shop.api.entity.marketing.ShopSeckillGoods">
+        <id column="id" property="id" />
+        <result column="goods_id" property="goodsId" />
+        <result column="price" property="price" />
+        <result column="stock" property="stock" />
+        <result column="sales" property="sales" />
+        <result column="create_time" property="createTime" />
+        <result column="is_quota" property="isQuota" />
+        <result column="quota" property="quota" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, seckill_id, goods_id, price, stock, sales, create_time, is_quota, quota
+    </sql>
+
+    <select id="listPage" resultType="com.spark.platform.wx.shop.api.entity.marketing.ShopSeckillGoods">
+        SELECT
+            s.*,
+            g.title 'goodsTitle',
+            g.home_pic 'homePic',
+            g.min_price
+        FROM
+            shop_seckill_goods s
+            JOIN shop_goods g ON s.goods_id = g.id
+          ${ew.customSqlSegment}
+    </select>
+
+    <select id="pageGoods" resultType="com.spark.platform.wx.shop.api.vo.GoodsSecKillCardVo">
+        SELECT
+            sg.start_time,
+            sg.end_time,
+            sg.kill_price,
+            sg.sales,
+            sg.is_quota,
+            sg.quota,
+            g.id 'goodsId',
+            g.title,
+            g.brief,
+            g.home_pic,
+            g.retail_price,
+            g.min_price 'price',
+            g.sale_num,
+            g.stock
+        FROM
+            shop_seckill_goods sg JOIN shop_goods g ON sg.goods_id=g.id
+        ${ew.customSqlSegment}
+    </select>
+
+    <select id="findByGoodsId" resultType="com.spark.platform.wx.shop.api.vo.SeckillGoodsVo">
+        SELECT
+            id 'seckillGoodsId',start_time,end_time,kill_price,sales,is_quota,quota
+        FROM
+            shop_seckill_goods
+         WHERE
+            goods_id=#{goodsId}
+    </select>
+
+</mapper>

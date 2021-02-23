@@ -6,7 +6,9 @@ import com.spark.platform.admin.api.feign.client.UserClient;
 import com.spark.platform.common.security.model.LoginUser;
 import com.spark.platform.common.base.utils.SpringContextHolder;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 
 /**
  * @author: wangdingfeng
@@ -46,7 +48,7 @@ public class UserUtils {
      */
     public static User getUser(){
         LoginUser loginUser = getLoginUser();
-        return  Static.userClient.getUserByUserId(loginUser.getId()).getData();
+        return Static.userClient.getUserByUserId(loginUser.getId()).getData();
     }
 
     /**
@@ -55,7 +57,22 @@ public class UserUtils {
      * @return
      */
     public static UserDTO getUser(String username){
-        return  Static.userClient.getUserByUserName(username).getData();
+        return Static.userClient.getUserByUserName(username).getData();
     }
+
+
+    /**
+     * 获取客户端
+     * @return clientId
+     */
+    public static String getClientId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication instanceof OAuth2Authentication) {
+            OAuth2Authentication auth2Authentication = (OAuth2Authentication) authentication;
+            return auth2Authentication.getOAuth2Request().getClientId();
+        }
+        return null;
+    }
+
 
 }

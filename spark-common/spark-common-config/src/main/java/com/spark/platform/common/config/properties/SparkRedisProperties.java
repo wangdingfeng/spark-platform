@@ -1,5 +1,6 @@
 package com.spark.platform.common.config.properties;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,8 +16,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SparkRedisProperties {
-    /**
-     * 是否开启redis缓存
-     */
+    @ApiModelProperty(value = "是否开启redis缓存")
     private Boolean enable = true;
 }

@@ -195,7 +195,7 @@ public class MinioUtil {
      */
     @SneakyThrows
     public static void putObject(String bucketName, MultipartFile multipartFile, String filename) {
-        PutObjectOptions putObjectOptions = new PutObjectOptions(multipartFile.getSize(), PutObjectOptions.MIN_MULTIPART_SIZE);
+        PutObjectOptions putObjectOptions = new PutObjectOptions(multipartFile.getSize(), -1);
         putObjectOptions.setContentType(multipartFile.getContentType());
         Static.minioClient.putObject(bucketName, filename, multipartFile.getInputStream(), putObjectOptions);
     }

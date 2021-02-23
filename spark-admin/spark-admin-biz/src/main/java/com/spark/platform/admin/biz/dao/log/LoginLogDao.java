@@ -29,7 +29,7 @@ public interface LoginLogDao extends BaseMapper<LogLogin> {
      * 获取今日登陆ip数
      * @return
      */
-    @Select("SELECT COUNT(DISTINCT location_ip) FROM sys_log_login WHERE TO_DAYS(login_time)=TO_DAYS(NOW())")
+    @Select("SELECT COUNT(DISTINCT ip) FROM sys_log_login WHERE TO_DAYS(login_time)=TO_DAYS(NOW())")
     int countTodayIP();
 
     /**

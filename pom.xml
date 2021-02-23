@@ -29,6 +29,7 @@
         <module>spark-tx-manager</module>
         <module>spark-quartz</module>
         <module>spark-file</module>
+        <module>spark-wx-shop</module>
     </modules>
 
 
@@ -246,6 +247,9 @@
             <properties>
                 <profiles.active>prod</profiles.active>
             </properties>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
         </profile>
     </profiles>
 

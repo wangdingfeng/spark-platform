@@ -1,9 +1,9 @@
-# spark-platform V2.0
+# spark-platform V2.0 (项目采用nacos作为注册中心和配置中心)
 [![star](https://gitee.com/dreamfeng/spark-platform/badge/star.svg?theme=white)](https://gitee.com/dreamfeng/spark-platform/stargazers)
 [![github](https://img.shields.io/github/stars/wangdingfeng/spark-platform)](https://github.com/wangdingfeng/spark-platform)
 
 
-### 如果主页网站无法显示请使用[码云预览](http://dreamfeng.gitee.io/spark-admin/)
+### 微信商城功能还在测试，但是大体上的功能已经测试完全，所以还是先上线了，其中修改了很多以前框架中存在的bug.
 #### 交流群上线，QQ群号:1137679743
 
 
@@ -27,21 +27,18 @@ SPARK 开发平台 作者：polaris.wang
 - 功能模块采用插拔方式，使用更简单整洁规范
 - 基于flowable的工作流系统，提供完善基于业务的流程系统
 - 提供代码生成器、封装Mybatis plus 查询，提高开发效率
+- 提供微信商城小程序功能
 
  
  ### 如果大家有什么建议或者问题，请在Issues中提交，作者会一一的回复，希望大家一起让这个开源项目变的更好，我的本意是大家一起学习，所以此项目完全开源，完全免费。您的点赞和建议是作者维护这个项目的最大动力，感谢！
 
-### 2020-11-07 更新日志
-1. 添加文件管理模块，采用Minio对象存储。[minio安装文档](https://www.kancloud.cn/polaris_wang/spark/2021742)
 
-### 2020-09-29 更新日志
-1. 修改测试流程图。
-2. 添加保存更新必填项后台校验。
-3. ip地址删除掉|0。
-4. 文章分页bug修复。
-5. 添加logstash日志系统。[文档地址](https://www.kancloud.cn/polaris_wang/spark/1908807)
-6. boot和cloud 版本更新
-7. 添加导出excel(基于easyexcel支持字典翻译)，例子请参考用户信息导出。
+### 2021-02-20 更新日志
+1. 修改重置密码没有加密的问题。
+2. 将bootstrap.yml中指定服务器IP配置转移到配置中心配置中。
+3. 修改获取角色权限没有过滤删除菜单的问题。
+4. 删除密码json忽略。
+5. 更新IP数据库，修改并发导致无法获取IP地址信息的问题。
 
 
 ### 文档地址
@@ -71,9 +68,13 @@ SPARK 开发平台 作者：polaris.wang
 GitHub | [https://github.com/wangdingfeng/spark-platform](https://github.com/wangdingfeng/spark-platform)|[https://github.com/wangdingfeng/spark-admin](https://github.com/wangdingfeng/spark-admin)
 Gitee  | [https://gitee.com/dreamfeng/spark-platform](https://gitee.com/dreamfeng/spark-platform)|[https://gitee.com/dreamfeng/spark-admin](https://gitee.com/dreamfeng/spark-admin)
 
+小程序地址：https://gitee.com/dreamfeng/wx-spark-shop
+
 ### 演示地址
 
 演示地址：[http://www.sparkplatform.cn/](http://www.sparkplatform.cn/)
+
+备用演示地址: [http://admin.xiapeiyi.com/](http://admin.xiapeiyi.com/) 不允许对里边的数据进行操作，感谢
 
 演示环境工作流账号密码：
 | 账号  | 密码   | 权限               |
@@ -125,9 +126,12 @@ spark-platform
 ├── spark-cms -- 内容管理平台模块
 ├── spark-tx-manager -- 分布式事务模块
 ├── spark-quartz -- 定时任务模块
-└── spark-file -- 通用工作流模块
+└── spark-file -- 文件模块
      └── spark-file-api -- 文件模块公共api模块
      └── spark-file-biz -- 文件模块业务处理模块
+└── spark-wx-shop -- 微信商城模块(完善中)
+     └── spark-wx-shop-api -- 微信商城公共api模块
+     └── spark-wx-shop-biz -- 微信商城业务处理模块    
 ```
  **平台截图**
 ![首页](https://images.gitee.com/uploads/images/2020/0808/115033_41517db6_1890906.png "屏幕截图.png")

@@ -63,7 +63,7 @@
                 WHERE ur.user_id = #{userId}
             ) AS um ON m.id = um.menu_id
         WHERE
-            m.permission is not null AND m.permission !=''
+            m.permission is not null AND m.permission !='' AND m.del_flag = 0
     </select>
 
     <select id="getRoleMenu" resultType="Menu">
@@ -73,7 +73,7 @@
             sys_menu m
             JOIN sys_role_menu rm ON m.id = rm.menu_id
         WHERE
-            rm.role_id = #{roleId}
+            AND m.del_flag = 0 rm.role_id = #{roleId}
     </select>
 
     <select id="getMenuIdsByRole" resultType="String">
