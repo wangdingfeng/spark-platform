@@ -5,11 +5,9 @@
     <parent>
         <groupId>com.spark.platform</groupId>
         <artifactId>spark-file</artifactId>
-        <version>2.0.1</version>
-        <relativePath>../pom.xml</relativePath>
+        <version>2.1.0</version>
     </parent>
     <artifactId>spark-file-biz</artifactId>
-    <version>2.0.1</version>
     <name>spark-file-biz</name>
     <description>spark 文件服务业务(此模块可以用来扩展对文件的管理和实现文件的预览)</description>
 

@@ -25,5 +25,5 @@ public interface AuthorityClient {
      * @return
      */
     @GetMapping("/authority/api/info")
-    ApiResponse<OauthClientDetails> getOauthClientDetailsByClientId(@RequestParam String clientId);
+    ApiResponse<OauthClientDetails> getOauthClientDetailsByClientId(@RequestParam("clientId") String clientId);
 }

@@ -30,7 +30,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
  */
 @EnableResourceServer
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@EnableFeignClients(basePackages = "com.spark.platform.**.feign")
 @ComponentScan(basePackages = {"com.spark.platform"})
 public class SparkResourceServerConfig extends ResourceServerConfigurerAdapter {
 

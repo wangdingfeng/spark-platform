@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="spark-tx-manager" />
+        <module name="spark-common-base" />
+        <module name="spark-flowable-biz" />
+        <module name="spark-common-security" />
+        <module name="spark-common-feign" />
+        <module name="spark-common-config" />
+        <module name="spark-common-utils" />
+        <module name="spark-gateway" />
+        <module name="spark-admin-biz" />
+        <module name="spark-common-log" />
+        <module name="spark-common-datasource" />
+        <module name="spark-file-api" />
+        <module name="spark-common-logistics" />
+        <module name="spark-admin-api" />
+        <module name="spark-wx-shop-biz" />
+        <module name="spark-cms" />
+        <module name="spark-flowable-api" />
+        <module name="spark-control" />
+        <module name="spark-quartz" />
+        <module name="spark-auth" />
+        <module name="spark-file-biz" />
+        <module name="spark-wx-shop-api" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="8">
+      <module name="spark-admin" target="1.8" />
+      <module name="spark-admin-api" target="1.8" />
+      <module name="spark-admin-biz" target="1.8" />
+      <module name="spark-auth" target="1.8" />
+      <module name="spark-cms" target="1.8" />
+      <module name="spark-common" target="1.8" />
+      <module name="spark-common-base" target="1.8" />
+      <module name="spark-common-config" target="1.8" />
+      <module name="spark-common-datasource" target="1.8" />
+      <module name="spark-common-feign" target="1.8" />
+      <module name="spark-common-log" target="1.8" />
+      <module name="spark-common-logistics" target="1.8" />
+      <module name="spark-common-security" target="1.8" />
+      <module name="spark-common-utils" target="1.8" />
+      <module name="spark-control" target="1.8" />
+      <module name="spark-file" target="1.8" />
+      <module name="spark-file-api" target="1.8" />
+      <module name="spark-file-biz" target="1.8" />
+      <module name="spark-flowable" target="1.8" />
+      <module name="spark-flowable-api" target="1.8" />
+      <module name="spark-flowable-biz" target="1.8" />
+      <module name="spark-gateway" target="1.8" />
+      <module name="spark-platform" target="1.8" />
+      <module name="spark-quartz" target="1.8" />
+      <module name="spark-tx-manager" target="1.8" />
+      <module name="spark-wx-shop" target="1.8" />
+      <module name="spark-wx-shop-api" target="1.8" />
+      <module name="spark-wx-shop-biz" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="spark-admin-api" options="" />
+      <module name="spark-admin-biz" options="" />
+      <module name="spark-auth" options="" />
+      <module name="spark-cms" options="" />
+      <module name="spark-common-base" options="" />
+      <module name="spark-common-config" options="" />
+      <module name="spark-common-datasource" options="" />
+      <module name="spark-common-feign" options="" />
+      <module name="spark-common-log" options="" />
+      <module name="spark-common-logistics" options="" />
+      <module name="spark-common-security" options="" />
+      <module name="spark-common-utils" options="" />
+      <module name="spark-control" options="" />
+      <module name="spark-file-api" options="" />
+      <module name="spark-file-biz" options="" />
+      <module name="spark-flowable-api" options="" />
+      <module name="spark-flowable-biz" options="" />
+      <module name="spark-gateway" options="" />
+      <module name="spark-quartz" options="" />
+      <module name="spark-tx-manager" options="" />
+      <module name="spark-wx-shop-api" options="" />
+      <module name="spark-wx-shop-biz" options="" />
+    </option>
+  </component>
+</project>

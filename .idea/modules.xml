@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/spark-admin/spark-admin.iml" filepath="$PROJECT_DIR$/spark-admin/spark-admin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark-admin/spark-admin-api/spark-admin-api.iml" filepath="$PROJECT_DIR$/spark-admin/spark-admin-api/spark-admin-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark-admin/spark-admin-biz/spark-admin-biz.iml" filepath="$PROJECT_DIR$/spark-admin/spark-admin-biz/spark-admin-biz.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark-auth/spark-auth.iml" filepath="$PROJECT_DIR$/spark-auth/spark-auth.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark-cms/spark-cms.iml" filepath="$PROJECT_DIR$/spark-cms/spark-cms.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark-common/spark-common.iml" filepath="$PROJECT_DIR$/spark-common/spark-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark-common/spark-common-base/spark-common-base.iml" filepath="$PROJECT_DIR$/spark-common/spark-common-base/spark-common-base.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark-common/spark-common-config/spark-common-config.iml" filepath="$PROJECT_DIR$/spark-common/spark-common-config/spark-common-config.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark-common/spark-common-datasource/spark-common-datasource.iml" filepath="$PROJECT_DIR$/spark-common/spark-common-datasource/spark-common-datasource.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark-common/spark-common-feign/spark-common-feign.iml" filepath="$PROJECT_DIR$/spark-common/spark-common-feign/spark-common-feign.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark-common/spark-common-log/spark-common-log.iml" filepath="$PROJECT_DIR$/spark-common/spark-common-log/spark-common-log.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark-common/spark-common-logistics/spark-common-logistics.iml" filepath="$PROJECT_DIR$/spark-common/spark-common-logistics/spark-common-logistics.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark-common/spark-common-security/spark-common-security.iml" filepath="$PROJECT_DIR$/spark-common/spark-common-security/spark-common-security.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark-common/spark-common-utils/spark-common-utils.iml" filepath="$PROJECT_DIR$/spark-common/spark-common-utils/spark-common-utils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark-control/spark-control.iml" filepath="$PROJECT_DIR$/spark-control/spark-control.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark-file/spark-file.iml" filepath="$PROJECT_DIR$/spark-file/spark-file.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark-file/spark-file-api/spark-file-api.iml" filepath="$PROJECT_DIR$/spark-file/spark-file-api/spark-file-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark-file/spark-file-biz/spark-file-biz.iml" filepath="$PROJECT_DIR$/spark-file/spark-file-biz/spark-file-biz.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark-flowable/spark-flowable.iml" filepath="$PROJECT_DIR$/spark-flowable/spark-flowable.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark-flowable/spark-flowable-api/spark-flowable-api.iml" filepath="$PROJECT_DIR$/spark-flowable/spark-flowable-api/spark-flowable-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark-flowable/spark-flowable-biz/spark-flowable-biz.iml" filepath="$PROJECT_DIR$/spark-flowable/spark-flowable-biz/spark-flowable-biz.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark-gateway/spark-gateway.iml" filepath="$PROJECT_DIR$/spark-gateway/spark-gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark-platform.iml" filepath="$PROJECT_DIR$/spark-platform.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark-quartz/spark-quartz.iml" filepath="$PROJECT_DIR$/spark-quartz/spark-quartz.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark-tx-manager/spark-tx-manager.iml" filepath="$PROJECT_DIR$/spark-tx-manager/spark-tx-manager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark-wx-shop/spark-wx-shop.iml" filepath="$PROJECT_DIR$/spark-wx-shop/spark-wx-shop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark-wx-shop/spark-wx-shop-api/spark-wx-shop-api.iml" filepath="$PROJECT_DIR$/spark-wx-shop/spark-wx-shop-api/spark-wx-shop-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark-wx-shop/spark-wx-shop-biz/spark-wx-shop-biz.iml" filepath="$PROJECT_DIR$/spark-wx-shop/spark-wx-shop-biz/spark-wx-shop-biz.iml" />
+    </modules>
+  </component>
+</project>

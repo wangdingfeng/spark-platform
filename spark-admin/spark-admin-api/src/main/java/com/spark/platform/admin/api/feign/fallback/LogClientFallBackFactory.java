@@ -5,8 +5,8 @@ import com.spark.platform.admin.api.entity.log.LogLogin;
 import com.spark.platform.admin.api.feign.client.LogClient;
 import com.spark.platform.common.base.constants.ServiceNameConstants;
 import com.spark.platform.common.base.support.ApiResponse;
-import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.stereotype.Component;
 
 /**

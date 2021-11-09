@@ -47,19 +47,19 @@ public class LogLogin implements Serializable {
     private String location;
 
     @ApiModelProperty(value = "登录ip")
-    private String locationIp;
+    private String ip;
 
     public LogLogin(){
 
     }
 
-    public LogLogin(String username, String osType, String browser, LocalDateTime loginTime, String location, String locationIp){
+    public LogLogin(String username, String osType, String browser, LocalDateTime loginTime, String location, String ip){
         this.username = username;
         this.osType = osType;
         this.browser = browser;
         this.loginTime = loginTime;
         this.location = location;
-        this.locationIp = locationIp;
+        this.ip = ip;
     }
 
 

@@ -5,11 +5,11 @@
     <parent>
         <groupId>com.spark.platform</groupId>
         <artifactId>spark-wx-shop</artifactId>
-        <version>2.0.1</version>
+        <version>2.1.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>spark-wx-shop-api</artifactId>
-    <version>2.0.1</version>
+    <version>2.1.0</version>
     <name>spark-wx-shop-api</name>
     <description>微信商城 对外部提供common</description>
 

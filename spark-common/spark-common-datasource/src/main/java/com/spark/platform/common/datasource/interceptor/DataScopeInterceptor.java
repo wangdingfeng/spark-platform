@@ -4,7 +4,6 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.db.Db;
 import cn.hutool.db.Entity;
 import com.baomidou.mybatisplus.core.toolkit.PluginUtils;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.handlers.AbstractSqlParserHandler;
 import com.google.common.collect.Lists;
 import com.spark.platform.common.base.constants.GlobalsConstants;
@@ -182,7 +181,7 @@ public class DataScopeInterceptor extends AbstractSqlParserHandler implements In
                 customizeList = Lists.newArrayList(user.get(dataScope.field()).toString());
             }
         }
-        String dataScopeSql = StringUtils.format("%s.%s in (%s)", mainTableName, dataScope.field(), CollUtil.join(customizeList, ","));
+        String dataScopeSql = String.format("%s.%s in (%s)", mainTableName, dataScope.field(), CollUtil.join(customizeList, ","));
         ;
         if (plain.getWhere() == null) {
             plain.setWhere(CCJSqlParserUtil.parseCondExpression(dataScopeSql));

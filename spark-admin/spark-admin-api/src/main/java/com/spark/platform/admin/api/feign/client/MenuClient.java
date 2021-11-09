@@ -27,5 +27,5 @@ public interface MenuClient {
      * @return
      */
     @GetMapping("/menu/api/auth")
-    ApiResponse findAuthByUserId(@RequestParam Long userId);
+    ApiResponse findAuthByUserId(@RequestParam("userId") Long userId);
 }

@@ -94,16 +94,8 @@ ribbon:
   eureka:
     enabled: true
 
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 60000
-
 feign:
-  hystrix:
+  sentinel:
     enabled: true
   okhttp:
     enabled: true

@@ -5,11 +5,10 @@
     <parent>
         <groupId>com.spark.platform</groupId>
         <artifactId>spark-platform</artifactId>
-        <version>2.0.1</version>
-        <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
+        <version>2.1.0</version>
     </parent>
     <artifactId>spark-gateway</artifactId>
-    <version>2.0.1</version>
+    <version>2.1.0</version>
     <name>spark-gateway</name>
     <description>gateway网关服务</description>
 
@@ -27,11 +26,6 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
-        <!--hystrix熔断降级-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
-        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
@@ -40,6 +34,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis-reactive</artifactId>
+        </dependency>
+        <!-- LB 扩展 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
         </dependency>
         <!-- for swagger -->
         <dependency>

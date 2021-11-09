@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/spark-admin/spark-admin-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark-admin/spark-admin-biz/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark-auth/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark-cms/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark-common/spark-common-base/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark-common/spark-common-config/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark-common/spark-common-datasource/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark-common/spark-common-feign/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark-common/spark-common-log/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark-common/spark-common-logistics/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark-common/spark-common-security/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark-common/spark-common-utils/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark-control/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark-file/spark-file-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark-file/spark-file-biz/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark-flowable/spark-flowable-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark-flowable/spark-flowable-biz/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark-gateway/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark-quartz/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark-tx-manager/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark-wx-shop/spark-wx-shop-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/spark-wx-shop/spark-wx-shop-biz/src/main/java" charset="UTF-8" />
+  </component>
+</project>
