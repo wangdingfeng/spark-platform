@@ -1,9 +1,7 @@
-# spark-platform V2.0 (项目采用nacos作为注册中心和配置中心)
+# spark-platform V2.1
 [![star](https://gitee.com/dreamfeng/spark-platform/badge/star.svg?theme=white)](https://gitee.com/dreamfeng/spark-platform/stargazers)
 [![github](https://img.shields.io/github/stars/wangdingfeng/spark-platform)](https://github.com/wangdingfeng/spark-platform)
 
-
-### 微信商城功能还在测试，但是大体上的功能已经测试完全，所以还是先上线了，其中修改了很多以前框架中存在的bug.
 #### 交流群上线，QQ群号:1137679743
 
 
@@ -13,9 +11,9 @@ SPARK 开发平台 作者：polaris.wang
 
 
 ![Apache](https://img.shields.io/badge/Apache-2.0-brightgreen)
-![cloud版本](https://img.shields.io/badge/Spring%20Cloud-Hoxton.SR8-brightgreen)
-![boot版本](https://img.shields.io/badge/Spring%20Boot-2.3.3.RELEASE-brightgreen)
-![https://img.shields.io/badge/Nacos-1.3-brightgreen](https://img.shields.io/badge/Nacos-1.3-brightgreen)
+![cloud版本](https://img.shields.io/badge/Spring%20Cloud-2020.0.4-brightgreen)
+![boot版本](https://img.shields.io/badge/Spring%20Boot-2.5.6-brightgreen)
+![https://img.shields.io/badge/Nacos-1.3-brightgreen](https://img.shields.io/badge/Nacos-2021.1-brightgreen)
 ![https://img.shields.io/badge/Flowable-6.4.2-brightgreen](https://img.shields.io/badge/Flowable-6.4.2-brightgreen)
 ![https://img.shields.io/badge/Mybatis%20Plus-3.3.1-brightgreen](https://img.shields.io/badge/Mybatis%20Plus-3.3.1-brightgreen)
 
@@ -33,12 +31,23 @@ SPARK 开发平台 作者：polaris.wang
  ### 如果大家有什么建议或者问题，请在Issues中提交，作者会一一的回复，希望大家一起让这个开源项目变的更好，我的本意是大家一起学习，所以此项目完全开源，完全免费。您的点赞和建议是作者维护这个项目的最大动力，感谢！
 
 
-### 2021-02-20 更新日志
-1. 修改重置密码没有加密的问题。
-2. 将bootstrap.yml中指定服务器IP配置转移到配置中心配置中。
-3. 修改获取角色权限没有过滤删除菜单的问题。
-4. 删除密码json忽略。
-5. 更新IP数据库，修改并发导致无法获取IP地址信息的问题。
+### 2021-11-09 更新日志
+升级spring boot和 cloud版本，解决冲突。
+添加Sentinel 监控。
+升级的遇到的问题汇总
+
+1、新版本的移除了hystrix。可使用 Resilience4j、Sentinel 替换，现阶段项目采用Sentinel替换hystrix。
+
+2、Bootstrap上下文默认不再启动:
+设置值spring.cloud.bootstrap.enabled=true或者 spring.config.use-legacy-processing=true即可。或者引入一个Jar：org.springframework.cloud:spring-cloud-starter-bootstrap。
+
+3、移除了Spring Cloud Security:
+其主要代码已经移到了 Spring Cloud Commons下
+
+4、Spring Cloud Openfeign
+支持在 Spring Cloud CircuitBreakers 中包装 feign 客户端；
+Spring Cloud OpenFeign 安全部分的代码，从 Spring Cloud Security 移到了 Spring Cloud OpenFeign；
+增加了 LoadBalancer 统计功能
 
 
 ### 文档地址
