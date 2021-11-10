@@ -100,8 +100,6 @@ SPARK-PLATFORM 开发平台 作者：polaris.wang
          <artifactId>spring-cloud-starter-loadbalancer</artifactId>
      </dependency>
    ```
-
-增加了 LoadBalancer 统计功能
 ---
 
 ### 文档地址 (补充中)
@@ -127,7 +125,7 @@ Gitee  | [https://gitee.com/dreamfeng/spark-platform](https://gitee.com/dreamfen
 
 ~~备用演示地址: [http://admin.xiapeiyi.com/](http://admin.xiapeiyi.com/) 不允许对里边的数据进行操作，感谢~~
 
-演示环境工作流账号密码：
+### 演示环境工作流账号密码：
 
 | 账号  | 密码   | 权限               |
 | ----- | :----: | --- |
@@ -136,7 +134,7 @@ Gitee  | [https://gitee.com/dreamfeng/spark-platform](https://gitee.com/dreamfen
 | zhubian1 | 123456 | 工作流权限 |
 | zhubian2 | 123456 | 工作流权限 |
 
-平台账号密码
+### 平台账号密码
 
 | 平台  | 账号   | 密码               |
 | --- | :---: | :---: |
@@ -145,7 +143,7 @@ Gitee  | [https://gitee.com/dreamfeng/spark-platform](https://gitee.com/dreamfen
 | Nacos |  |  |
 | Minio|  |  |
 
-版本说明
+### 版本说明
 
 |依赖 | 版本|
 |---|---
@@ -188,7 +186,7 @@ spark-platform
      └── spark-wx-shop-biz -- 微信商城业务处理模块    
 ```
 
-注意：
+### 注意：
 1. 流程测试：
 - 这里是列表文本使用admin 账号添加文章，发布，之后，角色是组长的都会接到待办消息。
 - 流程流转到主编审核，使用主编1和主编2审核，入口从待办任务中进入。
