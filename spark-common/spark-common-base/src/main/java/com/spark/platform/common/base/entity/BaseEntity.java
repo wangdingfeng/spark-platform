@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
  * @ProjectName: spark-platform
  * @Package: com.spark.platform.common.base.entity
  * @ClassName: BaseEntity
- * @Description:
+ * @Description: 基础字段
  * @Version: 1.0
  */
 @Data
