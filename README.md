@@ -7,7 +7,7 @@
 
 SPARK-PLATFORM 开发平台 作者：polaris.wang
 
- _如果您喜欢，请伸出您的小手，给作者点个赞，感谢您的支持_  :smile: 
+ _如果您喜欢，请伸出您的小手，给作者star一下，感谢您的支持_  :smile: 
 
 
 ![Apache](https://img.shields.io/badge/Apache-2.0-brightgreen)
@@ -18,9 +18,9 @@ SPARK-PLATFORM 开发平台 作者：polaris.wang
 ![https://img.shields.io/badge/Mybatis%20Plus-3.3.1-brightgreen](https://img.shields.io/badge/Mybatis%20Plus-3.3.1-brightgreen)
 
 
-- 基于 Spring Cloud Hoxton 、Spring Boot 2.2、 OAuth2 的RBAC权限管理系统  
+- 基于 Spring Cloud、Spring Boot、 OAuth2 的RBAC权限管理系统  
 - 基于vue-element-template，更简洁的页面，实现的前后端分离交互
-- 前后端分离架构，客户端和服务端纯Token交互，接口全部使用restful风格
+- 微服务和前后端分离架构，客户端和服务端纯Token交互，接口全部使用restful风格
 - 认证服务器与资源服务器分离，方便接入自己的微服务系统
 - 功能模块采用组件插拔方式，使用更简单整洁规范
 - 基于flowable的工作流系统，提供完善基于业务的流程系统
@@ -29,7 +29,7 @@ SPARK-PLATFORM 开发平台 作者：polaris.wang
 - ~~提供微信商城小程序功能，此功能不在master分支展示~~
 
  ---
-#### 如果大家有什么建议或者问题，请在Issues中提交，希望大家一起让这个开源项目变的更好，我的本意是大家一起学习，所以此项目完全开源，完全免费。您的点赞和建议是作者维护这个项目的最大动力，感谢！
+#### 如果大家有什么建议或者问题，请在Issues中提交，希望大家一起让这个开源项目变的更好，我的本意是大家一起学习，所以此项目完全开源，完全免费。您的star和建议是作者维护这个项目的最大动力，感谢！
 #### 后续更新计划：由于作者精力有限，不会在提供业务代码的更新，会把所有的精力转移到里边的bug修改、底层技术和组件的研究。小程序将会在master分支移除，转移到shop分支，后续也不在提供维护。
 
 ---
