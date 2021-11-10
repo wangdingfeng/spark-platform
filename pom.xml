@@ -29,8 +29,9 @@
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <spring-boot.version>2.5.6</spring-boot.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <spring-boot.version>2.5.6</spring-boot.version>
         <spring-cloud.version>2020.0.4</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
         <spring-boot-admin-version>2.2.0</spring-boot-admin-version>
@@ -48,6 +49,7 @@
         <ip2-region-version>1.7.2</ip2-region-version>
         <commons-lang3.version>3.9</commons-lang3.version>
         <commons-io-version>2.6</commons-io-version>
+        <commons-pool2.version>2.7.0</commons-pool2.version>
         <flowable.version>6.4.2</flowable.version>
         <freemarker.version>2.3.30</freemarker.version>
         <tx-manager-version>5.0.2.RELEASE</tx-manager-version>
