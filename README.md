@@ -154,7 +154,7 @@ Gitee  | [https://gitee.com/dreamfeng/spark-platform](https://gitee.com/dreamfen
 |Mybatis Plus | 3.3.1|
 |Spring Boot Admin | 2.2.3|
 
-#### 模块说明
+### 模块说明
 ```
 spark-platform 
 ├── spark-auth -- 授权服务 oauth2
