@@ -96,7 +96,7 @@ SPARK-PLATFORM 开发平台 作者：polaris.wang
 6. 增加了 LoadBalancer 统计功能；
    添加JAR包：
    ```
-     <!-- LB 扩展 -->
+     <!-- LB 统计 -->
      <dependency>
          <groupId>org.springframework.cloud</groupId>
          <artifactId>spring-cloud-starter-loadbalancer</artifactId>
