@@ -108,10 +108,54 @@ SPARK-PLATFORM 开发平台 作者：polaris.wang
  [https://www.kancloud.cn/polaris_wang/spark/1762689](https://www.kancloud.cn/polaris_wang/spark/1762689)
 
 ### 已实现功能
-|   用户管理  |  角色管理   |  菜单管理   |  部门管理   |  字典管理   |  客户端管理   |  待办事项   |  已办事项   |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-|   流程管理   |  系统日志   |  系统监控   | 代码生成器    | 网关限流    | 文件管理    |   登录日志  |  定时任务   |
 
+<table>
+    <tr>
+        <th colspan="7">系统管理</th>
+    </tr>
+    <tr>
+        <td>用户管理</td>
+        <td>角色管理</td>
+        <td>角色管理</td>
+        <td>菜单管理</td>
+        <td>部门管理</td>
+        <td>字典管理</td>
+        <td>客户端管理</td>
+    </tr>
+    <tr>
+        <th colspan="7">协同管理</th>
+    </tr>
+    <tr>
+        <td>代办事项</td>
+        <td>已办事项</td>
+        <td>流程设计</td>
+        <td>流程管理</td>
+        <td colspan="3">实例管理</td>
+    </tr>
+    <tr>
+        <th colspan="7">系统监控</th>
+    </tr>
+    <tr>
+        <td>系统日志</td>
+        <td>登陆日志</td>
+        <td>接口文档</td>
+        <td>Nacos</td>
+        <td>Admin监控</td>
+        <td>数据库监控</td>
+        <td>Minio</td>
+    </tr>
+    <tr>
+        <th colspan="7">扩展功能</th>
+    </tr>
+    <tr>
+        <td>微信凭证</td>
+        <td>行政区域</td>
+        <td>文件管理</td>
+        <td>定时任务</td>
+        <td>代码生成</td>
+        <td colspan="2">表单例子</td>
+    </tr>
+</table>
 
 ### 项目地址
  平台  | spark-platform（后端）|spark-admin（前端）
