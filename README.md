@@ -41,7 +41,9 @@ SPARK-PLATFORM 开发平台 作者：polaris.wang
 - 对冗杂的jar包进行删除。 
 - 优化配置
 ---
-###cloud版本升级的遇到的问题汇总:
+
+### Spring Cloud版本升级的遇到的问题汇总:
+
 1. Spring Cloud Netflix 彻底删除掉了除Eureka外的所有组件。
    - 基于 Eureka Client 的 RestTemplate 已支持 TLS 属性  
    - netflix组件替代方案 
