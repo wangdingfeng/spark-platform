@@ -30,24 +30,23 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <spring-boot.version>2.5.6</spring-boot.version>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <spring-cloud.version>2020.0.4</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <spring-boot-admin-version>2.2.0</spring-boot-admin-version>
         <spark-admin.version>2.1.0</spark-admin.version>
         <spark-common.version>2.1.0</spark-common.version>
         <spark-fowable-api.version>2.1.0</spark-fowable-api.version>
         <fastjson.version>1.2.78</fastjson.version>
-        <mybatis-plus.version>3.4.1</mybatis-plus.version>
         <druid.version>1.1.22</druid.version>
-        <commons-lang3.version>3.9</commons-lang3.version>
-        <security-jwt.version>1.0.10.RELEASE</security-jwt.version>
+        <mybatis-plus.version>3.4.1</mybatis-plus.version>
+        <security-jwt.version>1.1.0.RELEASE</security-jwt.version>
         <swagger.version>2.9.2</swagger.version>
         <swagger-spring-boot-starter.version>1.9.1.RELEASE</swagger-spring-boot-starter.version>
         <guava.veriosn>27.0-jre</guava.veriosn>
         <hutool.version>4.6.5</hutool.version>
-        <commons-pool2.version>2.7.0</commons-pool2.version>
-        <spring-boot-admin-version>2.2.0</spring-boot-admin-version>
         <ip2-region-version>1.7.2</ip2-region-version>
+        <commons-lang3.version>3.9</commons-lang3.version>
         <commons-io-version>2.6</commons-io-version>
         <flowable.version>6.4.2</flowable.version>
         <freemarker.version>2.3.30</freemarker.version>
@@ -55,7 +54,6 @@
         <logstash-logback.verison>5.3</logstash-logback.verison>
         <jackson-module-jaxb.veison>2.11.2</jackson-module-jaxb.veison>
         <easyexcel.version>2.2.3</easyexcel.version>
-        <hystrix.version>1.5.18</hystrix.version>
         <minio.version>7.1.4</minio.version>
         <nacos-url>127.0.0.1:8848</nacos-url>
         <sentinel-url>127.0.0.1:8080</sentinel-url>
@@ -67,12 +65,6 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
-        </dependency>
-        <!--工具-->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-pool2</artifactId>
-            <version>${commons-pool2.version}</version>
         </dependency>
         <!--Lombok-->
         <dependency>
@@ -165,14 +157,6 @@
                     <exclude>ip2region/**</exclude>
                     <exclude>flowable/**</exclude>
                 </excludes>
-            </resource>
-            <resource>
-                <directory>${project.basedir}/src/main/resources</directory>
-                <filtering>false</filtering>
-                <includes>
-                    <include>ip2region/**</include>
-                    <include>flowable/**</include>
-                </includes>
             </resource>
         </resources>
         <pluginManagement>
