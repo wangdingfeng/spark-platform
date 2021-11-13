@@ -22,7 +22,7 @@ public interface TaskClient {
      * @return
      */
     @PostMapping(value = "/runtime/tasks/{taskId}")
-    ApiResponse executeTask(@PathVariable String taskId, @RequestBody ExecuteTaskRequest executeTaskRequest);
+    ApiResponse executeTask(@PathVariable("taskId") String taskId, @RequestBody ExecuteTaskRequest executeTaskRequest);
 
     /**
      * 添加批注信息
@@ -32,7 +32,7 @@ public interface TaskClient {
      * @return
      */
     @PostMapping(value = "/runtime/tasks/comment")
-    ApiResponse addComments(@RequestParam String taskId,@RequestParam String processInstanceId,@RequestParam String message,@RequestParam String userId);
+    ApiResponse addComments(@RequestParam("taskId") String taskId,@RequestParam("processInstanceId") String processInstanceId,@RequestParam("message") String message,@RequestParam("userId") String userId);
 
     /**
      *

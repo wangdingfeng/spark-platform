@@ -3,8 +3,8 @@ package com.spark.platform.admin.api.feign.fallback;
 import com.spark.platform.admin.api.feign.client.RoleClient;
 import com.spark.platform.common.base.constants.ServiceNameConstants;
 import com.spark.platform.common.base.support.ApiResponse;
-import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.stereotype.Component;
 
 /**

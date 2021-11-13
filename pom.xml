@@ -4,16 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.3.RELEASE</version>
-        <relativePath/>
-    </parent>
-
     <groupId>com.spark.platform</groupId>
     <artifactId>spark-platform</artifactId>
-    <version>2.0.1</version>
+    <version>2.1.0</version>
     <description>Spark 开发平台</description>
     <name>spark-platform</name>
     <packaging>pom</packaging>
@@ -34,45 +27,46 @@
 
 
     <properties>
-        <java.version>1.8</java.version>
-        <spring-boot.version>2.3.3.RELEASE</spring-boot.version>
-        <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
-        <spring-cloud-alibaba.version>2.2.3.RELEASE</spring-cloud-alibaba.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <spark-admin.version>2.0.1</spark-admin.version>
-        <spark-common.version>2.0.1</spark-common.version>
-        <spark-fowable-api.version>2.0.1</spark-fowable-api.version>
-        <fastjson.version>1.2.70</fastjson.version>
-        <mybatis-plus.version>3.3.1</mybatis-plus.version>
+        <spring-boot.version>2.5.6</spring-boot.version>
+        <spring-cloud.version>2020.0.4</spring-cloud.version>
+        <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
+        <spring-boot-admin-version>2.2.0</spring-boot-admin-version>
+        <spark-admin.version>2.1.0</spark-admin.version>
+        <spark-common.version>2.1.0</spark-common.version>
+        <spark-fowable-api.version>2.1.0</spark-fowable-api.version>
+        <fastjson.version>1.2.78</fastjson.version>
         <druid.version>1.1.22</druid.version>
-        <commons-lang3.version>3.9</commons-lang3.version>
-        <security-jwt.version>1.0.10.RELEASE</security-jwt.version>
-        <jjwt.version>0.9.1</jjwt.version>
+        <mybatis-plus.version>3.4.1</mybatis-plus.version>
+        <security-jwt.version>1.1.0.RELEASE</security-jwt.version>
         <swagger.version>2.9.2</swagger.version>
+        <swagger-spring-boot-starter.version>1.9.1.RELEASE</swagger-spring-boot-starter.version>
         <guava.veriosn>27.0-jre</guava.veriosn>
         <hutool.version>4.6.5</hutool.version>
-        <commons-pool2.version>2.7.0</commons-pool2.version>
-        <swagger-spring-boot-starter.version>1.9.1.RELEASE</swagger-spring-boot-starter.version>
-        <spring-boot-admin-version>2.2.0</spring-boot-admin-version>
         <ip2-region-version>1.7.2</ip2-region-version>
+        <commons-lang3.version>3.9</commons-lang3.version>
         <commons-io-version>2.6</commons-io-version>
+        <commons-pool2.version>2.7.0</commons-pool2.version>
         <flowable.version>6.4.2</flowable.version>
-        <freemarker.version>2.3.28</freemarker.version>
+        <freemarker.version>2.3.30</freemarker.version>
         <tx-manager-version>5.0.2.RELEASE</tx-manager-version>
         <logstash-logback.verison>5.3</logstash-logback.verison>
         <jackson-module-jaxb.veison>2.11.2</jackson-module-jaxb.veison>
         <easyexcel.version>2.2.3</easyexcel.version>
         <minio.version>7.1.4</minio.version>
         <nacos-url>127.0.0.1:8848</nacos-url>
+        <sentinel-url>127.0.0.1:8080</sentinel-url>
         <logstash-url>localhost:4560</logstash-url>
     </properties>
 
     <dependencies>
-        <!--工具-->
+        <!--bootstrap 启动器-->
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-pool2</artifactId>
-            <version>${commons-pool2.version}</version>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
         <!--Lombok-->
         <dependency>
@@ -153,6 +147,10 @@
     <build>
         <finalName>${project.name}</finalName>
         <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
             <!-- 解决二进制制文件不能显示的问题-->
             <resource>
                 <directory>${project.basedir}/src/main/resources</directory>
@@ -161,14 +159,6 @@
                     <exclude>ip2region/**</exclude>
                     <exclude>flowable/**</exclude>
                 </excludes>
-            </resource>
-            <resource>
-                <directory>${project.basedir}/src/main/resources</directory>
-                <filtering>false</filtering>
-                <includes>
-                    <include>ip2region/**</include>
-                    <include>flowable/**</include>
-                </includes>
             </resource>
         </resources>
         <pluginManagement>
@@ -191,45 +181,6 @@
             </plugins>
         </pluginManagement>
     </build>
-
-
-    <repositories>
-        <repository>
-            <id>spring-snapshots</id>
-            <name>Spring Snapshots</name>
-            <url>https://repo.spring.io/snapshot</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>spring-milestones</id>
-            <name>Spring Milestones</name>
-            <url>https://repo.spring.io/milestone</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>spring-snapshots</id>
-            <name>Spring Snapshots</name>
-            <url>https://repo.spring.io/snapshot</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </pluginRepository>
-        <pluginRepository>
-            <id>spring-milestones</id>
-            <name>Spring Milestones</name>
-            <url>https://repo.spring.io/milestone</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
 
     <profiles>
         <profile>

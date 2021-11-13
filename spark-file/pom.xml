@@ -5,11 +5,10 @@
     <parent>
         <groupId>com.spark.platform</groupId>
         <artifactId>spark-platform</artifactId>
-        <version>2.0.1</version>
-        <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
+        <version>2.1.0</version>
     </parent>
     <artifactId>spark-file</artifactId>
-    <version>2.0.1</version>
+    <version>2.1.0</version>
     <name>spark-file</name>
     <description>spark 文件服务</description>
     <packaging>pom</packaging>

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -52,7 +53,7 @@ public interface FileClient {
      * @return
      */
     @GetMapping("/{id}")
-    ApiResponse<FileInfo> getById(@PathVariable Long id);
+    ApiResponse<FileInfo> getById(@PathVariable("id") Long id);
 
     /**
      * 获取文件下载路径
@@ -62,7 +63,7 @@ public interface FileClient {
      * @return
      */
     @GetMapping("/url/{id}")
-    ApiResponse<String> url(@PathVariable Long id, Integer expires);
+    ApiResponse<String> url(@PathVariable("id") Long id,@RequestParam("expires") Integer expires);
 
 
 }

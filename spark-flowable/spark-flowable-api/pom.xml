@@ -5,11 +5,11 @@
     <parent>
         <groupId>com.spark.platform</groupId>
         <artifactId>spark-flowable</artifactId>
-        <version>2.0.1</version>
-        <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
+        <version>2.1.0</version>
     </parent>
     <artifactId>spark-flowable-api</artifactId>
     <name>spark-flowable-api</name>
+    <version>2.1.0</version>
     <description>工作流暴露接口</description>
 
     <dependencies>

@@ -13,5 +13,8 @@ spring:
         group: DEFAULT_GROUP
       discovery:
         server-addr: @nacos-url@
+    sentinel:
+      transport:
+        dashboard: @sentinel-url@
 logstash:
   service: @logstash-url@

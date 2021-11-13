@@ -113,6 +113,9 @@ public class AddressUtils {
             if(StringUtils.isBlank(ip)){
                 return "";
             }
+            if (LOCAL_IP_127.equals(ip) || LOCAL_IP.equals(ip)) {
+                return "内网IP";
+            }
             if(null != map.get(ip)){
                 return map.get(ip);
             }

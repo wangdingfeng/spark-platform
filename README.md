@@ -1,66 +1,161 @@
-# spark-platform V2.0 (项目采用nacos作为注册中心和配置中心)
+# spark-platform V2.1
 [![star](https://gitee.com/dreamfeng/spark-platform/badge/star.svg?theme=white)](https://gitee.com/dreamfeng/spark-platform/stargazers)
 [![github](https://img.shields.io/github/stars/wangdingfeng/spark-platform)](https://github.com/wangdingfeng/spark-platform)
 
-
-### 微信商城功能还在测试，但是大体上的功能已经测试完全，所以还是先上线了，其中修改了很多以前框架中存在的bug.
-#### 交流群上线，QQ群号:1137679743
+#### 交流群-QQ群号:1137679743
 
 
-SPARK 开发平台 作者：polaris.wang
+SPARK-PLATFORM 开发平台 作者：polaris.wang
 
- _如果您喜欢，请伸出您的小手，给作者点个赞，感谢您的支持_  :smile: 
+ _如果您喜欢，请伸出您的小手，给作者star一下，感谢您的支持_  :smile: 
 
 
 ![Apache](https://img.shields.io/badge/Apache-2.0-brightgreen)
-![cloud版本](https://img.shields.io/badge/Spring%20Cloud-Hoxton.SR8-brightgreen)
-![boot版本](https://img.shields.io/badge/Spring%20Boot-2.3.3.RELEASE-brightgreen)
-![https://img.shields.io/badge/Nacos-1.3-brightgreen](https://img.shields.io/badge/Nacos-1.3-brightgreen)
+![cloud版本](https://img.shields.io/badge/Spring%20Cloud-2020.0.4-brightgreen)
+![boot版本](https://img.shields.io/badge/Spring%20Boot-2.5.6-brightgreen)
+![https://img.shields.io/badge/Nacos-1.3-brightgreen](https://img.shields.io/badge/Nacos-2021.1-brightgreen)
 ![https://img.shields.io/badge/Flowable-6.4.2-brightgreen](https://img.shields.io/badge/Flowable-6.4.2-brightgreen)
 ![https://img.shields.io/badge/Mybatis%20Plus-3.3.1-brightgreen](https://img.shields.io/badge/Mybatis%20Plus-3.3.1-brightgreen)
 
 
-- 基于 Spring Cloud Hoxton 、Spring Boot 2.2、 OAuth2 的RBAC权限管理系统  
+- 基于 Spring Cloud、Spring Boot、 OAuth2 的RBAC权限管理系统  
 - 基于vue-element-template，更简洁的页面，实现的前后端分离交互
-- 前后端分离架构，客户端和服务端纯Token交互，接口全部使用restful风格
+- 微服务和前后端分离架构，客户端和服务端纯Token交互，接口全部使用restful风格
 - 认证服务器与资源服务器分离，方便接入自己的微服务系统
-- 功能模块采用插拔方式，使用更简单整洁规范
+- 功能模块采用组件插拔方式，使用更简单整洁规范
 - 基于flowable的工作流系统，提供完善基于业务的流程系统
+- 提供配置自定义组件包注解。  
 - 提供代码生成器、封装Mybatis plus 查询，提高开发效率
-- 提供微信商城小程序功能
+- ~~提供微信商城小程序功能，此功能不在master分支展示~~
 
- 
- ### 如果大家有什么建议或者问题，请在Issues中提交，作者会一一的回复，希望大家一起让这个开源项目变的更好，我的本意是大家一起学习，所以此项目完全开源，完全免费。您的点赞和建议是作者维护这个项目的最大动力，感谢！
+ ---
+#### 如果大家有什么建议或者问题，请在Issues中提交，希望大家一起让这个开源项目变的更好，我的本意是大家一起学习，所以此项目完全开源，完全免费。您的star和建议是作者维护这个项目的最大动力，感谢！
+#### 后续更新计划：由于作者精力有限，不会在提供业务代码的更新，会把所有的精力转移到里边的bug修改、底层技术和组件的研究。小程序将会在master分支移除，转移到shop分支，后续也不在提供维护。
 
+---
+### 2021-11-09 更新日志
+- 升级spring boot和 cloud版本，解决冲突。 
+  
+- 添加Sentinel 监控。
 
-### 2021-02-20 更新日志
-1. 修改重置密码没有加密的问题。
-2. 将bootstrap.yml中指定服务器IP配置转移到配置中心配置中。
-3. 修改获取角色权限没有过滤删除菜单的问题。
-4. 删除密码json忽略。
-5. 更新IP数据库，修改并发导致无法获取IP地址信息的问题。
+- 对冗杂的jar包进行删除。 
+- 优化配置
+---
 
+### Spring Cloud版本升级的遇到的问题汇总:
 
-### 文档地址
+1. Spring Cloud Netflix 彻底删除掉了除Eureka外的所有组件。
+   - 基于 Eureka Client 的 RestTemplate 已支持 TLS 属性  
+   - netflix组件替代方案 
+     
+   |Netflix|推荐替代品|
+   | --- | --- |
+   |Hystrix|Sentinel、Resilience4j|
+   |Hystrix Dashboard / Turbine|Micrometer + Monitoring System|
+   |Ribbon|Spring Cloud Loadbalancer|
+   |Zuul|Spring Cloud Gateway|
+   |Archaius|Spring Boot外部化配置 + Spring Cloud配置|
+   
+   
+2. Bootstrap上下文默认不再启动:  
+  Spring Cloud容器是靠Bootstrap Context引导上下文来启动的，对应的类是BootstrapApplicationListener。  
+  解决方案:
+   - 设置值spring.cloud.bootstrap.enabled=true或者 spring.config.use-legacy-processing=true即可。注意：这些个属性值必须确保其能放进环境里才能生效。比如靠谱的方式是：系统属性、环境变量、命令行等
+   - 引入下边的jar包
+     
+     ```
+       <!--bootstrap 启动器-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
+     ```
+3. 移除了Spring Cloud Security:  
+   其主要代码已经移到了 Spring Cloud Commons下
+   引入JAR包实例
+   ```
+      <!--security-->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+        </dependency>
+        <!-- oauth-->
+        <dependency>
+            <groupId>org.springframework.security.oauth.boot</groupId>
+            <artifactId>spring-security-oauth2-autoconfigure</artifactId>
+        </dependency>
+   ```
+5. Spring Cloud Openfeign
+   - 支持在 Spring Cloud CircuitBreakers 中包装 feign 客户端；
+   - Spring Cloud OpenFeign 安全部分的代码，从 Spring Cloud Security 移到了 Spring Cloud OpenFeign。
+     
+     引入JAR包修改：
+      ```
+      feign.hystrix.FallbackFactory 替换成 org.springframework.cloud.openfeign.FallbackFactory
+      ```
+6. 增加了 LoadBalancer 统计功能；
+   添加JAR包：
+   ```
+     <!-- LB 统计 -->
+     <dependency>
+         <groupId>org.springframework.cloud</groupId>
+         <artifactId>spring-cloud-starter-loadbalancer</artifactId>
+     </dependency>
+   ```
+---
+
+### 文档地址 (补充中)
  [https://www.kancloud.cn/polaris_wang/spark/1762689](https://www.kancloud.cn/polaris_wang/spark/1762689)
- 
-
-注意：
-1. 流程测试：
-- 这里是列表文本使用admin 账号添加文章，发布，之后，角色是组长的都会接到待办消息。
-- 流程流转到主编审核，使用主编1和主编2审核，入口从待办任务中进入。
-- 系统判断节点为自动判断，逻辑为 主编审核节点只有当两个主编都审核通过，则为审核流程通过，如果其中有人拒绝，退回到发起人修改，也就是admin
-- 发起人admin重新修改数据 提交给组长角色审核，或者关闭当前的流程。
-2. 流程测试图
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0424/102707_2837dc87_1890906.png "屏幕截图.png")
 
 ### 已实现功能
-|   用户管理  |  角色管理   |  菜单管理   |  部门管理   |  字典管理   |  客户端管理   |  待办事项   |  已办事项   |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-|   流程管理   |  系统日志   |  系统监控   | 代码生成器    | 网关限流    | 文件管理    |   登录日志  |  定时任务   |
 
-
-
+<table>
+    <tr>
+        <th colspan="7">系统管理</th>
+    </tr>
+    <tr>
+        <td>用户管理</td>
+        <td>角色管理</td>
+        <td>角色管理</td>
+        <td>菜单管理</td>
+        <td>部门管理</td>
+        <td>字典管理</td>
+        <td>客户端管理</td>
+    </tr>
+    <tr>
+        <th colspan="7">协同管理</th>
+    </tr>
+    <tr>
+        <td>代办事项</td>
+        <td>已办事项</td>
+        <td>流程设计</td>
+        <td>流程管理</td>
+        <td colspan="3">实例管理</td>
+    </tr>
+    <tr>
+        <th colspan="7">系统监控</th>
+    </tr>
+    <tr>
+        <td>系统日志</td>
+        <td>登陆日志</td>
+        <td>接口文档</td>
+        <td>Nacos</td>
+        <td>Admin监控</td>
+        <td>数据库监控</td>
+        <td>Minio</td>
+    </tr>
+    <tr>
+        <th colspan="7">扩展功能</th>
+    </tr>
+    <tr>
+        <td>微信凭证</td>
+        <td>行政区域</td>
+        <td>文件管理</td>
+        <td>定时任务</td>
+        <td>代码生成</td>
+        <td colspan="2">表单例子</td>
+    </tr>
+</table>
 
 ### 项目地址
  平台  | spark-platform（后端）|spark-admin（前端）
@@ -72,37 +167,40 @@ Gitee  | [https://gitee.com/dreamfeng/spark-platform](https://gitee.com/dreamfen
 
 ### 演示地址
 
-演示地址：[http://www.sparkplatform.cn/](http://www.sparkplatform.cn/)
+~~演示地址：[http://www.sparkplatform.cn/](http://www.sparkplatform.cn/) 暂停~~
 
-备用演示地址: [http://admin.xiapeiyi.com/](http://admin.xiapeiyi.com/) 不允许对里边的数据进行操作，感谢
+~~备用演示地址: [http://admin.xiapeiyi.com/](http://admin.xiapeiyi.com/) 不允许对里边的数据进行操作，感谢~~
 
-演示环境工作流账号密码：
+### 演示环境工作流账号密码：
+
 | 账号  | 密码   | 权限               |
-| ----- | ------ | ------------------ |
+| ----- | :----: | --- |
 | admin | 123456 | 除删除外所有的权限 |
 | zuzhang | 123456 | 工作流权限 |
 | zhubian1 | 123456 | 工作流权限 |
 | zhubian2 | 123456 | 工作流权限 |
 
-平台账号密码
+### 平台账号密码
+
 | 平台  | 账号   | 密码               |
-| ----- | ------ | ------------------ |
+| --- | :---: | :---: |
 | Admin监控 | spark | spark |
 | 数据库监控 | spark | spark |
 | Nacos |  |  |
 | Minio|  |  |
 
-依赖 | 版本
----|---
-Spring Boot |  2.3.3.RELEASE 
-Spring Cloud | Hoxton.SR8   
-Nacos | 1.30   
-Flowable | 6.4.2
-Mybatis Plus | 3.3.1
-Spring Boot Admin | 2.2.3
-Security Jwt | 1.0.10.RELEASE
+### 版本说明
 
-#### 模块说明
+|依赖 | 版本|
+|---|---
+|Spring Boot |  2.5.6 |
+|Spring Cloud | 2020.0.4 | 
+|Nacos | 2.0.0 |   
+|Flowable | 6.4.2 |
+|Mybatis Plus | 3.3.1|
+|Spring Boot Admin | 2.2.3|
+
+### 模块说明
 ```
 spark-platform 
 ├── spark-auth -- 授权服务 oauth2
@@ -133,6 +231,17 @@ spark-platform
      └── spark-wx-shop-api -- 微信商城公共api模块
      └── spark-wx-shop-biz -- 微信商城业务处理模块    
 ```
+
+### 注意：
+1. 流程测试：
+- 这里是列表文本使用admin 账号添加文章，发布，之后，角色是组长的都会接到待办消息。
+- 流程流转到主编审核，使用主编1和主编2审核，入口从待办任务中进入。
+- 系统判断节点为自动判断，逻辑为 主编审核节点只有当两个主编都审核通过，则为审核流程通过，如果其中有人拒绝，退回到发起人修改，也就是admin
+- 发起人admin重新修改数据 提交给组长角色审核，或者关闭当前的流程。
+2. 流程测试图
+   ![输入图片说明](https://images.gitee.com/uploads/images/2020/0424/102707_2837dc87_1890906.png "屏幕截图.png")
+
+
  **平台截图**
 ![首页](https://images.gitee.com/uploads/images/2020/0808/115033_41517db6_1890906.png "屏幕截图.png")
 ![用户管理](https://images.gitee.com/uploads/images/2020/0808/115125_1e0193a6_1890906.png "屏幕截图.png")

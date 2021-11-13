@@ -5,8 +5,8 @@ import com.spark.platform.common.base.support.ApiResponse;
 import com.spark.platform.flowable.api.feign.client.TaskClient;
 import com.spark.platform.flowable.api.request.ExecuteTaskRequest;
 import com.spark.platform.flowable.api.request.TaskRequestQuery;
-import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.stereotype.Component;
 
 /**

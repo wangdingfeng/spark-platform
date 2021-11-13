@@ -32,6 +32,6 @@ public interface InstanceClient {
      * @return
      */
     @DeleteMapping(value = "runtime/process-instances/{processInstanceId}")
-    ApiResponse delete(@PathVariable String processInstanceId);
+    ApiResponse delete(@PathVariable("processInstanceId") String processInstanceId);
 
 }

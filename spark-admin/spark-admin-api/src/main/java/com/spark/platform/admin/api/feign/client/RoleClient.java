@@ -24,5 +24,5 @@ public interface RoleClient {
      * @return
      */
     @GetMapping("/role/{id}")
-    ApiResponse getRoleByUserId(@PathVariable Long id);
+    ApiResponse getRoleByUserId(@PathVariable("id") Long id);
 }
