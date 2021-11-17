@@ -151,15 +151,6 @@
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
             </resource>
-            <!-- 解决二进制制文件不能显示的问题-->
-            <resource>
-                <directory>${project.basedir}/src/main/resources</directory>
-                <filtering>true</filtering>
-                <excludes>
-                    <exclude>ip2region/**</exclude>
-                    <exclude>flowable/**</exclude>
-                </excludes>
-            </resource>
         </resources>
         <pluginManagement>
             <plugins>
