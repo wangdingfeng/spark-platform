@@ -18,7 +18,7 @@ import java.sql.SQLException;
  * @Package: com.spark.platform.common.config.datasource
  * @ClassName: DataSourceProperties
  * @Author: wangdingfeng
- * @Description:
+ * @Description: Druid 配置
  * @Date: 2020/4/15 12:37
  * @Version: 1.0
  */
