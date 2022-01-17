@@ -13,9 +13,9 @@ spring:
     default-property-inclusion: non_null
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/spark-dev?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8
-    username: root
-    password: 123456
+    url: jdbc:mysql://wangdingfeng.mysql.rds.aliyuncs.com/spark-dev?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8
+    username: wangdingfeng
+    password: Wang_123
     name: spark-dev
     type: com.alibaba.druid.pool.DruidDataSource
     initial-size: 5

@@ -22,7 +22,6 @@
         <module>spark-tx-manager</module>
         <module>spark-quartz</module>
         <module>spark-file</module>
-        <module>spark-wx-shop</module>
     </modules>
 
 

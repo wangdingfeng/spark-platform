@@ -227,9 +227,6 @@ spark-platform
 └── spark-file -- 文件模块
      └── spark-file-api -- 文件模块公共api模块
      └── spark-file-biz -- 文件模块业务处理模块
-└── spark-wx-shop -- 微信商城模块(完善中)
-     └── spark-wx-shop-api -- 微信商城公共api模块
-     └── spark-wx-shop-biz -- 微信商城业务处理模块    
 ```
 
 ### 注意：
