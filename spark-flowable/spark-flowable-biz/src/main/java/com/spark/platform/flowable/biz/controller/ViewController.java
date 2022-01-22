@@ -21,7 +21,7 @@ public class ViewController {
      * 设计流程图首页
      * @return
      */
-    @GetMapping("")
+    @GetMapping("/flowable")
     public String modelIndex(){
         return "redirect:/flowable/index.html";
     }
