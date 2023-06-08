@@ -2,7 +2,7 @@
 [![star](https://gitee.com/dreamfeng/spark-platform/badge/star.svg?theme=white)](https://gitee.com/dreamfeng/spark-platform/stargazers)
 [![github](https://img.shields.io/github/stars/wangdingfeng/spark-platform)](https://github.com/wangdingfeng/spark-platform)
 
-## 作者最新沉迷摄影，所以一直在停更
+## 作者这两年沉迷旅游、摄影，所以一直在停更......
 
 
 SPARK-PLATFORM 开发平台 作者：polaris.wang
