@@ -1,6 +1,6 @@
 package com.spark.platform.gateway.handle;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,22 +16,16 @@ import java.util.Optional;
  * @ProjectName: spark-platform
  * @Package: com.spark.platform.gateway.handle
  * @ClassName: SwaggerHandler
- * @Description:  swagger 请求 详细请搜索 gateway结合swagger
+ * @Description: swagger 请求 详细请搜索 gateway结合swagger
  * @Version: 1.0
  */
 @RestController
 @RequestMapping("/swagger-resources")
+@RequiredArgsConstructor
 public class SwaggerHandler {
-    @Autowired(required = false)
-    private SecurityConfiguration securityConfiguration;
-    @Autowired(required = false)
-    private UiConfiguration uiConfiguration;
+    private final SecurityConfiguration securityConfiguration;
+    private final UiConfiguration uiConfiguration;
     private final SwaggerResourcesProvider swaggerResources;
-
-    @Autowired
-    public SwaggerHandler(SwaggerResourcesProvider swaggerResources) {
-        this.swaggerResources = swaggerResources;
-    }
 
 
     @GetMapping("/configuration/security")
